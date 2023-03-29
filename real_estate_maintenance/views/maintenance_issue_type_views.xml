@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- Maintenance Issue Type View Form -->
+        <record id="maintenance_issue_type_view_form" model="ir.ui.view">
+            <field name="name">maintenance.issue.type.view.form</field>
+            <field name="model">maintenance.issue.type</field>
+            <field name="arch" type="xml">
+                <form string="Maintenance Issue Type">
+                    <sheet>
+                        <group col="4">
+                            <field name="name" required="1"/>
+                            <field name="invoice_status" required="1"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Maintenance Issue Type View Tree -->
+        <record id="maintenance_issue_type_view_tree" model="ir.ui.view">
+            <field name="name">maintenance.issue.type.view.tree</field>
+            <field name="model">maintenance.issue.type</field>
+            <field name="arch" type="xml">
+                <tree string="Maintenance Request">
+                    <field name="name"/>
+                    <field name="invoice_status"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Maintenance Request Action -->
+        <record id="maintenance_issue_type_act_window" model="ir.actions.act_window">
+            <field name="name">Maintenance Issue Type</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">maintenance.issue.type</field>
+            <field name="view_mode">tree,form</field>
+            <field name="context">{'create': True}</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    There are no maintenance issue types
+                </p>
+            </field>
+        </record>
+
+        <!-- Menu Item -->
+        <menuitem id="real_estate_maintenance_menu_issue"
+                  parent="real_estate_maintenance_menu_root"
+                  action="maintenance_issue_type_act_window"
+                  name="Issue Types" sequence="70"/>
+    </data>
+</odoo>

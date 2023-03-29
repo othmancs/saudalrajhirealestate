@@ -1,0 +1,346 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="portal_layout" name="Portal layout: maintenance menu entry" inherit_id="portal.portal_breadcrumbs"
+              priority="40">
+        <xpath expr="//ol[hasclass('o_portal_submenu')]" position="inside">
+            <li t-if="page_name == 'maintenance_requests' or maintenance_request" class="col-lg-2"
+                t-attf-class="breadcrumb-item #{'active ' if not maintenance_request else ''}">
+                <a t-if="maintenance_request" t-attf-href="/my/maintenance-requests?{{ keep_query() }}">Maintenance
+                    Requests
+                </a>
+                <t t-else="">Maintenance Requests</t>
+            </li>
+            <li t-if="maintenance_request"
+                t-attf-class="breadcrumb-item #{'active ' if not maintenance_request else ''}">
+                <t t-esc="maintenance_request.name"/>
+            </li>
+            <li t-if="page_name == 'real_estate_properties'" class="col-lg-2"
+                t-attf-class="breadcrumb-item active">
+                <span>Properties</span>
+            </li>
+        </xpath>
+    </template>
+
+    <template id="portal_my_home" name="Show Maintenance Requests" customize_show="True"
+              inherit_id="portal.portal_my_home" priority="40">
+        <xpath expr="//div[hasclass('o_portal_docs')]" position="inside">
+            <t t-call="portal.portal_docs_entry">
+                <t t-set="title">Properties</t>
+                <t t-set="url" t-value="'/my/properties'"/>
+                <t t-set="placeholder_count" t-value="'real_estate_property_count'"/>
+            </t>
+            <t t-call="portal.portal_docs_entry">
+                <t t-set="title">Maintenance Requests</t>
+                <t t-set="url" t-value="'/my/maintenance-requests'"/>
+                <t t-set="placeholder_count" t-value="'maintenance_request_count'"/>
+            </t>
+        </xpath>
+    </template>
+
+    <!--  Properties' Templates -->
+    <template id="portal_my_properties" name="My Properties">
+        <t t-call="portal.portal_layout">
+            <t t-set="breadcrumbs_searchbar" t-value="True"/>
+
+            <t t-call="portal.portal_searchbar">
+                <t t-set="title">Properties</t>
+            </t>
+
+            <!-- Modal -->
+            <div class="modal fade" id="request_maintenance" tabindex="-1" role="dialog"
+                 aria-labelledby="Maintenance Request"
+                 aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Maintenance Request</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true"/>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="container">
+                                <script>
+
+                                    function validateForm() {
+                                        return true;
+                                    }
+
+                                    function onClickMaintenanceRequest(property_id) {
+                                        $('#request_maintenance').modal('show');
+                                        $('#property_id').val(property_id);
+                                    }
+
+                                </script>
+                                <form action="/my/maintenance-request" method="POST"
+                                      onsubmit="return validateForm()"
+                                      id="maintenance_request_form"
+                                      name="maintenance_request_form"
+                                      enctype="multipart/form-data" class="">
+                                    <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                    <input type="hidden" name="property_id" id="property_id"/>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="form-group">
+                                                <label for="issue_type">Issue Type <span class="text-danger">*</span></label>
+                                                <select id="issue_type" name="issue_type"
+                                                        required="1"
+                                                        oninvalid="this.setCustomValidity('Issue Type Is Required!')"
+                                                        oninput="this.setCustomValidity('')"
+                                                        class="form-control">
+                                                </select>
+                                                <script type="text/javascript">
+                                                    fetch(`/issue-type/get`, {method: 'POST',
+                                                        body: JSON.stringify({}),
+                                                        headers: {'Content-Type': 'application/json'}}).then((response) =>
+                                                        response.json()).then((res) => {
+                                                            var data = `<option></option>`;
+                                                            res.result.forEach(function (issue_type) {
+                                                            data += `<option value='${issue_type.id}'>${issue_type.name}</option>`;
+                                                        });
+                                                        document.getElementById("issue_type").innerHTML = data;
+                                                    });
+                                                </script>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="form-group" style="width:100%">
+                                                <label for="user_name">Issue Description <span class="text-danger">*</span>
+                                                </label>
+                                                <textarea id="issue_description" name="issue_description"
+                                                       required="1"
+                                                       oninvalid="this.setCustomValidity('Issue Description Is Required!')"
+                                                       oninput="this.setCustomValidity('')"
+                                                       class="form-control"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button name="submit" type="submit"
+                                    value="submit" form="maintenance_request_form"
+                                    class="btn btn-primary">Confirm
+                                <span class="fa fa-long-arrow-right"/>
+                            </button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <t t-if="not real_estate_properties">
+                <div class="alert alert-warning mt8" role="alert">
+                    There are no properties.
+                <t t-esc="real_estate_properties"/>
+
+                </div>
+            </t>
+            <t t-else="">
+                <t t-if="real_estate_properties">
+                    <div class="row">
+                        <t t-foreach="real_estate_properties" t-as="real_estate_property">
+                            <div class="card col-md-4 col-sm-6 col-lg-3 col-xs-12">
+                                <img class="card-img-top"
+                                     height="200" width="100"
+                                     t-attf-src="/web/image/product.product/{{ real_estate_property.id }}/image_512"/>
+                                <div class="card-body">
+                                    <h5 class="card-title"><t t-esc="real_estate_property.name"/></h5>
+                                    <p class="card-text"><t t-esc="real_estate_property.description"/></p>
+                                    <button type="button" role="button" data-toggle="modal"
+                                            t-attf-onclick="onClickMaintenanceRequest({{real_estate_property.id}})"
+                                            data-target="#request_maintenance"
+                                       class="btn btn-success">Request Maintenance</button>
+                                </div>
+                            </div>
+                        </t>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+    <!-- Maintenance Templates -->
+    <template id="portal_my_maintenance_requests" name="My Maintenance Requests">
+        <t t-call="portal.portal_layout">
+            <t t-set="breadcrumbs_searchbar" t-value="True"/>
+
+            <t t-call="portal.portal_searchbar">
+                <t t-set="title">Maintenance Requests</t>
+            </t>
+            <t t-if="not maintenance_requests">
+                <div class="alert alert-warning mt8" role="alert">
+                    There are no maintenance requests.
+                </div>
+            </t>
+            <t t-else="">
+                <t t-if="maintenance_requests" t-call="portal.portal_table">
+                    <thead>
+                        <tr class="thead">
+                            <th class="text-left">Ref</th>
+                            <th>Request Date</th>
+                            <th>Visit Date</th>
+                            <th>Issue Type</th>
+                            <th>Invoicing Status</th>
+                            <th>Responsible</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- <t t-foreach="maintenance_requests" t-as="maintenance_request">
+                            <t t-call="real_estate_maintenance.portal_maintenance_request_item"/>
+                        </t> -->
+                    </tbody>
+                </t>
+            </t>
+        </t>
+    </template>
+
+    <template id="portal_my_maintenance_request" name="My Maintenance Requests">
+        <t t-call="portal.portal_layout">
+            <t t-set="o_portal_fullwidth_alert">
+                <t t-call="portal.portal_back_in_edit_mode">
+                    <t t-set="backend_url"
+                       t-value="'/web#model=maintenance.request&amp;id=%s&amp;view_type=form' % (maintenance_request.id)"/>
+                </t>
+            </t>
+        </t>
+    </template>
+
+    <template id="portal_maintenance_request_item" name="Tasks List">
+        <tr>
+            <td class="text-left">
+                <a t-attf-href="/my/maintenance-request/#{maintenance_request.id}?{{ keep_query() }}">
+                    <span t-field="maintenance_request.name"/>
+                </a>
+            </td>
+            <td class="text-left">
+                <span t-esc="maintenance_request.request_date"/>
+            </td>
+            <td class="text-left">
+                <span t-esc="maintenance_request.visit_date"/>
+            </td>
+            <td class="text-left">
+                <span t-field="maintenance_request.issue_type"/>
+            </td>
+            <td class="text-left">
+                <span t-field="maintenance_request.invoice_status"/>
+            </td>
+            <td class="text-left">
+                <span t-field="maintenance_request.maintenance_responsible_id"/>
+            </td>
+            <td class="text-left">
+                <span class="badge badge-pill badge-info" t-field="maintenance_request.state"/>
+            </td>
+        </tr>
+
+    </template>
+
+    <template id="portal_my_maintenance_request" name="My Maintenance Request">
+        <t t-call="portal.portal_layout">
+            <t t-call="portal.portal_record_layout">
+
+                <t t-set="card_header">
+                    <div class="row no-gutters">
+                        <div class="col-12">
+                            <h5 class="d-flex mb-1 mb-md-0 row">
+                                <div class="col-9">
+                                    <span t-field="maintenance_request.name" class="text-truncate"/>
+                                    <small class="text-muted d-none d-md-inline">(#<span
+                                            t-field="maintenance_request.id"/>)
+                                    </small>
+                                </div>
+                                <div class="col-3 text-right">
+                                    <small class="text-right">Status:</small>
+                                    <span t-field="maintenance_request.state" class="badge badge-pill badge-info"
+                                          title="Current status of this request"/>
+                                </div>
+                            </h5>
+                        </div>
+                    </div>
+                </t>
+
+                <t t-set="card_body">
+                    <div class="row mt-3" t-if="maintenance_request.maintenance_responsible_id">
+                        <div class="col-12 col-md-6 pb-2">
+                            <strong>Assigned To</strong>
+                            <div class="row" t-if="maintenance_request.maintenance_responsible_id">
+
+                                <div class="col pl-md-0">
+                                    <a t-attf-href="mailto:{{maintenance_request.maintenance_responsible_id.private_email}}">
+                                        <div t-esc="maintenance_request.maintenance_responsible_id.private_email"/>
+                                    </a>
+                                    <a t-attf-href="tel:{{maintenance_request.maintenance_responsible_id.phone}}">
+                                        <div t-esc="maintenance_request.maintenance_responsible_id.phone"/>
+                                    </a>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row mb-4">
+                        <div class="col-12 col-md-6">
+                            <div t-if="maintenance_request.visit_date">
+                                <strong>Visit Date:</strong>
+                                <a t-field="maintenance_request.visit_date" t-options="{'widget': 'date'}"/>
+                            </div>
+                            <div>
+                                <strong>Invoicing Status:</strong>
+                                <span t-field="maintenance_request.invoice_status"/>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6" name="portal_my_task_second_column"/>
+                    </div>
+
+                    <div class="row" t-if="maintenance_request.issue_description or maintenance_request.attachment_ids">
+                        <div t-if="maintenance_request.issue_description"
+                             t-attf-class="col-12 col-lg-7 mb-4 mb-md-0 {{'col-lg-7' if maintenance_request.attachment_ids else 'col-lg-12'}}">
+                            <hr class="mb-1"/>
+                            <div class="d-flex my-2">
+                                <strong>Description</strong>
+                            </div>
+                            <div class="py-1 px-2 bg-100 small" t-field="maintenance_request.issue_description"/>
+                        </div>
+                        <div t-if="maintenance_request.attachment_ids"
+                             t-attf-class="col-12 col-lg-5 {{'col-lg-5' if maintenance_request.issue_description else 'col-lg-12'}}">
+                            <hr class="mb-1 d-none d-lg-block"/>
+                            <strong class="d-block mb-2">Attachments</strong>
+                            <div class="row">
+                                <div t-attf-class="col {{'col-lg-6' if not maintenance_request.issue_description else 'col-lg-12'}}">
+                                    <ul class="list-group">
+                                        <a class="list-group-item list-group-item-action d-flex align-items-center oe_attachments py-1 px-2"
+                                           t-foreach='maintenance_request.attachment_ids' t-as='attachment'
+                                           t-attf-href="/web/content/#{attachment.id}?download=true&amp;access_token=#{attachment.access_token}"
+                                           target="_blank" data-no-post-process="">
+                                            <div class='oe_attachment_embedded o_image o_image_small mr-2 mr-lg-3'
+                                                 t-att-title="attachment.name" t-att-data-mimetype="attachment.mimetype"
+                                                 t-attf-data-src="/web/image/#{attachment.id}/50x40?access_token=#{attachment.access_token}"/>
+                                            <div class='oe_attachment_name text-truncate'>
+                                                <t t-esc='attachment.name'/>
+                                            </div>
+                                        </a>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </t>
+
+            <div class="mt32">
+                <h4>
+                    <strong>Message and communication history</strong>
+                </h4>
+                <t t-call="portal.message_thread">
+                    <t t-set="object" t-value="maintenance_request"/>
+                    <t t-set="token" t-value="maintenance_request.access_token"/>
+                    <t t-set="pid" t-value="pid"/>
+                    <t t-set="hash" t-value="hash"/>
+                </t>
+            </div>
+        </t>
+    </template>
+
+</odoo>

@@ -1,0 +1,1005 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* real_estate_maintenance
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 15.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-09-20 06:20+0000\n"
+"PO-Revision-Date: 2022-09-20 06:20+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: real_estate_maintenance
+#: model:mail.template,body_html:real_estate_maintenance.mail_template_data_notification_maintenance_request
+msgid ""
+"<div style=\"margin: 0px; padding: 0px;\">\n"
+"                    <p style=\"margin: 0px; padding: 0px; font-size: 13px;\">\n"
+"                        Hello <t t-out=\"object.company_id.maintenance_request_to_notify_user_id.name or ''\"/>,\n"
+"                        <br/>\n"
+"                        <br/>\n"
+"                        A new Maintenance Request Has Been Submitted. Reference ( <t t-out=\"object.name\"/> ).\n"
+"                        <br/>\n"
+"                        Customer: <t t-out=\"object.requester_id.name\"/>\n"
+"                        <br/>\n"
+"                        Property: <t t-out=\"object.property_id.name\"/>\n"
+"                        <br/>\n"
+"                        <br/>\n"
+"                        Thank you,\n"
+"                    </p>\n"
+"                </div>\n"
+"            "
+msgstr ""
+
+#. module: real_estate_maintenance
+#: model_terms:ir.ui.view,arch_db:real_estate_maintenance.portal_my_maintenance_request
+msgid "<small class=\"text-right\">Status:</small>"
+msgstr "<small class=\"text-right\">الحالة:</small>"
+
+#. module: real_estate_maintenance
+#: model_terms:ir.ui.view,arch_db:real_estate_maintenance.portal_layout
+msgid "<span>Properties</span>"
+msgstr "<span>الوحدات</span>"
+
+#. module: real_estate_maintenance
+#: model_terms:ir.ui.view,arch_db:real_estate_maintenance.portal_my_maintenance_request
+msgid "<strong class=\"d-block mb-2\">Attachments</strong>"
+msgstr "<strong class=\"d-block mb-2\">المرفقات</strong>"
+
+#. module: real_estate_maintenance
+#: model_terms:ir.ui.view,arch_db:real_estate_maintenance.portal_my_maintenance_request
+msgid "<strong>Assigned To</strong>"
+msgstr "<strong>مسند الى</strong>"
+
+#. module: real_estate_maintenance
+#: model_terms:ir.ui.view,arch_db:real_estate_maintenance.portal_my_maintenance_request
+msgid "<strong>Description</strong>"
+msgstr "<strong>الشرح</strong>"
+
+#. module: real_estate_maintenance
+#: model_terms:ir.ui.view,arch_db:real_estate_maintenance.portal_my_maintenance_request
+msgid "<strong>Invoicing Status:</strong>"
+msgstr "<strong>حالة الفوترة :</strong>"
+
+#. module: real_estate_maintenance
+#: model_terms:ir.ui.view,arch_db:real_estate_maintenance.portal_my_maintenance_request
+msgid "<strong>Message and communication history</strong>"
+msgstr "<strong>الرسائل وتاريخ التواصل</strong>"
+
+#. module: real_estate_maintenance
+#: model_terms:ir.ui.view,arch_db:real_estate_maintenance.portal_my_maintenance_request
+msgid "<strong>Visit Date:</strong>"
+msgstr "<strong>تاريخ الزيارة :</strong>"
+
+#. module: real_estate_maintenance
+#: model:ir.model.fields,field_description:real_estate_maintenance.field_maintenance_request__access_warning
+msgid "Access warning"
+msgstr ""
+
+#. module: real_estate_maintenance
+#: model:ir.model.fields,field_description:real_estate_maintenance.field_maintenance_request__account_move_ids
+msgid "Account Move"
+msgstr "قيد اليومية"
+
+#. module: real_estate_maintenance
+#: model:ir.model.fields,field_description:real_estate_maintenance.field_maintenance_request__account_moves_count
+msgid "Account Moves Count"
+msgstr ""
+
+#. module: real_estate_maintenance
+#: model:ir.model.fields,field_description:real_estate_maintenance.field_maintenance_request__message_needaction
+msgid "Action Needed"
+msgstr "بحاجة الى اجراء"
+
+#. module: real_estate_maintenance
+#: model_terms:ir.ui.view,arch_db:real_estate_maintenance.wiz_maintenance_request_refuse_view_form
+msgid "Action Refuse"
+msgstr "رفض"
+
+#. module: real_estate_maintenance
+#: model:ir.model.fields,field_description:real_estate_maintenance.field_maintenance_request__active
+msgid "Active"
+msgstr "مفعل"
+
+#. module: real_estate_maintenance
+#: model:ir.model.fields,field_description:real_estate_maintenance.field_maintenance_request__activity_ids
+msgid "Activities"
+msgstr ""
+
+#. module: real_estate_maintenance
+#: model:ir.model.fields,field_description:real_estate_maintenance.field_maintenance_request__activity_exception_decoration
+msgid "Activity Exception Decoration"
+msgstr ""
+
+#. module: real_estate_maintenance
+#: model:ir.model.fields,field_description:real_estate_maintenance.field_maintenance_request__activity_state
+msgid "Activity State"
+msgstr ""
+
+#. module: real_estate_maintenance
+#: model:ir.model.fields,field_description:real_estate_maintenance.field_maintenance_request__activity_type_icon
+msgid "Activity Type Icon"
+msgstr ""
+
+#. module: real_estate_maintenance
+#: code:addons/real_estate_maintenance/controllers/portal.py:0
+#: code:addons/real_estate_maintenance/controllers/portal.py:0
+#, python-format
+msgid "All"
+msgstr "الكل"
+
+#. module: real_estate_maintenance
+#: model_terms:ir.ui.view,arch_db:real_estate_maintenance.maintenance_request_view_search
+#: model_terms:ir.ui.view,arch_db:real_estate_maintenance.rental_contract_filter
+msgid "Archived"
+msgstr "مؤرشف"
+
+#. module: real_estate_maintenance
+#: model_terms:ir.ui.view,arch_db:real_estate_maintenance.wiz_maintenance_request_assign_view_form
+msgid "Assign"
+msgstr "مسند"
+
+#. module: real_estate_maintenance
+#: model:ir.actions.act_window,name:real_estate_maintenance.wiz_maintenance_request_assign_action
+#: model_terms:ir.ui.view,arch_db:real_estate_maintenance.wiz_maintenance_request_assign_view_form
+msgid "Assign Maintenance Request"
+msgstr "إسناد طلب الصيانة"
+
+#. module: real_estate_maintenance
+#: model:ir.model.fields,field_description:real_estate_maintenance.field_wiz_maintenance_request_assign__assigned_to
+msgid "Assigned To"
+msgstr "مسند الى"
+
+#. module: real_estate_maintenance
+#: model:ir.model.fields,field_description:real_estate_maintenance.field_maintenance_request__message_attachment_count
+msgid "Attachment Count"
+msgstr "عدد المرفقات"
+
+#. module: real_estate_maintenance
+#: model:ir.model.fields,help:real_estate_maintenance.field_maintenance_request__attachment_ids
+msgid "Attachments that don't come from a message."
+msgstr ""
+
+#. module: real_estate_maintenance
+#: model_terms:ir.ui.view,arch_db:real_estate_maintenance.rental_contract_filter
+msgid "Building"
+msgstr "الوحدات الرئيسية"
+
+#. module: real_estate_maintenance
+#: model_terms:ir.ui.view,arch_db:real_estate_maintenance.wiz_maintenance_request_assign_view_form
+#: model_terms:ir.ui.view,arch_db:real_estate_maintenance.wiz_maintenance_request_refuse_view_form
+msgid "Cancel"
+msgstr "الغاء"
+
+#. module: real_estate_maintenance
+#: model_terms:ir.ui.view,arch_db:real_estate_maintenance.maintenance_request_view_form
+#: model_terms:ir.ui.view,arch_db:real_estate_maintenance.portal_my_properties
+msgid "Close"
+msgstr "قفل"
+
+#. module: real_estate_maintenance
+#: code:addons/real_estate_maintenance/controllers/portal.py:0
+#: model:ir.model.fields.selection,name:real_estate_maintenance.selection__maintenance_request__state__closed
+#: model_terms:ir.ui.view,arch_db:real_estate_maintenance.maintenance_request_view_search
+#, python-format
+msgid "Closed"
+msgstr "مقفل"
+
+#. module: real_estate_maintenance
+#: model:ir.model,name:real_estate_maintenance.model_res_company
+msgid "Companies"
+msgstr "شركات"
+
+#. module: real_estate_maintenance
+#: model:ir.model.fields,field_description:real_estate_maintenance.field_maintenance_request__company_id
+msgid "Company"
+msgstr "الشركة"
+
+#. module: real_estate_maintenance
+#: model:ir.model,name:real_estate_maintenance.model_res_config_settings
+msgid "Config Settings"
+msgstr "ضبط الاعدادات"
+
+#. module: real_estate_maintenance
+#: code:addons/real_estate_maintenance/controllers/portal.py:0
+#: model_terms:ir.ui.view,arch_db:real_estate_maintenance.maintenance_request_view_form
+#, python-format
+msgid "Confirm"
+msgstr "تأكيد"
+
+#. module: real_estate_maintenance
+#: model_terms:ir.ui.view,arch_db:real_estate_maintenance.portal_my_properties
+msgid ""
+"Confirm\n"
+"                                <span class=\"fa fa-long-arrow-right\"/>"
+msgstr ""
+"تاكيد\n"
+"                                <span class=\"fa fa-long-arrow-right\"/>"
+
+#. module: real_estate_maintenance
+#: model:ir.model.fields.selection,name:real_estate_maintenance.selection__maintenance_request__state__confirm
+#: model_terms:ir.ui.view,arch_db:real_estate_maintenance.maintenance_request_view_search
+msgid "Confirmed"
+msgstr "مؤكد"
+
+#. module: real_estate_maintenance
+#: model_terms:ir.ui.view,arch_db:real_estate_maintenance.maintenance_request_view_form
+msgid "Consumed Products"
+msgstr "المنتجات المستخدمة"
+
+#. module: real_estate_maintenance
+#: model_terms:ir.ui.view,arch_db:real_estate_maintenance.portal_my_maintenance_request
+msgid "Contact"
+msgstr "معلومات التواصل"
+
+#. module: real_estate_maintenance
+#: model_terms:ir.ui.view,arch_db:real_estate_maintenance.maintenance_request_view_form
+msgid "Create Invoice"
+msgstr "انشاء فاتورة"
+
+#. module: real_estate_maintenance
+#: model:ir.model.fields,field_description:real_estate_maintenance.field_maintenance_issue_type__create_uid
+#: model:ir.model.fields,field_description:real_estate_maintenance.field_maintenance_request__create_uid
+#: model:ir.model.fields,field_description:real_estate_maintenance.field_maintenance_request_expense__create_uid
+#: model:ir.model.fields,field_description:real_estate_maintenance.field_maintenance_request_product__create_uid
+#: model:ir.model.fields,field_description:real_estate_maintenance.field_wiz_maintenance_request_assign__create_uid
+#: model:ir.model.fields,field_description:real_estate_maintenance.field_wiz_maintenance_request_refuse__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: real_estate_maintenance
+#: model:ir.model.fields,field_description:real_estate_maintenance.field_maintenance_issue_type__create_date
+#: model:ir.model.fields,field_description:real_estate_maintenance.field_maintenance_request__create_date
+#: model:ir.model.fields,field_description:real_estate_maintenance.field_maintenance_request_expense__create_date
+#: model:ir.model.fields,field_description:real_estate_maintenance.field_maintenance_request_product__create_date
+#: model:ir.model.fields,field_description:real_estate_maintenance.field_wiz_maintenance_request_assign__create_date
+#: model:ir.model.fields,field_description:real_estate_maintenance.field_wiz_maintenance_request_refuse__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: real_estate_maintenance
+#: model_terms:ir.ui.view,arch_db:real_estate_maintenance.portal_my_maintenance_request
+msgid "Current status of this request"
+msgstr "حالة الطلب"
+
+#. module: real_estate_maintenance
+#: model:ir.model.fields,field_description:real_estate_maintenance.field_maintenance_request__customer_invoice_id
+msgid "Customer Invoice"
+msgstr "فاتورة عميل"
+
+#. module: real_estate_maintenance
+#: model:ir.model.fields,help:real_estate_maintenance.field_maintenance_request__access_url
+msgid "Customer Portal URL"
+msgstr ""
+
+#. module: real_estate_maintenance
+#: code:addons/real_estate_maintenance/controllers/portal.py:0
+#, python-format
+msgid "Date"
+msgstr "التاريخ"
+
+#. module: real_estate_maintenance
+#: model:ir.model.fields,field_description:real_estate_maintenance.field_maintenance_issue_type__display_name
+#: model:ir.model.fields,field_description:real_estate_maintenance.field_maintenance_request__display_name
+#: model:ir.model.fields,field_description:real_estate_maintenance.field_maintenance_request_expense__display_name
+#: model:ir.model.fields,field_description:real_estate_maintenance.field_maintenance_request_product__display_name
+#: model:ir.model.fields,field_description:real_estate_maintenance.field_wiz_maintenance_request_assign__display_name
+#: model:ir.model.fields,field_description:real_estate_maintenance.field_wiz_maintenance_request_refuse__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: real_estate_maintenance
+#: model_terms:ir.ui.view,arch_db:real_estate_maintenance.rental_contract_filter
+msgid "Draft"
+msgstr "مسوده"
+
+#. module: real_estate_maintenance
+#: model:ir.model.fields,field_description:real_estate_maintenance.field_maintenance_request__email_cc
+msgid "Email cc"
+msgstr "نسخة ايميل"
+
+#. module: real_estate_maintenance
+#: model_terms:ir.ui.view,arch_db:real_estate_maintenance.maintenance_request_view_form
+msgid "Expenses"
+msgstr "المصاريف"
+
+#. module: real_estate_maintenance
+#: model_terms:ir.ui.view,arch_db:real_estate_maintenance.rental_contract_filter
+msgid "Expired"
+msgstr "منتهي"
+
+#. module: real_estate_maintenance
+#: model:ir.model.fields,field_description:real_estate_maintenance.field_maintenance_request__message_follower_ids
+msgid "Followers"
+msgstr ""
+
+#. module: real_estate_maintenance
+#: model:ir.model.fields,field_description:real_estate_maintenance.field_maintenance_request__message_partner_ids
+msgid "Followers (Partners)"
+msgstr ""
+
+#. module: real_estate_maintenance
+#: model:ir.model.fields,help:real_estate_maintenance.field_maintenance_request__activity_type_icon
+msgid "Font awesome icon e.g. fa-tasks"
+msgstr ""
+
+#. module: real_estate_maintenance
+#: model_terms:ir.ui.view,arch_db:real_estate_maintenance.rental_contract_filter
+msgid "Group By..."
+msgstr "تجميع حسب"
+
+#. module: real_estate_maintenance
+#: model:ir.model.fields,field_description:real_estate_maintenance.field_maintenance_request__has_message
+msgid "Has Message"
+msgstr ""
+
+#. module: real_estate_maintenance
+#: model:ir.model.fields,field_description:real_estate_maintenance.field_maintenance_issue_type__id
+#: model:ir.model.fields,field_description:real_estate_maintenance.field_maintenance_request__id
+#: model:ir.model.fields,field_description:real_estate_maintenance.field_maintenance_request_expense__id
+#: model:ir.model.fields,field_description:real_estate_maintenance.field_maintenance_request_product__id
+#: model:ir.model.fields,field_description:real_estate_maintenance.field_wiz_maintenance_request_assign__id
+#: model:ir.model.fields,field_description:real_estate_maintenance.field_wiz_maintenance_request_refuse__id
+msgid "ID"
+msgstr ""
+
+#. module: real_estate_maintenance
+#: model:ir.model.fields,field_description:real_estate_maintenance.field_maintenance_request__activity_exception_icon
+msgid "Icon"
+msgstr ""
+
+#. module: real_estate_maintenance
+#: model:ir.model.fields,help:real_estate_maintenance.field_maintenance_request__activity_exception_icon
+msgid "Icon to indicate an exception activity."
+msgstr ""
+
+#. module: real_estate_maintenance
+#: model:ir.model.fields,help:real_estate_maintenance.field_maintenance_request__message_needaction
+#: model:ir.model.fields,help:real_estate_maintenance.field_maintenance_request__message_unread
+msgid "If checked, new messages require your attention."
+msgstr ""
+
+#. module: real_estate_maintenance
+#: model:ir.model.fields,help:real_estate_maintenance.field_maintenance_request__message_has_error
+#: model:ir.model.fields,help:real_estate_maintenance.field_maintenance_request__message_has_sms_error
+msgid "If checked, some messages have a delivery error."
+msgstr ""
+
+#. module: real_estate_maintenance
+#: model:ir.model.fields.selection,name:real_estate_maintenance.selection__maintenance_request__state__ongoing
+msgid "In Progress"
+msgstr "تحت المعالجة"
+
+#. module: real_estate_maintenance
+#: model:ir.model.fields,field_description:real_estate_maintenance.field_res_company__invoice_product_id
+#: model:ir.model.fields,field_description:real_estate_maintenance.field_res_config_settings__invoice_product_id
+msgid "Invoice Product"
+msgstr "منتجات الفاتورة"
+
+#. module: real_estate_maintenance
+#: model_terms:ir.ui.view,arch_db:real_estate_maintenance.maintenance_request_view_form
+msgid "Invoices & Bills"
+msgstr "الفواتير"
+
+#. module: real_estate_maintenance
+#: model:ir.model.fields,field_description:real_estate_maintenance.field_maintenance_issue_type__invoice_status
+#: model:ir.model.fields,field_description:real_estate_maintenance.field_maintenance_request__invoice_status
+#: model_terms:ir.ui.view,arch_db:real_estate_maintenance.portal_my_maintenance_requests
+msgid "Invoicing Status"
+msgstr "حالة الفوترة"
+
+#. module: real_estate_maintenance
+#: model:ir.model.fields,field_description:real_estate_maintenance.field_maintenance_request__message_is_follower
+msgid "Is Follower"
+msgstr ""
+
+#. module: real_estate_maintenance
+#: model:ir.model.fields,field_description:real_estate_maintenance.field_maintenance_request__issue_description
+#: model_terms:ir.ui.view,arch_db:real_estate_maintenance.maintenance_request_view_form
+msgid "Issue Description"
+msgstr "وصف المشكلة"
+
+#. module: real_estate_maintenance
+#: model_terms:ir.ui.view,arch_db:real_estate_maintenance.portal_my_properties
+msgid "Issue Description <span class=\"text-danger\">*</span>"
+msgstr "وصف المشكلة <span class=\"text-danger\">*</span>"
+
+#. module: real_estate_maintenance
+#: model:ir.model,name:real_estate_maintenance.model_maintenance_issue_type
+#: model:ir.model.fields,field_description:real_estate_maintenance.field_maintenance_issue_type__name
+#: model:ir.model.fields,field_description:real_estate_maintenance.field_maintenance_request__issue_type
+#: model_terms:ir.ui.view,arch_db:real_estate_maintenance.portal_my_maintenance_requests
+msgid "Issue Type"
+msgstr "نوع الصيانة"
+
+#. module: real_estate_maintenance
+#: model_terms:ir.ui.view,arch_db:real_estate_maintenance.portal_my_properties
+msgid "Issue Type <span class=\"text-danger\">*</span>"
+msgstr "نوع المشكلة <span class=\"text-danger\">*</span>"
+
+#. module: real_estate_maintenance
+#: model:ir.ui.menu,name:real_estate_maintenance.real_estate_maintenance_menu_issue
+msgid "Issue Types"
+msgstr "انواع الصيانة"
+
+#. module: real_estate_maintenance
+#: model:ir.model,name:real_estate_maintenance.model_account_move
+msgid "Journal Entry"
+msgstr "قيد اليومية"
+
+#. module: real_estate_maintenance
+#: model:ir.model.fields,field_description:real_estate_maintenance.field_maintenance_issue_type____last_update
+#: model:ir.model.fields,field_description:real_estate_maintenance.field_maintenance_request____last_update
+#: model:ir.model.fields,field_description:real_estate_maintenance.field_maintenance_request_expense____last_update
+#: model:ir.model.fields,field_description:real_estate_maintenance.field_maintenance_request_product____last_update
+#: model:ir.model.fields,field_description:real_estate_maintenance.field_wiz_maintenance_request_assign____last_update
+#: model:ir.model.fields,field_description:real_estate_maintenance.field_wiz_maintenance_request_refuse____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: real_estate_maintenance
+#: model:ir.model.fields,field_description:real_estate_maintenance.field_maintenance_issue_type__write_uid
+#: model:ir.model.fields,field_description:real_estate_maintenance.field_maintenance_request__write_uid
+#: model:ir.model.fields,field_description:real_estate_maintenance.field_maintenance_request_expense__write_uid
+#: model:ir.model.fields,field_description:real_estate_maintenance.field_maintenance_request_product__write_uid
+#: model:ir.model.fields,field_description:real_estate_maintenance.field_wiz_maintenance_request_assign__write_uid
+#: model:ir.model.fields,field_description:real_estate_maintenance.field_wiz_maintenance_request_refuse__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: real_estate_maintenance
+#: model:ir.model.fields,field_description:real_estate_maintenance.field_maintenance_issue_type__write_date
+#: model:ir.model.fields,field_description:real_estate_maintenance.field_maintenance_request__write_date
+#: model:ir.model.fields,field_description:real_estate_maintenance.field_maintenance_request_expense__write_date
+#: model:ir.model.fields,field_description:real_estate_maintenance.field_maintenance_request_product__write_date
+#: model:ir.model.fields,field_description:real_estate_maintenance.field_wiz_maintenance_request_assign__write_date
+#: model:ir.model.fields,field_description:real_estate_maintenance.field_wiz_maintenance_request_refuse__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: real_estate_maintenance
+#: model:ir.model.fields,help:real_estate_maintenance.field_maintenance_request__email_cc
+msgid "List of cc from incoming emails."
+msgstr ""
+
+#. module: real_estate_maintenance
+#: model:ir.model.fields,field_description:real_estate_maintenance.field_maintenance_request__message_main_attachment_id
+msgid "Main Attachment"
+msgstr "المرفقات الرئيسية"
+
+#. module: real_estate_maintenance
+#: model:ir.model.fields,field_description:real_estate_maintenance.field_maintenance_request__attachment_ids
+msgid "Main Attachments"
+msgstr ""
+
+#. module: real_estate_maintenance
+#: model:ir.module.category,description:real_estate_maintenance.model_category_real_estate_maintenance
+#: model:ir.module.category,name:real_estate_maintenance.model_category_real_estate_maintenance
+#: model_terms:ir.ui.view,arch_db:real_estate_maintenance.res_config_settings_view_form
+msgid "Maintenance"
+msgstr "اعمال صيانة"
+
+#. module: real_estate_maintenance
+#: model_terms:ir.ui.view,arch_db:real_estate_maintenance.portal_layout
+msgid ""
+"Maintenance\n"
+"                    Requests"
+msgstr ""
+"الصيانة\n"
+"                    طلبات"
+
+#. module: real_estate_maintenance
+#: model_terms:ir.ui.view,arch_db:real_estate_maintenance.res_config_settings_view_form
+msgid "Maintenance Invoice Product"
+msgstr "منتج فاتورة الصيانة"
+
+#. module: real_estate_maintenance
+#: model:ir.actions.act_window,name:real_estate_maintenance.maintenance_issue_type_act_window
+#: model_terms:ir.ui.view,arch_db:real_estate_maintenance.maintenance_issue_type_view_form
+msgid "Maintenance Issue Type"
+msgstr "نوع مشكلة الصيانة"
+
+#. module: real_estate_maintenance
+#: model:res.groups,name:real_estate_maintenance.group_maintenance_manager
+msgid "Maintenance Manager"
+msgstr "مدير الصيانة"
+
+#. module: real_estate_maintenance
+#: model:ir.model.fields,field_description:real_estate_maintenance.field_account_bank_statement_line__maintenance_request_id
+#: model:ir.model.fields,field_description:real_estate_maintenance.field_account_move__maintenance_request_id
+#: model:ir.model.fields,field_description:real_estate_maintenance.field_account_payment__maintenance_request_id
+#: model:ir.model.fields,field_description:real_estate_maintenance.field_maintenance_request_expense__maintenance_request_id
+#: model:ir.model.fields,field_description:real_estate_maintenance.field_maintenance_request_product__maintenance_request_id
+#: model:ir.model.fields,field_description:real_estate_maintenance.field_stock_picking__maintenance_request_id
+#: model_terms:ir.ui.view,arch_db:real_estate_maintenance.maintenance_issue_type_view_tree
+#: model_terms:ir.ui.view,arch_db:real_estate_maintenance.maintenance_request_view_form
+#: model_terms:ir.ui.view,arch_db:real_estate_maintenance.maintenance_request_view_search
+#: model_terms:ir.ui.view,arch_db:real_estate_maintenance.maintenance_request_view_tree
+#: model_terms:ir.ui.view,arch_db:real_estate_maintenance.portal_my_properties
+msgid "Maintenance Request"
+msgstr "طلب صيانة"
+
+#. module: real_estate_maintenance
+#: model:mail.template,subject:real_estate_maintenance.mail_template_data_notification_maintenance_request
+msgid "Maintenance Request (Ref {{ object.name or 'n/a' }})"
+msgstr "طلب صيانة (المرجع {{ object.name or 'n/a' }})"
+
+#. module: real_estate_maintenance
+#: model:ir.model.fields,field_description:real_estate_maintenance.field_maintenance_request__maintenance_request_expense_line_ids
+msgid "Maintenance Request Expense Line"
+msgstr ""
+
+#. module: real_estate_maintenance
+#: model:ir.model.fields,field_description:real_estate_maintenance.field_maintenance_request__maintenance_request_product_line_ids
+msgid "Maintenance Request Product Line"
+msgstr ""
+
+#. module: real_estate_maintenance
+#: model:ir.model.fields,field_description:real_estate_maintenance.field_res_company__maintenance_request_to_notify_user_id
+#: model:ir.model.fields,field_description:real_estate_maintenance.field_res_config_settings__maintenance_request_to_notify_user_id
+msgid "Maintenance Request To Notify User"
+msgstr "طلب صيانة لإخطار المستخدم"
+
+#. module: real_estate_maintenance
+#: model:mail.template,name:real_estate_maintenance.mail_template_data_notification_maintenance_request
+msgid "Maintenance Request: Notify"
+msgstr "طلب الصيانة: تنبيه"
+
+#. module: real_estate_maintenance
+#: model:ir.actions.act_window,name:real_estate_maintenance.maintenance_request_act_window
+#: model:ir.ui.menu,name:real_estate_maintenance.real_estate_maintenance_menu_request
+#: model_terms:ir.ui.view,arch_db:real_estate_maintenance.portal_layout
+#: model_terms:ir.ui.view,arch_db:real_estate_maintenance.portal_my_home
+#: model_terms:ir.ui.view,arch_db:real_estate_maintenance.portal_my_maintenance_requests
+msgid "Maintenance Requests"
+msgstr "طلبات الصيانة"
+
+#. module: real_estate_maintenance
+#: model:ir.model.fields,field_description:real_estate_maintenance.field_maintenance_request__maintenance_responsible_id
+msgid "Maintenance Responsible"
+msgstr "مسؤول الصيانة"
+
+#. module: real_estate_maintenance
+#: model:ir.model.fields,field_description:real_estate_maintenance.field_maintenance_request__message_has_error
+msgid "Message Delivery error"
+msgstr ""
+
+#. module: real_estate_maintenance
+#: model:ir.model.fields,field_description:real_estate_maintenance.field_maintenance_request__message_ids
+msgid "Messages"
+msgstr "الرسائل"
+
+#. module: real_estate_maintenance
+#: model:ir.model.fields,field_description:real_estate_maintenance.field_maintenance_request__my_activity_date_deadline
+msgid "My Activity Deadline"
+msgstr ""
+
+#. module: real_estate_maintenance
+#: code:addons/real_estate_maintenance/controllers/portal.py:0
+#: model:ir.model.fields,field_description:real_estate_maintenance.field_maintenance_request__name
+#, python-format
+msgid "Name"
+msgstr "الإسم"
+
+#. module: real_estate_maintenance
+#: model:ir.model.fields.selection,name:real_estate_maintenance.selection__maintenance_request__state__new
+#: model_terms:ir.ui.view,arch_db:real_estate_maintenance.maintenance_request_view_search
+msgid "New"
+msgstr "جديد"
+
+#. module: real_estate_maintenance
+#: model:ir.model.fields,field_description:real_estate_maintenance.field_maintenance_request__activity_date_deadline
+msgid "Next Activity Deadline"
+msgstr ""
+
+#. module: real_estate_maintenance
+#: model:ir.model.fields,field_description:real_estate_maintenance.field_maintenance_request__activity_summary
+msgid "Next Activity Summary"
+msgstr ""
+
+#. module: real_estate_maintenance
+#: model:ir.model.fields,field_description:real_estate_maintenance.field_maintenance_request__activity_type_id
+msgid "Next Activity Type"
+msgstr ""
+
+#. module: real_estate_maintenance
+#: code:addons/real_estate_maintenance/models/maintenance_request.py:0
+#, python-format
+msgid "No picking type found!"
+msgstr "لم إيجاد نوع عملية تسليم مخزني"
+
+#. module: real_estate_maintenance
+#: model:ir.model.fields,field_description:real_estate_maintenance.field_maintenance_request__message_needaction_counter
+msgid "Number of Actions"
+msgstr ""
+
+#. module: real_estate_maintenance
+#: model:ir.model.fields,field_description:real_estate_maintenance.field_maintenance_request__message_has_error_counter
+msgid "Number of errors"
+msgstr ""
+
+#. module: real_estate_maintenance
+#: model:ir.model.fields,help:real_estate_maintenance.field_maintenance_request__message_needaction_counter
+msgid "Number of messages which requires an action"
+msgstr ""
+
+#. module: real_estate_maintenance
+#: model:ir.model.fields,help:real_estate_maintenance.field_maintenance_request__message_has_error_counter
+msgid "Number of messages with delivery error"
+msgstr ""
+
+#. module: real_estate_maintenance
+#: model:ir.model.fields,help:real_estate_maintenance.field_maintenance_request__message_unread_counter
+msgid "Number of unread messages"
+msgstr ""
+
+#. module: real_estate_maintenance
+#: model:ir.model.fields.selection,name:real_estate_maintenance.selection__maintenance_issue_type__invoice_status__on-company
+#: model:ir.model.fields.selection,name:real_estate_maintenance.selection__maintenance_request__invoice_status__on-company
+msgid "On The Company"
+msgstr "على الشركة"
+
+#. module: real_estate_maintenance
+#: model:ir.model.fields.selection,name:real_estate_maintenance.selection__maintenance_issue_type__invoice_status__on-partner
+#: model:ir.model.fields.selection,name:real_estate_maintenance.selection__maintenance_request__invoice_status__on-partner
+msgid "On The Requester"
+msgstr "على المستأجر"
+
+#. module: real_estate_maintenance
+#: code:addons/real_estate_maintenance/controllers/portal.py:0
+#: model_terms:ir.ui.view,arch_db:real_estate_maintenance.maintenance_request_view_search
+#, python-format
+msgid "Ongoing"
+msgstr "تحت التنفيذ"
+
+#. module: real_estate_maintenance
+#: model_terms:ir.ui.view,arch_db:real_estate_maintenance.rental_contract_filter
+msgid "Partner"
+msgstr "العميل"
+
+#. module: real_estate_maintenance
+#: model_terms:ir.ui.view,arch_db:real_estate_maintenance.maintenance_request_view_form
+msgid "Pickings"
+msgstr "سندات البضاعة"
+
+#. module: real_estate_maintenance
+#: code:addons/real_estate_maintenance/models/maintenance_request.py:0
+#, python-format
+msgid "Please define maintenance invoicing product in settings!"
+msgstr "الرجاء تحديد منتج فواتير الصيانة في الاعدادات!"
+
+#. module: real_estate_maintenance
+#: model:ir.model.fields,field_description:real_estate_maintenance.field_maintenance_request__access_url
+msgid "Portal Access URL"
+msgstr ""
+
+#. module: real_estate_maintenance
+#: model:ir.model.fields,field_description:real_estate_maintenance.field_maintenance_request_expense__price_unit
+msgid "Price"
+msgstr "السعر"
+
+#. module: real_estate_maintenance
+#: model:ir.model.fields,field_description:real_estate_maintenance.field_maintenance_request_expense__product_id
+#: model:ir.model.fields,field_description:real_estate_maintenance.field_maintenance_request_product__product_id
+msgid "Product"
+msgstr "المنتج"
+
+#. module: real_estate_maintenance
+#: model_terms:ir.ui.view,arch_db:real_estate_maintenance.portal_my_home
+#: model_terms:ir.ui.view,arch_db:real_estate_maintenance.portal_my_properties
+msgid "Properties"
+msgstr "الوحدات"
+
+#. module: real_estate_maintenance
+#: model:ir.model.fields,field_description:real_estate_maintenance.field_maintenance_request__property_id
+msgid "Property"
+msgstr "العقارات"
+
+#. module: real_estate_maintenance
+#: model:ir.model,name:real_estate_maintenance.model_maintenance_request
+msgid "Property Maintenance Request"
+msgstr "طلب صيانة عقار"
+
+#. module: real_estate_maintenance
+#: model:ir.model,name:real_estate_maintenance.model_maintenance_request_expense
+msgid "Property Maintenance Request Expense"
+msgstr "مصروف طلب صيانة عقار"
+
+#. module: real_estate_maintenance
+#: model:ir.model,name:real_estate_maintenance.model_maintenance_request_product
+msgid "Property Maintenance Request Product"
+msgstr "منتجات طلب صيانة عقار"
+
+#. module: real_estate_maintenance
+#: model:ir.model.fields,field_description:real_estate_maintenance.field_maintenance_request_expense__quantity
+#: model:ir.model.fields,field_description:real_estate_maintenance.field_maintenance_request_product__quantity
+msgid "Quantity"
+msgstr "الكمية"
+
+#. module: real_estate_maintenance
+#: model:ir.model.fields,field_description:real_estate_maintenance.field_maintenance_request__rating_ids
+msgid "Rating"
+msgstr "التقييم"
+
+#. module: real_estate_maintenance
+#: model:ir.model.fields,field_description:real_estate_maintenance.field_maintenance_request__rating_avg
+msgid "Rating Average"
+msgstr ""
+
+#. module: real_estate_maintenance
+#: model:ir.model.fields,field_description:real_estate_maintenance.field_maintenance_request__rating_last_feedback
+msgid "Rating Last Feedback"
+msgstr ""
+
+#. module: real_estate_maintenance
+#: model:ir.model.fields,field_description:real_estate_maintenance.field_maintenance_request__rating_last_image
+msgid "Rating Last Image"
+msgstr ""
+
+#. module: real_estate_maintenance
+#: model:ir.model.fields,field_description:real_estate_maintenance.field_maintenance_request__rating_last_value
+msgid "Rating Last Value"
+msgstr ""
+
+#. module: real_estate_maintenance
+#: model:ir.model.fields,field_description:real_estate_maintenance.field_maintenance_request__rating_count
+msgid "Rating count"
+msgstr ""
+
+#. module: real_estate_maintenance
+#: model:ir.ui.menu,name:real_estate_maintenance.real_estate_maintenance_menu_root
+msgid "Real Estate Maintenance"
+msgstr "صيانة العقارات"
+
+#. module: real_estate_maintenance
+#: model_terms:ir.ui.view,arch_db:real_estate_maintenance.res_config_settings_view_form
+msgid "Real Estate Maintenance Configuration"
+msgstr "تهئية صيانة العقارات"
+
+#. module: real_estate_maintenance
+#: model:ir.model.fields,help:real_estate_maintenance.field_maintenance_request__rating_last_feedback
+msgid "Reason of the rating"
+msgstr "سبب التصنيف"
+
+#. module: real_estate_maintenance
+#: model_terms:ir.ui.view,arch_db:real_estate_maintenance.portal_my_maintenance_requests
+msgid "Ref"
+msgstr "المرجع"
+
+#. module: real_estate_maintenance
+#: code:addons/real_estate_maintenance/controllers/portal.py:0
+#, python-format
+msgid "Reference"
+msgstr "المرجع"
+
+#. module: real_estate_maintenance
+#: model_terms:ir.ui.view,arch_db:real_estate_maintenance.maintenance_request_view_form
+msgid "Refuse"
+msgstr "رفض"
+
+#. module: real_estate_maintenance
+#: model_terms:ir.ui.view,arch_db:real_estate_maintenance.maintenance_request_view_form
+msgid "Refuse Justification"
+msgstr "تبرير الرفض"
+
+#. module: real_estate_maintenance
+#: model:ir.actions.act_window,name:real_estate_maintenance.wiz_maintenance_request_refuse_action
+#: model_terms:ir.ui.view,arch_db:real_estate_maintenance.wiz_maintenance_request_refuse_view_form
+msgid "Refuse Maintenance Request"
+msgstr "رفض طلب الصيانة"
+
+#. module: real_estate_maintenance
+#: model:ir.model.fields,field_description:real_estate_maintenance.field_maintenance_request__refuse_reason
+#: model:ir.model.fields,field_description:real_estate_maintenance.field_wiz_maintenance_request_refuse__refuse_reason
+msgid "Refuse Reason"
+msgstr "سبب الرفض"
+
+#. module: real_estate_maintenance
+#: code:addons/real_estate_maintenance/controllers/portal.py:0
+#: model:ir.model.fields.selection,name:real_estate_maintenance.selection__maintenance_request__state__refused
+#, python-format
+msgid "Refused"
+msgstr "تم الرفض"
+
+#. module: real_estate_maintenance
+#: model:ir.model.fields,field_description:real_estate_maintenance.field_maintenance_request__request_date
+#: model_terms:ir.ui.view,arch_db:real_estate_maintenance.portal_my_maintenance_requests
+msgid "Request Date"
+msgstr "تاريخ الطلب"
+
+#. module: real_estate_maintenance
+#: model_terms:ir.ui.view,arch_db:real_estate_maintenance.portal_my_properties
+msgid "Request Maintenance"
+msgstr "طلب الصيانة"
+
+#. module: real_estate_maintenance
+#: model:ir.model.fields,field_description:real_estate_maintenance.field_maintenance_request__requester_id
+msgid "Requester"
+msgstr "مقدم الطلب"
+
+#. module: real_estate_maintenance
+#: model_terms:ir.ui.view,arch_db:real_estate_maintenance.portal_my_maintenance_requests
+#: model_terms:ir.ui.view,arch_db:real_estate_maintenance.rental_contract_filter
+msgid "Responsible"
+msgstr "المسؤول"
+
+#. module: real_estate_maintenance
+#: model:ir.model.fields,field_description:real_estate_maintenance.field_maintenance_request__activity_user_id
+msgid "Responsible User"
+msgstr "المستخدم المسؤول"
+
+#. module: real_estate_maintenance
+#: model_terms:ir.ui.view,arch_db:real_estate_maintenance.rental_contract_filter
+msgid "Running"
+msgstr "ساري"
+
+#. module: real_estate_maintenance
+#: model:ir.model.fields,field_description:real_estate_maintenance.field_maintenance_request__message_has_sms_error
+msgid "SMS Delivery error"
+msgstr ""
+
+#. module: real_estate_maintenance
+#: code:addons/real_estate_maintenance/models/maintenance_request.py:0
+#: code:addons/real_estate_maintenance/models/maintenance_request.py:0
+#, python-format
+msgid "Schedule Maintenance"
+msgstr "جدولة الصيانة"
+
+#. module: real_estate_maintenance
+#: model_terms:ir.ui.view,arch_db:real_estate_maintenance.maintenance_request_view_search
+msgid "Search"
+msgstr ""
+
+#. module: real_estate_maintenance
+#: model:ir.model.fields,field_description:real_estate_maintenance.field_maintenance_request__access_token
+msgid "Security Token"
+msgstr ""
+
+#. module: real_estate_maintenance
+#: model_terms:ir.ui.view,arch_db:real_estate_maintenance.res_config_settings_view_form
+msgid "Select User To Notify"
+msgstr "تحديد المستخدم المراد إشعاره"
+
+#. module: real_estate_maintenance
+#: model:ir.actions.act_window,name:real_estate_maintenance.action_real_estate_maintenance_config
+#: model:ir.ui.menu,name:real_estate_maintenance.menu_real_estate_maintenance_config
+msgid "Settings"
+msgstr "الإعدادات"
+
+#. module: real_estate_maintenance
+#: model_terms:ir.ui.view,arch_db:real_estate_maintenance.maintenance_request_view_form
+msgid "Start"
+msgstr "بدء"
+
+#. module: real_estate_maintenance
+#: model_terms:ir.ui.view,arch_db:real_estate_maintenance.rental_contract_filter
+msgid "State"
+msgstr "الحالة"
+
+#. module: real_estate_maintenance
+#: code:addons/real_estate_maintenance/controllers/portal.py:0
+#: model:ir.model.fields,field_description:real_estate_maintenance.field_maintenance_request__state
+#: model_terms:ir.ui.view,arch_db:real_estate_maintenance.portal_my_maintenance_requests
+#, python-format
+msgid "Status"
+msgstr "الحالة"
+
+#. module: real_estate_maintenance
+#: model:ir.model.fields,help:real_estate_maintenance.field_maintenance_request__activity_state
+msgid ""
+"Status based on activities\n"
+"Overdue: Due date is already passed\n"
+"Today: Activity date is today\n"
+"Planned: Future activities."
+msgstr ""
+
+#. module: real_estate_maintenance
+#: model:ir.model.fields,field_description:real_estate_maintenance.field_maintenance_request__stock_picking_ids
+msgid "Stock Picking"
+msgstr ""
+
+#. module: real_estate_maintenance
+#: model:ir.model.fields,field_description:real_estate_maintenance.field_maintenance_request__stock_pickings_count
+msgid "Stock Pickings Count"
+msgstr ""
+
+#. module: real_estate_maintenance
+#: model:ir.model.fields,field_description:real_estate_maintenance.field_maintenance_request_expense__tax_ids
+msgid "Taxes"
+msgstr "الضرائب"
+
+#. module: real_estate_maintenance
+#: model_terms:ir.actions.act_window,help:real_estate_maintenance.maintenance_issue_type_act_window
+msgid "There are no maintenance issue types"
+msgstr "ليست هناك أنواع صيانة"
+
+#. module: real_estate_maintenance
+#: model_terms:ir.actions.act_window,help:real_estate_maintenance.maintenance_request_act_window
+msgid "There are no maintenance requests"
+msgstr "ليست هناك طلبات صيانة"
+
+#. module: real_estate_maintenance
+#: model_terms:ir.ui.view,arch_db:real_estate_maintenance.portal_my_maintenance_requests
+msgid "There are no maintenance requests."
+msgstr "ليست لديك طلبات صيانة"
+
+#. module: real_estate_maintenance
+#: model_terms:ir.ui.view,arch_db:real_estate_maintenance.portal_my_properties
+msgid "There are no properties."
+msgstr "ليست لديك عقارات"
+
+#. module: real_estate_maintenance
+#: model_terms:ir.ui.view,arch_db:real_estate_maintenance.rental_contract_filter
+msgid "To Renew"
+msgstr "للتجديد"
+
+#. module: real_estate_maintenance
+#: model_terms:ir.ui.view,arch_db:real_estate_maintenance.rental_contract_filter
+msgid "Top Search"
+msgstr ""
+
+#. module: real_estate_maintenance
+#: model:ir.model,name:real_estate_maintenance.model_stock_picking
+msgid "Transfer"
+msgstr "الشحنة"
+
+#. module: real_estate_maintenance
+#: model:ir.model.fields,help:real_estate_maintenance.field_maintenance_request__activity_exception_decoration
+msgid "Type of the exception activity on record."
+msgstr ""
+
+#. module: real_estate_maintenance
+#: model:ir.model.fields,field_description:real_estate_maintenance.field_maintenance_request__message_unread
+msgid "Unread Messages"
+msgstr ""
+
+#. module: real_estate_maintenance
+#: model:ir.model.fields,field_description:real_estate_maintenance.field_maintenance_request__message_unread_counter
+msgid "Unread Messages Counter"
+msgstr ""
+
+#. module: real_estate_maintenance
+#: model_terms:ir.ui.view,arch_db:real_estate_maintenance.res_config_settings_view_form
+msgid "User To Notify about Maintenance Requests"
+msgstr "المستخدم الذي يتم تنبيهه بطلبات الصيانة"
+
+#. module: real_estate_maintenance
+#: model:ir.model.fields,field_description:real_estate_maintenance.field_maintenance_request_expense__partner_id
+msgid "Vendor"
+msgstr "المورد"
+
+#. module: real_estate_maintenance
+#: model:ir.model.fields,field_description:real_estate_maintenance.field_maintenance_request__visit_date
+#: model_terms:ir.ui.view,arch_db:real_estate_maintenance.portal_my_maintenance_requests
+msgid "Visit Date"
+msgstr "تاريخ الزيارة"
+
+#. module: real_estate_maintenance
+#: model:ir.model.fields,field_description:real_estate_maintenance.field_wiz_maintenance_request_assign__visit_date
+msgid "Visit Planned Date"
+msgstr "تاريخ الزيارة المجدول"
+
+#. module: real_estate_maintenance
+#: model:ir.model.fields,field_description:real_estate_maintenance.field_maintenance_request__website_message_ids
+msgid "Website Messages"
+msgstr ""
+
+#. module: real_estate_maintenance
+#: model:ir.model.fields,help:real_estate_maintenance.field_maintenance_request__website_message_ids
+msgid "Website communication history"
+msgstr ""
+
+#. module: real_estate_maintenance
+#: model:ir.model,name:real_estate_maintenance.model_wiz_maintenance_request_assign
+msgid "wiz.maintenance.request.assign"
+msgstr ""
+
+#. module: real_estate_maintenance
+#: model:ir.model,name:real_estate_maintenance.model_wiz_maintenance_request_refuse
+msgid "wiz.maintenance.request.refuse"
+msgstr ""

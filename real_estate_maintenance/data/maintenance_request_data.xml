@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+
+        <!-- Sequence -->
+        <record id="sequence_maintenance_request" model="ir.sequence">
+            <field name="name">Maintenance Request</field>
+            <field name="code">sequence.maintenance.request</field>
+            <field name="prefix">MR/%(range_year)s/</field>
+            <field eval="1" name="number_next"/>
+            <field eval="1" name="number_increment"/>
+            <field eval="True" name="use_date_range"/>
+            <field eval="False" name="company_id"/>
+            <field name="padding">4</field>
+        </record>
+
+        <!-- Notify Email Template -->
+        <record id="mail_template_data_notification_maintenance_request" model="mail.template">
+            <field name="name">Maintenance Request: Notify</field>
+            <field name="model_id" ref="model_maintenance_request"/>
+            <field name="subject">Maintenance Request (Ref {{ object.name or 'n/a' }})</field>
+            <field name="email_to">{{ object.company_id.maintenance_request_to_notify_user_id.email }}</field>
+            <field name="partner_to">{{ object.company_id.maintenance_request_to_notify_user_id.id }}</field>
+            <field name="body_html" type="html">
+                <div style="margin: 0px; padding: 0px;">
+                    <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                        Hello <t t-out="object.company_id.maintenance_request_to_notify_user_id.name or ''"/>,
+                        <br/>
+                        <br/>
+                        A new Maintenance Request Has Been Submitted. Reference ( <t t-out="object.name"/> ).
+                        <br/>
+                        Customer: <t t-out="object.requester_id.name"/>
+                        <br/>
+                        Property: <t t-out="object.property_id.name"/>
+                        <br/>
+                        <br/>
+                        Thank you,
+                    </p>
+                </div>
+            </field>
+            <field name="lang">{{ object.company_id.maintenance_request_to_notify_user_id.partner_id.lang }}</field>
+            <field name="auto_delete" eval="True"/>
+        </record>
+    </data>
+</odoo>

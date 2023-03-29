@@ -74,14 +74,14 @@
                             <field name="pricelist_id" store="1" force_save="1" invisible="1" />
                             <field name="order_contract_invoice" invisible="1" />
                             <field name="partner_shipping_id" invisible="1" />
-                            <field name="transfer_customer_id"  />
-                            <field name="transfer_date"  />
+                            <field name="transfer_customer_id" required="1"  />
+                            <field name="transfer_date" required="1" />
                             <field name="transfer_context_order" invisible="1"/>
                         </group>
                     </sheet>
                     <footer>
                         <button name="do_transfer" type="object" string="Transfer" class="oe_highlight"/>
-                        <button name="do_transfer_and_print" type="object" string="Transfer and print" class="oe_highlight"/>
+                        <button name="do_transfer_and_print" type="object" string="Transfer and print" invisible="1" class="oe_highlight"/>
                     </footer>
                 </form>
             </field>
@@ -145,6 +145,11 @@
                     <button class="oe_stat_button" attrs="{'invisible':[('new_rental_id', '=', False)]}"
                             name="action_view_transfer" type="object" icon="fa-building-o">
                         New Rental
+                    </button>
+                    <field name="old_rent_ids" invisible="1"/>
+                    <button class="oe_stat_button" attrs="{'invisible':[('old_rent_ids', '=', [])]}"
+                            name="action_view_old_contract" type="object" icon="fa-building-o">
+                        Old Rental
                     </button>
                     <button class="oe_stat_button" attrs="{'invisible':[('transferred_id', '=', False)]}"
                             name="action_view_transferred" type="object" icon="fa-building-o">

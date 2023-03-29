@@ -7,7 +7,7 @@ class RentProduct(models.Model):
     _inherit = 'product.template'
 
     unit_number = fields.Char(string='رقم الوحدة')
-    unit_area = fields.Char(string='مساحة الوحدة')
+    unit_area = fields.Float(string='مساحة الوحدة')
     unit_floor_number = fields.Char(string='رقم الطابق')
     unit_rooms_number = fields.Char(string='عدد الغرف')
     unit_state = fields.Char(compute='_get_state', string='الحالة', default='شاغرة')

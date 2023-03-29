@@ -377,6 +377,10 @@ class RentSaleOrderLine(models.Model):
                                  rec.order_id.order_contract_invoice.filtered(lambda line: line.status == 'uninvoiced')
                                  ) if rec.order_id.order_line else 0.0
 
+    @api.onchange('operating_unit_id')
+    def _onchange_operating_unit_id(self):
+        return {'domain': {'property_number': [('property_address_area.id', '=', self.operating_unit_id.id)]}}
+
     @api.depends('product_uom_qty', 'discount', 'price_unit', 'tax_id')
     def _compute_amount(self):
         """

@@ -34,8 +34,7 @@
                     <field name="contract_admin_sub_fees" optional="hide"/>
                     <field name="contract_service_sub_fees" optional="hide"/>
                 </xpath>
-                <xpath expr="// field [@ name = 'order_line'] / tree / field [@ name = 'product_id']"
-                       position="before">
+                <xpath expr="// field [@ name = 'order_line'] / tree / field [@ name = 'product_id']" position="before">
                     <field name="property_number"/>
                     <field name="pickup_date" invisible="1" force_save="1"/>
                     <field name="return_date" invisible="1" force_save="1"/>
@@ -113,8 +112,7 @@
 <!--                                    <field name="product_id"/>-->
                                 </group>
                                 <notebook>
-                                    <page name="pickup_contract" string="التسليم"
-                                    >
+                                    <page name="pickup_contract" string="التسليم">
                                         <group>
                                             <group string="حالة الأبواب">
                                                 <field name="door_good"/>
@@ -140,6 +138,8 @@
                                                 <field name="elec_good"/>
                                                 <field name="elec_bad"/>
                                                 <field name="elec_comment"/>
+                                                <field name="elec_filter"/>
+                                                <field name="water_filter"/>
                                             </group>
                                             <group string="الملاجظات">
                                                 <field name="notes"/>
@@ -200,6 +200,8 @@
                                             <group string="تصفية عداد الكهرباء">
                                                 <field name="iselec_remain"/>
                                                 <field name="isnotelec_remain"/>
+                                                <field name="relec_filter"/>
+                                                <field name="rwater_filter"/>
                                             </group>
                                             <group string="ملاحظة">
                                                 <field name="rmanage_note"/>

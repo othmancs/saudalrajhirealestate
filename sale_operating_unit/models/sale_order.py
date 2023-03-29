@@ -32,6 +32,9 @@ class SaleOrder(models.Model):
 
     @api.onchange('operating_unit_id')
     def onchange_operating_unit_id(self):
+        if len(self.order_line):
+                raise ValidationError(_("You can't change the operation unit while you have some lines with deffrent operation"))
+        
         if self.team_id and self.team_id.operating_unit_id != \
                 self.operating_unit_id:
             self.team_id = False
@@ -64,5 +67,4 @@ class SaleOrder(models.Model):
 class SaleOrderLine(models.Model):
     _inherit = 'sale.order.line'
 
-    operating_unit_id = fields.Many2one(related='order_id.operating_unit_id',
-                                        string='Operating Unit')
+    operating_unit_id = fields.Many2one(related='order_id.operating_unit_id',string='Operating Unit')

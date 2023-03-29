@@ -56,6 +56,7 @@ class PurchaseRequest(models.Model):
     name = fields.Char(
         string="Request Reference",
         required=True,
+        readonly=True,
         default=lambda self: _("New"),
         tracking=True,
     )

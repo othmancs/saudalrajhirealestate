@@ -50,17 +50,18 @@ class ProductTemplate(models.Model):
                      or any(config[key] for key in ['test_enable', 'test_file', 'init', 'update'])):
             return False
         for partner in self.env.user.partner_id.with_context(lang='en_US'):
-            result = partner._geo_localize(partner.street,
-                                           partner.zip,
-                                           partner.city,
-                                           partner.state_id.name,
-                                           partner.country_id.name)
-            print("resultresultresultresultresult", result)
+            if partner.street and partner.zip and partner.city and partner.street and partner.country_id:
+                result = partner._geo_localize(partner.street,
+                                               partner.zip,
+                                               partner.city,
+                                               partner.state_id.name,
+                                               partner.country_id.name)
+                print("resultresultresultresultresult", result)
 
-            if result:
-                self.write({
-                    'partner_latitude': result[0],
-                    'partner_longitude': result[1],
-                    'date_localization': fields.Date.context_today(partner)
-                })
+                if result:
+                    self.write({
+                        'partner_latitude': result[0],
+                        'partner_longitude': result[1],
+                        'date_localization': fields.Date.context_today(partner)
+                    })
         return True
