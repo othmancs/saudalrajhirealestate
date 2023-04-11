@@ -9,7 +9,7 @@
         'security/security.xml',
         'security/ir.model.access.csv',
         'cron/cron.xml',
-        # 'wizard/transfer_apartment_wizard.xml',
+        'wizard/transfer_apartment_wizard.xml',
         'views/product.xml',
         'views/sales_views.xml',
         'views/rent_property_build.xml',

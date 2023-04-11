@@ -8,7 +8,7 @@
             <form>
                 <group>
                     <group name="group1">
-                        <field name="name" />
+                        <field name="transfer_date" />
                     </group>
 <!--                    <group name="group2">-->
 <!--                        <field name="remaining_amount"/>-->
