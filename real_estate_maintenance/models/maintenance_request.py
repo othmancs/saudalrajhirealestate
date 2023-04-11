@@ -8,6 +8,11 @@ class MaintenanceRequest(models.Model):
     _mail_post_access = 'read'
     _description = 'Property Maintenance Request'
 
+
+    @api.model
+    def _default_operating_unit(self):
+        return self.env.user.default_operating_unit_id
+    
     MAINTENANCE_REQUEST_STATES = [('new', 'New'), ('confirm', 'Confirmed'), ('ongoing', 'In Progress'),
                                   ('closed', 'Closed'), ('refused', 'Refused')]
     INVOICING_STATES = [('on-company', 'On The Company'), ('on-partner', 'On The Requester')]
@@ -36,6 +41,23 @@ class MaintenanceRequest(models.Model):
     state = fields.Selection(MAINTENANCE_REQUEST_STATES, "Status", default="new")
     active = fields.Boolean(default=True)
 
+
+
+    operating_unit_id = fields.Many2one(
+        comodel_name='operating.unit',
+        string='Operating Unit',
+        default=_default_operating_unit,
+        readonly=True,
+        states={'draft': [('readonly', False)],
+                'sent': [('readonly', False)]}
+    )
+
+    property_rent_id = fields.Many2one(
+        comodel_name='rent.property',
+        string='Property',
+        readonly=True,
+    )
+
     def action_view_stock_pickings(self):
         action = self.env['ir.actions.act_window']._for_xml_id('stock.action_picking_tree_all')
         action['domain'] = [('maintenance_request_id', '=', self.id)]
@@ -60,12 +82,30 @@ class MaintenanceRequest(models.Model):
         return res
 
     def _send_notification_email(self):
-        print("//////////////")
-        # notification_template_id = self.env.ref(
-        #     "real_estate_maintenance.mail_template_data_notification_maintenance_request").id
-        # self.with_context(force_send=True).sudo().message_post_with_template(notification_template_id,
-        #                                                                      email_layout_xmlid='mail.mail_notification_light')
+        for rec in self.company_id.maintenance_request_to_notify_user_id:
+            if rec.email:
+                mail_content = " Hello " + rec.name + \
+                            " <br/> " + "<br/> " + \
+                            " A new Maintenance Request Has Been Submitted. Reference (" + rec.name + ")" + \
+                            " <br/> " + \
+                            " Operating Unit: " + self.operating_unit_id.name + \
+                            " <br/> " + \
+                            " Property: " + self.property_rent_id.property_name + \
+                            " <br/> " +\
+                            " Unit: " + self.property_id.name + \
+                            " <br/> " +\
+                            " <br/> " +\
+                            " Thank you,"
+                
 
+                self.env['mail.mail'].create({
+                                                'subject': _('Maintenance Request -  (Ref %s)') % (self.name),
+                                                'author_id': self.env.user.partner_id.id,
+                                                'body_html': mail_content,
+                                                'email_to': rec.email,
+                                            }).send()
+
+        
     def _compute_attachment_ids(self):
         for maintenance_request in self:
             attachment_ids = self.env['ir.attachment'].sudo().search([('res_id', '=', maintenance_request.id),
@@ -155,7 +195,7 @@ class MaintenanceRequest(models.Model):
                             'location_id': picking.location_id.id,
                             'location_dest_id': picking.location_dest_id.id,
                         })
-                        stock_move_obj.create(move_vals)
+                        stock_move_obj.with_context(maintenance=True).create(move_vals)
                     picking.action_confirm()
                     picking.action_assign()
 
@@ -216,7 +256,7 @@ class MaintenanceRequest(models.Model):
             res = {
                 'name': self.env.company.invoice_product_id.name,
                 'product_id': self.env.company.invoice_product_id.id,
-                'analytic_account_id': self.property_id.parent_id.analytic_account_id.id,
+                'analytic_account_id': self.property_id.analytic_account.id,
                 'quantity': 1,
                 'price_unit': 1,
             }

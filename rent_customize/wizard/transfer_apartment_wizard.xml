@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_transfer_apartment_wizard" model="ir.ui.view">
+        <field name="name">transfer.apartment.wizard.form</field>
+        <field name="model">transfer.apartment.wizard</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <group name="group1">
+                        <field name="name" />
+                    </group>
+<!--                    <group name="group2">-->
+<!--                        <field name="remaining_amount"/>-->
+<!--                        <field name="amount" readonly="1" force_save="1"/>-->
+<!--                        <field name="payment_date"/>-->
+<!--                        <field name="loan_id" invisible="1"/>-->
+<!--                    </group>-->
+<!--                    <field  name="installment_ids" attrs="{'invisible': [('partial_reconcile', '=', False)]}" domain="[('paid', '=', False)]">-->
+<!--                        <tree create="0">-->
+<!--                            <field name="name"/>-->
+<!--                            <field name="date"/>-->
+<!--                            <field name="amount"/>-->
+<!--                        </tree>-->
+<!--                    </field>-->
+                </group>
+                <footer>
+                    <button string='Print Report' name="action_print_report" type="object" class="btn-primary"/>
+                    <button string="Cancel" class="btn-default" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="apartment_transfer_wizard_action" model="ir.actions.act_window">
+        <field name="name">Transfer Apartment</field>
+        <field name="res_model">transfer.apartment.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+</odoo>

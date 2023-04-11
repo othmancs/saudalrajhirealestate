@@ -123,8 +123,8 @@
                             states="occupied"/>
                     <button name="action_refund_insurance" type="object" string="Refund Insurance" class="oe_highlight"
                             attrs="{'invisible':['|', ('refund_insurance', '=', True), ('state', '!=', 'termination')]}"/>
-                    <button name="renew_contract" type="object" string="Renew" class="oe_highlight"
-                            attrs="{'invisible':[('state', 'not in', ['occupied', 'termination'])]}"/>
+                    <button name="renew_contract" type="object" string="Renew" class="oe_highlight"/>
+                    <!-- attrs="{'invisible':[('state', 'not in', ['occupied', 'termination'])]}" -->
                     <field name="no_of_invoiced" invisible="1"/>
                     <field name="has_late_lines" invisible="1"/>
                     <field name="rental_status" invisible="1"/>
@@ -228,8 +228,11 @@
                             attrs="{'invisible':['|', ('rental_status','not in',['sent']), ('state', 'not in', ['sale', 'done'])]}"/>
                     <button name="action_transfer" type="object" class="btn-primary" string="Transfer"
                             attrs="{'invisible':[ ('transferred', '=', True)]}"/>
-                    <button name="print_transfer" type="object" class="btn-primary" string="Print Transfer"
+<!--                    <button name="%(rent_customize.apartment_transfer_wizard_action)d" type="action" class="btn-primary" string="Print Transfer"-->
+<!--                            attrs="{'invisible':[ ('transferred', '!=', True)]}"/>-->
+                     <button name="print_transfer" type="object" class="btn-primary" string="Print Transfer"
                             attrs="{'invisible':[ ('transferred', '!=', True)]}"/>
+
 
                     <field name="transferred" invisible="1"/>
                     <field name="transfer_customer_id" invisible="1"/>
@@ -240,6 +243,7 @@
                 </xpath>
                 <xpath expr="//field[@name='payment_term_id']" position="after">
                     <field name="annual_increase" />
+                    <field name="annual_increase_type" attrs="{'invisible':[('annual_increase', '!=', True)], 'required':[('annual_increase', '=', True)]}"/>
                     <field name="annual_amount" attrs="{'invisible':[ ('annual_increase', '!=', True)]}"/>
                 </xpath>
                 <xpath expr="//notebook" position="inside">

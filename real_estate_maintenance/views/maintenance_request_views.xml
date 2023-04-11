@@ -10,97 +10,118 @@
                 <form string="Maintenance Request">
                     <header>
                         <button type="object" name="action_confirm"
-                                groups="real_estate_maintenance.group_maintenance_manager"
-                                string="Confirm" class="oe_highlight" states="new"/>
-                        <button type="object" name="action_ongoing" string="Start" class="oe_highlight"
-                                states="confirm"/>
-                        <button type="object" name="action_close" string="Close" class="oe_highlight" states="ongoing"/>
+                            groups="real_estate_maintenance.group_maintenance_manager"
+                            string="Confirm" class="oe_highlight" states="new" />
+                        <button type="object" name="action_ongoing" string="Start"
+                            class="oe_highlight"
+                            states="confirm" />
+                        <button type="object" name="action_close" string="Close"
+                            class="oe_highlight" states="ongoing" />
                         <button type="object" name="action_refuse"
-                                groups="real_estate_maintenance.group_maintenance_manager"
-                                string="Refuse" class="oe_highlight" states="new"/>
-                        <field name="customer_invoice_id" invisible="1"/>
+                            groups="real_estate_maintenance.group_maintenance_manager"
+                            string="Refuse" class="oe_highlight" states="new" />
+                        <field name="customer_invoice_id" invisible="1" />
                         <button type="object" name="action_create_invoice" string="Create Invoice"
-                                class="oe_highlight"
-                                attrs="{'invisible': ['|', '|', ('invoice_status', '=', 'on-company'), ('customer_invoice_id', '!=', False), ('state', '!=', 'closed')]}"/>
-                        <field name="state" widget="statusbar"/>
+                            class="oe_highlight"
+                            attrs="{'invisible': ['|', '|', ('invoice_status', '=', 'on-company'), ('customer_invoice_id', '!=', False), ('state', '!=', 'closed')]}" />
+                        <field name="state" widget="statusbar" />
                     </header>
                     <sheet>
                         <div name="button_box" class="oe_button_box">
-                            <field name="stock_picking_ids" invisible="1"/>
+                            <field name="stock_picking_ids" invisible="1" />
                             <button class="oe_stat_button"
-                                    type="object" name="action_view_stock_pickings"
-                                    icon="fa-truck">
-                                <field string="Pickings" name="stock_pickings_count" widget="statinfo"/>
+                                type="object" name="action_view_stock_pickings"
+                                icon="fa-truck">
+                                <field string="Pickings" name="stock_pickings_count"
+                                    widget="statinfo" />
                             </button>
-                            <field name="account_move_ids" invisible="1"/>
+                            <field name="account_move_ids" invisible="1" />
                             <button class="oe_stat_button"
-                                    type="object" name="action_view_invoices"
-                                    icon="fa-money">
-                                <field string="Invoices &amp; Bills" name="account_moves_count" widget="statinfo"/>
+                                type="object" name="action_view_invoices"
+                                icon="fa-money">
+                                <field string="Invoices &amp; Bills" name="account_moves_count"
+                                    widget="statinfo" />
                             </button>
                         </div>
                         <div class="oe_title">
                             <h1>
-                                <field name="name" readonly="1"/>
+                                <field name="name" readonly="1" />
                             </h1>
                         </div>
-                        <group col="4">
-                            <field name="property_id" required="1"
-                                   attrs="{'readonly': [('state', 'in', ('closed', 'refused'))]}"/>
-                            <field name="requester_id" required="1"
-                                   attrs="{'readonly': [('state', 'in', ('closed', 'refused'))]}"/>
-                            <field name="request_date" required="1"
-                                   attrs="{'readonly': [('state', 'in', ('closed', 'refused'))]}"/>
-                            <field name="visit_date" attrs="{'readonly': [('state', 'in', ('closed', 'refused'))]}"/>
-                            <field name="issue_type" attrs="{'readonly': [('state', 'in', ('closed', 'refused'))]}"/>
-                            <field name="invoice_status"
-                                   attrs="{'readonly': [('state', 'in', ('closed', 'refused'))]}"/>
-                            <field name="maintenance_responsible_id"
-                                   attrs="{'readonly': [('state', 'in', ('closed', 'refused'))]}"/>
+                        <group>
+                            <group>
+                                <field name="request_date" required="1"
+                                    attrs="{'readonly': [('state', 'in', ('closed', 'refused'))]}" />
+                                <field name="visit_date"
+                                    attrs="{'readonly': [('state', 'in', ('closed', 'refused'))]}" />
+                            </group>
+                            <group>
+                                <field name="operating_unit_id" required="1"
+                                    attrs="{'readonly': [('state', 'in', ('closed', 'refused'))]}" />
+                                <field name="property_rent_id"
+                                    domain="[('property_address_area', '=', operating_unit_id)]"
+                                    required="1"
+                                    attrs="{'readonly': [('state', 'in', ('closed', 'refused'))]}" />
+                                <field name="property_id"
+                                    domain="[('property_id', '=', property_rent_id)]" required="1"
+                                    attrs="{'readonly': [('state', 'in', ('closed', 'refused'))]}" />
+                            </group>
+                        </group>
+                        <group>
+                            <group>
+                                <field name="requester_id"
+                                    attrs="{'readonly': [('state', 'in', ('closed', 'refused'))]}" />
+                                <field name="issue_type"
+                                    attrs="{'readonly': [('state', 'in', ('closed', 'refused'))]}" />
+                                <field name="invoice_status"
+                                    attrs="{'readonly': [('state', 'in', ('closed', 'refused'))]}" />
+                                <field name="maintenance_responsible_id"
+                                    attrs="{'readonly': [('state', 'in', ('closed', 'refused'))]}" />
+                            </group>
                         </group>
                         <notebook>
                             <page string="Consumed Products"
-                                  attrs="{'invisible': [('state', 'in', ('new'))]}"
-                                  name="consumed_products">
+                                attrs="{'invisible': [('state', 'in', ('new'))]}"
+                                name="consumed_products">
                                 <field name="maintenance_request_product_line_ids"
-                                       attrs="{'readonly': [('state', 'in', ('closed', 'refused'))]}">
+                                    attrs="{'readonly': [('state', 'in', ('closed', 'refused'))]}">
                                     <tree editable="bottom">
-                                        <field name="product_id"/>
-                                        <field name="location_id"/>
-                                        <field name="quantity"/>
+                                        <field name="product_id" />
+                                        <field name="location_id" />
+                                        <field name="quantity" />
                                     </tree>
                                 </field>
                             </page>
                             <page string="Expenses"
-                                  attrs="{'invisible': [('state', 'in', ('new'))]}"
-                                  name="expenses">
+                                attrs="{'invisible': [('state', 'in', ('new'))]}"
+                                name="expenses">
                                 <field name="maintenance_request_expense_line_ids"
-                                       attrs="{'readonly': [('state', 'in', ('closed', 'refused'))]}">
+                                    attrs="{'readonly': [('state', 'in', ('closed', 'refused'))]}">
                                     <tree editable="bottom">
-                                        <field name="partner_id"/>
-                                        <field name="product_id"/>
-                                        <field name="quantity"/>
-                                        <field name="price_unit"/>
-                                        <field name="tax_ids" widget="many2many_tags"/>
+                                        <field name="partner_id" />
+                                        <field name="product_id" />
+                                        <field name="quantity" />
+                                        <field name="price_unit" />
+                                        <field name="tax_ids" widget="many2many_tags" />
                                     </tree>
                                 </field>
                             </page>
                             <page string="Issue Description" name="issue_description">
                                 <field name="issue_description"
-                                       widget="text"
-                                       readonly="1"/>
+                                    widget="text"
+                                    readonly="1" />
                             </page>
                             <page string="Refuse Justification" name="refuse_justification">
                                 <field name="refuse_reason"
-                                       widget="text"
-                                       readonly="1"/>
+                                    widget="text"
+                                    readonly="1" />
                             </page>
                         </notebook>
                     </sheet>
                     <div class="oe_chatter">
-                        <field name="message_follower_ids" widget="mail_followers"/>
-                        <field name="activity_ids" widget="mail_activity"/>
-                        <field name="message_ids" widget="mail_thread"/>
+                        <field name="message_follower_ids" widget="mail_followers" />
+                        <field name="activity_ids" widget="mail_activity" />
+                        <field name="message_ids" widget="mail_thread" />
                     </div>
                 </form>
             </field>
@@ -114,13 +135,17 @@
                 <search string="Search">
                     <group>
                         <field name="name"
-                               filter_domain="['|', ('name', 'ilike', self), '|', ('property_id', 'ilike', self), ('requester_id', 'ilike', self)]"
-                               string="Maintenance Request"/>
-                        <filter string="Confirmed" name="state_confirmed" domain="[('state', '=', 'confirm')]"/>
-                        <filter string="New" name="state_new" domain="[('state', '=', 'new')]"/>
-                        <filter string="Archived" name="state_archived" domain="[('active', '=', False)]"/>
-                        <filter string="Ongoing" name="state_ongoing" domain="[('state', '=', 'ongoing')]"/>
-                        <filter string="Closed" name="state_closed" domain="[('state', '=', 'closed')]"/>
+                            filter_domain="['|', ('name', 'ilike', self), '|', ('property_id', 'ilike', self), ('requester_id', 'ilike', self)]"
+                            string="Maintenance Request" />
+                        <filter string="Confirmed" name="state_confirmed"
+                            domain="[('state', '=', 'confirm')]" />
+                        <filter string="New" name="state_new" domain="[('state', '=', 'new')]" />
+                        <filter string="Archived" name="state_archived"
+                            domain="[('active', '=', False)]" />
+                        <filter string="Ongoing" name="state_ongoing"
+                            domain="[('state', '=', 'ongoing')]" />
+                        <filter string="Closed" name="state_closed"
+                            domain="[('state', '=', 'closed')]" />
 
                     </group>
                 </search>
@@ -133,15 +158,15 @@
             <field name="model">maintenance.request</field>
             <field name="arch" type="xml">
                 <tree string="Maintenance Request">
-                    <field name="name"/>
-                    <field name="property_id"/>
-                    <field name="requester_id"/>
-                    <field name="request_date"/>
-                    <field name="visit_date"/>
-                    <field name="issue_type"/>
-                    <field name="invoice_status"/>
-                    <field name="maintenance_responsible_id"/>
-                    <field name="state"/>
+                    <field name="name" />
+                    <field name="property_id" />
+                    <field name="requester_id" />
+                    <field name="request_date" />
+                    <field name="visit_date" />
+                    <field name="issue_type" />
+                    <field name="invoice_status" />
+                    <field name="maintenance_responsible_id" />
+                    <field name="state" />
                 </tree>
             </field>
         </record>
@@ -181,7 +206,7 @@
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">maintenance.request</field>
             <field name="view_mode">tree,form</field>
-            <field name="context">{'create': False}</field>
+            <field name="context">{}</field>
             <field name="help" type="html">
                 <p class="oe_view_nocontent_create">
                     There are no maintenance requests
@@ -191,14 +216,14 @@
 
         <!-- Main Menu Item -->
         <menuitem id="real_estate_maintenance_menu_root"
-                  action="maintenance_request_act_window"
-                  web_icon="real_estate_maintenance,static/description/icon.png"
-                  name="Real Estate Maintenance" sequence="70"/>
+            action="maintenance_request_act_window"
+            web_icon="real_estate_maintenance,static/description/icon.png"
+            name="Real Estate Maintenance" sequence="70" />
 
         <!-- Menu Item -->
         <menuitem id="real_estate_maintenance_menu_request"
-                  parent="real_estate_maintenance_menu_root"
-                  action="maintenance_request_act_window"
-                  name="Maintenance Requests" sequence="70"/>
+            parent="real_estate_maintenance_menu_root"
+            action="maintenance_request_act_window"
+            name="Maintenance Requests" sequence="70" />
     </data>
 </odoo>

@@ -89,25 +89,26 @@ class StockMove(models.Model):
     def _check_company_plustech_purchase_request(self):
         if not self.ids:
             return
-        self.env.cr.execute(
-            """
-            SELECT 1
-            FROM plustech_purchase_request_allocation pra
-            INNER JOIN stock_move sm
-               ON sm.id=pra.stock_move_id
-            WHERE pra.company_id != sm.company_id
-                AND sm.id IN %s
-            LIMIT 1
-        """,
-            (tuple(self.ids),),
-        )
-        if self.env.cr.fetchone():
-            raise ValidationError(
-                _(
-                    "The company of the purchase request must match with "
-                    "that of the location."
-                )
+        if 'maintenance' not in self._context:
+            self.env.cr.execute(
+                """
+                SELECT 1
+                FROM plustech_purchase_request_allocation pra
+                INNER JOIN stock_move sm
+                ON sm.id=pra.stock_move_id
+                WHERE pra.company_id != sm.company_id
+                    AND sm.id IN %s
+                LIMIT 1
+            """,
+                (tuple(self.ids),),
             )
+            if self.env.cr.fetchone():
+                raise ValidationError(
+                    _(
+                        "The company of the purchase request must match with "
+                        "that of the location."
+                    )
+                )
 
     def copy_data(self, default=None):
         if not default:

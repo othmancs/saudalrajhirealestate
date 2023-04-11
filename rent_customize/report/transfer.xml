@@ -17,7 +17,7 @@
                         <center>تنازل عن عقد إيجار</center>
                         <br/>
                         <para>
-                            انه في يوم ................... وتاريخ    / / 14هـ الموافق
+                            انه في يوم <t t-esc="doc.dayofweek[str(doc.fromdate.date().weekday())]"/> وتاريخ <t t-esc="doc.get_date_hijri(doc.fromdate.date())"/>هـ الموافق
                             <b t-esc="str(doc.fromdate)[:10]"/>
                             م أنا (المتنازل)/
                             <b t-esc="doc.partner_id.name"/>
@@ -35,7 +35,7 @@
                                t-esc="doc.order_line[0].property_number.property_address_build.name"/>
 
                             بموجب عقد الإيجار رقم
-                            <b t-esc="doc.company_id"/>
+                            <b t-esc="doc.contract_number"/>
 
                             وتاريخ
                             <b t-esc="doc.get_date_hijri(doc.date_order)"/>
@@ -55,7 +55,7 @@
                             والبالغ قدره ....................................... ريال، وكذلك تنازلت عن قيمة
                             التأمين البالغ قدرها
                             <b t-esc="doc.apartment_insurance"/>
-                            والمدفوعة حسب (الفاتورة الالكترونية/الحوالة) رقم ............. وتاريخ/ / 14هـ
+                            والمدفوعة حسب (الفاتورة الالكترونية/الحوالة) رقم <t t-esc="doc.invoice_number"/> وتاريخ/ / 14هـ
                             الموافق.. /.. /... م إلى السيد /
                             <b t-esc="doc.transfer_customer_id.name"/>
                             وجنسيته

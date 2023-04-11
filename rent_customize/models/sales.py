@@ -62,18 +62,22 @@ class SaleOrder(models.Model):
     transfer_date = fields.Date('Transfer Date', copy=False)
     transferred = fields.Boolean('Transferred ?', copy=False)
     annual_increase = fields.Boolean('Annual Increase ?')
+    annual_increase_type = fields.Selection([
+        ('percentage', 'Percentage'),
+        ('fixed', 'Fixed amount')
+    ], default='percentage', string='Annual INcrease Type')
     annual_amount = fields.Float("Annual Amount")
 
-
     def get_date_hijri(self, date):
-        day = date.day
-        month = date.month
-        year = date.year
-        hijri_date = Gregorian(year, month, day).to_hijri()
-        war_start = '2011-01-03'
-        war = datetime.strptime(war_start, '%Y-%m-%d')
-        war1 = convert.Gregorian.fromdate(war).to_hijri()
-        return hijri_date
+        if date:
+            day = date.day
+            month = date.month
+            year = date.year
+            hijri_date = Gregorian(year, month, day).to_hijri()
+            war_start = '2011-01-03'
+            war = datetime.strptime(war_start, '%Y-%m-%d')
+            war1 = convert.Gregorian.fromdate(war).to_hijri()
+            return hijri_date
 
     def renew_contract(self):
         new_contract_id = self.copy()
@@ -90,7 +94,18 @@ class SaleOrder(models.Model):
         new_contract_id.is_rental_order = self.is_rental_order
         new_contract_id.partner_id = self.partner_id
         lines = []
+
+        
         for line in self.order_line:
+
+            annual_increase_amount = 0.0
+            if self.annual_increase:
+                if self.annual_increase_type == 'percentage':
+                    annual_increase_amount = line.price_unit * self.annual_amount / 100
+                else:
+                    annual_increase_amount = self.annual_amount
+
+
             line = self.env['sale.order.line'].create({
                 'order_id': new_contract_id.id,
                 'property_number': line.property_number.id,
@@ -98,7 +113,7 @@ class SaleOrder(models.Model):
                 'name': line.name,
                 'product_uom_qty': line.product_uom_qty,
                 'product_uom': line.product_uom.id,
-                'price_unit': line.price_unit if self.annual_increase != True else ((line.price_unit * self.annual_amount/100) + line.price_unit),
+                'price_unit': line.price_unit + annual_increase_amount,
                 'tax_id': [(6,0, line.tax_id.ids)],
                 'insurance_value': line.insurance_value,
                 'is_rental': line.is_rental,
@@ -138,6 +153,7 @@ class SaleOrder(models.Model):
     @api.onchange('damage_amount', 'apartment_insurance')
     def change_damage_amount(self):
         self.refund_amount = self.apartment_insurance - self.damage_amount
+    
     def action_termination(self):
         self.write({
             "rental_status": "returned",
@@ -335,6 +351,7 @@ class SaleOrder(models.Model):
 
         }
         return invoice_vals
+    
     def refund(self):
         invoice_lines = []
         invoice_lines.append([0, 0, self._prepare_refund_invoice_line()])
@@ -412,6 +429,17 @@ class SaleOrder(models.Model):
                 order.invoice_status = 'to invoice'
             elif all(invoice_status == 'invoiced' for invoice_status in invoice_lines):
                 order.invoice_status = 'invoiced'
+
+    dayofweek = {
+        '0': _('الاثنين'),
+        '1': _('الثلاثاء'),
+        '2': _('الأربعاء'),
+        '3': _('الخميس'),
+        '4': _('الجمعة'),
+        '5': _('السبت'),
+        '6': _('ألأخد')
+        }
+
 
 class RentSaleInvoices(models.Model):
     _inherit = 'rent.sale.invoices'

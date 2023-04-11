@@ -1,0 +1,440 @@
+<odoo>
+    <record id="action_pickup_form" model="ir.actions.report">
+        <field name="name">نموذج الاستلام</field>
+        <field name="model">sale.order</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">renting.report_pickup_form</field>
+        <field name="report_file">renting.report_pickup_form</field>
+        <field name="print_report_name">'نموذج استلام - %s' % (object.name)</field>
+        <field name="binding_model_id" ref="model_sale_order"/>
+    </record>
+
+    <template id="report_pickup_form">
+        <t t-call="web.html_container">
+            <!--        <t t-call="renting.renting_layout_standard">-->
+            <t t-foreach="docs" t-as="o">
+                <!--                <t t-set="line" t-value="o.order_line"/>-->
+                <t t-foreach="o.order_property_state" t-as="line">
+                    <t t-if="o and 'company_id' in o">
+                        <t t-set="company" t-value="o.company_id"></t>
+                    </t>
+                    <t t-if="not o or not 'company_id' in o">
+                        <t t-set="company" t-value="res_company"></t>
+                    </t>
+                    <t t-if="line.sale_order_line_id">
+                        <t t-call="web.external_layout_standard">
+
+                            <div class="page" dir="rtl">
+                                <h1 class="text-center">نموذج أستلام عقار</h1>
+                                <br/>
+                                <br/>
+                                <div class="row" style="width: 80%;">
+                                    <table style="width: 80%;">
+                                        <tr>
+                                            <th scope="row" class="text-center">اسم العقار :</th>
+                                            <td>
+                                                <span t-field="line.sale_order_line_id.product_id.name"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row" class="text-center">اسم المستأجر :</th>
+                                            <td>
+                                                <span t-field="o.partner_id.name"/>
+                                            </td>
+                                            <th scope="row" class="text-center">رقم الوحدة:</th>
+                                            <td style="padding-right: 20px;">
+                                                <span t-field="line.sale_order_line_id.property_number.property_number"/>
+                                            </td>
+                                        </tr>
+                                    </table>
+
+                                </div>
+                                <br/>
+                                <br/>
+                                <table class="table table-bordered">
+                                    <tr>
+                                        <th scope="row" class="text-center">حالة الأبواب</th>
+                                        <td>
+                                            <p>
+                                                <span style="margin-left:1.5em;">جيد</span>
+                                                <t t-if="line.rdoor_good">
+                                                    <input type="checkbox" id="oe_import_tracking" checked="checked"/>
+                                                </t>
+                                                <t t-if="not line.rdoor_good">
+                                                    <input type="checkbox" id="oe_import_tracking"/>
+                                                </t>
+                                            </p>
+                                        </td>
+                                        <td>
+                                            <span style="margin-left:1.5em;">سئ</span>
+
+                                            <t t-if="line.rdoor_bad">
+                                                <input type="checkbox" id="oe_import_tracking" checked="checked"/>
+                                            </t>
+                                            <t t-if="not line.rdoor_bad">
+                                                <input type="checkbox" id="oe_import_tracking"/>
+                                            </t>
+                                        </td>
+                                        <td>
+                                            <p style="margin-left:1.5em;">حدد :
+                                                <span t-field="line.rdoor_comment"/>
+                                            </p>
+                                        </td>
+                                        <td>الملاحظات</td>
+
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" class="text-center">الحائط</th>
+                                        <td>
+                                            <p>
+                                                <span style="margin-left:1.5em;">جيد</span>
+                                                <t t-if="line.rwall_good">
+                                                    <input type="checkbox" id="oe_import_tracking" checked="checked"/>
+                                                </t>
+                                                <t t-if="not line.rwall_good">
+                                                    <input type="checkbox" id="oe_import_tracking"/>
+                                                </t>
+                                            </p>
+                                        </td>
+                                        <td>
+                                            <span style="margin-left:1.5em;">سئ</span>
+                                            <t t-if="line.rwall_bad">
+                                                <input type="checkbox" id="oe_import_tracking" checked="checked"/>
+                                            </t>
+                                            <t t-if="not line.rwall_bad">
+                                                <input type="checkbox" id="oe_import_tracking"/>
+                                            </t>
+                                        </td>
+                                        <td>
+                                            <p style="margin-left:1.5em;">حدد :
+                                                <span t-field="line.rwall_comment"/>
+                                            </p>
+                                        </td>
+                                        <td>الملاحظات</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" class="text-center">النوافذ</th>
+                                        <td>
+                                            <span style="margin-left:1.5em;">جيد</span>
+                                            <t t-if="line.rwindow_good">
+                                                <input type="checkbox" id="oe_import_tracking" checked="checked"/>
+                                            </t>
+                                            <t t-if="not line.rwindow_good">
+                                                <input type="checkbox" id="oe_import_tracking"/>
+                                            </t>
+                                        </td>
+                                        <td>
+                                            <span style="margin-left:1.5em;">سئ</span>
+                                            <t t-if="line.rwindow_bad">
+                                                <input type="checkbox" id="oe_import_tracking" checked="checked"/>
+                                            </t>
+                                            <t t-if="not line.rwindow_bad">
+                                                <input type="checkbox" id="oe_import_tracking"/>
+                                            </t>
+                                        </td>
+                                        <td>
+                                            <p style="margin-left:1.5em;">حدد :
+                                                <span t-field="line.rwindow_comment"/>
+                                            </p>
+                                        </td>
+                                        <td>الملاحظات</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" class="text-center">السباكة</th>
+                                        <td>
+                                            <span style="margin-left:1.5em;">جيد</span>
+                                            <t t-if="line.rwater_good">
+                                                <input type="checkbox" id="oe_import_tracking" checked="checked"/>
+                                            </t>
+                                            <t t-if="not line.rwater_good">
+                                                <input type="checkbox" id="oe_import_tracking"/>
+                                            </t>
+                                        </td>
+                                        <td>
+                                            <span style="margin-left:1.5em;">سئ</span>
+                                            <t t-if="line.rwater_bad">
+                                                <input type="checkbox" id="oe_import_tracking" checked="checked"/>
+                                            </t>
+                                            <t t-if="not line.rwater_bad">
+                                                <input type="checkbox" id="oe_import_tracking"/>
+                                            </t>
+                                        </td>
+                                        <td>
+                                            <p style="margin-left:1.5em;">حدد :
+                                                <span t-field="line.rwater_comment"/>
+                                            </p>
+                                        </td>
+                                        <td>الملاحظات</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" class="text-center">الكهرباء</th>
+                                        <td>
+                                            <span style="margin-left:1.5em;">جيد</span>
+                                            <t t-if="line.relec_good">
+                                                <input type="checkbox" id="oe_import_tracking" checked="checked"/>
+                                            </t>
+                                            <t t-if="not line.relec_good">
+                                                <input type="checkbox" id="oe_import_tracking"/>
+                                            </t>
+                                        </td>
+                                        <td>
+                                            <span style="margin-left:1.5em;">سئ</span>
+                                            <t t-if="line.relec_bad">
+                                                <input type="checkbox" id="oe_import_tracking" checked="checked"/>
+                                            </t>
+                                            <t t-if="not line.relec_bad">
+                                                <input type="checkbox" id="oe_import_tracking"/>
+                                            </t>
+                                        </td>
+                                        <td>
+                                            <p style="margin-left:1.5em;">حدد :
+                                                <span t-field="line.relec_comment"/>
+                                            </p>
+                                        </td>
+                                        <td>الملاحظات</td>
+                                    </tr>
+                                </table>
+                                <br/>
+
+                                <table class="table border-none">
+                                    <tr>
+                                        <th scope="row" class="text-right">موافقة العميل بالتسليم</th>
+                                        <td class="text-right">
+                                            <p>
+                                                <span style="margin-left:1.5em;">نعم</span>
+                                                <input type="checkbox" id="oe_import_tracking"/>
+                                            </p>
+                                        </td>
+                                        <td class="text-right">
+                                            <span style="margin-left:1.5em;">لا</span>
+                                            <input type="checkbox" id="oe_import_tracking"/>
+                                        </td>
+
+                                        <td class="text-center">التوقيع: ...............</td>
+
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" class="text-right">يوجد مستحقات للمؤجر</th>
+                                        <td class="text-right">
+                                            <p>
+                                                <span style="margin-left:1.5em;">نعم</span>
+                                                <t t-if="line.is_cost">
+                                                    <input type="checkbox" id="oe_import_tracking" checked="checked"/>
+                                                </t>
+                                                <t t-if="not line.is_cost">
+                                                    <input type="checkbox" id="oe_import_tracking"/>
+                                                </t>
+                                            </p>
+                                        </td>
+                                        <td class="text-right">
+                                            <span style="margin-left:1.5em;">لا</span>
+                                            <t t-if="line.is_no_cost">
+                                                <input type="checkbox" id="oe_import_tracking" checked="checked"/>
+                                            </t>
+                                            <t t-if="not line.is_no_cost">
+                                                <input type="checkbox" id="oe_import_tracking"/>
+                                            </t>
+                                        </td>
+
+                                        <td class="text-center">التوقيع: ...............</td>
+
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" class="text-right">المبلغ المتبقي للمستأجر</th>
+                                        <td class="text-right">
+                                            <p>
+                                                <span style="margin-left:1.5em;">نعم</span>
+                                                <t t-if="line.is_amount_rem">
+                                                    <input type="checkbox" id="oe_import_tracking" checked="checked"/>
+                                                </t>
+                                                <t t-if="not line.is_amount_rem">
+                                                    <input type="checkbox" id="oe_import_tracking"/>
+                                                </t>
+                                            </p>
+                                        </td>
+                                        <td class="text-right">
+                                            <span style="margin-left:1.5em;">لا</span>
+                                            <t t-if="line.is_no_amount_rem">
+                                                <input type="checkbox" id="oe_import_tracking" checked="checked"/>
+                                            </t>
+                                            <t t-if="not line.is_no_amount_rem">
+                                                <input type="checkbox" id="oe_import_tracking"/>
+                                            </t>
+                                        </td>
+
+                                        <td class="text-center">التوقيع: ...............</td>
+
+                                    </tr>
+                                </table>
+                                <br/>
+                                <br/>
+                                <table class="table border-none">
+                                    <tr>
+                                        <th scope="row" class="text-right">تصفية عداد الكهرباء</th>
+                                        <td class="text-right">
+                                            <p>
+                                                <span style="margin-left:1.5em;">نعم</span>
+                                                <t t-if="line.iselec_remain">
+                                                    <input type="checkbox" id="oe_import_tracking" checked="checked"/>
+                                                </t>
+                                                <t t-if="not line.iselec_remain">
+                                                    <input type="checkbox" id="oe_import_tracking"/>
+                                                </t>
+                                            </p>
+                                        </td>
+                                        <td class="text-right">
+                                            <span style="margin-left:1.5em;">لا</span>
+                                            <t t-if="line.isnotelec_remain">
+                                                <input type="checkbox" id="oe_import_tracking" checked="checked"/>
+                                            </t>
+                                            <t t-if="not line.isnotelec_remain">
+                                                <input type="checkbox" id="oe_import_tracking"/>
+                                            </t>
+                                        </td>
+
+                                        <td class="text-center">التوقيع: ...............</td>
+
+                                    </tr>
+                                    <tr>
+                                        <td class="text-right">رقم عداد الكهرباء (..........)</td>
+                                        <td class="text-right">المبلغ المستحق:
+                                            <span t-field="line.relec_filter"/>
+                                        </td>
+                                        <td class="text-right">
+                                            <p>
+                                                <span style="margin-left:1.5em;">يوجد</span>
+                                                <t t-if="line.iselec_remain">
+                                                    <input type="checkbox" id="oe_import_tracking" checked="checked"/>
+                                                </t>
+                                                <t t-if="not line.iselec_remain">
+                                                    <input type="checkbox" id="oe_import_tracking"/>
+                                                </t>
+                                            </p>
+                                        </td>
+                                        <td class="text-right">
+                                            <span style="margin-left:1.5em;">لا يوجد</span>
+                                            <t t-if="line.isnotelec_remain">
+                                                <input type="checkbox" id="oe_import_tracking" checked="checked"/>
+                                            </t>
+                                            <t t-if="not line.isnotelec_remain">
+                                                <input type="checkbox" id="oe_import_tracking"/>
+                                            </t>
+                                        </td>
+                                        <td class="text-right">
+                                            <span style="margin-left:1.5em;">تم السداد</span>
+                                            <t t-if="line.isnotelec_remain">
+                                                <input type="checkbox" id="oe_import_tracking" checked="checked"/>
+                                            </t>
+                                            <t t-if="not line.isnotelec_remain">
+                                                <input type="checkbox" id="oe_import_tracking"/>
+                                            </t>
+                                        </td>
+                                        <td class="text-right">
+                                            <span style="margin-left:1.5em;">لم يتم السداد</span>
+                                            <t t-if="line.isnotelec_remain">
+                                                <input type="checkbox" id="oe_import_tracking" checked="checked"/>
+                                            </t>
+                                            <t t-if="not line.isnotelec_remain">
+                                                <input type="checkbox" id="oe_import_tracking"/>
+                                            </t>
+                                        </td>
+
+                                    </tr>
+                                    <tr>
+                                        <td class="text-right">رقم عداد المياه (..........)</td>
+                                        <td class="text-right">المبلغ المستحق:
+                                            <span t-field="line.relec_filter"/>
+                                        </td>
+                                        <td class="text-right">
+                                            <p>
+                                                <span style="margin-left:1.5em;">يوجد</span>
+                                                <t t-if="line.iselec_remain">
+                                                    <input type="checkbox" id="oe_import_tracking" checked="checked"/>
+                                                </t>
+                                                <t t-if="not line.iselec_remain">
+                                                    <input type="checkbox" id="oe_import_tracking"/>
+                                                </t>
+                                            </p>
+                                        </td>
+                                        <td class="text-right">
+                                            <span style="margin-left:1.5em;">لا يوجد</span>
+                                            <t t-if="line.isnotelec_remain">
+                                                <input type="checkbox" id="oe_import_tracking" checked="checked"/>
+                                            </t>
+                                            <t t-if="not line.isnotelec_remain">
+                                                <input type="checkbox" id="oe_import_tracking"/>
+                                            </t>
+                                        </td>
+                                        <td class="text-right">
+                                            <span style="margin-left:1.5em;">تم السداد</span>
+                                            <t t-if="line.isnotelec_remain">
+                                                <input type="checkbox" id="oe_import_tracking" checked="checked"/>
+                                            </t>
+                                            <t t-if="not line.isnotelec_remain">
+                                                <input type="checkbox" id="oe_import_tracking"/>
+                                            </t>
+                                        </td>
+                                        <td class="text-right">
+                                            <span style="margin-left:1.5em;">لم يتم السداد</span>
+                                            <t t-if="line.isnotelec_remain">
+                                                <input type="checkbox" id="oe_import_tracking" checked="checked"/>
+                                            </t>
+                                            <t t-if="not line.isnotelec_remain">
+                                                <input type="checkbox" id="oe_import_tracking"/>
+                                            </t>
+                                        </td>
+
+                                    </tr>
+                                </table>
+
+                                <br/>
+                                <br/>
+                                    <div class="text-center">
+                                        <h2>خاص بالأدارة :</h2>
+                                    </div>
+                                    <table class="table">
+                                        <tr>
+                                            <td>قيمة الأيجار</td>
+                                            <td>
+                                                <span t-field="o.amount_total"/>
+                                            </td>
+                                            <td>بداية العقد</td>
+                                            <td>
+                                                <span t-field="o.date_order"/>
+                                            </td>
+                                              <td>التأمين المدفوع</td>
+                                            <td>
+                                                 <span t-field="line.sale_order_line_id.insurance_value"/>
+                                            </td>
+                                        </tr>
+                                    </table>
+
+                                <br/>
+                              <div class="text-right" style="width: 80%;">
+                                    <p>الملاحظة :
+                                    <span t-field="line.rmanage_note"/>
+                                </p>
+                              </div>
+                                <br/>
+                                <br/>
+                                <div>
+                                    <div style="width: 45%; float:left;">
+                                        <h3>المسئول عن المبنى</h3>
+                                        <br/>
+                                        <span>..........</span>
+                                    </div>
+                                    <div style="width: 45%;">
+                                        <h3> مدير العقارات</h3>
+                                        <br/>
+                                        <span>..........</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                    </t>
+                </t>
+            </t>
+        </t>
+        <!--        </t>-->
+    </template>
+</odoo>

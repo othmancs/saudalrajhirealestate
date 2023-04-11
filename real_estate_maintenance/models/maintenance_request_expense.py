@@ -19,7 +19,7 @@ class MaintenanceRequestExpense(models.Model):
         res = {
             'name': self.product_id.name,
             'product_id': self.product_id.id,
-            'analytic_account_id': self.maintenance_request_id.property_id.parent_id.analytic_account_id.id,
+            'analytic_account_id': self.maintenance_request_id.property_id.analytic_account.id or False,
             'quantity': self.quantity,
             'price_unit': self.price_unit,
             'tax_ids': self.tax_ids.ids,

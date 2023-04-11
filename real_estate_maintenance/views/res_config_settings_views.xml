@@ -22,7 +22,7 @@
                                     </div>
                                     <div class="content-group">
                                         <div class="mt16">
-                                            <field name="maintenance_request_to_notify_user_id"
+                                            <field name="maintenance_request_to_notify_user_id" widget="many2many_tags"
                                                    options="{'no_quick_create': True}"/>
                                         </div>
                                     </div>
