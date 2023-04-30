@@ -9,7 +9,7 @@
                     <attribute name="widget">float</attribute>
                 </xpath>
                 <xpath expr="//field[@name='unit_area']" position="after">
-                    <field name="rent_unit_price" />
+                    <field name="rent_unit_price"/>
                 </xpath>
             </field>
         </record>
@@ -97,20 +97,20 @@
                 </xpath>
             </field>
         </record>
-<!--        <record id="product_template_view_map" model="ir.ui.view">-->
-<!--            <field name="name">product.template.view.map</field>-->
-<!--            <field name="model">product.template</field>-->
-<!--            <field name="arch" type="xml">-->
-<!--                <map res_partner="partner_longitude"/>-->
-<!--            </field>-->
-<!--        </record>-->
+        <!--        <record id="product_template_view_map" model="ir.ui.view">-->
+        <!--            <field name="name">product.template.view.map</field>-->
+        <!--            <field name="model">product.template</field>-->
+        <!--            <field name="arch" type="xml">-->
+        <!--                <map res_partner="partner_longitude"/>-->
+        <!--            </field>-->
+        <!--        </record>-->
 
-<!--        <record id="product_template_action_contacts_view_map" model="ir.actions.act_window.view">-->
-<!--            <field name="sequence" eval="3"/>-->
-<!--            <field name="view_mode">map</field>-->
-<!--            <field name="view_id" ref="product_template_view_map"/>-->
-<!--            <field name="act_window_id" ref="sale_renting.rental_product_template_action"/>-->
-<!--        </record>-->
+        <!--        <record id="product_template_action_contacts_view_map" model="ir.actions.act_window.view">-->
+        <!--            <field name="sequence" eval="3"/>-->
+        <!--            <field name="view_mode">map</field>-->
+        <!--            <field name="view_id" ref="product_template_view_map"/>-->
+        <!--            <field name="act_window_id" ref="sale_renting.rental_product_template_action"/>-->
+        <!--        </record>-->
         .
         <record id="furnished_product_template_search_view" model="ir.ui.view">
             <field name="name">product.template.search.inherit.rental</field>
@@ -120,6 +120,7 @@
                 <xpath expr="//filter[@name='filter_to_purchase']" position="after">
                     <filter string="Furnished" name="filter_furnished_apartment"
                             domain="[('furnished_apartment', '=', True)]"/>
+                    <filter string="Can't be Rented" name="filter_to_not_rent" domain="[('rent_ok', '=', False)]"/>
                 </xpath>
             </field>
         </record>
