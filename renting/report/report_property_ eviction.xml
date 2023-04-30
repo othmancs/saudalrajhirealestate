@@ -45,8 +45,8 @@
                                 <div class="row" style="width: 80%;padding-right: 50px;">
                                     <p style="text-align: right;font-size: 20px;">
                                         إشارة الى الموضوع أعلاه وبالإشارة الى عقد الإيجار الإلكتروني المبرم معكم بتاريخ
-                                        .../.../....م والمتضمن تأجير شقة رقم ... وعليه نود اشعاركم بعد رغبتنا في تجديد العقد
-                                        المشار إليه أعلاه على ان يكون يوم استلام الوحدة الإيجارية بتاريخ .../.../..... م ( تاريخ
+                                        <span t-field="o.fromdate" t-options='{"format": "MM/dd/yyyy"}'/>م والمتضمن تأجير شقة رقم <span t-if="o.order_line" t-esc="o.order_line[0].product_id.unit_number"/> وعليه نود اشعاركم بعد رغبتنا في تجديد العقد
+                                        المشار إليه أعلاه على ان يكون يوم استلام الوحدة الإيجارية بتاريخ <span t-field="o.todate" t-options='{"format": "MM/dd/yyyy"}'/> م ( تاريخ
                                                                                                                  نهاية العقد )
                                     </p>
                                 </div>
