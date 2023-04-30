@@ -120,7 +120,16 @@
                 <xpath expr="//filter[@name='filter_to_purchase']" position="after">
                     <filter string="Furnished" name="filter_furnished_apartment"
                             domain="[('furnished_apartment', '=', True)]"/>
-                    <filter string="Can't be Rented" name="filter_to_not_rent" domain="[('rent_ok', '=', False)]"/>
+<!--                    <filter string="Can't be Rented" name="filter_to_not_rent" domain="[('rent_ok', '=', False)]"/>-->
+                </xpath>
+                <xpath expr="//filter[@name='filter_to_sell']" position="attributes">
+                    <attribute name="domain">[('sale_ok','=',True), ('rent_ok', '=', False)]</attribute>
+                </xpath>
+                 <xpath expr="//filter[@name='filter_to_purchase']" position="attributes">
+                    <attribute name="domain">[('purchase_ok','=',True), ('rent_ok', '=', False)]</attribute>
+                </xpath>
+                 <xpath expr="//filter[@name='consumable']" position="attributes">
+                    <attribute name="domain">[('type', 'in', ['consu', 'product']), ('rent_ok', '=', False)]</attribute>
                 </xpath>
             </field>
         </record>
