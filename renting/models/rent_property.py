@@ -133,11 +133,10 @@ class RentPropertyModel(models.Model):
         #     ref += '0'
         res.ref_analytic_account = res.get_ref_analytic_account()
 
-        if not search_group[-1].id:
-            area_group_analytic_account = exist_area.sudo().create(
-                {'name': res.property_address_area.name, })
-        else:
+        if search_group:
             area_group_analytic_account = search_group[-1]
+        else:
+            area_group_analytic_account = exist_area.sudo().create({'name': res.property_address_area.name, })
 
         if res.property_address_build.id:
             search_build = exist_area.sudo().search([('name', '=', res.property_address_build.name)])

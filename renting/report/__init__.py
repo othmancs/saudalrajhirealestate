@@ -4,3 +4,4 @@
 from . import sale_report
 from . import invoice_report
 from . import rental_report
+from . import renting_report

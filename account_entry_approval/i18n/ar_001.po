@@ -1,0 +1,129 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* account_entry_approval
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 15.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-05-14 09:36+0000\n"
+"PO-Revision-Date: 2022-05-14 09:36+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: account_entry_approval
+#: model:ir.model.fields,field_description:account_entry_approval.field_res_company__need_approval_journals
+#: model:ir.model.fields,field_description:account_entry_approval.field_res_config_settings__need_approval_journals
+msgid "Approval Journal"
+msgstr ""
+
+#. module: account_entry_approval
+#: model_terms:ir.ui.view,arch_db:account_entry_approval.view_move_form_inherit
+msgid "Approve"
+msgstr "اعماد"
+
+#. module: account_entry_approval
+#: model:ir.model.fields.selection,name:account_entry_approval.selection__account_move__state__approved
+#: model_terms:ir.ui.view,arch_db:account_entry_approval.view_account_move_search_inherit
+msgid "Approved"
+msgstr "معتمد"
+
+#. module: account_entry_approval
+#: model:ir.model,name:account_entry_approval.model_res_company
+msgid "Companies"
+msgstr "شركات"
+
+#. module: account_entry_approval
+#: model:ir.model,name:account_entry_approval.model_res_config_settings
+msgid "Config Settings"
+msgstr "ضبط الاعدادات"
+
+#. module: account_entry_approval
+#: model_terms:ir.ui.view,arch_db:account_entry_approval.res_config_settings_view_form_inherit
+msgid "Enable to bring the approval in the Journal Entry."
+msgstr "تفعيل خاصية الاعتمادات في قيود اليومية"
+
+#. module: account_entry_approval
+#: model_terms:ir.ui.view,arch_db:account_entry_approval.res_config_settings_view_form_inherit
+msgid "Enables approval feature in payments."
+msgstr ""
+
+#. module: account_entry_approval
+#: model:ir.model.fields,field_description:account_entry_approval.field_account_journal__entry_user_ids
+msgid "Entry User"
+msgstr ""
+
+#. module: account_entry_approval
+#: model:ir.model.fields,field_description:account_entry_approval.field_account_bank_statement_line__is_approver
+#: model:ir.model.fields,field_description:account_entry_approval.field_account_move__is_approver
+#: model:ir.model.fields,field_description:account_entry_approval.field_account_payment__is_approver
+msgid "Is Approver"
+msgstr ""
+
+#. module: account_entry_approval
+#: model:ir.model,name:account_entry_approval.model_account_journal
+#: model_terms:ir.ui.view,arch_db:account_entry_approval.res_config_settings_view_form_inherit
+msgid "Journal"
+msgstr "دفتر اليومية"
+
+#. module: account_entry_approval
+#: model_terms:ir.ui.view,arch_db:account_entry_approval.res_config_settings_view_form_inherit
+msgid "Journal Approval"
+msgstr "اعتمادات القيود"
+
+#. module: account_entry_approval
+#: model:ir.model,name:account_entry_approval.model_account_move
+msgid "Journal Entry"
+msgstr "قيد اليومية"
+
+#. module: account_entry_approval
+#: model:ir.model.fields,field_description:account_entry_approval.field_res_config_settings__entry_approval
+#: model_terms:ir.ui.view,arch_db:account_entry_approval.view_account_journal_form
+msgid "Journal Entry Approval"
+msgstr "اعتمادات قيود اليومية"
+
+#. module: account_entry_approval
+#: model:ir.model.fields,field_description:account_entry_approval.field_account_bank_statement_line__need_approve
+#: model:ir.model.fields,field_description:account_entry_approval.field_account_move__need_approve
+#: model:ir.model.fields,field_description:account_entry_approval.field_account_payment__need_approve
+msgid "Need Approve"
+msgstr "يحتاج لاعتماد"
+
+#. module: account_entry_approval
+#: model_terms:ir.ui.view,arch_db:account_entry_approval.view_move_form_inherit
+msgid "Reject"
+msgstr "رفض"
+
+#. module: account_entry_approval
+#: model:ir.model.fields.selection,name:account_entry_approval.selection__account_move__state__rejected
+#: model_terms:ir.ui.view,arch_db:account_entry_approval.view_account_move_search_inherit
+msgid "Rejected"
+msgstr "مرفوض"
+
+#. module: account_entry_approval
+#: model:ir.model.fields,field_description:account_entry_approval.field_account_move__state
+#: model:ir.model.fields,field_description:account_entry_approval.field_account_payment__state
+msgid "Status"
+msgstr "الحالة"
+
+#. module: account_entry_approval
+#: model_terms:ir.ui.view,arch_db:account_entry_approval.view_account_journal_form
+msgid "User Approve Entry"
+msgstr "المستخدمين"
+
+#. module: account_entry_approval
+#: model:ir.model.fields,field_description:account_entry_approval.field_account_bank_statement_line__user_for_approve
+#: model:ir.model.fields,field_description:account_entry_approval.field_account_move__user_for_approve
+#: model:ir.model.fields,field_description:account_entry_approval.field_account_payment__user_for_approve
+msgid "User For Approve"
+msgstr ""
+
+#. module: account_entry_approval
+#: model:ir.model.fields.selection,name:account_entry_approval.selection__account_move__state__waiting_approval
+#: model_terms:ir.ui.view,arch_db:account_entry_approval.view_account_move_search_inherit
+msgid "Waiting For Approval"
+msgstr "في انتظار التعميد"

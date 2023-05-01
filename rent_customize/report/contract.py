@@ -8,8 +8,8 @@ class ContractWizard(models.TransientModel):
     _name = 'contract.wizard'
     _rec_name = 'start_date'
 
-    start_date = fields.Datetime(string='Start Date', required=True)
-    end_date = fields.Datetime(string='End Date', required=True)
+    start_date = fields.Date(string='Start Date', required=True)
+    end_date = fields.Date(string='End Date', required=True)
 
     def show_report(self):
         action = self.env.ref("rent_customize.filter_dates_action").read()[0]

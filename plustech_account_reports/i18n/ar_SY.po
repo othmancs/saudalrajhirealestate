@@ -1,0 +1,222 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* account_accountant_branch
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 15.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-09-25 12:24+0000\n"
+"PO-Revision-Date: 2022-09-25 12:24+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: account_accountant_branch
+#: model_terms:ir.ui.view,arch_db:account_accountant_branch.search_template_branch
+msgid ""
+"<span class=\"fa fa-folder-open\"/>\n"
+"                Branch"
+msgstr ""
+
+#. module: account_accountant_branch
+#: code:addons/account_accountant_branch/models/inherited_account_aged_partner.py:0
+#: code:addons/account_accountant_branch/models/inherited_account_partner_ledger.py:0
+#, python-format
+msgid "Account"
+msgstr "الحساب"
+
+#. module: account_accountant_branch
+#: model:ir.model,name:account_accountant_branch.model_account_report
+msgid "Account Report"
+msgstr "تقرير الحساب"
+
+#. module: account_accountant_branch
+#: model:ir.model,name:account_accountant_branch.model_account_financial_html_report_line
+msgid "Account Report (HTML Line)"
+msgstr "تقرير الحساب (HTML Line)"
+
+#. module: account_accountant_branch
+#: model:ir.model,name:account_accountant_branch.model_account_financial_html_report
+msgid "Account Report (HTML)"
+msgstr "تقرير الحساب (HTML)"
+
+#. module: account_accountant_branch
+#: code:addons/account_accountant_branch/models/inherited_account_partner_ledger.py:0
+#, python-format
+msgid "Amount Currency"
+msgstr ""
+
+#. module: account_accountant_branch
+#: code:addons/account_accountant_branch/models/inherited_account_aged_partner.py:0
+#, python-format
+msgid "As of: %s"
+msgstr ""
+
+#. module: account_accountant_branch
+#: model:ir.model.fields,field_description:account_accountant_branch.field_branch_branch__account_asset_count
+msgid "Asset Count"
+msgstr "عدد الاصول"
+
+#. module: account_accountant_branch
+#: model:ir.model,name:account_accountant_branch.model_account_asset
+msgid "Asset/Revenue Recognition"
+msgstr "إثبات الأصل/الربح"
+
+#. module: account_accountant_branch
+#: model_terms:ir.ui.view,arch_db:account_accountant_branch.view_branch_config_form_inherit
+msgid "Assets"
+msgstr "الاصول"
+
+#. module: account_accountant_branch
+#: code:addons/account_accountant_branch/models/inherited_account_general_ledger.py:0
+#: code:addons/account_accountant_branch/models/inherited_account_partner_ledger.py:0
+#, python-format
+msgid "Balance"
+msgstr "الرصيد"
+
+#. module: account_accountant_branch
+#. openerp-web
+#: code:addons/account_accountant_branch/models/inherited_account_aged_partner.py:0
+#: code:addons/account_accountant_branch/models/inherited_account_general_ledger.py:0
+#: code:addons/account_accountant_branch/models/inherited_account_partner_ledger.py:0
+#: code:addons/account_accountant_branch/static/src/js/custom_account_reports.js:0
+#: model:ir.model,name:account_accountant_branch.model_branch_branch
+#: model:ir.model.fields,field_description:account_accountant_branch.field_account_asset__branch_id
+#: model_terms:ir.ui.view,arch_db:account_accountant_branch.view_account_asset_search
+#, python-format
+msgid "Branch"
+msgstr "الفرع"
+
+#. module: account_accountant_branch
+#: code:addons/account_accountant_branch/models/branch_branch.py:0
+#, python-format
+msgid "Branch Moves"
+msgstr "حركات الفرع"
+
+#. module: account_accountant_branch
+#: model:ir.model,name:account_accountant_branch.model_account_cash_flow_report
+msgid "Cash Flow Report"
+msgstr "تقرير التدفقات النقدية"
+
+#. module: account_accountant_branch
+#: model:ir.model,name:account_accountant_branch.model_account_coa_report
+msgid "Chart of Account Report"
+msgstr "تقرير الدليل المحاسبي"
+
+#. module: account_accountant_branch
+#: code:addons/account_accountant_branch/models/inherited_account_general_ledger.py:0
+#, python-format
+msgid "Communication"
+msgstr "التوصل"
+
+#. module: account_accountant_branch
+#: code:addons/account_accountant_branch/models/inherited_account_general_ledger.py:0
+#: code:addons/account_accountant_branch/models/inherited_account_partner_ledger.py:0
+#, python-format
+msgid "Credit"
+msgstr "دائن"
+
+#. module: account_accountant_branch
+#: code:addons/account_accountant_branch/models/inherited_account_general_ledger.py:0
+#, python-format
+msgid "Currency"
+msgstr "العملة"
+
+#. module: account_accountant_branch
+#: code:addons/account_accountant_branch/models/inherited_account_general_ledger.py:0
+#, python-format
+msgid "Date"
+msgstr "التاريخ"
+
+#. module: account_accountant_branch
+#: code:addons/account_accountant_branch/models/inherited_account_general_ledger.py:0
+#: code:addons/account_accountant_branch/models/inherited_account_partner_ledger.py:0
+#, python-format
+msgid "Debit"
+msgstr "مدين"
+
+#. module: account_accountant_branch
+#: code:addons/account_accountant_branch/models/inherited_account_partner_ledger.py:0
+#, python-format
+msgid "Due Date"
+msgstr "تاريخ الاستحقاق"
+
+#. module: account_accountant_branch
+#: model:ir.model,name:account_accountant_branch.model_account_general_ledger
+msgid "General Ledger Report"
+msgstr "تقرير دفتر الحسابات العام"
+
+#. module: account_accountant_branch
+#: model:ir.model,name:account_accountant_branch.model_account_generic_tax_report
+msgid "Generic Tax Report"
+msgstr "تقرير الضرائب المبسط"
+
+#. module: account_accountant_branch
+#: code:addons/account_accountant_branch/models/inherited_account_general_ledger.py:0
+#: code:addons/account_accountant_branch/models/inherited_account_partner_ledger.py:0
+#, python-format
+msgid "Initial Balance"
+msgstr "الرصيد الافتتاحي"
+
+#. module: account_accountant_branch
+#: code:addons/account_accountant_branch/models/inherited_account_partner_ledger.py:0
+#, python-format
+msgid "JRNL"
+msgstr "اليومية"
+
+#. module: account_accountant_branch
+#: code:addons/account_accountant_branch/models/inherited_account_partner_ledger.py:0
+#, python-format
+msgid "Matching Number"
+msgstr ""
+
+#. module: account_accountant_branch
+#: code:addons/account_accountant_branch/models/inherited_account_general_ledger.py:0
+#, python-format
+msgid "Partner"
+msgstr "الشريك"
+
+#. module: account_accountant_branch
+#: model:ir.model,name:account_accountant_branch.model_account_partner_ledger
+msgid "Partner Ledger"
+msgstr "دفتر الأستاذ العام للشركاء"
+
+#. module: account_accountant_branch
+#: code:addons/account_accountant_branch/models/inherited_account_partner_ledger.py:0
+#, python-format
+msgid "Ref"
+msgstr "المرجع"
+
+#. module: account_accountant_branch
+#: model:ir.model.fields,field_description:account_accountant_branch.field_res_users__allowed_see_other_assets
+msgid "See Other Assets"
+msgstr "اظهار اصول الغير"
+
+#. module: account_accountant_branch
+#: code:addons/account_accountant_branch/models/inherited_account_aged_partner.py:0
+#: code:addons/account_accountant_branch/models/inherited_account_general_ledger.py:0
+#: code:addons/account_accountant_branch/models/inherited_account_partner_ledger.py:0
+#, python-format
+msgid "Total"
+msgstr "الاجمالي"
+
+#. module: account_accountant_branch
+#: code:addons/account_accountant_branch/models/inherited_account_general_ledger.py:0
+#, python-format
+msgid "Total %s"
+msgstr ""
+
+#. module: account_accountant_branch
+#: code:addons/account_accountant_branch/models/inherited_account_partner_ledger.py:0
+#, python-format
+msgid "Unknown Partner"
+msgstr "شريك غير معروف"
+
+#. module: account_accountant_branch
+#: model:ir.model,name:account_accountant_branch.model_res_users
+msgid "Users"
+msgstr "المستخدمون"

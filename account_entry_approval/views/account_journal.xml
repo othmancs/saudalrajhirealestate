@@ -1,0 +1,19 @@
+<odoo>
+    <data>
+        <record id="view_account_journal_form" model="ir.ui.view">
+            <field name="name">account.journal.form</field>
+            <field name="model">account.journal</field>
+            <field name="inherit_id" ref="account.view_account_journal_form" />
+            <field name="arch" type="xml">
+                <xpath expr="//form/sheet/notebook/page[@name='advanced_settings']" position="inside">
+                    <group>
+                        <group string="Journal Entry Approval">
+                            <field name="entry_approval_user_ids"  string="User Approve Entry" widget="many2many_tags" />
+                            <field name="entry_post_user_ids"  string="User Post Entry" widget="many2many_tags" />
+                        </group>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

@@ -8,7 +8,7 @@
             <field name="model">account.move</field>
             <field name="inherit_id" ref="account.view_move_form"/>
             <field name="arch" type="xml">
-                <xpath expr="//button[@name='action_post'][2]" position="replace">
+                <!-- <xpath expr="//button[@name='action_post'][2]" position="replace">
                     <button name="get_temp_sale_order_id" type="object" invisible="1" string="Get Rent ID"/>
                     <button name="action_review" type="object" class="oe_highlight"
                             groups="plustech_asset_enhance.review_account_group"
@@ -28,7 +28,7 @@
                                  ('state', '!=', 'review'),
                                   ('auto_post', '=', True),
                                    ('move_type', '!=', 'entry')]}"/>
-                </xpath>
+                </xpath> -->
                 <xpath expr="//field[@name='partner_id']" position="after">
                     <field name="temp_sale_order_id" invisible="1"/>
                 </xpath>

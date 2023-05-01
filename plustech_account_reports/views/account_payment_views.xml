@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- Inherit payment form -->
+        <record id="view_account_payment_form" model="ir.ui.view">
+            <field name="name">Inherited payment</field>
+            <field name="model">account.payment</field>
+            <field name="inherit_id" ref="account.view_account_payment_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='partner_bank_id']" position="after">
+                    <field name="branch_id"
+                           options="{'no_create':True,'no_open':True}"
+                           required="1"
+                           attrs="{'readonly':[('state','!=','draft')]}"/>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

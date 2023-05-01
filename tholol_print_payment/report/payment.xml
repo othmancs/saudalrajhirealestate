@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <data>
+
+        <template id="report_payment_receipt_document" inherit_id="account.report_payment_receipt_document">
+
+
+            <xpath expr="//t[@t-call='web.external_layout']" position="replace">
+
+                <t t-if="o and 'company_id' in o">
+                    <t t-set="company" t-value="o.company_id"></t>
+                </t>
+                <t t-if="not o or not 'company_id' in o">
+                    <t t-set="company" t-value="res_company"></t>
+                </t>
+
+
+                <t t-call="invoice_templates.invoice_templates_layout">
+                    <div class="page" style="font-family:MonixBold ;direction: ltr;margin-top:10px">
+                        <br/>
+                        <div style="margin-top:60px;">
+                            <h2 style="text-align: center;">
+                                <span style="background-color: #dde0e2;padding: 10px;border: 2px solid;"
+                                      t-if="o.payment_type == 'inbound' and o.journal_id.type == 'bank'">Bank Receipt -
+                                    سند قبض بنكي
+                                </span>
+
+                                <span style="background-color: #dde0e2;padding: 10px;border: 2px solid;"
+                                      t-if="o.payment_type == 'inbound' and o.journal_id.type == 'cash'">Cash Receipt -
+                                    سند قبض نقدي
+                                </span>
+
+                                <span style="background-color: #dde0e2;padding: 10px;border: 2px solid;"
+                                      t-if="o.payment_type == 'outbound' and o.journal_id.type == 'bank'">Bank Payment -
+                                    سند صرف بنكي
+                                </span>
+
+                                <span style="background-color: #dde0e2;padding: 10px;border: 2px solid;"
+                                      t-if="o.payment_type == 'outbound' and o.journal_id.type == 'cash'">Cash Payment -
+                                    سند صرف نقدي
+                                </span>
+
+                            </h2>
+                        </div>
+
+                        <div class="row"
+                             style="margin-top:50px;border: 2px solid;margin-right: 10px;margin-left: 10px;padding: 10px;">
+                                                        <div class="col-6 text-center" style="margin-top: 13px;" >
+                                <div class="row">
+                                    <div class="col-3">
+                                        <strong>Amount:</strong>
+                                    </div>
+                                    <div class="col-6 ">
+                                        <span t-field="o.amount"/>
+                                    </div>
+                                    <div class="col-3">
+                                        <strong>:المبلغ</strong>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-6 text-center">
+                                <div class="row">
+                                    <div class="col-3">
+                                        <strong>No#:</strong>
+                                    </div>
+                                    <div class="col-6 ">
+                                        <span t-field="o.name"/>
+                                    </div>
+                                    <div class="col-3">
+                                        <strong>:سند رقم</strong>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-3">
+                                        <strong>Date:</strong>
+                                    </div>
+                                    <div class="col-6 ">
+                                        <span t-field="o.date"/>
+                                    </div>
+                                    <div class="col-3">
+                                        <strong>:التاريخ</strong>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class=""
+                             style="margin-top:50px;border: 2px solid;margin-right: 10px;margin-left: 10px;padding: 30px;">
+                            <div class="">
+                                <div class="row" style="margin-bottom: 10px;">
+                                    <div class="col-3 text-left">
+                                        <strong>Receive from:</strong>
+                                    </div>
+                                    <div class="col-6 text-center" style="border-bottom: 1px dashed;">
+                                        <span t-field="o.partner_id"/>
+                                    </div>
+                                    <div class="col-3 text-right">
+                                        <strong t-if="o.payment_type == 'inbound'">:استلمنا من المكرم</strong>
+                                        <strong t-if="o.payment_type == 'outbound'">:ادفعوا بموجب هذا</strong>
+                                    </div>
+                                </div>
+
+                                <div class="row" style="margin-bottom: 10px;">
+                                    <div class="col-2 text-left">
+                                        <strong>The sum of:</strong>
+                                    </div>
+                                    <div class="col-8 text-center" style="border-bottom: 1px dashed;">
+                                        <t t-set="amount_text" t-value="o._convert_num_to_text(o.amount)"/>
+                                        <span t-esc="amount_text"/>
+                                    </div>
+                                    <div class="col-2 text-right">
+                                        <strong>:مبلغ وقدره</strong>
+                                    </div>
+                                </div>
+
+                                <div class="row" style="margin-bottom: 10px;">
+                                    <div class="col-2 text-left">
+                                        <strong>For:</strong>
+                                    </div>
+                                    <div class="col-8 text-center" style="border-bottom: 1px dashed;">
+                                        <span t-field="o.ref"/>
+                                    </div>
+                                    <div class="col-2 text-right">
+                                        <strong>:وذلك قيمــة</strong>
+                                    </div>
+                                </div>
+
+                                <div class="row" style="margin-bottom: 10px;" t-if="o.journal_id.type == 'bank'">
+                                    <div class="col-2 text-left">
+                                        <strong>Bank:</strong>
+                                    </div>
+                                    <div class="col-8 text-center" style="border-bottom: 1px dashed;">
+                                        <span t-field="o.journal_id.name"/>
+                                    </div>
+                                    <div class="col-2 text-right">
+                                        <strong>:بنك</strong>
+                                    </div>
+                                </div>
+                                 <div class="row" style="margin-bottom: 10px;" t-if="o.cheque_number">
+                                    <div class="col-2 text-left">
+                                        <strong>Cheque No.:</strong>
+                                    </div>
+                                    <div class="col-8 text-center" style="border-bottom: 1px dashed;">
+                                        <span t-field="o.cheque_number"/>
+                                    </div>
+                                    <div class="col-2 text-right">
+                                        <strong>:رقم الشيك</strong>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="" style="margin-top:50px;margin-right: 5px;margin-left: 5px;padding: 30px;"
+                             dir="rtl">
+                            <div class="row">
+                                <table class="table text-center table-borderless" style="border: 0px;">
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <div>
+                                                    <div>المستلم</div>
+                                                    <div>Received By</div>
+                                                    <div t-if="o.approval_ids and len(o.approval_ids)>0 and o.approval_ids.mapped('user_id').sudo().sign_signature"
+                                                             style="border-bottom: 1px dashed; margin-top:35px;">
+                                                        </div>
+                                                        <div t-if="not o.approval_ids or not o.approval_ids.mapped('user_id').sudo().sign_signature"  style="border-bottom: 1px dashed; margin-top:10px;">
+                                                        </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div>
+                                                    <div>المحاسب</div>
+                                                    <div>Accountant</div>
+                                                    <div style="border-bottom: 1px dashed; margin-top:10px;">
+                                                        <img style="height: 50px;"
+                                                             t-if="o.approval_ids and len(o.approval_ids)>0 and o.approval_ids[0].user_id.sudo().sign_signature"
+                                                             t-att-src="'data:image/png;base64,%s' % to_text(o.approval_ids[0].user_id.sudo().sign_signature)"/>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div>
+                                                    <div>مدير الحسابات</div>
+                                                    <div>Accounting Manager</div>
+                                                    <div style="border-bottom: 1px dashed; margin-top:10px;">
+                                                        <img style="height: 50px;"
+                                                             t-if="o.approval_ids and len(o.approval_ids)>1 and o.approval_ids[1].user_id.sudo().sign_signature"
+                                                             t-att-src="'data:image/png;base64,%s' % to_text(o.approval_ids[1].user_id.sudo().sign_signature)"/>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div>
+                                                    <div>مدير المالي</div>
+                                                    <div>Finance Manager</div>
+                                                    <div style="border-bottom: 1px dashed; margin-top:10px;">
+                                                        <img style="height: 50px;"
+                                                             t-if="o.approval_ids and len(o.approval_ids)>2 and o.approval_ids[2].user_id.sudo().sign_signature"
+                                                             t-att-src="'data:image/png;base64,%s' % to_text(o.approval_ids[2].user_id.sudo().sign_signature)"/>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div>
+                                                    <div>اعتماد</div>
+                                                    <div>Approval</div>
+                                                    <div style="border-bottom: 1px dashed; margin-top:10px;">
+                                                        <img style="height: 50px;"
+                                                             t-if="o.approval_ids and len(o.approval_ids)>3 and o.approval_ids[3].user_id.sudo().sign_signature"
+                                                             t-att-src="'data:image/png;base64,%s' % to_text(o.approval_ids[3].user_id.sudo().sign_signature)"/>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+
+            </xpath>
+
+        </template>
+    </data>
+</odoo>

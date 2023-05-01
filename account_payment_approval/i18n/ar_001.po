@@ -1,0 +1,299 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* account_payment_approval
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 15.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-11-09 15:13+0000\n"
+"PO-Revision-Date: 2022-11-09 15:13+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: account_payment_approval
+#: model:ir.model,name:account_payment_approval.model_account_payment_approvals
+msgid "Account Payment Approvals"
+msgstr ""
+
+#. module: account_payment_approval
+#: model:ir.model.fields,field_description:account_payment_approval.field_account_payment_approvals__action
+msgid "Action Type"
+msgstr ""
+
+#. module: account_payment_approval
+#: model:ir.model.fields,field_description:account_payment_approval.field_account_payment__approval_ids
+msgid "Approval"
+msgstr "الاعتماد"
+
+#. module: account_payment_approval
+#: model:ir.model.fields,field_description:account_payment_approval.field_res_config_settings__approval_currency_id
+msgid "Approval Currency"
+msgstr ""
+
+#. module: account_payment_approval
+#: model:ir.model.fields,field_description:account_payment_approval.field_account_payment_approvals__approval_date
+msgid "Approval Date"
+msgstr "تاريخ الاعتماد"
+
+#. module: account_payment_approval
+#: model:ir.model.fields.selection,name:account_payment_approval.selection__account_payment_approvals__action__approve
+#: model_terms:ir.ui.view,arch_db:account_payment_approval.view_account_payment_form_inherit
+msgid "Approve"
+msgstr "اعتماد"
+
+#. module: account_payment_approval
+#: model:ir.model.fields.selection,name:account_payment_approval.selection__account_move__state__approved
+#: model_terms:ir.ui.view,arch_db:account_payment_approval.view_account_payment_search_inherit
+msgid "Approved"
+msgstr "معتمد"
+
+#. module: account_payment_approval
+#: model:ir.model.fields,field_description:account_payment_approval.field_account_payment_approvals__user_id
+msgid "Approver"
+msgstr "تم اعتماد بواسطة"
+
+#. module: account_payment_approval
+#: model_terms:ir.ui.view,arch_db:account_payment_approval.view_account_payment_form_inherit
+msgid "Approver's"
+msgstr ""
+
+#. module: account_payment_approval
+#: model:ir.model.fields.selection,name:account_payment_approval.selection__account_payment__paid_through__cash
+msgid "Cash"
+msgstr "كاش"
+
+#. module: account_payment_approval
+#: model:ir.model.fields.selection,name:account_payment_approval.selection__account_payment__paid_through__cheque
+msgid "Cheque"
+msgstr "شيك"
+
+#. module: account_payment_approval
+#: model:ir.model.fields,field_description:account_payment_approval.field_account_payment__cheque_number
+msgid "Cheque No."
+msgstr "رقم الشيك"
+
+#. module: account_payment_approval
+#: model:ir.model,name:account_payment_approval.model_res_company
+msgid "Companies"
+msgstr "شركات"
+
+#. module: account_payment_approval
+#: model:ir.model,name:account_payment_approval.model_res_config_settings
+msgid "Config Settings"
+msgstr "تهيئة الإعدادات "
+
+#. module: account_payment_approval
+#: model:ir.model.fields,help:account_payment_approval.field_res_config_settings__approval_currency_id
+msgid "Converts the payment amount to this currency if chosen."
+msgstr ""
+
+#. module: account_payment_approval
+#: model:ir.model.fields.selection,name:account_payment_approval.selection__account_payment_approvals__action__create
+msgid "Create"
+msgstr ""
+
+#. module: account_payment_approval
+#: model:ir.model.fields,field_description:account_payment_approval.field_account_payment_approvals__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: account_payment_approval
+#: model:ir.model.fields,field_description:account_payment_approval.field_account_payment_approvals__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: account_payment_approval
+#: model:ir.model.fields,field_description:account_payment_approval.field_account_payment_approvals__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: account_payment_approval
+#: model_terms:ir.ui.view,arch_db:account_payment_approval.res_config_settings_view_form_inherit
+msgid "Enable to bring the approval in the inbound payment."
+msgstr "تفعيل الاعتمادات في سندات القبض"
+
+#. module: account_payment_approval
+#: model_terms:ir.ui.view,arch_db:account_payment_approval.res_config_settings_view_form_inherit
+msgid "Enable to bring the approval in the outbound payment."
+msgstr "تفعيل الاعتمادات في سندات الصرف"
+
+#. module: account_payment_approval
+#: model_terms:ir.ui.view,arch_db:account_payment_approval.res_config_settings_view_form_inherit
+msgid "Enable to bring the approval in the payment."
+msgstr "تفعيل الاعتمادات في السندات"
+
+#. module: account_payment_approval
+#: model_terms:ir.ui.view,arch_db:account_payment_approval.res_config_settings_view_form_inherit
+msgid "Enables approval feature in payments."
+msgstr "تفعيل خاصية الاعتمادات في السندات"
+
+#. module: account_payment_approval
+#: model:ir.model.fields,field_description:account_payment_approval.field_account_journal__inbound_accountant_ids
+#: model:ir.model.fields,field_description:account_payment_approval.field_account_journal__outbound_accountant_ids
+msgid "First Approval Users"
+msgstr "الاعتماد الاول"
+
+#. module: account_payment_approval
+#: model:ir.model.fields,field_description:account_payment_approval.field_account_payment_approvals__id
+msgid "ID"
+msgstr ""
+
+#. module: account_payment_approval
+#: model:ir.model.fields,help:account_payment_approval.field_res_config_settings__approval_amount
+msgid "If amount is 0.00, All the payments go through approval."
+msgstr ""
+
+#. module: account_payment_approval
+#: model:ir.model.fields,field_description:account_payment_approval.field_res_config_settings__approval_inbound
+msgid "Inbound Approval"
+msgstr "اعتمادات سندات القبض"
+
+#. module: account_payment_approval
+#: model:ir.model.fields,field_description:account_payment_approval.field_res_company__approval_inbound_journals
+#: model:ir.model.fields,field_description:account_payment_approval.field_res_config_settings__approval_inbound_journals
+#: model:ir.model.fields,field_description:account_payment_approval.field_res_config_settings__approval_outbound_journals
+msgid "Inbound Journal"
+msgstr "دفاتر اليومية لسندات القبض"
+
+#. module: account_payment_approval
+#: model_terms:ir.ui.view,arch_db:account_payment_approval.view_account_journal_form
+msgid "Inbound Payment Approval"
+msgstr "اعتماد سندات القبض"
+
+#. module: account_payment_approval
+#: model:ir.model.fields,field_description:account_payment_approval.field_account_payment__is_approver
+msgid "Is Approver"
+msgstr ""
+
+#. module: account_payment_approval
+#: model:ir.model,name:account_payment_approval.model_account_journal
+#: model_terms:ir.ui.view,arch_db:account_payment_approval.res_config_settings_view_form_inherit
+msgid "Journal"
+msgstr "دفتر اليومية"
+
+#. module: account_payment_approval
+#: model:ir.model,name:account_payment_approval.model_account_move
+msgid "Journal Entry"
+msgstr "قيد اليومية"
+
+#. module: account_payment_approval
+#: model:ir.model.fields,field_description:account_payment_approval.field_account_payment_approvals____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: account_payment_approval
+#: model:ir.model.fields,field_description:account_payment_approval.field_account_payment_approvals__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: account_payment_approval
+#: model:ir.model.fields,field_description:account_payment_approval.field_account_payment_approvals__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: account_payment_approval
+#: model:ir.model.fields,field_description:account_payment_approval.field_res_config_settings__approval_amount
+msgid "Minimum Approval Amount"
+msgstr ""
+
+#. module: account_payment_approval
+#: model:ir.model.fields,field_description:account_payment_approval.field_account_payment__need_approve
+msgid "Need Approve"
+msgstr "يحتاج لاعتماد"
+
+#. module: account_payment_approval
+#: model:ir.model.fields,field_description:account_payment_approval.field_res_config_settings__approval_outbound
+msgid "Outbound Approval"
+msgstr "اعتمادات سندات الصرف"
+
+#. module: account_payment_approval
+#: model:ir.model.fields,field_description:account_payment_approval.field_res_company__approval_outbound_journals
+msgid "Outbound Journal"
+msgstr "دفاتر اليومية لسندات الصرف"
+
+#. module: account_payment_approval
+#: model_terms:ir.ui.view,arch_db:account_payment_approval.view_account_journal_form
+msgid "Outbound Payment Approval"
+msgstr "اعتماد سندات الصرف"
+
+#. module: account_payment_approval
+#: model:ir.model.fields,field_description:account_payment_approval.field_account_payment__paid_through
+msgid "Paid Through"
+msgstr "نوع السند"
+
+#. module: account_payment_approval
+#: model:ir.model.fields,field_description:account_payment_approval.field_account_payment_approvals__payment_id
+msgid "Payment"
+msgstr "السند"
+
+#. module: account_payment_approval
+#: model:ir.model.fields,field_description:account_payment_approval.field_res_config_settings__payment_approval
+#: model_terms:ir.ui.view,arch_db:account_payment_approval.res_config_settings_view_form_inherit
+msgid "Payment Approval"
+msgstr "اعتمادات السندات"
+
+#. module: account_payment_approval
+#: model:ir.model,name:account_payment_approval.model_account_payment
+msgid "Payments"
+msgstr "المدفوعات"
+
+#. module: account_payment_approval
+#: model:ir.model.fields.selection,name:account_payment_approval.selection__account_payment_approvals__action__post
+msgid "Post"
+msgstr "ترحيل"
+
+#. module: account_payment_approval
+#: model:ir.model.fields,field_description:account_payment_approval.field_account_journal__inbound_post_user_ids
+#: model:ir.model.fields,field_description:account_payment_approval.field_account_journal__outbound_post_user_ids
+msgid "Post Users"
+msgstr ""
+
+#. module: account_payment_approval
+#: model_terms:ir.ui.view,arch_db:account_payment_approval.view_account_payment_form_inherit
+msgid "Reject"
+msgstr "رفض"
+
+#. module: account_payment_approval
+#: model:ir.model.fields.selection,name:account_payment_approval.selection__account_move__state__rejected
+#: model_terms:ir.ui.view,arch_db:account_payment_approval.view_account_payment_search_inherit
+msgid "Rejected"
+msgstr "مرفوض"
+
+#. module: account_payment_approval
+#: model:ir.model.fields,field_description:account_payment_approval.field_account_journal__inbound_user_ids
+#: model:ir.model.fields,field_description:account_payment_approval.field_account_journal__outbound_user_ids
+msgid "Second Approval Users"
+msgstr "الاعتماد الثاني"
+
+#. module: account_payment_approval
+#: model:ir.model.fields,field_description:account_payment_approval.field_account_move__state
+#: model:ir.model.fields,field_description:account_payment_approval.field_account_payment__state
+msgid "Status"
+msgstr "الحالة"
+
+#. module: account_payment_approval
+#: model:ir.model.fields.selection,name:account_payment_approval.selection__account_payment__paid_through__transfer
+msgid "Transfer"
+msgstr "حوالة"
+
+#. module: account_payment_approval
+#: model:ir.model.fields,field_description:account_payment_approval.field_account_payment__user_for_approve
+msgid "User For Approve"
+msgstr ""
+
+#. module: account_payment_approval
+#: model:ir.model.fields,field_description:account_payment_approval.field_account_payment__user_for_post
+msgid "User For Post"
+msgstr ""
+
+#. module: account_payment_approval
+#: model:ir.model.fields.selection,name:account_payment_approval.selection__account_move__state__second_approval
+#: model:ir.model.fields.selection,name:account_payment_approval.selection__account_move__state__waiting_approval
+#: model_terms:ir.ui.view,arch_db:account_payment_approval.view_account_payment_search_inherit
+msgid "Waiting For Approval"
+msgstr "في انتظار التعميد"

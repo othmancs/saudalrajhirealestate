@@ -11,8 +11,8 @@ class RentSaleOrder(models.Model):
     _inherit = 'sale.order'
 
     contract_number = fields.Char(string='رقم العقد')
-    fromdate = fields.Datetime(string='From Date', default=datetime.today(), copy=False, required=True)
-    todate = fields.Datetime(string='To Date', default=datetime.today(), copy=False, required=True)
+    fromdate = fields.Date(string='From Date', default=datetime.today(), copy=False, required=True)
+    todate = fields.Date(string='To Date', default=datetime.today(), copy=False, required=True)
     # Fields in Contract Info Tab
     order_contract = fields.Binary(string='العقد')
     invoice_terms = fields.Selection(
@@ -332,15 +332,15 @@ class RentSaleOrderLine(models.Model):
     _inherit = 'sale.order.line'
 
     property_number = fields.Many2one('rent.property', string='العقار')
-    pickup_date = fields.Datetime(string="Pickup", related='order_id.fromdate', store=True)
-    return_date = fields.Datetime(string="Return", related='order_id.todate', store=True)
+    pickup_date = fields.Date(string="Pickup", related='order_id.fromdate', store=True)
+    return_date = fields.Date(string="Return", related='order_id.todate', store=True)
     insurance_value = fields.Float(string='قيمة التأمين')
     contract_admin_fees = fields.Float(string='رسوم ادارية')
     contract_service_fees = fields.Float(string='رسوم الخدمات')
     contract_admin_sub_fees = fields.Float(string='رسوم ادارية خاضعة')
     contract_service_sub_fees = fields.Float(string='رسوم الخدمات خاضعة')
-    fromdate = fields.Datetime(related="order_id.fromdate", store=1)
-    todate = fields.Datetime(related="order_id.todate", store=1)
+    fromdate = fields.Date(related="order_id.fromdate", store=1)
+    todate = fields.Date(related="order_id.todate", store=1)
 
     def search_property_address_area(self, operator, value):
         return [('property_address_area', 'ilike', value)]

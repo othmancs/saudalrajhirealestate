@@ -107,8 +107,8 @@ class RentProduct(models.Model):
     contract_admin_fees = fields.Float(compute="get_sale_data", string='رسوم إدارية')
     contract_service_fees = fields.Float(compute="get_sale_data", string='رسوم الخدمات')
     insurance_value = fields.Float(compute="get_sale_data", string='قيمة التأمين')
-    fromdate = fields.Datetime(compute="get_sale_data", string='تاريخ الإستلام')
-    todate = fields.Datetime(compute="get_sale_data", string='تاريخ التسليم')
+    fromdate = fields.Date(compute="get_sale_data", string='تاريخ الإستلام')
+    todate = fields.Date(compute="get_sale_data", string='تاريخ التسليم')
     last_sale_id = fields.Many2one('sale.order', compute="get_sale_data")
     operating_unit_id = fields.Many2one('operating.unit', string='الفرع ')
     def get_sale_data(self):

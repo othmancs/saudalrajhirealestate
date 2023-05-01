@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- Inherit branch form view -->
+        <record id="view_branch_config_form_inherit" model="ir.ui.view">
+            <field name="name">branch.branch.form.inherit</field>
+            <field name="model">branch.branch</field>
+            <field name="inherit_id" ref="base_branch.view_branch_config_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div[@name='button_box']" position="inside">
+                    <button class="oe_stat_button" string="" name="action_view_assets" type="object"
+                            icon="fa-building-o">
+                        <field string="Assets" name="account_asset_count" widget="statinfo"/>
+                    </button>
+                </xpath>
+                 <xpath expr="//group[@name='sequence_group']" position="inside">
+                    <field name="asset_sequence_id" attrs="{'required': [('branch_auto_sequence', '=', False)]}"/>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

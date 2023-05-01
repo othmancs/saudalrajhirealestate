@@ -12,8 +12,8 @@ class RentalReport(models.Model):
     property_address_build = fields.Many2one('rent.property.build', string='المجمع')
     property_address_city = fields.Many2one('rent.property.city',string='المدينة')
     country = fields.Many2one('res.country', string='الدولة')
-    fromdate = fields.Datetime()
-    todate = fields.Datetime()
+    fromdate = fields.Date()
+    todate = fields.Date()
 
     def _select(self):
         return super(RentalReport, self)._select() + """,

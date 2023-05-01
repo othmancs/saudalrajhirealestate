@@ -13,12 +13,12 @@ from odoo.exceptions import UserError
 class AccountMove(models.Model):
     _inherit = "account.move"
 
-    state = fields.Selection(selection=[
-        ('draft', 'Draft'),
-        ('review', 'Reviewed'),
-        ('posted', 'Posted'),
-        ('cancel', 'Cancelled'),
-    ], string='Status', required=True, readonly=True, copy=False, tracking=True, default='draft')
+    # state = fields.Selection(selection=[
+    #     ('draft', 'Draft'),
+    #     ('review', 'Reviewed'),
+    #     ('posted', 'Posted'),
+    #     ('cancel', 'Cancelled'),
+    # ], string='Status', required=True, readonly=True, copy=False, tracking=True, default='draft')
 
     renting_attachment_ids = fields.Many2many(comodel_name='ir.attachment', relation="sale_attachment_rel",
                                               string='Attachments', compute="get_sale_attachment")
