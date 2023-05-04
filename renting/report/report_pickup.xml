@@ -268,118 +268,118 @@
                                 </table>
                                 <br/>
                                 <br/>
-                                <table class="table border-none">
+                                <table class="table" border="0" cellpadding="0" cellspacing="0">
                                     <tr>
                                         <th scope="row" class="text-right">تصفية عداد الكهرباء</th>
-                                        <td class="text-right">
+                                        <td class="text-right" style="width:50%;">
                                             <p>
                                                 <span style="margin-left:1.5em;">نعم</span>
-                                                <t t-if="line.iselec_remain">
+                                                <t t-if="line.is_elec_filter=='yes'">
                                                     <input type="checkbox" id="oe_import_tracking" checked="checked"/>
                                                 </t>
-                                                <t t-if="not line.iselec_remain">
+                                                <t t-else="">
+                                                    <input type="checkbox" id="oe_import_tracking"/>
+                                                </t>
+                                                <span style="margin-left:1.5em;">لا</span>
+                                                <t t-if="line.is_elec_filter=='no'">
+                                                    <input type="checkbox" id="oe_import_tracking" checked="checked"/>
+                                                </t>
+                                                <t t-else="">
                                                     <input type="checkbox" id="oe_import_tracking"/>
                                                 </t>
                                             </p>
                                         </td>
-                                        <td class="text-right">
-                                            <span style="margin-left:1.5em;">لا</span>
-                                            <t t-if="line.isnotelec_remain">
-                                                <input type="checkbox" id="oe_import_tracking" checked="checked"/>
-                                            </t>
-                                            <t t-if="not line.isnotelec_remain">
-                                                <input type="checkbox" id="oe_import_tracking"/>
-                                            </t>
-                                        </td>
-
                                         <td class="text-center">التوقيع: ...............</td>
 
                                     </tr>
                                     <tr>
-                                        <td class="text-right">رقم عداد الكهرباء (..........)</td>
+                                        <td class="text-right">رقم عداد الكهرباء:
+                                            <span t-esc="line.sale_order_line_id.product_id.unit_electricity"/>
+                                        </td>
                                         <td class="text-right">المبلغ المستحق:
-                                            <span t-field="line.relec_filter"/>
+                                            <span t-field="line.elec_remain_amount"/>
                                         </td>
                                         <td class="text-right">
-                                            <p>
-                                                <span style="margin-left:1.5em;">يوجد</span>
-                                                <t t-if="line.iselec_remain">
+                                                <span style="margin-left:1.5em;">يوجد
+                                                     <t t-if="line.iselec_remain=='yes'">
                                                     <input type="checkbox" id="oe_import_tracking" checked="checked"/>
                                                 </t>
-                                                <t t-if="not line.iselec_remain">
+                                                <t t-else="">
                                                     <input type="checkbox" id="oe_import_tracking"/>
                                                 </t>
-                                            </p>
+                                               </span>
                                         </td>
                                         <td class="text-right">
-                                            <span style="margin-left:1.5em;">لا يوجد</span>
-                                            <t t-if="line.isnotelec_remain">
+                                            <span style="margin-left:1.5em;">لا يوجد
+                                            <t t-if="line.iselec_remain=='no'">
                                                 <input type="checkbox" id="oe_import_tracking" checked="checked"/>
                                             </t>
-                                            <t t-if="not line.isnotelec_remain">
+                                            <t t-else="">
                                                 <input type="checkbox" id="oe_import_tracking"/>
-                                            </t>
+                                            </t></span>
                                         </td>
                                         <td class="text-right">
-                                            <span style="margin-left:1.5em;">تم السداد</span>
-                                            <t t-if="line.isnotelec_remain">
+                                            <span style="margin-left:1.5em;">تم السداد
+                                            <t t-if="line.iselec_paid=='yes'">
                                                 <input type="checkbox" id="oe_import_tracking" checked="checked"/>
                                             </t>
-                                            <t t-if="not line.isnotelec_remain">
+                                            <t t-else="">
                                                 <input type="checkbox" id="oe_import_tracking"/>
-                                            </t>
+                                            </t></span>
                                         </td>
                                         <td class="text-right">
-                                            <span style="margin-left:1.5em;">لم يتم السداد</span>
-                                            <t t-if="line.isnotelec_remain">
+                                            <span style="margin-left:1.5em;">لم يتم السداد
+                                            <t t-if="line.iselec_paid=='no'">
                                                 <input type="checkbox" id="oe_import_tracking" checked="checked"/>
                                             </t>
-                                            <t t-if="not line.isnotelec_remain">
+                                            <t t-else="">
                                                 <input type="checkbox" id="oe_import_tracking"/>
-                                            </t>
+                                            </t></span>
                                         </td>
 
                                     </tr>
                                     <tr>
-                                        <td class="text-right">رقم عداد المياه (..........)</td>
+                                        <td class="text-right">رقم عداد المياه:
+                                            <span t-esc="line.sale_order_line_id.product_id.unit_water"/>
+                                        </td>
                                         <td class="text-right">المبلغ المستحق:
-                                            <span t-field="line.relec_filter"/>
+                                            <span t-field="line.iswater_remain_amount"/>
                                         </td>
                                         <td class="text-right">
                                             <p>
                                                 <span style="margin-left:1.5em;">يوجد</span>
-                                                <t t-if="line.iselec_remain">
+                                                <t t-if="line.iswater_remain=='yes'">
                                                     <input type="checkbox" id="oe_import_tracking" checked="checked"/>
                                                 </t>
-                                                <t t-if="not line.iselec_remain">
+                                                <t t-else="">
                                                     <input type="checkbox" id="oe_import_tracking"/>
                                                 </t>
                                             </p>
                                         </td>
                                         <td class="text-right">
                                             <span style="margin-left:1.5em;">لا يوجد</span>
-                                            <t t-if="line.isnotelec_remain">
+                                            <t t-if="line.iswater_remain=='no'">
                                                 <input type="checkbox" id="oe_import_tracking" checked="checked"/>
                                             </t>
-                                            <t t-if="not line.isnotelec_remain">
+                                            <t t-else="">
                                                 <input type="checkbox" id="oe_import_tracking"/>
                                             </t>
                                         </td>
                                         <td class="text-right">
                                             <span style="margin-left:1.5em;">تم السداد</span>
-                                            <t t-if="line.isnotelec_remain">
+                                            <t t-if="line.iswater_paid=='yes'">
                                                 <input type="checkbox" id="oe_import_tracking" checked="checked"/>
                                             </t>
-                                            <t t-if="not line.isnotelec_remain">
+                                            <t t-else="">
                                                 <input type="checkbox" id="oe_import_tracking"/>
                                             </t>
                                         </td>
                                         <td class="text-right">
                                             <span style="margin-left:1.5em;">لم يتم السداد</span>
-                                            <t t-if="line.isnotelec_remain">
+                                            <t t-if="line.iswater_paid=='no'">
                                                 <input type="checkbox" id="oe_import_tracking" checked="checked"/>
                                             </t>
-                                            <t t-if="not line.isnotelec_remain">
+                                            <t t-else="">
                                                 <input type="checkbox" id="oe_import_tracking"/>
                                             </t>
                                         </td>
@@ -389,32 +389,32 @@
 
                                 <br/>
                                 <br/>
-                                    <div class="text-center">
-                                        <h2>خاص بالأدارة :</h2>
-                                    </div>
-                                    <table class="table">
-                                        <tr>
-                                            <td>قيمة الأيجار</td>
-                                            <td>
-                                                <span t-field="o.amount_total"/>
-                                            </td>
-                                            <td>بداية العقد</td>
-                                            <td>
-                                                <span t-field="o.date_order"/>
-                                            </td>
-                                              <td>التأمين المدفوع</td>
-                                            <td>
-                                                 <span t-field="line.sale_order_line_id.insurance_value"/>
-                                            </td>
-                                        </tr>
-                                    </table>
+                                <div class="text-center">
+                                    <h2>خاص بالأدارة :</h2>
+                                </div>
+                                <table class="table">
+                                    <tr>
+                                        <td>قيمة الأيجار</td>
+                                        <td>
+                                            <span t-field="o.amount_total"/>
+                                        </td>
+                                        <td>بداية العقد</td>
+                                        <td>
+                                            <span t-field="o.date_order"/>
+                                        </td>
+                                        <td>التأمين المدفوع</td>
+                                        <td>
+                                            <span t-field="line.sale_order_line_id.insurance_value"/>
+                                        </td>
+                                    </tr>
+                                </table>
 
                                 <br/>
-                              <div class="text-right" style="width: 80%;">
+                                <div class="text-right" style="width: 80%;">
                                     <p>الملاحظة :
-                                    <span t-field="line.rmanage_note"/>
-                                </p>
-                              </div>
+                                        <span t-field="line.rmanage_note"/>
+                                    </p>
+                                </div>
                                 <br/>
                                 <br/>
                                 <div>
@@ -424,7 +424,7 @@
                                         <span>..........</span>
                                     </div>
                                     <div style="width: 45%;">
-                                        <h3> مدير العقارات</h3>
+                                        <h3>مدير العقارات</h3>
                                         <br/>
                                         <span>..........</span>
                                     </div>

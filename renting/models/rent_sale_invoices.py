@@ -207,7 +207,9 @@ class RentSalestats(models.Model):
     water_bad = fields.Boolean('سئ')
     water_comment = fields.Char('حدد')
     elec_good = fields.Boolean('جيد')
+    is_elec_filter = fields.Selection([('yes', 'نعم'), ('no', 'لا')], string='تصفية العداد؟')
     elec_filter = fields.Char('تصفية عداد الكهرباء')
+    is_water_filter = fields.Selection([('yes', 'نعم'), ('no', 'لا')], string='تصفية العداد؟')
     water_filter = fields.Char('تصفية عداد المياه')
     elec_bad = fields.Boolean('سئ')
     elec_comment = fields.Char('حدد')
@@ -226,7 +228,9 @@ class RentSalestats(models.Model):
     relec_good = fields.Boolean('جيد')
     relec_bad = fields.Boolean('سئ')
     relec_comment = fields.Char('حدد')
+    return_is_elec_filter = fields.Selection([('yes', 'نعم'), ('no', 'لا')], string='تصفية العداد؟')
     relec_filter = fields.Char('تصفية عداد الكهرباء')
+    return_is_water_filter = fields.Selection([('yes', 'نعم'), ('no', 'لا')], string='تصفية العداد؟')
     rwater_filter = fields.Char('تصفية عداد المياه')
     customer_accept = fields.Boolean('نعم')
     customer_refused = fields.Boolean('لا')
@@ -241,5 +245,24 @@ class RentSalestats(models.Model):
     is_amount_rem = fields.Boolean('نعم')
     is_no_amount_rem = fields.Boolean('لا')
     amount_rem = fields.Float('المبلغ المتبقي')
-    iselec_remain = fields.Boolean('نعم')
+    iselec_remain = fields.Selection([('yes', 'يوجد'), ('no', 'لا يوجد')], string='مبلغ المستحق(كهرباء)')
     isnotelec_remain = fields.Boolean('لا')
+    iselec_paid = fields.Selection([('yes', 'تم السداد'), ('no', 'لم يتم')],
+                                   string='سداد مبلغ المستحق(كهرباء)')
+    elec_remain_amount = fields.Float('Electricity Remaining Amount')
+    iswater_remain = fields.Selection([('yes', 'يوجد'), ('no', 'لا يوجد')], string='مبلغ المستحق')
+    iswater_paid = fields.Selection([('yes', 'تم السداد'), ('no', 'لم يتم')],
+                                   string='سداد مبلغ المستحق')
+    iswater_remain_amount = fields.Float('Water Remaining Amount')
+
+    return_iselec_remain = fields.Selection([('yes', 'يوجد'), ('no', 'لا يوجد')], string='مبلغ المستحق(كهرباء)')
+    return_isnotelec_remain = fields.Boolean('لا')
+    return_iselec_paid = fields.Selection([('yes', 'تم السداد'), ('no', 'لم يتم')],
+                                   string='سداد مبلغ المستحق(كهرباء)')
+    return_elec_remain_amount = fields.Float('Electricity Remaining Amount')
+    return_iswater_remain = fields.Selection([('yes', 'يوجد'), ('no', 'لا يوجد')], string='مبلغ المستحق')
+    return_iswater_paid = fields.Selection([('yes', 'تم السداد'), ('no', 'لم يتم')],
+                                    string='سداد مبلغ المستحق')
+    return_iswater_remain_amount = fields.Float('Water Remaining Amount')
+
+

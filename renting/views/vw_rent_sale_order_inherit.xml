@@ -12,13 +12,13 @@
 
                 <xpath expr="//button[@name='%(sale.action_view_sale_advance_payment_inv)d'][1]" position="replace">
                     <button name="%(sale.action_view_sale_advance_payment_inv)d" string="Create Invoice"
-                        type="action" class="btn-primary"
-                        attrs="{'invisible': ['|',('invoice_status', '!=', 'to invoice'),('is_rental_order', '=', True)]}"/>
+                            type="action" class="btn-primary"
+                            attrs="{'invisible': ['|',('invoice_status', '!=', 'to invoice'),('is_rental_order', '=', True)]}"/>
                 </xpath>
                 <xpath expr="//button[@name='%(sale.action_view_sale_advance_payment_inv)d'][2]" position="replace">
                     <button name="%(sale.action_view_sale_advance_payment_inv)d" string="Create Invoice"
-                        type="action" context="{'default_advance_payment_method': 'percentage'}"
-                        attrs="{'invisible': ['|','|',('invoice_status', '!=', 'no'), ('state', '!=', 'sale'),('is_rental_order', '=', True)]}"/>
+                            type="action" context="{'default_advance_payment_method': 'percentage'}"
+                            attrs="{'invisible': ['|','|',('invoice_status', '!=', 'no'), ('state', '!=', 'sale'),('is_rental_order', '=', True)]}"/>
                 </xpath>
                 <xpath expr="//button[@name='action_cancel']" position="replace">
                     <button name="action_cancel" type="object" string="Cancel"
@@ -103,13 +103,15 @@
                             </tree>
                         </field>
                     </page>
-                    <page name="property_stats" string="حالة الوحدات" attrs="{'invisible':[('rental_status','not in', ['pickup','return'])]}">
-                        <field name="order_property_state" widget="section_and_note_one2many" mode="tree,form" context="{'default_sale_order': active_id}">
+                    <page name="property_stats" string="حالة الوحدات"
+                          attrs="{'invisible':[('rental_status','not in', ['pickup','return'])]}">
+                        <field name="order_property_state" widget="section_and_note_one2many" mode="tree,form"
+                               context="{'default_sale_order': active_id}">
                             <form>
                                 <group>
                                     <field name="sale_order" invisible="1"/>
                                     <field name="sale_order_line_id"/>
-<!--                                    <field name="product_id"/>-->
+                                    <!--                                    <field name="product_id"/>-->
                                 </group>
                                 <notebook>
                                     <page name="pickup_contract" string="التسليم">
@@ -138,11 +140,51 @@
                                                 <field name="elec_good"/>
                                                 <field name="elec_bad"/>
                                                 <field name="elec_comment"/>
-                                                <field name="elec_filter"/>
-                                                <field name="water_filter"/>
                                             </group>
-                                            <group string="الملاجظات">
+                                            <group string="تصفية عداد الكهرباء">
+                                                <field name="return_is_elec_filter" widget="radio"
+                                                       options="{'horizontal': true}"/>
+                                                <label for="return_iselec_paid" string="مبلغ المستحق"/>
+                                                <div>
+                                                    <div class="o_row o_row_readonly">
+                                                        <field name="return_elec_remain_amount" class="oe_inline"
+                                                               options="{'horizontal': True}"/>
+
+                                                        <span class="oe_inline">
+                                                            <field name="return_iselec_remain" widget="radio"
+                                                                   options="{'horizontal': true}"/>
+                                                        </span>
+                                                        <field name="return_iselec_paid" widget="radio"
+                                                               options="{'horizontal': true}"/>
+                                                    </div>
+
+                                                </div>
+                                                <field name="elec_filter"/>
+                                            </group>
+                                              <group string="الملاجظات">
                                                 <field name="notes"/>
+                                            </group>
+
+                                             <group string="تصفية عداد المياه">
+<!--                                                <field name="return_is_water_filter" widget="radio"-->
+<!--                                                       options="{'horizontal': true}"/>-->
+                                                <label for="return_iswater_paid" string="مبلغ المستحق"/>
+                                                <div>
+                                                    <div class="o_row o_row_readonly">
+                                                        <field name="return_iswater_remain_amount" class="oe_inline"
+                                                               string="In"
+                                                               options="{'horizontal': True}"/>
+
+                                                        <span class="oe_inline">
+                                                            <field name="return_iswater_remain" widget="radio"
+                                                                   options="{'horizontal': true}"/>
+                                                        </span>
+                                                        <field name="return_iswater_paid" widget="radio"
+                                                               options="{'horizontal': true}"/>
+                                                    </div>
+
+                                                </div>
+                                                <field name="elec_filter"/>
                                             </group>
                                             <group string="موافق العميل بالسكن">
                                                 <field name="customer_accept"/>
@@ -198,13 +240,51 @@
                                                 <field name="amount_rem" style="width:15%"/>
                                             </group>
                                             <group string="تصفية عداد الكهرباء">
-                                                <field name="iselec_remain"/>
-                                                <field name="isnotelec_remain"/>
+                                                <field name="is_elec_filter" widget="radio"
+                                                       options="{'horizontal': true}"/>
+                                                <!--                                                <field name="isnotelec_remain"/>-->
+                                                <label for="iselec_paid" string="مبلغ المستحق"/>
+                                                <div>
+                                                    <div class="o_row o_row_readonly">
+                                                        <field name="elec_remain_amount" class="oe_inline" string="In"
+                                                               options="{'horizontal': True}"/>
+
+                                                        <span class="oe_inline">
+                                                            <field name="iselec_remain" widget="radio"
+                                                                   options="{'horizontal': true}"/>
+                                                        </span>
+                                                        <field name="iselec_paid" widget="radio"
+                                                               options="{'horizontal': true}"/>
+                                                        <span class="oe_inline"/>
+                                                    </div>
+
+                                                </div>
                                                 <field name="relec_filter"/>
-                                                <field name="rwater_filter"/>
                                             </group>
+
                                             <group string="ملاحظة">
                                                 <field name="rmanage_note"/>
+                                            </group>
+                                            <group string="تصفية عداد المياه">
+<!--                                                <field name="is_water_filter" widget="radio"-->
+<!--                                                       options="{'horizontal': true}"/>-->
+                                                <label for="iswater_paid" string="مبلغ المستحق"/>
+                                                <div>
+                                                    <div class="o_row o_row_readonly">
+                                                        <field name="iswater_remain_amount" class="oe_inline"
+                                                               string="In"
+                                                               options="{'horizontal': True}"/>
+
+                                                        <span class="oe_inline">
+                                                            <field name="iswater_remain" widget="radio"
+                                                                   options="{'horizontal': true}"/>
+                                                        </span>
+                                                        <field name="iswater_paid" widget="radio"
+                                                               options="{'horizontal': true}"/>
+                                                    </div>
+
+                                                </div>
+                                                <field name="rwater_filter"/>
                                             </group>
                                         </group>
                                     </page>
@@ -218,11 +298,11 @@
                         </field>
                     </page>
                 </xpath>
-              <!--   <xpath expr="//field[@name='amount_total']" position="after">
-                    <field name="amount_remain" class="oe_subtotal_footer_separator" widget="monetary"
-                           options="{'currency_field': 'currency_id'}"/>
+                <!--   <xpath expr="//field[@name='amount_total']" position="after">
+                      <field name="amount_remain" class="oe_subtotal_footer_separator" widget="monetary"
+                             options="{'currency_field': 'currency_id'}"/>
 
-                </xpath> -->
+                  </xpath> -->
                 <xpath expr="//div[@name='button_box']" position="after">
                     <!--                    <div class="row float-right">-->
                     <div class="badge-pill badge-info float-right"

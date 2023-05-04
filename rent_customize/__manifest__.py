@@ -16,6 +16,7 @@
         'views/sale_rental_schedule.xml',
         'views/attachment.xml',
         'views/move.xml',
+        'views/rent_letter_template.xml',
         'report/contract.xml',
         'report/transfer.xml',
     ]

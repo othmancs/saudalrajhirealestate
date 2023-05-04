@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="rent_value_update_tree">
+            <field name="name">rental.letter.template.tree</field>
+            <field name="model">rental.letter.template</field>
+            <field name="arch" type="xml">
+                <tree string="Rental Value Update">
+                    <field name="subject"/>
+                </tree>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="rent_value_update_form">
+            <field name="name">rental.letter.template.form</field>
+            <field name="model">rental.letter.template</field>
+            <field name="arch" type="xml">
+                <form string="">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="subject"/>
+                                <field name="unit_number"/>
+                                <field name="neighborhood"/>
+                            </group>
+                            <group>
+                                <field name="contract_id" required="1"/>
+                                <field name="contract_date"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+         <record model="ir.actions.act_window" id="rent_letter_template">
+            <field name="name">Templates</field>
+            <field name="res_model">rental.letter.template</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+         <menuitem id="rent_rental_letter_templates_menu"
+                  parent="sale_renting.rental_menu_root" name="Templates"
+                  sequence="6"/>
+         <menuitem name="Rental Value Update" id="rent_rental_value_update_menu"
+                  parent="rent_rental_letter_templates_menu"
+                  action="rent_letter_template"
+                  sequence="1"/>
+    </data>
+</odoo>

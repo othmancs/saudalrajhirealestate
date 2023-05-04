@@ -49,8 +49,8 @@
 
                                <table class="table table-bordered">
                                     <tr>
-                                        <th scope="row" class="text-center">حالة الأبواب</th>
-                                        <td>
+                                        <th scope="row" class="text-center" style="padding:0px;">حالة الأبواب</th>
+                                        <td style="padding:0px;">
                                             <p>
                                                 <span style="margin-left:1.5em;">جيد</span>
                                                 <t t-if="line.rdoor_good">
@@ -61,7 +61,7 @@
                                                 </t>
                                             </p>
                                         </td>
-                                        <td>
+                                        <td style="padding:0px;">
                                             <span style="margin-left:1.5em;">سئ</span>
 
                                             <t t-if="line.rdoor_bad">
@@ -71,17 +71,17 @@
                                                 <input type="checkbox" id="oe_import_tracking"/>
                                             </t>
                                         </td>
-                                        <td>
+                                        <td style="padding:0px;">
                                             <p style="margin-left:1.5em;">حدد :
                                                 <span t-field="line.rdoor_comment"/>
                                             </p>
                                         </td>
-                                        <td>الملاحظات</td>
+                                        <td style="padding:0px;">الملاحظات</td>
 
                                     </tr>
                                     <tr>
-                                        <th scope="row" class="text-center">الحائط</th>
-                                        <td>
+                                        <th scope="row" class="text-center" style="padding:0px;">الحائط</th>
+                                        <td style="padding:0px;">
                                             <p>
                                                 <span style="margin-left:1.5em;">جيد</span>
                                                 <t t-if="line.rwall_good">
@@ -92,7 +92,7 @@
                                                 </t>
                                             </p>
                                         </td>
-                                        <td>
+                                        <td style="padding:0px;">
                                             <span style="margin-left:1.5em;">سئ</span>
                                             <t t-if="line.rwall_bad">
                                                 <input type="checkbox" id="oe_import_tracking" checked="checked"/>
@@ -101,7 +101,7 @@
                                                 <input type="checkbox" id="oe_import_tracking"/>
                                             </t>
                                         </td>
-                                        <td>
+                                        <td style="padding:0px;">
                                             <p style="margin-left:1.5em;">حدد :
                                                 <span t-field="line.rwall_comment"/>
                                             </p>
@@ -109,8 +109,8 @@
                                         <td>الملاحظات</td>
                                     </tr>
                                     <tr>
-                                        <th scope="row" class="text-center">النوافذ</th>
-                                        <td>
+                                        <th scope="row" class="text-center" style="padding:0px;">النوافذ</th>
+                                        <td style="padding:0px;">
                                             <span style="margin-left:1.5em;">جيد</span>
                                             <t t-if="line.rwindow_good">
                                                 <input type="checkbox" id="oe_import_tracking" checked="checked"/>
@@ -119,7 +119,7 @@
                                                 <input type="checkbox" id="oe_import_tracking"/>
                                             </t>
                                         </td>
-                                        <td>
+                                        <td style="padding:0px;">
                                             <span style="margin-left:1.5em;">سئ</span>
                                             <t t-if="line.rwindow_bad">
                                                 <input type="checkbox" id="oe_import_tracking" checked="checked"/>
@@ -128,16 +128,16 @@
                                                 <input type="checkbox" id="oe_import_tracking"/>
                                             </t>
                                         </td>
-                                        <td>
+                                        <td style="padding:0px;">
                                             <p style="margin-left:1.5em;">حدد :
                                                 <span t-field="line.rwindow_comment"/>
                                             </p>
                                         </td>
-                                        <td>الملاحظات</td>
+                                        <td style="padding:0px;">الملاحظات</td>
                                     </tr>
                                     <tr>
-                                        <th scope="row" class="text-center">السباكة</th>
-                                        <td>
+                                        <th scope="row" class="text-center" style="padding:0px;">السباكة</th>
+                                        <td style="padding:0px;">
                                             <span style="margin-left:1.5em;">جيد</span>
                                             <t t-if="line.rwater_good">
                                                 <input type="checkbox" id="oe_import_tracking" checked="checked"/>
@@ -146,7 +146,7 @@
                                                 <input type="checkbox" id="oe_import_tracking"/>
                                             </t>
                                         </td>
-                                        <td>
+                                        <td style="padding:0px;">
                                             <span style="margin-left:1.5em;">سئ</span>
                                             <t t-if="line.rwater_bad">
                                                 <input type="checkbox" id="oe_import_tracking" checked="checked"/>
@@ -155,7 +155,7 @@
                                                 <input type="checkbox" id="oe_import_tracking"/>
                                             </t>
                                         </td>
-                                        <td>
+                                        <td style="padding:0px;">
                                             <p style="margin-left:1.5em;">حدد :
                                                 <span t-field="line.rwater_comment"/>
                                             </p>
@@ -163,7 +163,7 @@
                                         <td>الملاحظات</td>
                                     </tr>
                                     <tr>
-                                        <th scope="row" class="text-center">الكهرباء</th>
+                                        <th scope="row" class="text-center" style="padding:0px;">الكهرباء</th>
                                         <td>
                                             <span style="margin-left:1.5em;">جيد</span>
                                             <t t-if="line.relec_good">
@@ -173,7 +173,7 @@
                                                 <input type="checkbox" id="oe_import_tracking"/>
                                             </t>
                                         </td>
-                                        <td>
+                                        <td style="padding:0px;">
                                             <span style="margin-left:1.5em;">سئ</span>
                                             <t t-if="line.relec_bad">
                                                 <input type="checkbox" id="oe_import_tracking" checked="checked"/>
@@ -182,7 +182,7 @@
                                                 <input type="checkbox" id="oe_import_tracking"/>
                                             </t>
                                         </td>
-                                        <td>
+                                        <td style="padding:0px;">
                                             <p style="margin-left:1.5em;">حدد :
                                                 <span t-field="line.relec_comment"/>
                                             </p>
@@ -192,26 +192,26 @@
                                 </table>
                                 <br/>
 
-                                <table class="table border-none">
+                                <table class="table" style="border-collapse: collapse;">
                                     <tr>
-                                        <th scope="row" class="text-right">موافقة العميل بالتسليم</th>
-                                        <td class="text-right">
+                                        <th scope="row" class="text-right" style="border: none;">موافقة العميل بالتسليم</th>
+                                        <td class="text-right" style="border: none;">
                                             <p>
                                                 <span style="margin-left:1.5em;">نعم</span>
                                                 <input type="checkbox" id="oe_import_tracking"/>
                                             </p>
                                         </td>
-                                        <td class="text-right">
+                                        <td class="text-right" style="border: none;">
                                             <span style="margin-left:1.5em;">لا</span>
                                             <input type="checkbox" id="oe_import_tracking"/>
                                         </td>
 
-                                        <td class="text-center">التوقيع: ...............</td>
+                                        <td class="text-center" style="border: none;">التوقيع: ...............</td>
 
                                     </tr>
                                     <tr>
-                                        <th scope="row" class="text-right">يوجد مستحقات للمؤجر</th>
-                                        <td class="text-right">
+                                        <th scope="row" class="text-right" style="border: none;">يوجد مستحقات للمؤجر</th>
+                                        <td class="text-right" style="border: none;">
                                             <p>
                                                 <span style="margin-left:1.5em;">نعم</span>
                                                 <t t-if="line.is_cost">
@@ -222,7 +222,7 @@
                                                 </t>
                                             </p>
                                         </td>
-                                        <td class="text-right">
+                                        <td class="text-right" style="border: none;">
                                             <span style="margin-left:1.5em;">لا</span>
                                             <t t-if="line.is_no_cost">
                                                 <input type="checkbox" id="oe_import_tracking" checked="checked"/>
@@ -232,12 +232,12 @@
                                             </t>
                                         </td>
 
-                                        <td class="text-center">التوقيع: ...............</td>
+                                        <td class="text-center" style="border: none;">التوقيع: ...............</td>
 
                                     </tr>
                                     <tr>
-                                        <th scope="row" class="text-right">المبلغ المتبقي للمستأجر</th>
-                                        <td class="text-right">
+                                        <th scope="row" class="text-right" style="border: none;">المبلغ المتبقي للمستأجر</th>
+                                        <td class="text-right" style="border: none;">
                                             <p>
                                                 <span style="margin-left:1.5em;">نعم</span>
                                                 <t t-if="line.is_amount_rem">
@@ -248,7 +248,7 @@
                                                 </t>
                                             </p>
                                         </td>
-                                        <td class="text-right">
+                                        <td class="text-right" style="border: none;">
                                             <span style="margin-left:1.5em;">لا</span>
                                             <t t-if="line.is_no_amount_rem">
                                                 <input type="checkbox" id="oe_import_tracking" checked="checked"/>
@@ -258,7 +258,7 @@
                                             </t>
                                         </td>
 
-                                        <td class="text-center">التوقيع: ...............</td>
+                                        <td class="text-center" style="border: none;">التوقيع: ...............</td>
 
                                     </tr>
                                 </table>
@@ -267,118 +267,116 @@
                                 <table class="table border-none">
                                     <tr>
                                         <th scope="row" class="text-right">تصفية عداد الكهرباء</th>
-                                        <td class="text-right">
+                                        <td class="text-right" style="width:50%;">
                                             <p>
                                                 <span style="margin-left:1.5em;">نعم</span>
-                                                <t t-if="line.iselec_remain">
+                                                <t t-if="line.return_is_elec_filter=='yes'">
                                                     <input type="checkbox" id="oe_import_tracking" checked="checked"/>
                                                 </t>
-                                                <t t-if="not line.iselec_remain">
+                                                <t t-else="">
+                                                    <input type="checkbox" id="oe_import_tracking"/>
+                                                </t>
+                                                <span style="margin-left:1.5em;">لا</span>
+                                                <t t-if="line.return_is_elec_filter=='no'">
+                                                    <input type="checkbox" id="oe_import_tracking" checked="checked"/>
+                                                </t>
+                                                <t t-else="">
                                                     <input type="checkbox" id="oe_import_tracking"/>
                                                 </t>
                                             </p>
-                                        </td>
-                                        <td class="text-right">
-                                            <span style="margin-left:1.5em;">لا</span>
-                                            <t t-if="line.isnotelec_remain">
-                                                <input type="checkbox" id="oe_import_tracking" checked="checked"/>
-                                            </t>
-                                            <t t-if="not line.isnotelec_remain">
-                                                <input type="checkbox" id="oe_import_tracking"/>
-                                            </t>
                                         </td>
 
                                         <td class="text-center">التوقيع: ...............</td>
 
                                     </tr>
                                     <tr>
-                                        <td class="text-right">رقم عداد الكهرباء (..........)</td>
+                                        <td class="text-right">رقم عداد الكهرباء:  <span t-esc="line.sale_order_line_id.product_id.unit_electricity"/></td>
                                         <td class="text-right">المبلغ المستحق:
-                                            <span t-field="line.relec_filter"/>
+                                            <span t-field="line.return_elec_remain_amount"/>
                                         </td>
                                         <td class="text-right">
-                                            <p>
-                                                <span style="margin-left:1.5em;">يوجد</span>
-                                                <t t-if="line.iselec_remain">
+                                                <span style="margin-left:1.5em;">يوجد
+                                                     <t t-if="line.return_iselec_remain=='yes'">
                                                     <input type="checkbox" id="oe_import_tracking" checked="checked"/>
                                                 </t>
-                                                <t t-if="not line.iselec_remain">
+                                                <t t-else="">
                                                     <input type="checkbox" id="oe_import_tracking"/>
                                                 </t>
-                                            </p>
+                                               </span>
                                         </td>
                                         <td class="text-right">
-                                            <span style="margin-left:1.5em;">لا يوجد</span>
-                                            <t t-if="line.isnotelec_remain">
+                                            <span style="margin-left:1.5em;">لا يوجد
+                                            <t t-if="line.return_iselec_remain=='no'">
                                                 <input type="checkbox" id="oe_import_tracking" checked="checked"/>
                                             </t>
-                                            <t t-if="not line.isnotelec_remain">
+                                            <t t-else="">
                                                 <input type="checkbox" id="oe_import_tracking"/>
-                                            </t>
+                                            </t></span>
                                         </td>
                                         <td class="text-right">
-                                            <span style="margin-left:1.5em;">تم السداد</span>
-                                            <t t-if="line.isnotelec_remain">
+                                            <span style="margin-left:1.5em;">تم السداد
+                                            <t t-if="line.return_iselec_paid=='yes'">
                                                 <input type="checkbox" id="oe_import_tracking" checked="checked"/>
                                             </t>
-                                            <t t-if="not line.isnotelec_remain">
+                                            <t t-else="">
                                                 <input type="checkbox" id="oe_import_tracking"/>
-                                            </t>
+                                            </t></span>
                                         </td>
                                         <td class="text-right">
-                                            <span style="margin-left:1.5em;">لم يتم السداد</span>
-                                            <t t-if="line.isnotelec_remain">
+                                            <span style="margin-left:1.5em;">لم يتم السداد
+                                            <t t-if="line.return_iselec_paid=='no'">
                                                 <input type="checkbox" id="oe_import_tracking" checked="checked"/>
                                             </t>
-                                            <t t-if="not line.isnotelec_remain">
+                                            <t t-else="">
                                                 <input type="checkbox" id="oe_import_tracking"/>
-                                            </t>
+                                            </t></span>
                                         </td>
 
                                     </tr>
                                     <tr>
-                                        <td class="text-right">رقم عداد المياه (..........)</td>
-                                        <td class="text-right">المبلغ المستحق:
-                                            <span t-field="line.relec_filter"/>
+                                        <td class="text-right">رقم عداد المياه:   <span t-esc="line.sale_order_line_id.product_id.unit_water"/></td>
+                                       <td class="text-right">المبلغ المستحق:
+                                            <span t-field="line.return_iswater_remain_amount"/>
                                         </td>
                                         <td class="text-right">
                                             <p>
                                                 <span style="margin-left:1.5em;">يوجد</span>
-                                                <t t-if="line.iselec_remain">
+                                                <t t-if="line.return_iswater_remain=='yes'">
                                                     <input type="checkbox" id="oe_import_tracking" checked="checked"/>
                                                 </t>
-                                                <t t-if="not line.iselec_remain">
+                                                <t t-else="">
                                                     <input type="checkbox" id="oe_import_tracking"/>
                                                 </t>
                                             </p>
                                         </td>
                                         <td class="text-right">
                                             <span style="margin-left:1.5em;">لا يوجد</span>
-                                            <t t-if="line.isnotelec_remain">
+                                            <t t-if="line.return_iswater_remain=='no'">
                                                 <input type="checkbox" id="oe_import_tracking" checked="checked"/>
                                             </t>
-                                            <t t-if="not line.isnotelec_remain">
+                                            <t t-else="">
                                                 <input type="checkbox" id="oe_import_tracking"/>
                                             </t>
                                         </td>
                                         <td class="text-right">
                                             <span style="margin-left:1.5em;">تم السداد</span>
-                                            <t t-if="line.isnotelec_remain">
+                                            <t t-if="line.return_iswater_paid=='yes'">
                                                 <input type="checkbox" id="oe_import_tracking" checked="checked"/>
                                             </t>
-                                            <t t-if="not line.isnotelec_remain">
+                                            <t t-else="">
                                                 <input type="checkbox" id="oe_import_tracking"/>
                                             </t>
                                         </td>
                                         <td class="text-right">
                                             <span style="margin-left:1.5em;">لم يتم السداد</span>
-                                            <t t-if="line.isnotelec_remain">
+                                            <t t-if="line.return_iswater_paid=='no'">
                                                 <input type="checkbox" id="oe_import_tracking" checked="checked"/>
                                             </t>
-                                            <t t-if="not line.isnotelec_remain">
+                                            <t t-else="">
                                                 <input type="checkbox" id="oe_import_tracking"/>
                                             </t>
                                         </td>
+
 
                                     </tr>
                                 </table>

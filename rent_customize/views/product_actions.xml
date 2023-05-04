@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="sale.product_template_action" model="ir.actions.act_window">
+        <field name="context">{ 'search_default_filter_to_not_rent': True,}</field>
+    </record>
+<!--    <record id="product.product_normal_action_sell" model="ir.actions.act_window">-->
+<!--        <field name="domain">[('rent_ok', '=', False)]</field>-->
+<!--    </record>-->
+<!--    <record id="purchase.product_normal_action_puchased" model="ir.actions.act_window">-->
+<!--        <field name="domain">[('rent_ok', '=', False)]</field>-->
+<!--    </record>-->
+<!--    <record id="product.product_normal_action_sell" model="ir.actions.act_window">-->
+<!--        <field name="domain">[('rent_ok', '=', False)]</field>-->
+<!--    </record>-->
+<!--    <record id="account.product_product_action_sellable" model="ir.actions.act_window">-->
+<!--        <field name="domain">[('rent_ok', '=', False)]</field>-->
+<!--    </record>-->
+</odoo>
