@@ -7,39 +7,20 @@
         web_icon="stock_request,static/description/icon.png"
         sequence="100"
     />
-    <menuitem
-        id="menu_stock_request_operations"
-        parent="menu_stock_request_root"
-        name="Operations"
-        sequence="10"
-    />
-    <menuitem
-        id="stock_request_order_menu"
-        name="Stock Request Orders"
-        parent="menu_stock_request_operations"
-        action="stock_request_order_action"
-        groups="group_stock_request_order"
-        sequence="20"
-    />
+
     <menuitem
         id="menu_stock_request"
-        action="action_stock_request_form"
+        action="action_request_quantities_form"
         name="Stock Requests"
-        parent="menu_stock_request_operations"
+        parent="menu_stock_request_root"
         sequence="30"
     />
-    <menuitem
-        id="menu_stock_request_master_data"
-        parent="menu_stock_request_root"
-        name="Master Data"
-        sequence="100"
-    />
-    <menuitem
-        id="menu_stock_request_master_data"
-        parent="menu_stock_request_root"
-        name="Master Data"
-        sequence="100"
-    />
+   <menuitem id="menu_request_quantities_line"
+              name="Request Quantities"
+              parent="menu_stock_request_root"
+              action="action_request_quantities_report"
+                     sequence="31"
+              />
     <menuitem
         id="menu_stock_request_config"
         name="Settings"

@@ -17,7 +17,7 @@ class StockPicking(models.Model):
 
     @api.onchange("picking_type_id", "partner_id")
     def onchange_picking_type(self):
-        res = super(StockPicking, self).onchange_picking_type()
+        res = super(StockPicking, self)._onchange_picking_type()
         if self.picking_type_id:
             unit = self.picking_type_id.warehouse_id.operating_unit_id
             self.operating_unit_id = unit

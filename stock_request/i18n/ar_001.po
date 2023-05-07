@@ -1,0 +1,519 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_request
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 15.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-12-26 00:50+0000\n"
+"PO-Revision-Date: 2021-12-26 00:50+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: stock_request
+#: model:ir.model.fields,field_description:stock_request.field_stock_request_line__available_qty
+msgid "Available Qty"
+msgstr ""
+
+#. module: stock_request
+#: model_terms:ir.ui.view,arch_db:stock_request.action_product_sale_history_view
+msgid "Cancel"
+msgstr ""
+
+#. module: stock_request
+#: model_terms:ir.actions.act_window,help:stock_request.action_request_quantities_form
+msgid "Click to create a new order."
+msgstr ""
+
+#. module: stock_request
+#: model:ir.model.fields,field_description:stock_request.field_stock_request__company_id
+#: model:ir.model.fields,field_description:stock_request.field_stock_request_line__company_id
+msgid "Company"
+msgstr ""
+
+#. module: stock_request
+#: model:ir.model,name:stock_request.model_res_config_settings
+msgid "Config Settings"
+msgstr "ضبط الاعدادات"
+
+#. module: stock_request
+#: model_terms:ir.ui.view,arch_db:stock_request.view_request_quantities_form
+msgid "Confirm"
+msgstr ""
+
+#. module: stock_request
+#: model:ir.model.fields.selection,name:stock_request.selection__stock_request__state__confirmed
+#: model_terms:ir.ui.view,arch_db:stock_request.view_stock_request_filter
+msgid "Confirmed"
+msgstr ""
+
+#. module: stock_request
+#: model_terms:ir.ui.view,arch_db:stock_request.view_request_quantities_line_search
+msgid "Confirmed Orders"
+msgstr ""
+
+#. module: stock_request
+#: model_terms:ir.ui.view,arch_db:stock_request.view_stock_request_filter
+msgid "Confirmed Stock Requests"
+msgstr ""
+
+#. module: stock_request
+#: model_terms:ir.ui.view,arch_db:stock_request.view_request_quantities_form
+msgid "Create Picking"
+msgstr ""
+
+#. module: stock_request
+#: model:ir.model.fields,field_description:stock_request.field_product_pending_orders__create_uid
+#: model:ir.model.fields,field_description:stock_request.field_stock_request__create_uid
+#: model:ir.model.fields,field_description:stock_request.field_stock_request_line__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: stock_request
+#: model:ir.model.fields,field_description:stock_request.field_product_pending_orders__create_date
+#: model:ir.model.fields,field_description:stock_request.field_stock_request__create_date
+#: model:ir.model.fields,field_description:stock_request.field_stock_request_line__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: stock_request
+#: model:ir.model.fields,field_description:stock_request.field_stock_request__partner_id
+#: model:ir.model.fields,field_description:stock_request.field_stock_request_line__partner_id
+#: model_terms:ir.ui.view,arch_db:stock_request.view_request_quantities_line_search
+msgid "Customer"
+msgstr ""
+
+#. module: stock_request
+#: model_terms:ir.ui.view,arch_db:stock_request.view_stock_request_filter
+msgid "Date"
+msgstr ""
+
+#. module: stock_request
+#: model:ir.model.fields,field_description:stock_request.field_stock_request__location_dest_id
+#: model:ir.model.fields,field_description:stock_request.field_stock_request_line__location_dest_id
+#: model_terms:ir.ui.view,arch_db:stock_request.view_stock_request_filter
+msgid "Destination Location"
+msgstr ""
+
+#. module: stock_request
+#: model:ir.model.fields,field_description:stock_request.field_stock_request_line__notice
+msgid "Discount Notice"
+msgstr ""
+
+#. module: stock_request
+#: model:ir.model.fields,field_description:stock_request.field_product_pending_orders__display_name
+#: model:ir.model.fields,field_description:stock_request.field_stock_request__display_name
+#: model:ir.model.fields,field_description:stock_request.field_stock_request_line__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: stock_request
+#: model_terms:ir.ui.view,arch_db:stock_request.view_request_quantities_line_search
+msgid "Done/Transferred Orders"
+msgstr ""
+
+#. module: stock_request
+#: model_terms:ir.ui.view,arch_db:stock_request.view_stock_request_filter
+msgid "Draft"
+msgstr ""
+
+#. module: stock_request
+#: model_terms:ir.ui.view,arch_db:stock_request.view_request_quantities_line_search
+msgid "Draft Orders"
+msgstr ""
+
+#. module: stock_request
+#: model_terms:ir.ui.view,arch_db:stock_request.view_stock_request_filter
+msgid "Draft Stock Requests"
+msgstr ""
+
+#. module: stock_request
+#: model:ir.model.fields,field_description:stock_request.field_stock_request__employee_id
+#: model:ir.model.fields,field_description:stock_request.field_stock_request_line__employee_id
+#: model_terms:ir.ui.view,arch_db:stock_request.view_request_quantities_line_search
+msgid "Employee"
+msgstr ""
+
+#. module: stock_request
+#: model:ir.model.fields,field_description:stock_request.field_stock_request__fiscal_position_id
+msgid "Fiscal Position"
+msgstr ""
+
+#. module: stock_request
+#: model:ir.model.fields,field_description:stock_request.field_stock_request__fully_transfered
+msgid "Fully Transfered"
+msgstr ""
+
+#. module: stock_request
+#: model_terms:ir.ui.view,arch_db:stock_request.view_request_quantities_line_search
+#: model_terms:ir.ui.view,arch_db:stock_request.view_stock_request_filter
+msgid "Group By"
+msgstr ""
+
+#. module: stock_request
+#: model_terms:ir.ui.view,arch_db:stock_request.view_request_quantities_form
+msgid "History"
+msgstr ""
+
+#. module: stock_request
+#: model:ir.model.fields,field_description:stock_request.field_product_pending_orders__id
+#: model:ir.model.fields,field_description:stock_request.field_stock_request__id
+#: model:ir.model.fields,field_description:stock_request.field_stock_request_line__id
+msgid "ID"
+msgstr ""
+
+#. module: stock_request
+#: model:ir.model.fields,field_description:stock_request.field_stock_request__note
+msgid "Internal Notes"
+msgstr ""
+
+#. module: stock_request
+#: model_terms:ir.ui.view,arch_db:stock_request.view_request_quantities_form
+msgid "Inventory"
+msgstr ""
+
+#. module: stock_request
+#: model_terms:ir.ui.view,arch_db:stock_request.view_request_quantities_form
+msgid "Inventory Info"
+msgstr ""
+
+#. module: stock_request
+#: model:ir.model.fields,field_description:stock_request.field_product_pending_orders____last_update
+#: model:ir.model.fields,field_description:stock_request.field_stock_request____last_update
+#: model:ir.model.fields,field_description:stock_request.field_stock_request_line____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: stock_request
+#: model:ir.model.fields,field_description:stock_request.field_product_pending_orders__write_uid
+#: model:ir.model.fields,field_description:stock_request.field_stock_request__write_uid
+#: model:ir.model.fields,field_description:stock_request.field_stock_request_line__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: stock_request
+#: model:ir.model.fields,field_description:stock_request.field_product_pending_orders__write_date
+#: model:ir.model.fields,field_description:stock_request.field_stock_request__write_date
+#: model:ir.model.fields,field_description:stock_request.field_stock_request_line__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: stock_request
+#: model:ir.model.fields,field_description:stock_request.field_stock_request_line__name
+msgid "Line No"
+msgstr ""
+
+#. module: stock_request
+#: model:ir.model,name:stock_request.model_stock_request_line
+msgid "Lines of stock request"
+msgstr ""
+
+#. module: stock_request
+#: model:res.groups,name:stock_request.group_stock_request_manager
+msgid "Manager"
+msgstr ""
+
+#. module: stock_request
+#: model:ir.model.fields.selection,name:stock_request.selection__stock_request__state__draft
+msgid "New"
+msgstr ""
+
+#. module: stock_request
+#: model_terms:ir.ui.view,arch_db:stock_request.view_request_quantities_form
+msgid "Notes"
+msgstr ""
+
+#. module: stock_request
+#: model:ir.model.fields,field_description:stock_request.field_res_config_settings__picking_type_id
+#: model:ir.model.fields,field_description:stock_request.field_stock_request__picking_type_id
+msgid "Operation Type"
+msgstr ""
+
+#. module: stock_request
+#: model_terms:ir.ui.view,arch_db:stock_request.view_request_quantities_line_search
+msgid "Order"
+msgstr ""
+
+#. module: stock_request
+#: model:ir.model.fields,field_description:stock_request.field_stock_request__date_order
+#: model:ir.model.fields,field_description:stock_request.field_stock_request_line__date_order
+#: model_terms:ir.ui.view,arch_db:stock_request.view_request_quantities_line_search
+msgid "Order Date"
+msgstr ""
+
+#. module: stock_request
+#: model:ir.model.fields,field_description:stock_request.field_stock_request__lines
+msgid "Order Lines"
+msgstr ""
+
+#. module: stock_request
+#: model:ir.model.fields,field_description:stock_request.field_stock_request__name
+#: model:ir.model.fields,field_description:stock_request.field_stock_request_line__order_id
+msgid "Order Ref"
+msgstr ""
+
+#. module: stock_request
+#: model_terms:ir.ui.view,arch_db:stock_request.view_request_quantities_form
+msgid "Order lines"
+msgstr ""
+
+#. module: stock_request
+#: model_terms:ir.ui.view,arch_db:stock_request.res_config_settings_view_form
+msgid "Orders &amp; Configuration"
+msgstr ""
+
+#. module: stock_request
+#: model:ir.model.fields.selection,name:stock_request.selection__stock_request_line__transfer_status__partially
+msgid "Partially Transfer"
+msgstr ""
+
+#. module: stock_request
+#: model_terms:ir.ui.view,arch_db:stock_request.action_product_sale_history_view
+msgid "Pending Requests Table"
+msgstr ""
+
+#. module: stock_request
+#: model:ir.model.fields,field_description:stock_request.field_stock_request__delivery_count
+msgid "Picking Orders"
+msgstr ""
+
+#. module: stock_request
+#: model:ir.model.fields,field_description:stock_request.field_stock_request__picking_ids
+msgid "Pickings"
+msgstr ""
+
+#. module: stock_request
+#: model:ir.model.fields,field_description:stock_request.field_stock_request_line__product_id
+#: model_terms:ir.ui.view,arch_db:stock_request.view_request_quantities_line_search
+msgid "Product"
+msgstr ""
+
+#. module: stock_request
+#: model:ir.model.fields,field_description:stock_request.field_product_pending_orders__product_pending_order_ids
+msgid "Product Pending Orders"
+msgstr ""
+
+#. module: stock_request
+#: model_terms:ir.ui.view,arch_db:stock_request.action_product_sale_history_view
+msgid "Product Pending Requests"
+msgstr ""
+
+#. module: stock_request
+#: model:ir.actions.act_window,name:stock_request.action_product_sale_history
+msgid "Product sale history"
+msgstr ""
+
+#. module: stock_request
+#: model:ir.model.fields,field_description:stock_request.field_product_pending_orders__product_id
+msgid "Product:"
+msgstr ""
+
+#. module: stock_request
+#: model_terms:ir.ui.view,arch_db:stock_request.view_request_quantities_form
+msgid "Products"
+msgstr ""
+
+#. module: stock_request
+#: model:ir.model.fields,field_description:stock_request.field_stock_move__request_line_id
+msgid "QTY Request"
+msgstr ""
+
+#. module: stock_request
+#: model:ir.model.fields,field_description:stock_request.field_stock_request_line__qty_left
+msgid "Qty Left"
+msgstr ""
+
+#. module: stock_request
+#: model:ir.model.fields,field_description:stock_request.field_stock_request_line__qty
+msgid "Quantity"
+msgstr ""
+
+#. module: stock_request
+#: model_terms:ir.ui.view,arch_db:stock_request.view_request_quantities_line_search
+msgid "Quotation Date"
+msgstr ""
+
+#. module: stock_request
+#: model:ir.model.fields,field_description:stock_request.field_stock_request__date_quotation
+#: model:ir.model.fields,field_description:stock_request.field_stock_request_line__date_quotation
+msgid "Request Date"
+msgstr ""
+
+#. module: stock_request
+#: model:ir.actions.act_window,name:stock_request.action_request_quantities_report
+#: model:ir.ui.menu,name:stock_request.menu_request_quantities_line
+msgid "Request Quantities"
+msgstr ""
+
+#. module: stock_request
+#: model_terms:ir.ui.view,arch_db:stock_request.view_pos_request_quantities_line_pivot
+msgid "Request Quantity"
+msgstr ""
+
+#. module: stock_request
+#: model:res.groups,name:stock_request.group_stock_request_user
+#: model_terms:ir.ui.view,arch_db:stock_request.view_stock_request_filter
+msgid "Requester"
+msgstr ""
+
+#. module: stock_request
+#: model_terms:ir.ui.view,arch_db:stock_request.view_stock_request_filter
+msgid "Requests by Date"
+msgstr ""
+
+#. module: stock_request
+#: model_terms:ir.ui.view,arch_db:stock_request.view_stock_request_filter
+msgid "Search Request"
+msgstr ""
+
+#. module: stock_request
+#: model_terms:ir.ui.view,arch_db:stock_request.res_config_settings_view_form
+msgid "Select Picking Type"
+msgstr ""
+
+#. module: stock_request
+#: model:ir.actions.act_window,name:stock_request.action_stock_request_config
+#: model:ir.ui.menu,name:stock_request.menu_stock_request_config
+msgid "Settings"
+msgstr ""
+
+#. module: stock_request
+#: model:ir.model.fields,field_description:stock_request.field_stock_request__location_src_id
+#: model:ir.model.fields,field_description:stock_request.field_stock_request_line__location_src_id
+#: model_terms:ir.ui.view,arch_db:stock_request.view_stock_request_filter
+msgid "Source Location"
+msgstr ""
+
+#. module: stock_request
+#: model:ir.model.fields,field_description:stock_request.field_stock_request__state
+#: model:ir.model.fields,field_description:stock_request.field_stock_request_line__state
+#: model_terms:ir.ui.view,arch_db:stock_request.view_stock_request_filter
+msgid "Status"
+msgstr ""
+
+#. module: stock_request
+#: model:ir.model,name:stock_request.model_stock_move
+msgid "Stock Move"
+msgstr "حركة المخزون"
+
+#. module: stock_request
+#: model:ir.model.fields,field_description:stock_request.field_stock_request_line__move_ids
+msgid "Stock Moves"
+msgstr ""
+
+#. module: stock_request
+#: model:ir.actions.act_window,name:stock_request.action_request_quantities_form
+#: model:ir.model.fields,field_description:stock_request.field_stock_picking__stock_request_id
+#: model:ir.module.category,name:stock_request.module_category_stock_request
+#: model_terms:ir.ui.view,arch_db:stock_request.view_request_quantities_form
+#: model_terms:ir.ui.view,arch_db:stock_request.view_request_quantities_tree
+#: model_terms:ir.ui.view,arch_db:stock_request.view_stock_request_filter
+msgid "Stock Request"
+msgstr ""
+
+#. module: stock_request
+#: model:ir.ui.menu,name:stock_request.menu_stock_request
+#: model:ir.ui.menu,name:stock_request.menu_stock_request_root
+msgid "Stock Requests"
+msgstr ""
+
+#. module: stock_request
+#: model:ir.model.fields,field_description:stock_request.field_stock_request__amount_tax
+msgid "Taxes"
+msgstr ""
+
+#. module: stock_request
+#: model:ir.model.fields.selection,name:stock_request.selection__stock_request_line__transfer_status__waiting
+msgid "To Transfer"
+msgstr ""
+
+#. module: stock_request
+#: model:ir.model.fields,field_description:stock_request.field_stock_request__amount_total
+msgid "Total"
+msgstr ""
+
+#. module: stock_request
+#: model:ir.model,name:stock_request.model_stock_picking
+msgid "Transfer"
+msgstr "الشحنة"
+
+#. module: stock_request
+#: model:ir.model.fields,field_description:stock_request.field_stock_request_line__transfer_status
+#: model_terms:ir.ui.view,arch_db:stock_request.view_request_quantities_line_search
+msgid "Transfer Status"
+msgstr ""
+
+#. module: stock_request
+#: model_terms:ir.ui.view,arch_db:stock_request.view_stock_request_filter
+msgid "Transfered"
+msgstr ""
+
+#. module: stock_request
+#: model_terms:ir.ui.view,arch_db:stock_request.view_stock_request_filter
+msgid "Transfered Stock Requests"
+msgstr ""
+
+#. module: stock_request
+#: model:ir.model.fields.selection,name:stock_request.selection__stock_request__state__done
+#: model:ir.model.fields.selection,name:stock_request.selection__stock_request_line__transfer_status__transferred
+msgid "Transferred"
+msgstr ""
+
+#. module: stock_request
+#: model:ir.model.fields,field_description:stock_request.field_stock_request_line__transferred_qty
+msgid "Transferred Quantity"
+msgstr ""
+
+#. module: stock_request
+#: model_terms:ir.ui.view,arch_db:stock_request.view_request_quantities_form
+msgid "Transfers"
+msgstr ""
+
+#. module: stock_request
+#: model_terms:ir.actions.act_window,help:stock_request.action_request_quantities_form
+msgid ""
+"Use this menu to browse previous quotations. To record new\n"
+"            quotations, you may use the menu <i>Your Session</i> for\n"
+"            the touchscreen interface."
+msgstr ""
+
+#. module: stock_request
+#: model_terms:ir.ui.view,arch_db:stock_request.view_request_quantities_line_search
+msgid "Wait Picking to Transfer"
+msgstr ""
+
+#. module: stock_request
+#: model:ir.model.fields.selection,name:stock_request.selection__stock_request__state__picking
+#: model_terms:ir.ui.view,arch_db:stock_request.view_stock_request_filter
+msgid "Waiting"
+msgstr ""
+
+#. module: stock_request
+#: model_terms:ir.ui.view,arch_db:stock_request.view_stock_request_filter
+msgid "Waiting for picking Stock Requests"
+msgstr ""
+
+#. module: stock_request
+#: model:ir.model,name:stock_request.model_product_pending_orders
+msgid "product.pending.orders"
+msgstr ""
+
+#. module: stock_request
+#: model:res.groups,name:stock_request.group_stock_request_confirm
+msgid "request confirm"
+msgstr ""
+
+#. module: stock_request
+#: model:ir.model.fields,help:stock_request.field_product_pending_orders__product_pending_order_ids
+msgid "shows the product pending orders"
+msgstr ""
+
+#. module: stock_request
+#: model:ir.model,name:stock_request.model_stock_request
+msgid "stock.request"
+msgstr ""

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_request_quantities_line_tree" model="ir.ui.view">
+        <field name="name">stock.request.line.tree</field>
+        <field name="model">stock.request.line</field>
+        <field name="arch" type="xml">
+            <tree create="false"
+                  decoration-primary="qty_in_transfer > 0"
+                  decoration-success="transferred_qty > 0"
+                  edit="false">
+                <field name="date_quotation"/>
+                <field name="date_order"/>
+                <field name="order_id"/>
+                <field name="product_id"/>
+                <field name="request_qty"/>
+                <field name="qty"  groups="stock_request.group_stock_approve"/>
+                <field name="qty_in_transfer"/>
+                <field name="transferred_qty"/>
+                <field name="purchased_qty"/>
+                <field name ="available_qty"/>
+                 <field name="employee_id"/>
+<!--                <field name="location_src_id"/>-->
+                <field name="location_dest_id" />
+                <field name="transfer_status" />
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="view_pos_request_quantities_line_pivot">
+        <field name="name">stock.request.line.pivot</field>
+        <field name="model">stock.request.line</field>
+        <field name="arch" type="xml">
+            <pivot string="Request Quantity">
+                <field name="product_id" type="row"/>
+                <field name="qty" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+    <record id="view_request_quantities_line_search" model="ir.ui.view">
+        <field name="name">stock.request.line.select</field>
+        <field name="model">stock.request.line</field>
+        <field name="priority" eval="15"/>
+        <field name="arch" type="xml">
+            <search>
+                <field name="order_id" string="Order"/>
+                <field name="partner_id" operator="child_of"/>
+                <field name="order_id" string="Employee" />
+
+                <filter string="Done/Transferred Orders" domain="[('state', '=', 'done')]" name="done"/>
+                <filter string="Wait Picking to Transfer" domain="[('state', '=', 'picking')]" name="picking"/>
+                <filter string="Confirmed Orders" domain="[('state', '=', 'confirmed')]" name="confirmed"/>
+                <filter string="Draft Orders" domain="[('state', '=', 'draft')]" name="draft"/>
+                <group expand="0" string="Group By">
+                    <filter string="Product" name="product_id" domain="[]" context="{'group_by': 'product_id'}"/>
+                    <filter string="Customer" name="partner_id" domain="[]" context="{'group_by': 'partner_id'}"/>
+                    <filter string="Transfer Status" name="transfer_status" domain="[]" context="{'group_by': 'transfer_status'}"/>
+                    <filter name="state" string="Customer" domain="[]" context="{'group_by': 'state'}"/>
+                    <filter string="Order Date" name="order_month" domain="[]" context="{'group_by': 'date_order'}"/>
+                    <filter string="Quotation Date" name="date_quotation" domain="[]" context="{'group_by': 'date_quotation'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+    <record id="action_request_quantities_report" model="ir.actions.act_window">
+        <field name="name">Request Quantities</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">stock.request.line</field>
+        <field name="view_mode">tree,pivot</field>
+        <field name="view_id" eval="view_request_quantities_line_tree"/>
+        <field name="search_view_id" ref="stock_request.view_request_quantities_line_search"/>
+        <field name="domain">[]</field>
+    </record>
+
+
+</odoo>

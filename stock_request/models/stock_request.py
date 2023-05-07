@@ -1,379 +1,279 @@
-# Copyright 2017-2020 ForgeFlow, S.L.
-# License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).
+# -*- coding: utf-8 -*-
 
-from odoo import _, api, fields, models
-from odoo.exceptions import UserError, ValidationError
-from odoo.tools import float_compare
+import logging
 
-REQUEST_STATES = [
-    ("draft", "Draft"),
-    ("open", "In progress"),
-    ("done", "Done"),
-    ("cancel", "Cancelled"),
-]
+from odoo import models, fields, api
+
+_logger = logging.getLogger(__name__)
 
 
 class StockRequest(models.Model):
-    _name = "stock.request"
-    _description = "Stock Request"
-    _inherit = "stock.request.abstract"
-    _order = "id desc"
+    _name = 'stock.request'
+    _inherit = ['mail.thread']
 
-    def __get_request_states(self):
-        return REQUEST_STATES
-
-    def _get_request_states(self):
-        return self.__get_request_states()
-
-    def _get_default_requested_by(self):
-        return self.env["res.users"].browse(self.env.uid)
-
-    @staticmethod
-    def _get_expected_date():
-        return fields.Datetime.now()
-
-    def _get_default_expected_date(self):
-        if self.order_id:
-            res = self.order_id.expected_date
-        else:
-            res = self._get_expected_date()
-        return res
-
-    name = fields.Char(states={"draft": [("readonly", False)]})
-    state = fields.Selection(
-        selection=_get_request_states,
-        string="Status",
-        copy=False,
-        default="draft",
-        index=True,
-        readonly=True,
-        tracking=True,
-    )
-    requested_by = fields.Many2one(
-        "res.users",
-        "Requested by",
-        required=True,
-        tracking=True,
-        default=lambda s: s._get_default_requested_by(),
-    )
-    expected_date = fields.Datetime(
-        "Expected Date",
-        default=lambda s: s._get_default_expected_date(),
-        index=True,
-        required=True,
-        readonly=True,
-        states={"draft": [("readonly", False)]},
-        help="Date when you expect to receive the goods.",
-    )
-    picking_policy = fields.Selection(
-        [
-            ("direct", "Receive each product when available"),
-            ("one", "Receive all products at once"),
-        ],
-        string="Shipping Policy",
-        required=True,
-        readonly=True,
-        states={"draft": [("readonly", False)]},
-        default="direct",
-    )
-    move_ids = fields.One2many(
-        comodel_name="stock.move",
-        compute="_compute_move_ids",
-        string="Stock Moves",
-        readonly=True,
-    )
+    name = fields.Char(string='Order Ref', required=True,
+                       readonly=True, copy=False, default='/')
+    company_id = fields.Many2one('res.company', string='Company', required=True, readonly=True,
+                                 default=lambda self: self.env.user.company_id)
+    user_id = fields.Many2one(
+        "res.users", string="Responsible", default=lambda self: self.env.user)
+    date_quotation = fields.Datetime(
+        string='Request Date', readonly=True, index=True, default=fields.Datetime.now)
+    date_order = fields.Date(string='Order Date', readonly=True, index=True)
+    amount_tax = fields.Float(string='Taxes', digits=0, default=1.2)
+    amount_total = fields.Float(string='Total', digits=0)
+    lines = fields.One2many('stock.request.line',
+                            'order_id', string='Order Lines', copy=True)
+    partner_id = fields.Many2one(
+        'res.partner', string='Customer', change_default=True, index=True)
+    employee_id = fields.Many2one('hr.employee', string='Employee', index=True)
+    state = fields.Selection([('draft', 'New'), ('approve', 'Approve'),
+                              ('confirmed', 'Confirmed'),
+                              ('picking', 'Waiting'),
+                              ('done', 'Transferred'),
+                              ('cancel', 'Canceled')], 'Status', readonly=True, copy=False, default='draft',
+                             tracking=True)
+    note = fields.Text(string='Internal Notes')
+    fiscal_position_id = fields.Many2one(
+        'account.fiscal.position', string='Fiscal Position')
+    location_src_id = fields.Many2one(
+        'stock.location', string='Source Location')
+    location_dest_id = fields.Many2one('stock.location', string='Destination Location', readonly=False,
+                                       domain="[('usage', '=', 'internal')]")
+    picking_type_id = fields.Many2one(
+        'stock.picking.type', string='Operation Type', domain=[('code', '=', 'internal')])
     picking_ids = fields.One2many(
-        "stock.picking",
-        compute="_compute_picking_ids",
-        string="Pickings",
-        readonly=True,
-    )
-    qty_in_progress = fields.Float(
-        "Qty In Progress",
-        digits="Product Unit of Measure",
-        readonly=True,
-        compute="_compute_qty",
-        store=True,
-        help="Quantity in progress.",
-    )
-    qty_done = fields.Float(
-        "Qty Done",
-        digits="Product Unit of Measure",
-        readonly=True,
-        compute="_compute_qty",
-        store=True,
-        help="Quantity completed",
-    )
-    qty_cancelled = fields.Float(
-        "Qty Cancelled",
-        digits="Product Unit of Measure",
-        readonly=True,
-        compute="_compute_qty",
-        store=True,
-        help="Quantity cancelled",
-    )
-    picking_count = fields.Integer(
-        string="Delivery Orders",
-        compute="_compute_picking_ids",
-        readonly=True,
-    )
-    allocation_ids = fields.One2many(
-        comodel_name="stock.request.allocation",
-        inverse_name="stock_request_id",
-        string="Stock Request Allocation",
-    )
-    order_id = fields.Many2one("stock.request.order", readonly=True)
-    warehouse_id = fields.Many2one(
-        states={"draft": [("readonly", False)]}, readonly=True
-    )
-    location_id = fields.Many2one(
-        states={"draft": [("readonly", False)]}, readonly=True
-    )
-    product_id = fields.Many2one(states={"draft": [("readonly", False)]}, readonly=True)
-    product_uom_id = fields.Many2one(
-        states={"draft": [("readonly", False)]}, readonly=True
-    )
-    product_uom_qty = fields.Float(
-        states={"draft": [("readonly", False)]}, readonly=True
-    )
-    procurement_group_id = fields.Many2one(
-        states={"draft": [("readonly", False)]}, readonly=True
-    )
-    company_id = fields.Many2one(states={"draft": [("readonly", False)]}, readonly=True)
-    route_id = fields.Many2one(states={"draft": [("readonly", False)]}, readonly=True)
+        'stock.picking', 'stock_request_id', string='Pickings')
+    transfer_ids = fields.One2many(
+        'stock.picking', 'stock_request_id', string='Transfers')
+    order_ids = fields.One2many(
+        'purchase.order', 'stock_request_id', string='Purchase Orders', tracking=True)
+    delivery_count = fields.Integer(
+        string='Picking Orders', compute='_compute_picking_ids')
+    fully_transfered = fields.Boolean(default=False, )
 
-    _sql_constraints = [
-        ("name_uniq", "unique(name, company_id)", "Stock Request name must be unique")
-    ]
+    check_state = fields.Boolean(string='', compute="_compute_state")
 
-    @api.depends("allocation_ids", "allocation_ids.stock_move_id")
-    def _compute_move_ids(self):
-        for request in self:
-            request.move_ids = request.allocation_ids.mapped("stock_move_id")
+    @api.depends('picking_ids', 'order_ids')
+    def _compute_state(self):
+        flag = True
+        self.check_state = False
+        for l in self.lines:
+            if l.transferred_qty >= l.qty:
+                flag = False
+        if not flag:
+            self.state = 'done'
+            for l in self.lines:
+                l.state = 'done'
 
-    @api.depends(
-        "allocation_ids",
-        "allocation_ids.stock_move_id",
-        "allocation_ids.stock_move_id.picking_id",
-    )
+    @api.onchange('branch_id')
+    def _get_default_location_src_id(self):
+        if self.branch_id:
+            loc = self.env['stock.location'].search(
+                [('location_id', '=', self.branch_id.warehouse_id.view_location_id.id)], limit=1)
+            self.location_dest_id = loc.id
+
+    def _set_to_done(self):
+        pass
+
+    @api.onchange('user_id')
+    def _onchange_user_id(self):
+        if self.user_id:
+            self.employee_id = self.user_id.employee_ids[0] if len(
+                self.user_id.employee_ids) > 0 else False
+        else:
+            self.employee_id = self.employee_id
+
+    @api.depends('picking_ids')
     def _compute_picking_ids(self):
-        for request in self:
-            request.picking_count = 0
-            request.picking_ids = self.env["stock.picking"]
-            request.picking_ids = request.move_ids.filtered(
-                lambda m: m.state != "cancel"
-            ).mapped("picking_id")
-            request.picking_count = len(request.picking_ids)
-
-    @api.depends(
-        "allocation_ids",
-        "allocation_ids.stock_move_id.state",
-        "allocation_ids.stock_move_id.move_line_ids",
-        "allocation_ids.stock_move_id.move_line_ids.qty_done",
-    )
-    def _compute_qty(self):
-        for request in self:
-            incoming_qty = 0.0
-            other_qty = 0.0
-            for allocation in request.allocation_ids:
-                if allocation.stock_move_id.picking_code == "incoming":
-                    incoming_qty += allocation.allocated_product_qty
-                else:
-                    other_qty += allocation.allocated_product_qty
-            done_qty = abs(other_qty - incoming_qty)
-            open_qty = sum(request.allocation_ids.mapped("open_product_qty"))
-            uom = request.product_id.uom_id
-            request.qty_done = uom._compute_quantity(done_qty, request.product_uom_id)
-            request.qty_in_progress = uom._compute_quantity(
-                open_qty, request.product_uom_id
-            )
-            request.qty_cancelled = (
-                max(
-                    0,
-                    uom._compute_quantity(
-                        request.product_qty - done_qty - open_qty,
-                        request.product_uom_id,
-                    ),
-                )
-                if request.allocation_ids
-                else 0
-            )
-
-    @api.constrains("order_id", "requested_by")
-    def check_order_requested_by(self):
-        if self.order_id and self.order_id.requested_by != self.requested_by:
-            raise ValidationError(_("Requested by must be equal to the order"))
-
-    @api.constrains("order_id", "warehouse_id")
-    def check_order_warehouse_id(self):
-        if self.order_id and self.order_id.warehouse_id != self.warehouse_id:
-            raise ValidationError(_("Warehouse must be equal to the order"))
-
-    @api.constrains("order_id", "location_id")
-    def check_order_location(self):
-        if self.order_id and self.order_id.location_id != self.location_id:
-            raise ValidationError(_("Location must be equal to the order"))
-
-    @api.constrains("order_id", "procurement_group_id")
-    def check_order_procurement_group(self):
-        if (
-            self.order_id
-            and self.order_id.procurement_group_id != self.procurement_group_id
-        ):
-            raise ValidationError(_("Procurement group must be equal to the order"))
-
-    @api.constrains("order_id", "company_id")
-    def check_order_company(self):
-        if self.order_id and self.order_id.company_id != self.company_id:
-            raise ValidationError(_("Company must be equal to the order"))
-
-    @api.constrains("order_id", "expected_date")
-    def check_order_expected_date(self):
-        if self.order_id and self.order_id.expected_date != self.expected_date:
-            raise ValidationError(_("Expected date must be equal to the order"))
-
-    @api.constrains("order_id", "picking_policy")
-    def check_order_picking_policy(self):
-        if self.order_id and self.order_id.picking_policy != self.picking_policy:
-            raise ValidationError(_("The picking policy must be equal to the order"))
-
-    def _action_confirm(self):
-        self._action_launch_procurement_rule()
-        self.write({"state": "open"})
-
-    def action_confirm(self):
-        self._action_confirm()
-        return True
-
-    def action_draft(self):
-        self.write({"state": "draft"})
-        return True
-
-    def action_cancel(self):
-        self.sudo().mapped("move_ids")._action_cancel()
-        self.write({"state": "cancel"})
-        return True
-
-    def action_done(self):
-        self.write({"state": "done"})
-        self.mapped("order_id").check_done()
-        return True
-
-    def check_done(self):
-        precision = self.env["decimal.precision"].precision_get(
-            "Product Unit of Measure"
-        )
-        for request in self:
-            allocated_qty = sum(request.allocation_ids.mapped("allocated_product_qty"))
-            qty_done = request.product_id.uom_id._compute_quantity(
-                allocated_qty, request.product_uom_id
-            )
-            if (
-                float_compare(
-                    qty_done, request.product_uom_qty, precision_digits=precision
-                )
-                >= 0
-            ):
-                request.action_done()
-            elif request._check_done_allocation():
-                request.action_done()
-        return True
-
-    def _check_done_allocation(self):
-        precision = self.env["decimal.precision"].precision_get(
-            "Product Unit of Measure"
-        )
-        self.ensure_one()
-        return (
-            self.allocation_ids
-            and float_compare(self.qty_cancelled, 0, precision_digits=precision) > 0
-        )
-
-    def _prepare_procurement_values(self, group_id=False):
-
-        """Prepare specific key for moves or other components that
-        will be created from a procurement rule
-        coming from a stock request. This method could be override
-        in order to add other custom key that could be used in
-        move/po creation.
-        """
-        return {
-            "date_planned": self.expected_date,
-            "warehouse_id": self.warehouse_id,
-            "stock_request_allocation_ids": self.id,
-            "group_id": group_id or self.procurement_group_id.id or False,
-            "route_ids": self.route_id,
-            "stock_request_id": self.id,
-        }
-
-    def _skip_procurement(self):
-        return self.state != "draft" or self.product_id.type not in ("consu", "product")
-
-    def _action_launch_procurement_rule(self):
-        """
-        Launch procurement group run method with required/custom
-        fields genrated by a
-        stock request. procurement group will launch '_run_move',
-        '_run_buy' or '_run_manufacture'
-        depending on the stock request product rule.
-        """
-        precision = self.env["decimal.precision"].precision_get(
-            "Product Unit of Measure"
-        )
-        errors = []
-        for request in self:
-            if request._skip_procurement():
-                continue
-            qty = 0.0
-            for move in request.move_ids.filtered(lambda r: r.state != "cancel"):
-                qty += move.product_qty
-
-            if float_compare(qty, request.product_qty, precision_digits=precision) >= 0:
-                continue
-
-            values = request._prepare_procurement_values(
-                group_id=request.procurement_group_id
-            )
-            try:
-                procurements = []
-                procurements.append(
-                    self.env["procurement.group"].Procurement(
-                        request.product_id,
-                        request.product_uom_qty,
-                        request.product_uom_id,
-                        request.location_id,
-                        request.name,
-                        request.name,
-                        self.env.company,
-                        values,
-                    )
-                )
-                self.env["procurement.group"].run(procurements)
-            except UserError as error:
-                errors.append(error.name)
-        if errors:
-            raise UserError("\n".join(errors))
-        return True
-
-    def action_view_transfer(self):
-        action = self.env.ref("stock.action_picking_tree_all").read()[0]
-
-        pickings = self.mapped("picking_ids")
-        if len(pickings) > 1:
-            action["domain"] = [("id", "in", pickings.ids)]
-        elif pickings:
-            action["views"] = [(self.env.ref("stock.view_picking_form").id, "form")]
-            action["res_id"] = pickings.id
-        return action
+        for order in self:
+            order.delivery_count = len(order.picking_ids)
 
     @api.model
     def create(self, vals):
-        upd_vals = vals.copy()
-        if upd_vals.get("name", "/") == "/":
-            upd_vals["name"] = self.env["ir.sequence"].next_by_code("stock.request")
-        return super().create(upd_vals)
+        if vals.get('name', '/') == '/':
+            vals['name'] = self.env['ir.sequence'].next_by_code(
+                'stock.request') or '/'
+        return super(StockRequest, self).create(vals)
 
-    def unlink(self):
-        if self.filtered(lambda r: r.state != "draft"):
-            raise UserError(_("Only requests on draft state can be unlinked"))
-        return super(StockRequest, self).unlink()
+    def action_approve(self):
+        self.state = 'approve'
+
+    def action_cancel(self):
+        self.state = 'cancel'
+
+    def action_confirm(self):
+        self.state = 'confirmed'
+        for l in self.lines:
+            l.state = 'confirmed'
+
+    def action_view_picking(self):
+        action = self.env.ref('stock.action_picking_tree_all').read()[0]
+        action['domain'] = [('id', 'in', self.picking_ids.ids)]
+        return action
+
+
+class StockQuotationLine(models.Model):
+    _name = "stock.request.line"
+    _description = "Lines of stock request"
+    _rec_name = "product_id"
+
+    company_id = fields.Many2one('res.company', string='Company', required=True,
+                                 default=lambda self: self.env.user.company_id)
+    name = fields.Char(string='Line No')
+    notice = fields.Char(string='Discount Notice')
+    product_id = fields.Many2one('product.product', string='Product', domain=[('sale_ok', '=', True)],
+                                 required=True, change_default=True)
+    request_qty = fields.Float('Requested Qty', default=1, tracking=True)
+    qty = fields.Float('Approved Qty', default=1, tracking=True)
+    order_id = fields.Many2one(
+        'stock.request', string='Order Ref', ondelete='cascade')
+    state = fields.Selection(
+        [('draft', 'New'), ('confirmed', 'Confirmed'), ('purchase', 'To Purchase'),
+         ('picking', 'Waiting'), ('done', 'Transferred')],
+        'Status', readonly=True, copy=False, default='draft', store=True)
+    date_quotation = fields.Datetime(string='Request Date', readonly=True, index=True, default=fields.Datetime.now,
+                                     related='order_id.date_quotation', store=True)
+    date_order = fields.Date(string='Order Date', readonly=True,
+                             index=True, related='order_id.date_order', store=True)
+    employee_id = fields.Many2one('hr.employee', string='Employee', index=True, related='order_id.employee_id',
+                                  store=True)
+    location_src_id = fields.Many2one('stock.location', string='Source Location', related='order_id.location_src_id',
+                                      store=True)
+    location_dest_id = fields.Many2one('stock.location', string='Destination Location',
+                                       related='order_id.location_dest_id', store=True)
+    transfer_status = fields.Selection([('waiting', 'To Transfer'), ('partially', 'Partially Transfer'),
+                                        ('transferred', 'Transferred'), ('purchase', 'To Purchase'),
+                                        ('purchased', 'Purchased'), ], string='Transfer Status',
+                                       store=True)
+    move_ids = fields.One2many(
+        'stock.move', 'request_line_id', string='Stock Moves')
+    transferred_qty = fields.Float(
+        string='Transferred Quantity', compute='compute_transferred_qty')
+    purchased_qty = fields.Float(
+        string='Purchased Quantity', )
+    available_qty = fields.Float(
+        String='Available Qty', compute='compute_available_qty')
+    qty_left = fields.Float(String='Qty Left')
+    partner_id = fields.Many2one('res.partner', string='Customer', change_default=True, index=True,
+                                 related='order_id.partner_id', store=True)
+    qty_in_transfer = fields.Float("Qty In Transfer", compute="_compute_qty_in_transfer")
+    user_id = fields.Many2one(related="order_id.user_id", store=1)
+
+    @api.onchange('request_qty')
+    def post_on_chatter(self):
+        self.qty = self.request_qty
+
+    @api.depends('move_ids.state', 'move_ids.request_line_id', 'move_ids.product_uom_qty', 'move_ids.product_uom',
+                 'move_ids.quantity_done')
+    def compute_transferred_qty(self):
+        for line in self:
+            for picking in line.order_id.picking_ids:
+                if (picking.location_dest_id.id == line.order_id.location_dest_id.id) and picking.state == 'done':
+                    for move_line in picking.move_line_ids_without_package:
+                        if move_line.product_id == line.product_id:
+                            line.transferred_qty = move_line.qty_done
+            line.qty_left = line.qty - line.transferred_qty
+            if line.transfer_status not in ['purchase', 'purchased']:
+                if line.transferred_qty >= line.qty:
+                    line.transfer_status = 'transferred'
+                elif 0 < line.transferred_qty < line.qty:
+                    line.transfer_status = 'partially'
+                else:
+                    line.transfer_status = 'waiting'
+
+    def _compute_qty_in_transfer(self):
+        for line in self:
+            total_qty_in_transfer = 0.0
+            for rec in line.env["stock.move"].search([("request_line_id", "=", line.id)]):
+                total_qty_in_transfer += rec.product_qty
+            line.qty_in_transfer = total_qty_in_transfer
+
+    @api.depends('location_src_id', 'transferred_qty', 'move_ids.quantity_done')
+    def compute_available_qty(self):
+        for line in self:
+            product_id = line.product_id.with_context(
+                {'location_id': line.location_dest_id.id})
+            quants = self.env['stock.quant'].search(
+                [('product_id', '=', product_id.id), ('location_id', '=', line.order_id.location_dest_id.id)])
+            line.available_qty = sum(quants.mapped('quantity'))
+
+    def action_open_quants(self):
+
+        loc_ids = self.env['stock.location'].search(
+            [('usage', '=', 'internal')])
+        ali = self.env['stock.quant'].search(
+            [('product_id', '=', self.product_id.id), ('location_id', 'in', loc_ids.ids)])
+        pending_orders = self.env['stock.request.line'].search(
+            [('transfer_status', 'not in', ['transferred']), ('order_id', '!=', self.order_id.id)])
+        n_context = dict(self.env.context)
+        n_context.update({'quant_ids': ali.ids})
+
+        return {
+            'name': ('%s ') % self.product_id.name,
+            'view_mode': 'tree',
+            'view_id': self.env.ref('stock_request.stock_quant_quantity_view').id,
+            'res_model': 'stock.quant',
+            'type': 'ir.actions.act_window',
+            'target': 'new',
+            'domain': [("product_id", "=", self.product_id.id),
+                       ("location_id", "!=", self.order_id.location_dest_id.id)],
+            'context': {'search_default_internal_loc': 1, 'default_transfer_qty': 0.0, 'active_line': self.id,
+                        'quant_ids': ali.ids, 'stock_request_id': self.order_id.id}
+        }
+
+    def action_do_purchase(self):
+
+        return {
+            'name': 'Make Purchase Order',
+            'view_mode': 'form',
+            'res_model': 'purchase.wizard',
+            'type': 'ir.actions.act_window',
+            'target': 'new',
+            'context': {'stock_request_id': self.order_id.id}
+        }
+
+
+class StockPicking(models.Model):
+    _inherit = 'stock.picking'
+    stock_request_id = fields.Many2one(
+        'stock.request', string='Stock Request', copy=True)
+
+    # @api.model
+    def button_validate(self):
+        res = super(StockPicking, self).button_validate()
+        flag = False
+        stock_request_id = self.purchase_id.stock_request_id or self.stock_request_id
+        for l in self.move_ids_without_package:
+            if l.request_line_id:
+                l.request_line_id.transfer_status = "transferred"
+                l.request_line_id.transferred_qty = l.quantity_done
+
+        return res
+
+
+class StockMove(models.Model):
+    _inherit = "stock.move"
+    request_line_id = fields.Many2one(
+        'stock.request.line', 'QTY Request', index=True, copy=True)
+
+
+class ResConfigSettings(models.TransientModel):
+    _inherit = 'res.config.settings'
+
+    picking_type_id = fields.Many2one('stock.picking.type', string='Operation Type',
+                                      domain=[('code', '=', 'internal')])
+
+    @api.model
+    def get_values(self):
+        res = super(ResConfigSettings, self).get_values()
+        get_param = self.env['ir.config_parameter'].sudo().get_param
+        res['picking_type_id'] = int(
+            get_param('stock_request.picking_type_id'))
+        return res
+
+    def set_values(self):
+        super(ResConfigSettings, self).set_values()
+        set_param = self.env['ir.config_parameter'].sudo().set_param
+        set_param('stock_request.picking_type_id',
+                  int(self.picking_type_id.id))

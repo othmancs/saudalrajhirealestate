@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <!-- 
+        <record id="product_quantity_view_form" model="ir.ui.view">
+            <field name="name">product.quantity.view.form</field>
+            <field name="model">product.quantity</field>
+            <field name="arch" type="xml">
+                <form string="Product Quantity">
+                    <div>
+                        <button name="create_transfer" type="object" title="Transfer" class="oe_highlight"/>
+                        <field name="quant_id" mode="tree" nolabel="1" readonly="0">
+                            <tree string="Quants" editable="1" create="0" delete="0">
+                                <field name="product_id" readonly="1"/>
+                                <field name="location_id" readonly="1"/>
+                                <field name="available_quantity" readonly="1"/>
+                                <field name="inventory_quantity" readonly="1"/>
+                                <field name="transfer_qty"/>
+                                <button name="do_transfer" type="object" title="Make Transfer" icon="fa-bars" style="font-size: 1rem;" groups="stock_request.group_stock_request_manager"/>
+                            </tree>
+                        </field>
+                    </div>
+                    <footer>
+                        <button string="Cancel" class="btn btn-default" special="cancel"/>
+                    </footer>
+                </form>
+
+            </field>
+        </record> -->
+
+        <!-- product.quantity form view -->
+        <!-- <record id="action_product_quantity_view" model="ir.ui.view">
+            <field name="name">product.quantity.view.form</field>
+            <field name="model">product.quantity</field>
+            <field name="arch" type="xml">
+                <form string="Product Quantity">
+                    <div>
+                        <button name="create_transfer" type="object" title="Transfer" class="oe_highlight"/>
+                        <field name="quant_id" mode="tree" nolabel="1" readonly="0">
+                            <tree string="Quants" editable="1" create="0" delete="0">
+                                <field name="product_id" readonly="1"/>
+                                <field name="location_id" readonly="1"/>
+                                <field name="available_quantity" readonly="1"/>
+                                <field name="inventory_quantity" readonly="1"/>
+                                <field name="transfer_qty"/>
+                                <button name="do_transfer" type="object" title="Make Transfer" icon="fa-bars" style="font-size: 1rem;" groups="stock_request.group_stock_request_manager"/>
+                            </tree>
+                        </field>
+                    </div>
+                    <footer>
+                        <button string="Cancel" class="btn btn-default" special="cancel"/>
+                    </footer>
+                </form>
+
+            </field>
+        </record> -->
+
+        <!-- product.quantity form view -->
+        <record id="stock_quant_quantity_view" model="ir.ui.view">
+            <field name="name">stock.quant.new.view</field>
+            <field name="model">stock.quant</field>
+            <field name="arch" type="xml">
+                <tree editable="bottom" create="0" edit="1" js_class="singleton_list" sample="0">
+                    <!-- <field name="product_id" readonly="1"/> -->
+                    <field name="location_id" readonly="1"/>
+                    <!-- <field name="available_quantity" readonly="1"/> -->
+                    <field name="lot_id" readonly="1"/>
+                    <field name="quantity" readonly="1"/>
+                    <field name="transfer_qty" readonly="0"/>
+                    <button name="do_transfer" type="object" string="Make Transfer"  groups="stock_request.group_stock_request_manager"/>
+                </tree>
+
+            </field>
+        </record>
+
+    
+        <!-- <record id="action_product_quantity" model="ir.actions.act_window">
+            <field name="name">Product sale history</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">product.quantity</field>
+            <field name="view_id" ref="action_product_quantity_view"/>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record> -->
+
+    </data>
+</odoo>

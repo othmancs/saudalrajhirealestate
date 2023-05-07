@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="action_product_sale_history_view" model="ir.ui.view">
+            <field name="name">Product sale history</field>
+            <field name="model">product.pending.orders</field>
+            <field name="arch" type="xml">
+                <form string="Product Pending Requests">
+                    <div>
+                        <field name="product_id" readonly="1"/>
+                        <field name="product_pending_order_ids" mode="tree" nolabel="1" readonly="1">
+                            <tree string="Pending Requests Table">
+                                <field name="employee_id"/>
+                                <field name="order_id" />
+                                <field name="qty"/>
+                                <field name="transferred_qty"/>
+                                <field name="qty_left"/>
+                            </tree>
+                        </field>
+                    </div>
+                    <footer>
+                        <button string="Cancel" class="btn btn-default" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_product_sale_history" model="ir.actions.act_window">
+            <field name="name">Product sale history</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">product.pending.orders</field>
+            <field name="view_id" ref="action_product_sale_history_view"/>
+            <field name="view_mode">tree</field>
+            <field name="target">new</field>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="action_purchase_wizard_view" model="ir.ui.view">
+            <field name="name">purchase.wizard</field>
+            <field name="model">purchase.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Purchase Order">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="partner_id"/>
+                                <field name="qty"/>
+                            </group>
+                            <group>
+                                <field name="date"/>
+                            </group>
+                        </group>
+                    </sheet>
+                    <footer>
+                        <button string="Cancel" class="btn btn-default" special="cancel"/>
+                        <button name="do_order" type="object" string="Proceed To Order" class="oe_highlight" groups="stock_request.group_stock_request_manager"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_purchase_wizard" model="ir.actions.act_window">
+            <field name="name">Purchase Order</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">purchase.wizard</field>
+            <field name="view_id" ref="action_purchase_wizard_view"/>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+    </data>
+</odoo>
