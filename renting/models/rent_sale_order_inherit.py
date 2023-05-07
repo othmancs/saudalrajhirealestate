@@ -402,3 +402,6 @@ class RentSaleOrderLine(models.Model):
             if self.env.context.get('import_file', False) and not self.env.user.user_has_groups(
                     'account.group_account_manager'):
                 line.tax_id.invalidate_cache(['invoice_repartition_line_ids'], [line.tax_id.id])
+
+    def get_rental_order_line_description(self):
+        return ""
