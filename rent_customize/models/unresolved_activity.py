@@ -27,19 +27,18 @@ class MailActivity(models.Model):
             manager_id = self.env['hr.employee'].search([('user_id', '=', activity.user_id.id)]).parent_id.user_id
 
             if manager_id:
-                if user.has_group('base.group_user'):
-                    notification = {
-                        'activity_type_id': self.env.ref(
-                            'rent_customize.unresolved_contract_activity_notification').id,
-                        'res_id': activity.res_id,
-                        'res_model_id': self.env['ir.model'].search([('model', '=', 'sale.order')]).id,
-                        'icon': 'fa-check-square-o',
-                        'date_deadline': fields.Date.today(),
-                        'user_id': manager_id.id,
-                        'note': "Activity unresolved due payment contract.",
-                        'notification_sent': True
-                    }
-                    self.env['mail.activity'].create(notification)
+                notification = {
+                    'activity_type_id': self.env.ref(
+                        'rent_customize.unresolved_contract_activity_notification').id,
+                    'res_id': activity.res_id,
+                    'res_model_id': self.env['ir.model'].search([('model', '=', 'sale.order')]).id,
+                    'icon': 'fa-check-square-o',
+                    'date_deadline': fields.Date.today(),
+                    'user_id': manager_id.id,
+                    'note': "Activity unresolved due payment contract.",
+                    'notification_sent': True
+                }
+                self.env['mail.activity'].create(notification)
             else:
                 activity.unlink()
 
