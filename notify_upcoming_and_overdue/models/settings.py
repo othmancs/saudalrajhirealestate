@@ -5,7 +5,7 @@ import secrets
 
 class ResCompany(models.Model):
     _inherit = 'res.company'
-    notify_user_ids = fields.Many2many(comodel_name='res.users', string='Notify Users')
+    notify_user_ids = fields.Many2many('res.users', 'notify_user_rel', string='Notify Users')
 
 
 class ResConfigSettings(models.TransientModel):
@@ -15,4 +15,4 @@ class ResConfigSettings(models.TransientModel):
     over_days = fields.Integer(config_parameter='notify_upcoming_and_overdue.over_days')
     send_email = fields.Boolean(config_parameter='notify_upcoming_and_overdue.send_email')
     send_user_notify = fields.Boolean(config_parameter='notify_upcoming_and_overdue.send_user_notify')
-    notify_user_ids = fields.Many2many(string="Notify Users",related='company_id.notify_user_ids', readonly=False)
+    notify_user_ids = fields.Many2many('res.users', 'notify_user_rel',string="Notify Users",related='company_id.notify_user_ids', readonly=False)
