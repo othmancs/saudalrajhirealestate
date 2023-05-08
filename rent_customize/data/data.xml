@@ -1,0 +1,31 @@
+<odoo>
+    <data>
+        <record id="contract_expire_notification" model="mail.activity.type">
+            <field name="name">Contract Expiration Date Notification</field>
+            <field name="icon">fa-pencil-square-o</field>
+            <field name="delay_count">5</field>
+            <field name="sequence">12</field>
+        </record>
+
+        <record id="invoice_expire_notification" model="mail.activity.type">
+            <field name="name">Invoice Expiration Date Notification</field>
+            <field name="icon">fa-pencil-square-o</field>
+            <field name="delay_count">5</field>
+            <field name="sequence">12</field>
+        </record>
+
+        <record id="unresolved_contract_activity_notification" model="mail.activity.type">
+            <field name="name">Unresolved Contract Activity Notification</field>
+            <field name="icon">fa-pencil-square-o</field>
+            <field name="delay_count">5</field>
+            <field name="sequence">12</field>
+        </record>
+
+        <record id="unresolved_invoice_activity_notification" model="mail.activity.type">
+            <field name="name">Unresolved Invoice Activity Notification</field>
+            <field name="icon">fa-pencil-square-o</field>
+            <field name="delay_count">5</field>
+            <field name="sequence">12</field>
+        </record>
+    </data>
+</odoo>

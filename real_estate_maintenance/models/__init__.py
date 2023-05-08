@@ -5,3 +5,4 @@ from . import maintenance_request_product
 from . import res_config_settings
 from . import maintenance_issue_type
 from . import stock_picking
+from . import stock_request

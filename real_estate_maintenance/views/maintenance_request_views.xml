@@ -12,6 +12,9 @@
                         <button type="object" name="action_confirm"
                             groups="real_estate_maintenance.group_maintenance_manager"
                             string="Confirm" class="oe_highlight" states="new" />
+                         <button type="object" name="action_create_pr" string="Create Purchase Requisition"
+                            class="oe_highlight"
+                            states="confirm" />
                         <button type="object" name="action_ongoing" string="Start"
                             class="oe_highlight"
                             states="confirm" />
@@ -28,11 +31,18 @@
                     </header>
                     <sheet>
                         <div name="button_box" class="oe_button_box">
-                            <field name="stock_picking_ids" invisible="1" />
+<!--                            <field name="stock_picking_ids" invisible="1" />-->
+<!--                            <button class="oe_stat_button"-->
+<!--                                type="object" name="action_view_stock_pickings"-->
+<!--                                icon="fa-truck">-->
+<!--                                <field string="Pickings" name="stock_pickings_count"-->
+<!--                                    widget="statinfo" />-->
+<!--                            </button>-->
+                             <field name="purchase_requisition_ids" invisible="1" />
                             <button class="oe_stat_button"
-                                type="object" name="action_view_stock_pickings"
-                                icon="fa-truck">
-                                <field string="Pickings" name="stock_pickings_count"
+                                type="object" name="action_view_purchase_requisition"
+                               icon="fa-book">
+                                <field string="Purchase Requisitions" name="purchase_requisition_count"
                                     widget="statinfo" />
                             </button>
                             <field name="account_move_ids" invisible="1" />
@@ -87,7 +97,7 @@
                                     attrs="{'readonly': [('state', 'in', ('closed', 'refused'))]}">
                                     <tree editable="bottom">
                                         <field name="product_id" />
-                                        <field name="location_id" />
+                                        <field name="location_id"  invisible="1"/>
                                         <field name="quantity" />
                                     </tree>
                                 </field>

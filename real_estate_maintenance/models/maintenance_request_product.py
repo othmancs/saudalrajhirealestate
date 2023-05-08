@@ -12,7 +12,7 @@ class MaintenanceRequestProduct(models.Model):
         return location and location.id or False
 
     maintenance_request_id = fields.Many2one('maintenance.request')
-    location_id = fields.Many2one("stock.location", "Stock Location", required=1,
+    location_id = fields.Many2one("stock.location", "Stock Location", required=0,
                                   domain=[('usage', '=', 'internal')],
                                   default=_get_default_location_src_id)
     product_id = fields.Many2one("product.product", "Product", domain=[('partner_id', '=', False),

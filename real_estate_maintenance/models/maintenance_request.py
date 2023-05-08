@@ -8,11 +8,10 @@ class MaintenanceRequest(models.Model):
     _mail_post_access = 'read'
     _description = 'Property Maintenance Request'
 
-
     @api.model
     def _default_operating_unit(self):
         return self.env.user.default_operating_unit_id
-    
+
     MAINTENANCE_REQUEST_STATES = [('new', 'New'), ('confirm', 'Confirmed'), ('ongoing', 'In Progress'),
                                   ('closed', 'Closed'), ('refused', 'Refused')]
     INVOICING_STATES = [('on-company', 'On The Company'), ('on-partner', 'On The Requester')]
@@ -40,9 +39,9 @@ class MaintenanceRequest(models.Model):
                                          compute="_compute_account_moves_count")
     state = fields.Selection(MAINTENANCE_REQUEST_STATES, "Status", default="new")
     active = fields.Boolean(default=True)
-
-
-
+    purchase_requisition_ids = fields.One2many("stock.request", "maintenance_request_id")
+    purchase_requisition_count = fields.Integer("Purchase Requisition Count",
+                                                compute="_compute_purchase_requisition_count")
     operating_unit_id = fields.Many2one(
         comodel_name='operating.unit',
         string='Operating Unit',
@@ -67,6 +66,15 @@ class MaintenanceRequest(models.Model):
         for rec in self:
             rec.stock_pickings_count = len(rec.stock_picking_ids)
 
+    def _compute_purchase_requisition_count(self):
+        for rec in self:
+            rec.purchase_requisition_count = len(rec.purchase_requisition_ids)
+
+    def action_view_purchase_requisition(self):
+        action = self.env['ir.actions.act_window']._for_xml_id('stock_request.action_request_quantities_form')
+        action['domain'] = [('maintenance_request_id', '=', self.id)]
+        return action
+
     def _compute_account_moves_count(self):
         for rec in self:
             rec.account_moves_count = len(rec.account_move_ids)
@@ -85,27 +93,25 @@ class MaintenanceRequest(models.Model):
         for rec in self.company_id.maintenance_request_to_notify_user_id:
             if rec.email:
                 mail_content = " Hello " + rec.name + \
-                            " <br/> " + "<br/> " + \
-                            " A new Maintenance Request Has Been Submitted. Reference (" + rec.name + ")" + \
-                            " <br/> " + \
-                            " Operating Unit: " + self.operating_unit_id.name + \
-                            " <br/> " + \
-                            " Property: " + self.property_rent_id.property_name + \
-                            " <br/> " +\
-                            " Unit: " + self.property_id.name + \
-                            " <br/> " +\
-                            " <br/> " +\
-                            " Thank you,"
-                
+                               " <br/> " + "<br/> " + \
+                               " A new Maintenance Request Has Been Submitted. Reference (" + rec.name + ")" + \
+                               " <br/> " + \
+                               " Operating Unit: " + self.operating_unit_id.name + \
+                               " <br/> " + \
+                               " Property: " + self.property_rent_id.property_name + \
+                               " <br/> " + \
+                               " Unit: " + self.property_id.name + \
+                               " <br/> " + \
+                               " <br/> " + \
+                               " Thank you,"
 
                 self.env['mail.mail'].create({
-                                                'subject': _('Maintenance Request -  (Ref %s)') % (self.name),
-                                                'author_id': self.env.user.partner_id.id,
-                                                'body_html': mail_content,
-                                                'email_to': rec.email,
-                                            }).send()
+                    'subject': _('Maintenance Request -  (Ref %s)') % (self.name),
+                    'author_id': self.env.user.partner_id.id,
+                    'body_html': mail_content,
+                    'email_to': rec.email,
+                }).send()
 
-        
     def _compute_attachment_ids(self):
         for maintenance_request in self:
             attachment_ids = self.env['ir.attachment'].sudo().search([('res_id', '=', maintenance_request.id),
@@ -124,12 +130,30 @@ class MaintenanceRequest(models.Model):
             'context': ctx
         }
 
+    def action_create_pr(self):
+        for record in self:
+            if len(record.maintenance_request_product_line_ids) == 0:
+                raise UserError(_("Please add consumed products in order to create purchase requisition"))
+
+            pr_obj = self.env['stock.request']
+            lines = []
+            pr_vals = {
+                'user_id': record.maintenance_responsible_id.user_id.id or self.env.user.id,
+                'maintenance_request_id': self.id,
+
+            }
+            for line in record.maintenance_request_product_line_ids:
+                lines.append((0, 0, {'product_id': line.product_id.id,
+                                     'request_qty': line.quantity}))
+            pr_vals['lines'] = lines
+            pr_obj.with_context(maintenance=True).create(pr_vals)
+
     def action_ongoing(self):
         self.write({"state": "ongoing"})
 
     def action_close(self):
         self.create_bills()
-        self.action_create_picking_new()
+        # self.action_create_picking_new()
         self.write({"state": "closed"})
 
     def action_refuse(self):

@@ -358,7 +358,7 @@ class SaleOrder(models.Model):
         vals = self._prepare_refund_invoices(self, invoice_lines)
         invoice = self.env['account.move'].create(vals)
         invoice.invoice_date = fields.Date.today()
-        invoice.action_review()
+        # invoice.action_review()
         invoice.action_post()
         # self.status = 'invoiced'
         self.refund_insurance = True

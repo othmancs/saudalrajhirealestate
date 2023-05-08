@@ -6,7 +6,7 @@
     'website': "www.plustech-it.com",
     'summary': """""",
     'description': """""",
-    'depends': ['base', 'product', 'sale', 'hr', 'rating','stock', 'operating_unit', 'rent_customize'],
+    'depends': ['base', 'product', 'sale', 'hr', 'rating','stock','stock_request', 'operating_unit', 'rent_customize'],
     'data': [
         'security/security.xml',
         'security/ir.model.access.csv',

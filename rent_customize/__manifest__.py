@@ -19,5 +19,7 @@
         'views/rent_letter_template.xml',
         'report/contract.xml',
         'report/transfer.xml',
+        'views/res_setting.xml',
+        'data/data.xml',
     ]
 }
