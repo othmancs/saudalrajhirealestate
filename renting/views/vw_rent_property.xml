@@ -2,13 +2,61 @@
 
 <odoo>
     <data>
+
+
+        <record model="ir.ui.view" id="rent_property_build_tree">
+            <field name="name">rent.property.build.tree</field>
+            <field name="model">rent.property.build</field>
+            <field name="arch" type="xml">
+                <tree string="Property">
+                    <field name="name" />
+                    <field name="ref_analytic_account" string="رقم العقار" />
+                    <field name="property_address_area" />
+                    <field name="property_address_city" />
+                    <field name="company_id" />
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="rent_property_build_form">
+            <field name="name">rent.property.build.form</field>
+            <field name="model">rent.property.build</field>
+            <field name="arch" type="xml">
+                <form string="Properties">
+                    <sheet>
+                        
+
+                        <group>
+                            <group>
+                                <h1>
+                                    <field name="name" />
+                                </h1>
+                            </group>
+                        </group>
+
+                        <group >
+                            <group>
+                                <field name="ref_analytic_account"/>
+                                <field name="property_address_city"/>
+                                <field name="property_address_area" />
+                                <field name="company_id" />
+                            </group>
+                        </group>
+
+                       
+                    </sheet>
+                    </form>
+            </field>
+        </record>
+
+
         <record model="ir.ui.view" id="rent_property_search">
             <field name="name">rent.property.search</field>
             <field name="model">rent.property</field>
             <field name="arch" type="xml">
                 <search>
                     <field string="رقم العقار" name="ref_analytic_account"
-                           filter_domain="[('ref_analytic_account','ilike',self)]"/>
+                        filter_domain="[('ref_analytic_account','ilike',self)]" />
                 </search>
             </field>
         </record>
@@ -17,12 +65,12 @@
             <field name="model">rent.property</field>
             <field name="arch" type="xml">
                 <tree string="Property">
-                    <field name="property_name"/>
-                    <field name="ref_analytic_account" string="رقم العقار"/>
-                    <field name="free_units"/>
-                    <field name="busy_units"/>
-                    <field name="rent_config_property_type_id"/>
-                    <field name="rent_config_property_purpose_id"/>
+                    <field name="property_name" />
+                    <field name="ref_analytic_account" string="رقم العقار" />
+                    <field name="free_units" />
+                    <field name="busy_units" />
+                    <field name="rent_config_property_type_id" />
+                    <field name="rent_config_property_purpose_id" />
                 </tree>
             </field>
         </record>
@@ -36,14 +84,16 @@
 
                             <!--                            <button type="object" name="get_elevator_maintenance"-->
                             <!--                                    icon="fa-arrow-circle-o-up">-->
-                            <!--                                <field name="elevator_maintenance_count" string="Elevator Maintenance"-->
+                            <!--                                <field name="elevator_maintenance_count" string="Elevator
+                            Maintenance"-->
                             <!--                                       widget="statinfo"/>-->
                             <!--                            </button>-->
 
                             <button type="object" name="get_property_maintenance"
-                                    icon="fa-building">
-                                <field name="property_maintenance_count" string="Property Maintenance"
-                                       widget="statinfo"/>
+                                icon="fa-building">
+                                <field name="property_maintenance_count"
+                                    string="Property Maintenance"
+                                    widget="statinfo" />
                             </button>
 
                         </div>
@@ -51,16 +101,17 @@
                         <group>
                             <group>
                                 <h1>
-                                    <field name="property_name"/>
+                                    <field name="property_name" />
                                 </h1>
                             </group>
                         </group>
                         <group>
-                            <label for="analytic_account" string="الحساب التحليلي "/>
+                            <label for="analytic_account" string="الحساب التحليلي " />
                             <div>
-                                <field name="analytic_account" style="width: 33%"/>
+                                <field name="analytic_account" style="width: 33%" />
                             </div>
-                            <!--                            <label for="ref_analytic_account" string="رقم اشارة الحساب التحليلي "/>-->
+                            <!--                            <label for="ref_analytic_account" string="رقم اشارة الحساب التحليلي
+                            "/>-->
                             <!--                            <div>-->
                             <!--                                <field name="ref_analytic_account" style="width: 15%"/>-->
                             <!--                            </div>-->
@@ -68,17 +119,18 @@
 
                         <group string="Address Info">
                             <group>
-                                <field name="country" required="1"/>
-                                <field name="property_address_city" required="1"/>
-                                <field name="property_address_area"/>
-                                <field name="property_address_build"/>
-                                <field name="property_address_street"/>
+                                <field name="country" required="1" />
+                                <field name="property_address_city" required="1" />
+                                <field name="property_address_area" />
+                                <field name="property_address_build" />
+                                <field name="property_address_street" />
                             </group>
 
                             <group>
-                                <field name="property_address_Postal_code"/>
-                                <field name="property_number" required="1"/>
-                                <field name="property_extra_number"/>
+                                <field name="property_address_Postal_code" />
+                                <field name="property_number" required="1" />
+                                <field name="property_extra_number" />
+                                <field name="company_id" invisible="1" />
                             </group>
                         </group>
 
@@ -86,106 +138,113 @@
                             <page name="general_information" string="General Information">
                                 <group>
                                     <group>
-                                        <field name="property_construction_date"/>
-                                        <field name="rent_config_property_type_id"/>
-                                        <field name="rent_config_property_purpose_id"/>
+                                        <field name="property_construction_date" />
+                                        <field name="rent_config_property_type_id" />
+                                        <field name="rent_config_property_purpose_id" />
                                     </group>
                                     <group>
-                                        <field name="property_land_contract"/>
-                                        <field name="property_land_contract_date"/>
-                                        <field name="property_land_contract_image"/>
-                                        <field name="property_land_contract_electronic"/>
+                                        <field name="property_land_contract" />
+                                        <field name="property_land_contract_date" />
+                                        <field name="property_land_contract_image" />
+                                        <field name="property_land_contract_electronic" />
                                     </group>
                                 </group>
                             </page>
                             <page string="Property Units">
-                                <field name="unit_ids" context="{'default_property_id':'property_id'}">
+                                <field name="unit_ids"
+                                    context="{'default_property_id':'property_id'}">
                                     <tree string="Units">
-                                        <field name="name"/>
-                                        <field name="unit_price"/>
-                                        <field name="unit_price_unit"/>
-                                        <field name="unit_state"/>
+                                        <field name="name" />
+                                        <field name="unit_price" />
+                                        <field name="unit_price_unit" />
+                                        <field name="unit_state" />
                                     </tree>
                                 </field>
                             </page>
                             <page string="حارس العقار">
                                 <field name="security_tab">
                                     <tree editable="botttom">
-                                        <field name="security_name"/>
-                                        <field name="security_salary"/>
-                                        <field name="security_address"/>
-                                        <field name="security_national_id"/>
-                                        <field name="security_id_image"/>
+                                        <field name="security_name" />
+                                        <field name="security_salary" />
+                                        <field name="security_address" />
+                                        <field name="security_national_id" />
+                                        <field name="security_id_image" />
                                     </tree>
                                 </field>
                             </page>
                             <page string="خدمات المرافق">
                                 <group string="المرافق العامة">
-                                    <field name="property_has_elevator"/>
-                                    <field name="property_elevators"/>
-                                    <field name="elevator_contract"/>
-                                    <field name="property_has_parking"/>
-                                    <field name="property_garages"/>
-                                    <field name="property_units_number"/>
-                                    <field name="property_floors_number"/>
-                                    <field name="property_gas"/>
-                                    <field name="property_electricity"/>
-                                    <field name="property_water"/>
+                                    <field name="property_has_elevator" />
+                                    <field name="property_elevators" />
+                                    <field name="elevator_contract" />
+                                    <field name="property_has_parking" />
+                                    <field name="property_garages" />
+                                    <field name="property_units_number" />
+                                    <field name="property_floors_number" />
+                                    <field name="property_gas" />
+                                    <field name="property_electricity" />
+                                    <field name="property_water" />
                                 </group>
                                 <group string="الصيانة">
-                                    <field name="maintain_contract"/>
-                                    <field name="maintain_company"/>
-                                    <field name="maintain_contract_image"/>
+                                    <field name="maintain_contract" />
+                                    <field name="maintain_company" />
+                                    <field name="maintain_contract_image" />
                                 </group>
                                 <group string="الأمن">
-                                    <field name="security_contract"/>
-                                    <field name="security_company"/>
-                                    <field name="security_contract_image"/>
+                                    <field name="security_contract" />
+                                    <field name="security_company" />
+                                    <field name="security_contract_image" />
                                 </group>
                                 <group string="النظافة">
-                                    <field name="cleaning_contract"/>
-                                    <field name="cleaning_company"/>
-                                    <field name="cleaning_contract_image"/>
+                                    <field name="cleaning_contract" />
+                                    <field name="cleaning_company" />
+                                    <field name="cleaning_contract_image" />
                                 </group>
                             </page>
                             <page string="التصاريح الحكومية">
                                 <group string="تصريح البلدية">
-                                    <field name="national_permit_number"/>
-                                    <field name="national_permit_image" widget="many2many_binary" class="oe_avatar"/>
-                                    <field name="national_permit_shop_in"/>
-                                    <field name="national_permit_shop_out"/>
-                                    <field name="national_permit_build"/>
+                                    <field name="national_permit_number" />
+                                    <field name="national_permit_image" widget="many2many_binary"
+                                        class="oe_avatar" />
+                                    <field name="national_permit_shop_in" />
+                                    <field name="national_permit_shop_out" />
+                                    <field name="national_permit_build" />
                                 </group>
                                 <group string="تصريح الدفاع المدني">
-                                    <field name="defense_permit_number"/>
-                                    <field name="defense_permit_image" widget="many2many_binary" class="oe_avatar"/>
-                                    <field name="defense_permit_in"/>
-                                    <field name="defense_permit_out"/>
+                                    <field name="defense_permit_number" />
+                                    <field name="defense_permit_image" widget="many2many_binary"
+                                        class="oe_avatar" />
+                                    <field name="defense_permit_in" />
+                                    <field name="defense_permit_out" />
                                 </group>
                                 <group string="تصريح وزارة السياحة">
-                                    <field name="tour_permit_number"/>
-                                    <field name="tour_permit_image" widget="many2many_binary" class="oe_avatar"/>
-                                    <field name="tour_permit_in"/>
-                                    <field name="tour_permit_out"/>
+                                    <field name="tour_permit_number" />
+                                    <field name="tour_permit_image" widget="many2many_binary"
+                                        class="oe_avatar" />
+                                    <field name="tour_permit_in" />
+                                    <field name="tour_permit_out" />
                                 </group>
                                 <group string="تصريح وزارة الاسكان">
-                                    <field name="pepole_permit_number"/>
-                                    <field name="pepole_permit_image" widget="many2many_binary" class="oe_avatar"/>
-                                    <field name="pepole_permit_in"/>
-                                    <field name="pepole_permit_out"/>
+                                    <field name="pepole_permit_number" />
+                                    <field name="pepole_permit_image" widget="many2many_binary"
+                                        class="oe_avatar" />
+                                    <field name="pepole_permit_in" />
+                                    <field name="pepole_permit_out" />
                                 </group>
                                 <group string="تصريح السجل التجاري">
-                                    <field name="trade_permit_number"/>
-                                    <field name="trade_permit_image" widget="many2many_binary" class="oe_avatar"/>
-                                    <field name="trade_permit_in"/>
-                                    <field name="trade_permit_out"/>
+                                    <field name="trade_permit_number" />
+                                    <field name="trade_permit_image" widget="many2many_binary"
+                                        class="oe_avatar" />
+                                    <field name="trade_permit_in" />
+                                    <field name="trade_permit_out" />
                                 </group>
                             </page>
                         </notebook>
                     </sheet>
                     <div class="oe_chatter">
-                        <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
-                        <field name="message_ids" widget="mail_thread"/>
+                        <field name="message_follower_ids" widget="mail_followers"
+                            groups="base.group_user" />
+                        <field name="message_ids" widget="mail_thread" />
                     </div>
                 </form>
             </field>
@@ -193,11 +252,11 @@
         <record id="view_rental_country" model="ir.ui.view">
             <field name="name">country.form.inherit.rental</field>
             <field name="model">res.country</field>
-            <field name="inherit_id" ref="base.view_country_form"/>
+            <field name="inherit_id" ref="base.view_country_form" />
             <field name="arch" type="xml">
 
                 <xpath expr="//field[@name='code']" position="after">
-                    <field name="ref_analytic_account" required="1"/>
+                    <field name="ref_analytic_account" required="1" />
                 </xpath>
             </field>
         </record>

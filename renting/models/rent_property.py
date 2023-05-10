@@ -20,6 +20,7 @@ class RentPropertyModel(models.Model):
     unit_ids = fields.One2many('product.template', 'property_id', string='Unit ID',
                                copy=True)  # Related field to products
 
+    company_id = fields.Many2one('res.company', string='company', related='property_address_area.company_id')
     # General Info Tab Fields
     property_construction_date = fields.Date(string='Construction Date')
     rent_config_property_type_id = fields.Many2one('rent.config.property.types', string='Property Type',
@@ -237,6 +238,8 @@ class RentPropertybuilding(models.Model):
     property_address_area = fields.Many2one('rent.property.state', string='الفرع ')
     property_address_city = fields.Many2one('rent.property.city', string='City')
     ref_analytic_account = fields.Integer(string='رقم اشارة الحساب التحليلي')
+    company_id = fields.Many2one('res.company', string='company', readonly=True, default=lambda self: self.env.company)
+
 
 
 class RentPropertystate(models.Model):

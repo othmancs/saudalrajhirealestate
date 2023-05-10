@@ -45,6 +45,21 @@
         <field eval="0" name="perm_create"/>
     </record>
 
+
+        <record id="rule_rent_property" model="ir.rule">
+            <field name="name">Rent Property Multi Company</field>
+            <field name="model_id" ref="model_rent_property"/>
+            <field eval="True" name="global"/>
+            <field name="domain_force">['|',('company_id','=',False),('company_id', 'in', company_ids)]</field>
+        </record>
+
+        <record id="rule_rent_property_build" model="ir.rule">
+            <field name="name">Rent Property Build Multi Company</field>
+            <field name="model_id" ref="model_rent_property_build"/>
+            <field eval="True" name="global"/>
+            <field name="domain_force">['|',('company_id','=',False),('company_id', 'in', company_ids)]</field>
+        </record>
+
     <record id="ir_rule_sale_report_allowed_operating_units"
             model="ir.rule">
         <field name="model_id" ref="sale.model_sale_report"/>

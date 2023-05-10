@@ -199,10 +199,12 @@ class RentSaleOrder(models.Model):
         return result
 
     full_invoiced = fields.Boolean(string="Fully Invoiced", compute="_compute_full_invoiced", store=True)
-    no_of_invoiced = fields.Integer(string="عدد الفواتير المفوترة", compute="compute_no_invoiced", store=True)
-    no_of_not_invoiced = fields.Integer(string="عدد الفواتير الغير مفوترة", compute="compute_no_invoiced", store=True)
-    no_of_invoiced_amount = fields.Float(string="المبالغ المفوترة", compute="compute_no_invoiced", store=True)
-    no_of_not_invoiced_amount = fields.Float(string="المبالغ الغير مفوترة", compute="compute_no_invoiced", store=True)
+    no_of_invoiced = fields.Integer(string="عدد الفواتير المفوترة", compute="compute_no_invoiced")
+    no_of_not_invoiced = fields.Integer(string="عدد الفواتير الغير مفوترة", compute="compute_no_invoiced")
+    no_of_invoiced_amount = fields.Float(string="المبالغ المفوترة", compute="compute_no_invoiced")
+    no_of_not_invoiced_amount = fields.Float(string="المبالغ الغير مفوترة", compute="compute_no_invoiced")
+    no_of_posted_invoiced = fields.Float(string="الفواتير المرحلة", compute="compute_no_invoiced")
+    no_of_posted_invoiced_amount = fields.Float(string="المبالغ الفواتير المرحلة", compute="compute_no_invoiced")
 
     @api.depends('order_contract_invoice.status', 'order_contract_invoice.amount')
     def compute_no_invoiced(self):
@@ -211,12 +213,16 @@ class RentSaleOrder(models.Model):
             order.no_of_not_invoiced = 0
             order.no_of_invoiced_amount = 0
             order.no_of_not_invoiced_amount = 0
+            order.no_of_posted_invoiced = 0
+
             order.no_of_invoiced = len(order.order_contract_invoice.filtered(lambda s: s.status == 'invoiced'))
-            order.no_of_invoiced_amount = sum(
-                order.order_contract_invoice.filtered(lambda s: s.status == 'invoiced').mapped('amount'))
+            order.no_of_invoiced_amount = sum(order.order_contract_invoice.filtered(lambda s: s.status == 'invoiced').mapped('amount'))
+
             order.no_of_not_invoiced = len(order.order_contract_invoice.filtered(lambda s: s.status == 'uninvoiced'))
-            order.no_of_not_invoiced_amount = sum(
-                order.order_contract_invoice.filtered(lambda s: s.status == 'uninvoiced').mapped('amount'))
+            order.no_of_not_invoiced_amount = sum(order.order_contract_invoice.filtered(lambda s: s.status == 'uninvoiced').mapped('amount'))
+
+            order.no_of_posted_invoiced = len(order.invoice_ids.filtered(lambda s: s.state == 'posted'))
+            order.no_of_posted_invoiced_amount = sum(order.invoice_ids.filtered(lambda s: s.state == 'posted').mapped('amount_total'))
 
     @api.depends('order_contract_invoice.status')
     def _compute_full_invoiced(self):

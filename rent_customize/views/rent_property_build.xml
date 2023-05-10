@@ -23,6 +23,7 @@
                         </group>
                         <group>
                             <field name="ref_analytic_account"/>
+                            <field name="company_id"/>
                         </group>
                     </group>
                 </sheet>

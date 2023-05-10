@@ -136,6 +136,16 @@
                   sequence="10"/>
 
 
+        <record model="ir.actions.act_window" id="rent_config_rent_property_build">
+            <field name="name">Rent Property Build</field>
+            <field name="res_model">rent.property.build</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <menuitem name="Rent Property Build" id="rent_config_unit_finishes_menu"
+                  parent="sale_renting.menu_rental_config"
+                  action="rent_config_rent_property_build"
+                  sequence="5"/>
+
         <!-- Menu items under "Reports" menu in "rental" menu -->
 
         <!-- Maintenance Report (Pivot) -->
