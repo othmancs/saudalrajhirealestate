@@ -36,24 +36,29 @@ class RentLog(models.Model):
     todate = fields.Date('To Date')
     amount = fields.Float('Amount')
 
+
 class SaleOrder(models.Model):
     _inherit = "sale.order"
     state = fields.Selection([
         ('draft', 'Quotation'),
         ('sent', 'Quotation Sent'),
+        ('review', 'To Review'),
+        ('approve', 'Approved'),
         ('sale', 'Acceptance'),
         ('done', 'Locked'),
         ('cancel', 'Cancelled'),
         ('occupied', 'Occupied'),
         ('termination', 'Termination'),
     ], string='Status', readonly=True, copy=False, index=True, tracking=3, default='draft')
+    rental_status = fields.Selection(selection_add=[('review', 'To Review'), ('approve', 'To Approve'),
+                                                    ('sent',)],
+                                     ondelete={'review': 'set draft', 'approve': 'set draft'})
     apartment_insurance = fields.Float('Apartment Insurance')
     refund_insurance = fields.Boolean('Refund Insurance')
     damage_amount = fields.Float('Damage Amount')
     refund_amount = fields.Float('Refund Amount')
     context_order = fields.Many2one('sale.order')
     old_rent_ids = fields.One2many(comodel_name='rent.log', inverse_name='order_id', string='Old Rents')
-
 
     transfer_context_order = fields.Many2one('sale.order', copy=False)
     new_rental_id = fields.Many2one('sale.order', copy=False)
@@ -67,6 +72,14 @@ class SaleOrder(models.Model):
         ('fixed', 'Fixed amount')
     ], default='percentage', string='Annual INcrease Type')
     annual_amount = fields.Float("Annual Amount")
+
+    def action_submit(self):
+        if not self.order_line:
+            raise ValidationError(_("You need to add at least one line before Submitting."))
+        return self.write({'state': 'review'})
+
+    def action_review(self):
+        return self.write({'state': 'approve'})
 
     def get_date_hijri(self, date):
         if date:
@@ -458,19 +471,17 @@ class RentSaleInvoices(models.Model):
 class SaleOrderLine(models.Model):
     _inherit = 'sale.order.line'
 
-    unit_rented = fields.Boolean(compute="_compute_unit_rented")
-
-    @api.depends('fromdate', 'todate', 'property_number')
-    def _compute_unit_rented(self):
+    @api.onchange('property_number', 'product_id', 'fromdate', 'todate')
+    def _set_product_domain(self):
+        product_ids = []
         for line in self:
-            order = self.env['sale.order.line'].sudo().search([
+            orders = self.env['sale.order.line'].sudo().search([
                 ('order_id.state', '=', 'occupied'),
-                ('property_number', '=', line.property_number.id),
                 ('fromdate', '<', line.todate)
-            ], limit=1)
-            if order:
-                line.unit_rented = True
-            else:
-                line.unit_rented = False
+            ])
+            product_ids = orders.product_id.ids
+        return {'domain': {'product_id': [('product_tmpl_id.property_id','=',self.property_number.id),('id', 'not in', product_ids)]}}
+
+
 
 

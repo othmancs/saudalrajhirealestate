@@ -9,5 +9,14 @@
             <field name="name">Renting Order From Invoice</field>
             <field name="users" eval="[(4, ref('base.user_admin'))]"/>
         </record>
+
+         <record id="submit_rental_order" model="res.groups">
+            <field name="name">Submit Orders</field>
+            <field name="users" eval="[(4, ref('base.user_admin'))]"/>
+        </record>
+          <record id="review_rental_order" model="res.groups">
+            <field name="name">Review Orders</field>
+            <field name="users" eval="[(4, ref('base.user_admin'))]"/>
+        </record>
     </data>
 </odoo>

@@ -13,6 +13,12 @@
                 <!--          <div class="badge-pill badge-danger float-right" attrs="{'invisible': ['|', ('state', 'not in', ['sale', 'done']),'|', ('rental_status', '!=', 'return'), ('has_late_lines', '=', False)]}">Late Return</div>-->
                 <!--          <div class="badge-pill badge-success float-right" attrs="{'invisible': ['|', ('state', 'not in', ['sale', 'done']), ('rental_status', '!=', 'returned')]}">Returned</div>-->
                 <!--        -->
+               <xpath expr="//button[@name='action_quotation_send']" position="before">
+                    <button name="action_submit" states="draft" string="Submit" type="object" class="oe_highlight"
+                    groups="rent_customize.submit_rental_order"/>
+                   <button name="action_review" states="review" string="Reviewed" type="object" class="oe_highlight"
+                   groups="rent_customize.review_rental_order"/>
+                </xpath>
                 <xpath expr="//div[@class='badge-pill badge-info float-right']" position="replace">
                     <div class="badge-pill badge-info float-right"
                          attrs="{'invisible': ['|', ('state', 'not in', ['sale', 'done']),'|', ('rental_status', '!=', 'sent'), ('has_late_lines', '=', True)]}">
@@ -64,24 +70,25 @@
                 <form string="refund_insurance_form">
                     <sheet>
                         <group>
-                            <field name="id" invisible="1" />
-                            <field name="state" invisible="1" />
-                            <field name="company_id" invisible="1" />
-                            <field name="partner_id" invisible="1" />
-                            <field name="apartment_insurance" invisible="1" />
-                            <field name="apartment_insurance" invisible="1" />
-                            <field name="partner_invoice_id" invisible="1" />
-                            <field name="pricelist_id" store="1" force_save="1" invisible="1" />
-                            <field name="order_contract_invoice" invisible="1" />
-                            <field name="partner_shipping_id" invisible="1" />
-                            <field name="transfer_customer_id" required="1"  />
-                            <field name="transfer_date" required="1" />
+                            <field name="id" invisible="1"/>
+                            <field name="state" invisible="1"/>
+                            <field name="company_id" invisible="1"/>
+                            <field name="partner_id" invisible="1"/>
+                            <field name="apartment_insurance" invisible="1"/>
+                            <field name="apartment_insurance" invisible="1"/>
+                            <field name="partner_invoice_id" invisible="1"/>
+                            <field name="pricelist_id" store="1" force_save="1" invisible="1"/>
+                            <field name="order_contract_invoice" invisible="1"/>
+                            <field name="partner_shipping_id" invisible="1"/>
+                            <field name="transfer_customer_id" required="1"/>
+                            <field name="transfer_date" required="1"/>
                             <field name="transfer_context_order" invisible="1"/>
                         </group>
                     </sheet>
                     <footer>
                         <button name="do_transfer" type="object" string="Transfer" class="oe_highlight"/>
-                        <button name="do_transfer_and_print" type="object" string="Transfer and print" invisible="1" class="oe_highlight"/>
+                        <button name="do_transfer_and_print" type="object" string="Transfer and print" invisible="1"
+                                class="oe_highlight"/>
                     </footer>
                 </form>
             </field>
@@ -131,6 +138,13 @@
                 </xpath>
             </field>
         </record>
+
+
+<!--          <record id="sale.view_order_form" model="ir.ui.view">-->
+<!--                                  <field name="priority" eval="15"/>-->
+
+<!--          </record>-->
+
         <record id="rent_view_order_form" model="ir.ui.view">
             <field name="name">sale.order</field>
             <field name="model">sale.order</field>
@@ -139,9 +153,12 @@
                 <xpath expr="//field[@name='state']" position="replace">
                     <field name="state" widget="statusbar" statusbar_visible="draft,sale,occupied,termination"/>
                 </xpath>
+                <xpath expr="//button[@name='action_confirm'][2]" position="attributes">
+                    <attribute name="attrs">{'invisible': [('state', 'not in', ['approve'])]}</attribute>
+                </xpath>
                 <div class="oe_button_box" position="inside">
-                    <field name="transferred_id" invisible="1" />
-                    <field name="new_rental_id" invisible="1" />
+                    <field name="transferred_id" invisible="1"/>
+                    <field name="new_rental_id" invisible="1"/>
                     <button class="oe_stat_button" attrs="{'invisible':[('new_rental_id', '=', False)]}"
                             name="action_view_transfer" type="object" icon="fa-building-o">
                         New Rental
@@ -217,25 +234,24 @@
             <field name="model">sale.order</field>
             <field name="inherit_id" ref="sale_renting.rental_order_primary_form_view"/>
             <field name="arch" type="xml">
-                 <xpath expr="//field[@name='order_line']/tree/field[@name='product_id']" position="after">
-                     <field name="unit_rented" invisible="1"/>
-                     <field name="fromdate" invisible="1"/>
-                     <field name="todate" invisible="1"/>
-                 </xpath>
-                <xpath expr="//field[@name='order_line']/tree/field[@name='product_id']" position="attributes">
-                    <attribute name="domain">
-                        [('product_tmpl_id.property_id','=',property_number),('unit_rented','=',False)]
-                    </attribute>
+                <xpath expr="//field[@name='order_line']/tree/field[@name='product_id']" position="after">
+                    <field name="fromdate" invisible="1"/>
+                    <field name="todate" invisible="1"/>
                 </xpath>
+<!--                <xpath expr="//field[@name='order_line']/tree/field[@name='product_id']" position="attributes">-->
+<!--                    <attribute name="context">-->
+<!--                        [('product_tmpl_id.property_id','=',property_number),('unit_rented','=',False)]-->
+<!--                    </attribute>-->
+<!--                </xpath>-->
                 <xpath expr="//button[@name='action_quotation_send']" position="before">
                     <button name="action_pickup" type="object" class="btn-primary" string="PICKUP"
                             groups="rent_customize.group_pickup_rental_order"
                             attrs="{'invisible':['|', ('rental_status','not in',['sent']), ('state', 'not in', ['sale', 'done'])]}"/>
                     <button name="action_transfer" type="object" class="btn-primary" string="Transfer"
                             attrs="{'invisible':[ ('transferred', '=', True)]}"/>
-<!--                    <button name="%(rent_customize.apartment_transfer_wizard_action)d" type="action" class="btn-primary" string="Print Transfer"-->
-<!--                            attrs="{'invisible':[ ('transferred', '!=', True)]}"/>-->
-                     <button name="print_transfer" type="object" class="btn-primary" string="Print Transfer"
+                    <!--                    <button name="%(rent_customize.apartment_transfer_wizard_action)d" type="action" class="btn-primary" string="Print Transfer"-->
+                    <!--                            attrs="{'invisible':[ ('transferred', '!=', True)]}"/>-->
+                    <button name="print_transfer" type="object" class="btn-primary" string="Print Transfer"
                             attrs="{'invisible':[ ('transferred', '!=', True)]}"/>
 
 
@@ -247,18 +263,19 @@
                     <field name="rental_status" invisible="1"/>
                 </xpath>
                 <xpath expr="//field[@name='payment_term_id']" position="after">
-                    <field name="annual_increase" />
-                    <field name="annual_increase_type" attrs="{'invisible':[('annual_increase', '!=', True)], 'required':[('annual_increase', '=', True)]}"/>
+                    <field name="annual_increase"/>
+                    <field name="annual_increase_type"
+                           attrs="{'invisible':[('annual_increase', '!=', True)], 'required':[('annual_increase', '=', True)]}"/>
                     <field name="annual_amount" attrs="{'invisible':[ ('annual_increase', '!=', True)]}"/>
                 </xpath>
                 <xpath expr="//notebook" position="inside">
                     <page name="old_rents" string="Old Rents">
                         <field name="old_rent_ids" readonly="1" force_save="1">
                             <tree create="0" edit="0" delete="0">
-                                <field name="rent_id" />
-                                <field name="fromdate" />
-                                <field name="todate" />
-                                <field name="amount" />
+                                <field name="rent_id"/>
+                                <field name="fromdate"/>
+                                <field name="todate"/>
+                                <field name="amount"/>
                             </tree>
                         </field>
                     </page>
