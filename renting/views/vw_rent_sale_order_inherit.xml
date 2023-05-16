@@ -40,15 +40,15 @@
                     <field name="return_date" invisible="1" force_save="1"/>
                 </xpath>
 
-                <xpath expr="// field [@ name = 'order_line'] / tree / field [@ name = 'product_id']"
-                       position="attributes">
-                    <attribute name="domain">
-                        [('product_tmpl_id.property_id','=',property_number),('product_tmpl_id.state_id','=','شاغرة')]
-                    </attribute>
-                    <!--                    <attribute name="domain">[('product_tmpl_id.unit_number', '=',-->
-                    <!--                        unit_number),('product_tmpl_id.property_id','=',property_number),('product_tmpl_id.state_id','=','شاغرة')]-->
-                    <!--                    </attribute>-->
-                </xpath>
+<!--                <xpath expr="// field [@ name = 'order_line'] / tree / field [@ name = 'product_id']"-->
+<!--                       position="attributes">-->
+<!--                    <attribute name="domain">-->
+<!--                        [('product_tmpl_id.property_id','=',property_number),('product_tmpl_id.state_id','=','شاغرة')]-->
+<!--                    </attribute>-->
+<!--                    &lt;!&ndash;                    <attribute name="domain">[('product_tmpl_id.unit_number', '=',&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        unit_number),('product_tmpl_id.property_id','=',property_number),('product_tmpl_id.state_id','=','شاغرة')]&ndash;&gt;-->
+<!--                    &lt;!&ndash;                    </attribute>&ndash;&gt;-->
+<!--                </xpath>-->
                 <xpath expr="// field [@ name = 'order_line'] / tree / field [@ name = 'name']"
                        position="attributes">
                     <attribute name="required">False</attribute>

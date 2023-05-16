@@ -453,3 +453,24 @@ class RentSaleInvoices(models.Model):
             'invoice_date_due': self.fromdate,
         })
         return res
+
+
+class SaleOrderLine(models.Model):
+    _inherit = 'sale.order.line'
+
+    unit_rented = fields.Boolean(compute="_compute_unit_rented")
+
+    @api.depends('fromdate', 'todate', 'property_number')
+    def _compute_unit_rented(self):
+        for line in self:
+            order = self.env['sale.order.line'].sudo().search([
+                ('order_id.state', '=', 'occupied'),
+                ('property_number', '=', line.property_number.id),
+                ('fromdate', '<', line.todate)
+            ], limit=1)
+            if order:
+                line.unit_rented = True
+            else:
+                line.unit_rented = False
+
+
