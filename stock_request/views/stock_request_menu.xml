@@ -11,7 +11,7 @@
     <menuitem
         id="menu_stock_request"
         action="action_request_quantities_form"
-        name="Stock Requests"
+        name="Purchase Requests"
         parent="menu_stock_request_root"
         sequence="30"
     />
@@ -32,7 +32,7 @@
      <menuitem
         id="menu_rental_stock_request"
         action="action_request_quantities_form"
-        name="Stock Requests"
+        name="Purchase Requests"
         parent="sale_renting.rental_menu_root"
         sequence="4"
     />
