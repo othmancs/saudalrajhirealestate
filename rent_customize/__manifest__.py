@@ -4,7 +4,7 @@
     'summary': """Sale Renting Customization""",
     'category': 'Sales Management',
     'version': '0.1',
-    'depends': ['sale', 'sale_renting', 'renting', 'web_google_maps'],
+    'depends': ['sale', 'sale_renting', 'renting', 'web_google_maps', 'invoice_templates'],
     'data': [
         'security/security.xml',
         'security/ir.model.access.csv',

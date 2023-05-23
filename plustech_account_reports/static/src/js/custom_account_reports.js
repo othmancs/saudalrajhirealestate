@@ -170,6 +170,7 @@ var _t = core._t;
                 
                 if (!this.M2MBranchFilters) {
                     var fields = {};
+                    console.log("aaaaaaaaaaaaaa")
                     if ('operating_unit_ids' in this.report_options) {
                         fields['operating_unit_id'] = {
                             label: _t('Operating Unit'),
