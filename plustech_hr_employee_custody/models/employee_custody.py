@@ -137,8 +137,12 @@ class CustodyLine(models.Model):
     rejected = fields.Boolean(string='Reject')
     request_for = fields.Char(string='Request For')
     return_date = fields.Date(string='Renew Date')
-    state = fields.Selection(related="custody_id.state", string='Status')
+    state = fields.Selection(related="custody_id.state", string='Status', store=True)
     serial = fields.Char(related='product_id.default_code', string='Serial')
+    employee_id = fields.Many2one('hr.employee', related="custody_id.employee_id", string='Employee', store=True)
+    request_date = fields.Date(string='Request Date', related="custody_id.request_date", store=True)
+    receive_date = fields.Date(string='Receive Date', related="custody_id.receive_date", store=True)
+    name = fields.Char(related="custody_id.name", string='Request No')
 
     def action_renew(self):
         return {

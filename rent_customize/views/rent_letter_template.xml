@@ -27,18 +27,19 @@
                             <group>
                                 <field name="ref" invisible="1"/>
                                 <field name="subject"/>
-                                <field name="assigner_id" context="{'letter':True}"  string="Assigner"
+                                <field name="assigner_id" context="{'letter':True}" string="Assigner"
                                        attrs="{'required': [('subject', 'in', ('transfer','eviction'))],
                                 'invisible': [('subject', 'not in', ('transfer','eviction'))]}"/>
-                                 <field name="assigner_id" context="{'letter':True}" attrs="{'required': [('subject', 'in', ('pickup','return','value_update', 'payment_claim', 'termination'))],
-                                'invisible': [('subject', 'not in', ('pickup','return','value_update', 'payment_claim', 'termination'))]}" string="Customer"/>
+                                <field name="assigner_id" context="{'letter':True}" attrs="{'required': [('subject', 'in', ('pickup','return','value_update', 'payment_claim', 'termination'))],
+                                'invisible': [('subject', 'not in', ('pickup','return','value_update', 'payment_claim', 'termination'))]}"
+                                       string="Customer"/>
                                 <field name="partner_id" attrs="{'required': [('subject', 'in', ('commercial','personal'))],
                                 'invisible': [('subject', 'not in', ('commercial', 'personal'))]}" string="Customer"/>
-                                    <field name="authorized_identity" string="Tenant ID"
+                                <field name="authorized_identity" string="Tenant ID"
                                        attrs="{'invisible': [('subject', 'not in', ('personal'))]}"/>
                                 <field name="location"
                                        attrs="{'invisible': [('subject', 'not in', ('commercial','personal'))]}"/>
-                                <field name="rental_value" widget="monetary"
+                                <field name="rental_value"
                                        attrs="{'invisible': [('subject', 'not in', ('commercial','personal'))]}"/>
                                 <field name="new_rental_value" widget="monetary" string="Proposed Rental Value"
                                        attrs="{'invisible': [('subject', 'not in', ('commercial','personal'))]}"/>
@@ -58,8 +59,6 @@
 
                                 <field name="transfer_date"
                                        attrs="{'invisible': [('subject', 'not in', ('transfer'))], 'required':[('subject', 'in', ('transfer'))]}"/>
-                                <field name="contract_number"
-                                       attrs="{'invisible': [('subject', 'not in', ('transfer'))]}"/>
 
                                 <label for="beginning_contract" string="Contract Date"
                                        attrs="{'invisible': [('subject', 'not in', ('transfer','eviction','value_update','payment_claim','termination'))]}"/>
@@ -72,6 +71,10 @@
                                        attrs="{'invisible': [('subject', 'not in', ('transfer','eviction', 'value_update', 'payment_claim','termination'))],
                                         'required':[('subject', 'in', ('transfer', 'eviction', 'value_update','payment_claim','termination'))]}"
                                        context="{'letter_unit': True}"/>
+                                <field name="contract_value"
+                                       attrs="{'invisible': [('subject', 'not in', ('transfer', 'eviction'))]}"/>
+                                <field name="due_amount"
+                                       attrs="{'invisible': [('subject', 'not in', ('transfer', 'eviction'))]}"/>
                                 <field name="neighborhood"
                                        attrs="{'invisible': [('subject', 'not in', ('transfer'))], 'required':[('subject', 'in', ('transfer'))]}"/>
                                 <field name="termination_notice_period"
@@ -93,6 +96,7 @@
 
                             <group>
                                 <field name="today_date"/>
+                                <field name="user_id"/>
                                 <field name="state_unit_id" attrs="{'invisible': [('subject', 'not in', ('pickup','return'))],
                                         'required':[('subject', 'in', ('pickup','return'))]}"/>
                                 <field name="new_rental_id" context="{'letter':True}" string="Assignee"
@@ -113,11 +117,12 @@
                                 <field name="number" attrs="{'invisible': [('subject', 'not in', ('payment_claim'))]}"/>
                                 <field name="payment_period"
                                        attrs="{'invisible': [('subject', 'not in', ('commercial','payment_claim'))]}"/>
-                                <field name="bank_id" attrs="{'invisible': [('subject', 'not in', ('payment_claim'))]}"/>
+                                <field name="bank_id"
+                                       attrs="{'invisible': [('subject', 'not in', ('payment_claim'))]}"/>
                                 <field name="company_partner_id" invisible="1"/>
                                 <field name="property_type_id" options="{'no_create': True}"
                                        attrs="{'invisible': [('subject', 'not in', ('commercial','personal'))]}"/>
-                                 <field name="contact_number" string="Contact Number"
+                                <field name="contact_number" string="Contact Number"
                                        attrs="{'invisible': [('subject', 'not in', ('personal'))]}"/>
                                 <field name="employer" attrs="{'invisible': [('subject', '!=', 'personal')]}"/>
                                 <field name="martial_status" attrs="{'invisible': [('subject', '!=', 'personal')]}"/>
@@ -139,24 +144,29 @@
                                        attrs="{'invisible': [('subject', '!=', 'termination')]}"/>
                                 <field name="fee"
                                        attrs="{'invisible': [('subject', 'not in', ('transfer','eviction','value_update','termination'))]}"/>
+                                <field name="contract_number"
+                                       attrs="{'invisible': [('subject', 'not in', ('transfer', 'eviction'))]}"/>
+                                <field name="property_id"/>
+                                <field name="eviction_state" widget="radio"
+                                       attrs="{'invisible': [('subject', 'not in', ('eviction'))]}"/>
                             </group>
 
 
                             <group string="Insurance Officer"
                                    attrs="{'invisible': [('subject', 'not in', ('commercial','personal'))]}">
-                                    <field name="insurance_officer"/>
-                                    <field name="insurance_officer_opinion"/>
+                                <field name="insurance_officer"/>
+                                <field name="insurance_officer_opinion"/>
 
                             </group>
                             <group string="Property Manager"
                                    attrs="{'invisible': [('subject', 'not in', ('commercial','personal'))]}">
-                                    <field name="property_manager"/>
-                                    <field name="property_manager_opinion"/>
+                                <field name="property_manager"/>
+                                <field name="property_manager_opinion"/>
                             </group>
                             <group string="CEO"
                                    attrs="{'invisible': [('subject', 'not in', ('commercial','personal'))]}">
-                                    <field name="chief_executive"/>
-                                    <field name="chief_executive_no"/>
+                                <field name="chief_executive"/>
+                                <field name="chief_executive_no"/>
                             </group>
 
                             <group>
@@ -182,149 +192,149 @@
                                 </group>
 
                             </page>
-<!--                            <page string="بنود الاستلام/التسليم" name="cases"-->
-<!--                                  attrs="{'invisible': [('subject', 'not in', ('return','pickup'))]}">-->
-<!--                                <group>-->
-<!--                                    <group string="حالة الأبواب">-->
-<!--                                        <field name="door_good"/>-->
-<!--                                        <field name="door_bad"/>-->
-<!--                                        <field name="door_comment"/>-->
-<!--                                        <field name="door_note"/>-->
-<!--                                    </group>-->
-<!--                                    <group string="الحائط">-->
-<!--                                        <field name="wall_good"/>-->
-<!--                                        <field name="wall_bad"/>-->
-<!--                                        <field name="wall_comment"/>-->
-<!--                                        <field name="wall_note"/>-->
-<!--                                    </group>-->
-<!--                                    <group string="النوافذ">-->
-<!--                                        <field name="window_good"/>-->
-<!--                                        <field name="window_bad"/>-->
-<!--                                        <field name="window_comment"/>-->
-<!--                                        <field name="window_note"/>-->
-<!--                                    </group>-->
-<!--                                    <group string="السباكة">-->
-<!--                                        <field name="water_good"/>-->
-<!--                                        <field name="water_bad"/>-->
-<!--                                        <field name="water_comment"/>-->
-<!--                                        <field name="water_note"/>-->
-<!--                                    </group>-->
-<!--                                    <group string="الكهرباء">-->
-<!--                                        <field name="elec_good"/>-->
-<!--                                        <field name="elec_bad"/>-->
-<!--                                        <field name="elec_comment"/>-->
-<!--                                        <field name="elec_note"/>-->
-<!--                                    </group>-->
-<!--                                </group>-->
-<!--                            </page>-->
+                            <!--                            <page string="بنود الاستلام/التسليم" name="cases"-->
+                            <!--                                  attrs="{'invisible': [('subject', 'not in', ('return','pickup'))]}">-->
+                            <!--                                <group>-->
+                            <!--                                    <group string="حالة الأبواب">-->
+                            <!--                                        <field name="door_good"/>-->
+                            <!--                                        <field name="door_bad"/>-->
+                            <!--                                        <field name="door_comment"/>-->
+                            <!--                                        <field name="door_note"/>-->
+                            <!--                                    </group>-->
+                            <!--                                    <group string="الحائط">-->
+                            <!--                                        <field name="wall_good"/>-->
+                            <!--                                        <field name="wall_bad"/>-->
+                            <!--                                        <field name="wall_comment"/>-->
+                            <!--                                        <field name="wall_note"/>-->
+                            <!--                                    </group>-->
+                            <!--                                    <group string="النوافذ">-->
+                            <!--                                        <field name="window_good"/>-->
+                            <!--                                        <field name="window_bad"/>-->
+                            <!--                                        <field name="window_comment"/>-->
+                            <!--                                        <field name="window_note"/>-->
+                            <!--                                    </group>-->
+                            <!--                                    <group string="السباكة">-->
+                            <!--                                        <field name="water_good"/>-->
+                            <!--                                        <field name="water_bad"/>-->
+                            <!--                                        <field name="water_comment"/>-->
+                            <!--                                        <field name="water_note"/>-->
+                            <!--                                    </group>-->
+                            <!--                                    <group string="الكهرباء">-->
+                            <!--                                        <field name="elec_good"/>-->
+                            <!--                                        <field name="elec_bad"/>-->
+                            <!--                                        <field name="elec_comment"/>-->
+                            <!--                                        <field name="elec_note"/>-->
+                            <!--                                    </group>-->
+                            <!--                                </group>-->
+                            <!--                            </page>-->
 
-<!--                            <page string="معلومات اخرى" name="info"-->
-<!--                                  attrs="{'invisible': [('subject', 'not in', ('return','pickup'))]}">-->
-<!--                                <group col="3">-->
-<!--                                    <group string="موافقة العميل بالتسليم">-->
-<!--                                        <field name="customer_accept"/>-->
-<!--                                        <field name="customer_refused"/>-->
-<!--                                    </group>-->
+                            <!--                            <page string="معلومات اخرى" name="info"-->
+                            <!--                                  attrs="{'invisible': [('subject', 'not in', ('return','pickup'))]}">-->
+                            <!--                                <group col="3">-->
+                            <!--                                    <group string="موافقة العميل بالتسليم">-->
+                            <!--                                        <field name="customer_accept"/>-->
+                            <!--                                        <field name="customer_refused"/>-->
+                            <!--                                    </group>-->
 
-<!--                                    <group string="يوجد مستحقات للمؤجر">-->
-<!--                                        <field name="rental_payments_yes"/>-->
-<!--                                        <field name="rental_payments_no"/>-->
-<!--                                        <field name="rental_payments"-->
-<!--                                               attrs="{'invisible': [('subject', '!=', 'pickup')]}"/>-->
-<!--                                    </group>-->
+                            <!--                                    <group string="يوجد مستحقات للمؤجر">-->
+                            <!--                                        <field name="rental_payments_yes"/>-->
+                            <!--                                        <field name="rental_payments_no"/>-->
+                            <!--                                        <field name="rental_payments"-->
+                            <!--                                               attrs="{'invisible': [('subject', '!=', 'pickup')]}"/>-->
+                            <!--                                    </group>-->
 
-<!--                                    <group string="المبلغ المتبقي للمستأجر">-->
-<!--                                        <field name="remaining_amount_yes"/>-->
-<!--                                        <field name="remaining_amount_no"/>-->
-<!--                                        <field name="remaining_amount"-->
-<!--                                               attrs="{'invisible': [('subject', '!=', 'pickup')]}"/>-->
+                            <!--                                    <group string="المبلغ المتبقي للمستأجر">-->
+                            <!--                                        <field name="remaining_amount_yes"/>-->
+                            <!--                                        <field name="remaining_amount_no"/>-->
+                            <!--                                        <field name="remaining_amount"-->
+                            <!--                                               attrs="{'invisible': [('subject', '!=', 'pickup')]}"/>-->
 
-<!--                                    </group>-->
-<!--                                </group>-->
-<!--                                <group string="تصفية عداد الكهرباء" col="3">-->
-<!--                                    <group>-->
-<!--                                        <field name="elec_yes"/>-->
-<!--                                    </group>-->
-<!--                                    <group>-->
-<!--                                        <field name="elec_no"/>-->
-<!--                                    </group>-->
-<!--                                    <group>-->
-<!--                                        <field name="remaining_amount"-->
-<!--                                               attrs="{'invisible': [('subject', '!=', 'pickup')]}"/>-->
-<!--                                    </group>-->
+                            <!--                                    </group>-->
+                            <!--                                </group>-->
+                            <!--                                <group string="تصفية عداد الكهرباء" col="3">-->
+                            <!--                                    <group>-->
+                            <!--                                        <field name="elec_yes"/>-->
+                            <!--                                    </group>-->
+                            <!--                                    <group>-->
+                            <!--                                        <field name="elec_no"/>-->
+                            <!--                                    </group>-->
+                            <!--                                    <group>-->
+                            <!--                                        <field name="remaining_amount"-->
+                            <!--                                               attrs="{'invisible': [('subject', '!=', 'pickup')]}"/>-->
+                            <!--                                    </group>-->
 
-<!--                                </group>-->
-<!--                                <hr/>-->
-<!--                                <group col="2">-->
-<!--                                    <group>-->
-<!--                                        <field name="electricity_meter_no"/>-->
-<!--                                    </group>-->
-<!--                                    <group>-->
-<!--                                        <field name="electricity_amount_due"/>-->
-<!--                                    </group>-->
-<!--                                </group>-->
-<!--                                <group col="5">-->
-<!--                                    <group>-->
-<!--                                        <field name="elec_found"/>-->
-<!--                                    </group>-->
-<!--                                    <group>-->
-<!--                                        <field name="elec_not_found"/>-->
-<!--                                    </group>-->
-<!--                                    <group>-->
-<!--                                        <field name="elec_payment"/>-->
-<!--                                    </group>-->
-<!--                                    <group>-->
-<!--                                        <field name="elec_not_payment"/>-->
-<!--                                    </group>-->
-<!--                                </group>-->
-<!--                                <hr/>-->
-<!--                                <group col="2">-->
-<!--                                    <group>-->
-<!--                                        <field name="water_meter_no"/>-->
-<!--                                    </group>-->
-<!--                                    <group>-->
-<!--                                        <field name="water_amount_due"/>-->
-<!--                                    </group>-->
-<!--                                </group>-->
-<!--                                <group col="5">-->
-<!--                                    <group>-->
-<!--                                        <field name="water_found"/>-->
-<!--                                    </group>-->
-<!--                                    <group>-->
-<!--                                        <field name="water_not_found"/>-->
-<!--                                    </group>-->
-<!--                                    <group>-->
-<!--                                        <field name="water_payment"/>-->
-<!--                                    </group>-->
-<!--                                    <group>-->
-<!--                                        <field name="water_not_payment"/>-->
-<!--                                    </group>-->
-<!--                                </group>-->
-<!--                            </page>-->
+                            <!--                                </group>-->
+                            <!--                                <hr/>-->
+                            <!--                                <group col="2">-->
+                            <!--                                    <group>-->
+                            <!--                                        <field name="electricity_meter_no"/>-->
+                            <!--                                    </group>-->
+                            <!--                                    <group>-->
+                            <!--                                        <field name="electricity_amount_due"/>-->
+                            <!--                                    </group>-->
+                            <!--                                </group>-->
+                            <!--                                <group col="5">-->
+                            <!--                                    <group>-->
+                            <!--                                        <field name="elec_found"/>-->
+                            <!--                                    </group>-->
+                            <!--                                    <group>-->
+                            <!--                                        <field name="elec_not_found"/>-->
+                            <!--                                    </group>-->
+                            <!--                                    <group>-->
+                            <!--                                        <field name="elec_payment"/>-->
+                            <!--                                    </group>-->
+                            <!--                                    <group>-->
+                            <!--                                        <field name="elec_not_payment"/>-->
+                            <!--                                    </group>-->
+                            <!--                                </group>-->
+                            <!--                                <hr/>-->
+                            <!--                                <group col="2">-->
+                            <!--                                    <group>-->
+                            <!--                                        <field name="water_meter_no"/>-->
+                            <!--                                    </group>-->
+                            <!--                                    <group>-->
+                            <!--                                        <field name="water_amount_due"/>-->
+                            <!--                                    </group>-->
+                            <!--                                </group>-->
+                            <!--                                <group col="5">-->
+                            <!--                                    <group>-->
+                            <!--                                        <field name="water_found"/>-->
+                            <!--                                    </group>-->
+                            <!--                                    <group>-->
+                            <!--                                        <field name="water_not_found"/>-->
+                            <!--                                    </group>-->
+                            <!--                                    <group>-->
+                            <!--                                        <field name="water_payment"/>-->
+                            <!--                                    </group>-->
+                            <!--                                    <group>-->
+                            <!--                                        <field name="water_not_payment"/>-->
+                            <!--                                    </group>-->
+                            <!--                                </group>-->
+                            <!--                            </page>-->
 
-<!--                            <page string="خاص بالادارة" name="management"-->
-<!--                                  attrs="{'invisible': [('subject', 'not in', ('return','pickup'))]}">-->
-<!--                                <group string=":موافقة الادارة على الاستلام" col="2">-->
-<!--                                    <group>-->
-<!--                                        <field name="mangement_accept"/>-->
-<!--                                    </group>-->
-<!--                                    <group>-->
-<!--                                        <field name="mangement_refused"/>-->
-<!--                                    </group>-->
-<!--                                    <group>-->
-<!--                                        <field name="note"/>-->
-<!--                                    </group>-->
+                            <!--                            <page string="خاص بالادارة" name="management"-->
+                            <!--                                  attrs="{'invisible': [('subject', 'not in', ('return','pickup'))]}">-->
+                            <!--                                <group string=":موافقة الادارة على الاستلام" col="2">-->
+                            <!--                                    <group>-->
+                            <!--                                        <field name="mangement_accept"/>-->
+                            <!--                                    </group>-->
+                            <!--                                    <group>-->
+                            <!--                                        <field name="mangement_refused"/>-->
+                            <!--                                    </group>-->
+                            <!--                                    <group>-->
+                            <!--                                        <field name="note"/>-->
+                            <!--                                    </group>-->
 
-<!--                                </group>-->
-<!--                            </page>-->
+                            <!--                                </group>-->
+                            <!--                            </page>-->
                         </notebook>
                     </sheet>
-                     <div class="oe_chatter">
-                    <field name="message_follower_ids" widget="mail_followers"
-                        groups="base.group_user" />
-                    <field name="activity_ids" widget="mail_activity" />
-                    <field name="message_ids" widget="mail_thread" />
-                </div>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"
+                               groups="base.group_user"/>
+                        <field name="activity_ids" widget="mail_activity"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
                 </form>
             </field>
         </record>
@@ -336,12 +346,13 @@
             <field name="context">{'letter': True,
                 'letter_unit': True}
             </field>
+            <field name="view_id" ref="rent_customize.rent_value_update_tree"/>
             <field name="view_mode">tree,form</field>
         </record>
 
         <menuitem id="rent_rental_letter_templates_menu"
                   parent="sale_renting.rental_menu_root" name="Templates"
-                  sequence="6"/>
+                  sequence="4"/>
 
         <menuitem name="Rental Letters" id="rent_rental_value_update_menu"
                   parent="rent_rental_letter_templates_menu"

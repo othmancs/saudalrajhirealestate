@@ -19,6 +19,7 @@
         'data/cron.xml',
         'data/template.xml',
         'views/hr_employee.xml',
+        'report/custody_report.xml',
     ],
     'license': 'LGPL-3',
     'installable': True,

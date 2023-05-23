@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="custody_report_tree" model="ir.ui.view">
+            <field name="name">custody.line.report.tree</field>
+            <field name="model">custody.line</field>
+            <field name="arch" type="xml">
+                <tree create="0" delete="0">
+                    <field name="name"/>
+                    <field name="employee_id"/>
+                    <field name="product_id"/>
+                    <field name="serial"/>
+                    <field name="request_for"/>
+                    <field name="request_date"/>
+                    <field name="receive_date"/>
+                    <field name="return_date"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="report_custody_filter" model="ir.ui.view">
+            <field name="name">custody.report.filter</field>
+            <field name="model">custody.line</field>
+            <field name="arch" type="xml">
+                <search string="Search Custody">
+                    <filter name="request_date" string="Today"
+                            domain="[('request_date','=',time.strftime('%%Y-%%m-%%d'))]"/>
+                    <filter name="date_filter" string="Request Date" date="request_date"/>
+                    <filter name="current_month" string="Current Month"
+                            domain="[('request_date', '&gt;=', (context_today()).strftime('%Y-%m-01')),('request_date', '&lt;', (context_today() + relativedelta(months=1)).strftime('%Y-%m-01'))]"/>
+                    <separator/>
+                    <field name="employee_id"/>
+                    <group expand="0" string="Group By">
+                        <filter name="group_employee" string="Employee"
+                                context="{'group_by':'employee_id'}"/>
+                        <filter name="group_status" string="Status" context="{'group_by':'state'}"/>
+                        <separator/>
+                        <filter name="group_request_date" string="Request Date" context="{'group_by':'request_date'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="custody_report_action" model="ir.actions.act_window">
+            <field name="name">Custody</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">custody.line</field>
+            <field name="view_mode">tree</field>
+        </record>
+
+        <menuitem id="menu_custody_report"
+                  name="Reporting"
+                  parent="custody_menu_root"
+                  sequence="5"
+        />
+
+        <menuitem id="menu_report_custody_all"
+                  name="Custodies"
+                  action="custody_report_action"
+                  parent="menu_custody_report"
+                  sequence="1"/>
+
+    </data>
+</odoo>

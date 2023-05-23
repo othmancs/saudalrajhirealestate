@@ -21,6 +21,7 @@
         'report/transfer.xml',
         'report/reports_layout_template.xml',
         'views/res_setting.xml',
+        'views/eviction_report.xml',
         'data/data.xml',
         'data/sequence_data.xml',
         'report/report_pickup_template.xml',

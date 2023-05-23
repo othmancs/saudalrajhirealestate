@@ -37,13 +37,16 @@ class RentalLetterTemplate(models.Model):
     national_id_assigner = fields.Char(string='National ID No. Assigner')
     national_id_assigner_date = fields.Date()
     unit_id = fields.Many2one('sale.order.line', string='Unit Number', domain="[('order_id', '=', assigner_id)]")
+    property_id = fields.Many2one('rent.property', related="unit_id.property_number", string="Property")
     state_unit_id = fields.Many2one('rent.sale.state', string='Unit Number', domain="[('sale_order_id', '=', assigner_id)]")
     city = fields.Char(string='City')
     neighborhood = fields.Char(string='Neighborhood')
     cash_receipts = fields.Char(string='Cash Receipts No.')
     cash_receipts_date = fields.Date(string='Cash Receipts Date')
     cash_receipts_value = fields.Char(string='Cash Receipts Value')
-
+    user_id = fields.Many2one(
+        "res.users", string="Responsible", default=lambda self: self.env.user)
+    eviction_state = fields.Selection([('done', 'Termination Done'), ('refused', 'Termination Refused')])
     e_invoice = fields.Char(string='e-invoice No.')
     e_invoice_date = fields.Date(string='e-invoice Date')
     insurance_value = fields.Float(related="unit_id.insurance_value", readonly=False, string='Insurance Value')
@@ -57,7 +60,8 @@ class RentalLetterTemplate(models.Model):
                                   default=lambda
                                       self: self.env.user.company_id.currency_id.id)
     fee = fields.Char(string="Charges day's rental")
-    partner_id = fields.Many2one('res.partner', string='Customer')
+    partner_id = fields.Many2one('res.partner', string='Customer' , related="assigner_id.partner_id", readonly=False,
+                                 store=True)
     beginning_contract = fields.Date(related='assigner_id.fromdate', String='Contract Date')
     contract_number = fields.Char(related='assigner_id.contract_number', String='Contract Number', readonly=False)
     end_contract = fields.Date(related='assigner_id.todate')
@@ -134,7 +138,8 @@ class RentalLetterTemplate(models.Model):
     water_not_found = fields.Boolean('لا يوجد')
     water_payment = fields.Boolean('تم السداد')
     water_not_payment = fields.Boolean('لم يتم السداد ')
-    rental_value = fields.Monetary(string="Rental Value")
+    contract_value = fields.Monetary(string="Contract Value", related="assigner_id.amount_total")
+    due_amount = fields.Float(string="Contract Value", related="assigner_id.amount_remain")
     deposits_paid = fields.Monetary(string="التأمين المدفوع")
     mangement_accept = fields.Boolean('نعم')
     mangement_refused = fields.Boolean('لا')
