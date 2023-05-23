@@ -457,6 +457,7 @@ class SaleOrder(models.Model):
 class RentSaleInvoices(models.Model):
     _inherit = 'rent.sale.invoices'
 
+    contract_number = fields.Char(related="sale_order_id.contract_number")
 
     def _prepare_invoice(self, invoice_lines):
         res = super(RentSaleInvoices, self)._prepare_invoice(invoice_lines)

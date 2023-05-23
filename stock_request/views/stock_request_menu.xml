@@ -29,4 +29,11 @@
         action="action_stock_request_config"
         groups="base.group_system"
     />
+     <menuitem
+        id="menu_rental_stock_request"
+        action="action_request_quantities_form"
+        name="Stock Requests"
+        parent="sale_renting.rental_menu_root"
+        sequence="4"
+    />
 </odoo>
