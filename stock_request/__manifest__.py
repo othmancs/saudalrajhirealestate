@@ -9,7 +9,7 @@
     "website": "www.plustech.com",
     "author": "Plus Tech",
     "category": "Warehouse Management",
-    "depends": ["stock", "hr"],
+    "depends": ["stock", "hr", "purchase"],
     "data": [
         "security/stock_request_security.xml",
         "security/ir.model.access.csv",

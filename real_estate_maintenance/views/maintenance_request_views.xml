@@ -62,8 +62,8 @@
                             <group>
                                 <field name="request_date" required="1"
                                     attrs="{'readonly': [('state', 'in', ('closed', 'refused'))]}" />
-                                <field name="visit_date"
-                                    attrs="{'readonly': [('state', 'in', ('closed', 'refused'))]}" />
+                                <field name="visit_date" attrs="{'readonly': [('state', 'in', ('closed', 'refused'))]}" />
+                                <field name="end_date" />
                             </group>
                             <group>
                                 <field name="operating_unit_id" required="1"
@@ -81,8 +81,8 @@
                             <group>
                                 <field name="requester_id"
                                     attrs="{'readonly': [('state', 'in', ('closed', 'refused'))]}" />
-                                <field name="issue_type"
-                                    attrs="{'readonly': [('state', 'in', ('closed', 'refused'))]}" />
+                                <field name="issue_type" attrs="{'readonly': [('state', 'in', ('closed', 'refused'))]}" />
+                                <field name="maintenance_type" widget="radio" attrs="{'readonly': [('state', 'in', ('closed', 'refused'))]}" />
                                 <field name="invoice_status"
                                     attrs="{'readonly': [('state', 'in', ('closed', 'refused'))]}" />
                                 <field name="maintenance_responsible_id"
@@ -216,6 +216,7 @@
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">maintenance.request</field>
             <field name="view_mode">tree,form</field>
+            <field name="view_ids" eval="[(5, 0, 0),(0, 0, {'view_mode': 'tree', 'view_id': ref('maintenance_request_view_tree')}) ]"/>
             <field name="context">{}</field>
             <field name="help" type="html">
                 <p class="oe_view_nocontent_create">
@@ -226,7 +227,6 @@
 
         <!-- Main Menu Item -->
         <menuitem id="real_estate_maintenance_menu_root"
-            action="maintenance_request_act_window"
             web_icon="real_estate_maintenance,static/description/icon.png"
             name="Real Estate Maintenance" sequence="70" />
 
@@ -235,5 +235,39 @@
             parent="real_estate_maintenance_menu_root"
             action="maintenance_request_act_window"
             name="Maintenance Requests" sequence="70" />
+
+        
+
+        <record id="real_estate_maintenance_tree_view_report" model="ir.ui.view">
+            <field name="name">Maintenance</field>
+            <field name="model">maintenance.request</field>
+            <field name="arch" type="xml">
+                <tree create="false" edit="false">
+                    <field name="name" readonly="1" decoration-bf="1"/>
+                    <field name="request_date"/>
+                    <field name="end_date"/>
+                    <field name="operating_unit_id" readonly="1"/>
+                    <field name="property_rent_id"/>
+                    <field name="maintenance_type"/>
+                    <field name="property_id"/>
+                    <field name="requester_id"/>
+                    <field name="maintenance_responsible_id"/>
+                    <field name="state"/>
+                    <field name="invoice_status"/>
+                </tree>
+            </field>
+        </record>
+        <record id="real_estate_maintenance_action_report" model="ir.actions.act_window">
+            <field name="name">Maintenance</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">maintenance.request</field>
+            <field name="view_ids" eval="[(5, 0, 0),(0, 0, {'view_mode': 'tree', 'view_id': ref('real_estate_maintenance_tree_view_report')}) ]"/>
+            <field name="view_mode">tree</field>
+        </record>
+
+        <menuitem id="real_estate_maintenance_menu_report"
+            parent="real_estate_maintenance_menu_root"
+            action="real_estate_maintenance_action_report"
+            name="Report" sequence="70" />
     </data>
 </odoo>

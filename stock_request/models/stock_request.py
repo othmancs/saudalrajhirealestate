@@ -3,6 +3,7 @@
 import logging
 
 from odoo import models, fields, api
+from odoo.exceptions import ValidationError
 
 _logger = logging.getLogger(__name__)
 
@@ -14,9 +15,10 @@ class StockRequest(models.Model):
     name = fields.Char(string='Order Ref', required=True,
                        readonly=True, copy=False, default='/')
     company_id = fields.Many2one('res.company', string='Company', required=True, readonly=True,
-                                 default=lambda self: self.env.user.company_id)
+                                 default=lambda self: self.env.company)
     user_id = fields.Many2one(
         "res.users", string="Responsible", default=lambda self: self.env.user)
+    manager_id = fields.Many2one('hr.employee', related="employee_id.parent_id", string='Manager', readonly=False)
     date_quotation = fields.Datetime(
         string='Request Date', readonly=True, index=True, default=fields.Datetime.now)
     date_order = fields.Date(string='Order Date', readonly=True, index=True)
@@ -26,8 +28,10 @@ class StockRequest(models.Model):
                             'order_id', string='Order Lines', copy=True)
     partner_id = fields.Many2one(
         'res.partner', string='Customer', change_default=True, index=True)
-    employee_id = fields.Many2one('hr.employee', string='Employee', index=True)
-    state = fields.Selection([('draft', 'New'), ('approve', 'Approve'),
+    employee_id = fields.Many2one('hr.employee', related="user_id.employee_id", string='Employee', index=True)
+    state = fields.Selection([('draft', 'New'),
+                              ('to_approve', 'To Approved'),
+                              ('approve', 'Approved'),
                               ('confirmed', 'Confirmed'),
                               ('picking', 'Waiting'),
                               ('done', 'Transferred'),
@@ -39,13 +43,12 @@ class StockRequest(models.Model):
     location_src_id = fields.Many2one(
         'stock.location', string='Source Location')
     location_dest_id = fields.Many2one('stock.location', string='Destination Location', readonly=False,
-                                       domain="[('usage', '=', 'internal')]")
+                                       domain="[('usage', '=', 'internal')]",
+                                       default=lambda self: self.env.company.location_dest_id)
     picking_type_id = fields.Many2one(
         'stock.picking.type', string='Operation Type', domain=[('code', '=', 'internal')])
     picking_ids = fields.One2many(
         'stock.picking', 'stock_request_id', string='Pickings')
-    transfer_ids = fields.One2many(
-        'stock.picking', 'stock_request_id', string='Transfers')
     order_ids = fields.One2many(
         'purchase.order', 'stock_request_id', string='Purchase Orders', tracking=True)
     delivery_count = fields.Integer(
@@ -53,6 +56,52 @@ class StockRequest(models.Model):
     fully_transfered = fields.Boolean(default=False, )
 
     check_state = fields.Boolean(string='', compute="_compute_state")
+    agreement_ids = fields.One2many(comodel_name='purchase.requisition', inverse_name='request_id',
+                                    string='Agreement_ids')
+    agreement_count = fields.Integer(compute="get_agreement_count")
+    purchase_order_ids = fields.One2many(comodel_name='purchase.order', inverse_name='stock_request_id',
+                                         string="RFQ's")
+    purchase_count = fields.Integer(
+        string="Purchases count", compute="_compute_purchase_count", readonly=True
+    )
+
+    is_manager = fields.Boolean(compute='compute_is_manager')
+
+    @api.depends('manager_id')
+    def compute_is_manager(self):
+
+        if self.manager_id.user_id.id == self.env.user.id:
+            self.is_manager = True
+        else:
+            self.is_manager = False
+
+    @api.depends('purchase_order_ids')
+    def _compute_purchase_count(self):
+        for rec in self:
+            rec.purchase_count = len(rec.purchase_order_ids.ids)
+
+    @api.depends('agreement_ids')
+    def get_agreement_count(self):
+        for rec in self:
+            rec.agreement_count = len(rec.agreement_ids.ids)
+
+    def action_view_purchase_order(self):
+        action = self.env["ir.actions.actions"]._for_xml_id("purchase.purchase_rfq")
+        lines = self.mapped("purchase_order_ids")
+        if len(lines) > 1:
+            action["domain"] = [("id", "in", lines.ids)]
+        elif lines:
+            action["views"] = [
+                (self.env.ref("purchase.purchase_order_form").id, "form")
+            ]
+            action["res_id"] = lines.id
+        return action
+
+    def action_open_agreement(self):
+        action = self.env.ref("purchase_requisition.action_purchase_requisition").sudo().read()[0]
+        action["domain"] = [("id", "in", self.agreement_ids.ids)]
+        action["context"] = {'default_request_id': self.id}
+        return action
 
     @api.depends('picking_ids', 'order_ids')
     def _compute_state(self):
@@ -96,16 +145,25 @@ class StockRequest(models.Model):
                 'stock.request') or '/'
         return super(StockRequest, self).create(vals)
 
+    def action_submit(self):
+        self.state = 'to_approve'
+        for line in self.lines:
+            line.state = 'to_approve'
+
     def action_approve(self):
         self.state = 'approve'
+        for line in self.lines:
+            line.state = 'approve'
 
     def action_cancel(self):
         self.state = 'cancel'
 
     def action_confirm(self):
+        if self.agreement_count < self.company_id.agreement_no and self.company_id.purchase_operation_type == 'tender':
+            raise ValidationError("You have to create %s purchase agreements" % self.company_id.agreement_no)
         self.state = 'confirmed'
-        for l in self.lines:
-            l.state = 'confirmed'
+        for line in self.lines:
+            line.state = 'confirmed'
 
     def action_view_picking(self):
         action = self.env.ref('stock.action_picking_tree_all').read()[0]
@@ -129,7 +187,8 @@ class StockQuotationLine(models.Model):
     order_id = fields.Many2one(
         'stock.request', string='Order Ref', ondelete='cascade')
     state = fields.Selection(
-        [('draft', 'New'), ('confirmed', 'Confirmed'), ('purchase', 'To Purchase'),
+        [('draft', 'New'), ('to_approve', 'To Approved'),
+         ('approve', 'Approved'), ('confirmed', 'Confirmed'), ('purchase', 'To Purchase'),
          ('picking', 'Waiting'), ('done', 'Transferred')],
         'Status', readonly=True, copy=False, default='draft', store=True)
     date_quotation = fields.Datetime(string='Request Date', readonly=True, index=True, default=fields.Datetime.now,
@@ -257,23 +316,22 @@ class StockMove(models.Model):
     request_line_id = fields.Many2one(
         'stock.request.line', 'QTY Request', index=True, copy=True)
 
-
-class ResConfigSettings(models.TransientModel):
-    _inherit = 'res.config.settings'
-
-    picking_type_id = fields.Many2one('stock.picking.type', string='Operation Type',
-                                      domain=[('code', '=', 'internal')])
-
-    @api.model
-    def get_values(self):
-        res = super(ResConfigSettings, self).get_values()
-        get_param = self.env['ir.config_parameter'].sudo().get_param
-        res['picking_type_id'] = int(
-            get_param('stock_request.picking_type_id'))
-        return res
-
-    def set_values(self):
-        super(ResConfigSettings, self).set_values()
-        set_param = self.env['ir.config_parameter'].sudo().set_param
-        set_param('stock_request.picking_type_id',
-                  int(self.picking_type_id.id))
+# class ResConfigSettings(models.TransientModel):
+#     _inherit = 'res.config.settings'
+#
+#     picking_type_id = fields.Many2one('stock.picking.type', string='Operation Type',
+#                                       domain=[('code', '=', 'internal')])
+#
+#     @api.model
+#     def get_values(self):
+#         res = super(ResConfigSettings, self).get_values()
+#         get_param = self.env['ir.config_parameter'].sudo().get_param
+#         res['picking_type_id'] = int(
+#             get_param('stock_request.picking_type_id'))
+#         return res
+#
+#     def set_values(self):
+#         super(ResConfigSettings, self).set_values()
+#         set_param = self.env['ir.config_parameter'].sudo().set_param
+#         set_param('stock_request.picking_type_id',
+#                   int(self.picking_type_id.id))

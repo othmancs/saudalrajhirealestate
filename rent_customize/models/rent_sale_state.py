@@ -12,6 +12,7 @@ class IRAttachment(models.Model):
 
 class RentSaleState(models.Model):
     _inherit = "rent.sale.state"
+    _rec_name = 'sale_order_line_id'
 
     supported_attachment_ids = fields.Many2many(comodel_name='ir.attachment', relation="supported_attachment_rel",
                                                 string='Attachments')

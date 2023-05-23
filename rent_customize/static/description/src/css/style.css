@@ -1,0 +1,8 @@
+@font-face {
+    font-family: 'MonixBold';
+    src: local('MonixBold'), local('MonixBold'), url(/rent_customize/static/description/src/fonts/PFDinTextUniversal-Regular.otf) format('opentype');
+}
+
+.mabco_font {
+    font-family: MonixBold;
+}

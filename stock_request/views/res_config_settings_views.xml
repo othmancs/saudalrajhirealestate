@@ -7,24 +7,51 @@
     <record id="res_config_settings_view_form" model="ir.ui.view">
         <field name="name">res.config.settings.view.form.inherit.stock_request</field>
         <field name="model">res.config.settings</field>
-        <field name="inherit_id" ref="base.res_config_settings_view_form" />
+        <field name="inherit_id" ref="base.res_config_settings_view_form"/>
         <field name="arch" type="xml">
             <xpath expr="//div[hasclass('settings')]" position="inside">
                 <div
-                    class="app_settings_block"
-                    data-string="Stock Request"
-                    data-key="stock_request"
-                    groups="stock_request.group_stock_request_manager">
+                        class="app_settings_block"
+                        data-string="Stock Request"
+                        data-key="stock_request"
+                        groups="stock_request.group_stock_request_manager">
                     <h2>Orders &amp; Configuration</h2>
                     <div class="row mt16 o_settings_container" id="stock_request">
-                        <div class="col-xs-12 col-md-6 o_setting_box">
+                        <div class="col-12 col-lg-6 o_setting_box" name="config_deputation_request_settings">
                             <div class="o_setting_right_pane">
-                                <label
-                                    string="Select Picking Type"
-                                    for="picking_type_id"
-                                />
+                                <h3>Delivery</h3>
                                 <div class="text-muted">
-                                    <field name="picking_type_id" />
+                                    Define Delivery  Settings
+                                </div>
+                                <div class="content-group">
+                                    <div class="row mt8">
+                                        <label for="picking_type_id"
+                                               class="col-lg-5 o_light_label"/>
+                                        <field name="picking_type_id"/>
+                                    </div>
+                                     <div class="row mt8">
+                                            <label for="location_dest_id" class="col-lg-5 o_light_label"/>
+                                            <field name="location_dest_id"/>
+                                        </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6 o_setting_box" name="config_deputation_request_settings">
+                            <div class="o_setting_right_pane">
+                                <h3>Agreements</h3>
+                                <div class="text-muted">
+                                    Define Agreement  Settings
+                                </div>
+                                <div class="content-group">
+                                    <div class="row mt8">
+                                        <label for="agreement_no"
+                                               string="Number of agreements" class="col-lg-5 o_light_label"/>
+                                        <field name="agreement_no"/>
+                                    </div>
+                                    <div class="row mt8">
+                                            <label for="purchase_operation_type" class="col-lg-5 o_light_label"/>
+                                            <field name="purchase_operation_type"  widget="radio"/>
+                                        </div>
                                 </div>
                             </div>
                         </div>

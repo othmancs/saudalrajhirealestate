@@ -4,7 +4,7 @@
     'summary': """Sale Renting Customization""",
     'category': 'Sales Management',
     'version': '0.1',
-    'depends': ['sale_renting', 'renting', 'web_google_maps'],
+    'depends': ['sale', 'sale_renting', 'renting', 'web_google_maps'],
     'data': [
         'security/security.xml',
         'security/ir.model.access.csv',
@@ -19,7 +19,23 @@
         'views/rent_letter_template.xml',
         'report/contract.xml',
         'report/transfer.xml',
+        'report/reports_layout_template.xml',
         'views/res_setting.xml',
         'data/data.xml',
-    ]
+        'data/sequence_data.xml',
+        'report/report_pickup_template.xml',
+        'report/report_return_template.xml',
+        'report/vacating_property_template.xml',
+        'report/transfer_template.xml',
+        'report/commercial_template.xml',
+        'report/personal_template.xml',
+        'report/value_update_template.xml',
+        'report/contract_termination.xml',
+        'report/payment_claim_template.xml',
+    ],
+    'assets': {
+        'web.report_assets_common': [
+            '/rent_customize/static/description/src/css/style.css',
+        ],
+    },
 }

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+       
+        <record id="res_partner_bank_inherit_form_view" model="ir.ui.view">
+            <field name="name">res_partner_bank_inherit.inherit_form_view</field>
+            <field name="model">res.partner.bank</field>
+            <field name="inherit_id" ref="base.view_partner_bank_form"/>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <field name="company_id" position="after">
+                    <field name="branch_name"/>
+                    <label for="street" string="Address"/>
+                    <div class="o_address_format">
+                        <field name="street" placeholder="Street..." class="o_address_street"/>
+                        <field name="street2" placeholder="Street 2..." class="o_address_street"/>
+                        <field name="city" placeholder="City" class="o_address_city"/>
+                        <field name="state_id" class="o_address_state" placeholder="State"/>
+                        <field name="zip" placeholder="ZIP" class="o_address_zip"/>
+                        <field name="country_id" placeholder="Country" class="o_address_country"/>
+                    </div>
+                    <field name="swift_code"/>
+                    <field name="iban_number"/>
+                    <field name="ifsc"/>
+                </field>
+            </field>
+        </record>
+
+    </data>
+</odoo>

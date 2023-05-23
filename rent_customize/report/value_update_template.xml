@@ -1,0 +1,102 @@
+<odoo>
+    <record id="action_report_value_update" model="ir.actions.report">
+        <field name="name">خطاب تحديث القيمة الإيجارية</field>
+        <field name="model">rental.letter.template</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">rent_customize.report_value_update_template</field>
+        <field name="report_file">rent_customize.report_value_update_template</field>
+        <field name="binding_model_id" eval="False"/>
+        <field name="binding_type">report</field>
+    </record>
+    <template id="report_value_update_template">
+      <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+
+                <t t-set="o" t-value="o.with_context({'lang':'en_US'})"/>
+                <t t-if="o and 'company_id' in o">
+                    <t t-set="company" t-value="o.company_id"></t>
+                </t>
+                <t t-if="not o or not 'company_id' in o">
+                    <t t-set="company" t-value="res_company"></t>
+                </t>
+                <t t-set="data_report_margin_top" t-value="35"/>
+                    <t t-set="data_report_header_spacing" t-value="35"/>
+                    <t t-set="data_report_dpi" t-value="110"/>
+                <t t-call="rent_customize.reports_template_layout">
+
+                    <div class="page" style="line-height: 2;font-family:MonixBold ;">
+                    <div class="oe_structure"/>
+                        <div class="text-center">
+                            <h4 lang="ar-SA" style="padding-top:20px;" align="center">خطاب تحديث القيمة الإيجارية</h4>
+                        </div>
+                    <div class="row">
+
+                        <table align="center" class="table table-bordered" cellpadding="1" cellspacing="1"
+                               style="width:100%; border:0; font-size:18px;" dir="rtl">
+                        <tbody>
+                        <tr style="height:18px;">
+                            <td colspan="2" align="right" style="border:0;">
+                                <p>السيد / السادة &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
+                                    <span t-esc="o['assigner_id'].partner_id.name"/> &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
+                                    المحترم/المحترمين</p>
+                                <p>السلام عليكم ورحمة الله وبركاته وبعد:</p>
+                                <br/>
+                                <br/>
+                            </td>
+                        </tr>
+                        <tr style="height:18px;">
+                            <td colspan="2" align="right" style="border:0;">
+                                <u>الموضوع: خطاب تحديث القيمة الإيجارية</u>
+                            </td>
+                        </tr>
+                        <tr style="height:18px;">
+                            <td colspan="2" align="right" style="border:0;">
+                                <p>
+                                    إشارة للموضوع أعلاه وبالإشارة الى عقد الإيجار الإلكتروني المبرم معكم بتاريخ
+                                    <span t-esc="o.beginning_contract"/>م
+                                    للشقة رقم
+                                        <span t-esc="o.unit_id.product_id.unit_number"/>
+                                    في العقار الواقع في حي
+                                        (
+                                            <span t-esc="o.unit_id.property_number.property_name"/>
+                                    )
+                                    بقيمة إيجارية وقدرها
+                                    (<span t-esc="o['rental_value_old']"/>)
+                                    ونظرا لإن القيمة السوقية للإيجار في المنطقة للشقق المماثلة تقدر بأعلى لذا نبلغكم بأن المالك يرغب بزيادة الأجرة الى
+                                    (<span t-esc="o['rental_value_new']"/>)
+                                    ابتداء من السنة الإيجارية الجديدة وذلك بتاريخ
+                                    <span t-esc="o.new_rental_year"/>م
+                                    عليه نأمل التكرم بالاطلاع والرد على خطابنا خلال مدة أقصاها أسبوع من تاريخه، وإلا سيعتبر ذلك عدم رغبة في التجديد من قبلكم، وعليه يكون العقد منتهيا بتاريخ نهايته،
+                                    ويجب عليكم إخلاء العقار خلال مدة أقصاها
+                                    (<span t-esc="o['vacating_the_property']"/>)
+                                    يوم من تاريخ نهاية العقد. وفي حال تأخيركم تسليم العقار عن المدة المحددة أعلاه ستكون الأجرة اليومية بقيمة
+                                    (<span t-esc="o['fee']"/>)
+                                    عن كل يوم.
+                                    <br/><br/>
+                                    <p align="center">وتقبلوا تحياتنا</p>
+                                </p>
+                            </td>
+                        </tr>
+
+                            <tr style="height:18px;">
+                                <td align="right" style="border:0;">استلام المستأجر</td>
+                                <td align="right" style="border:0;">توقيع إدارة العقار</td>
+                            </tr>
+                            <tr style="height:18px;">
+                                <td align="right" style="border:0;">التوقيع:</td>
+                                <td align="right" style="border:0;">التوقيع:</td>
+                            </tr>
+                            <tr style="height:18px;">
+                                <td align="right" style="border:0;">التاريخ:</td>
+                                <td align="right" style="border:0;">التاريخ:</td>
+                            </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </t>
+            </t>
+        </t>
+    </template>
+</odoo>

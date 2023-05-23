@@ -33,18 +33,13 @@ class RentalOrder(models.Model):
     
     @api.model
     def _cron_send_invoice_notifications(self):
-        print("*********************************")
         """ Cron job to send notifications for invoice """
         is_invoice_notify = self.env['ir.config_parameter'].get_param('rent_customize.is_invoice_notify')
         invoice_notify = self.env['ir.config_parameter'].get_param('rent_customize.invoice_notify')
-        print(is_invoice_notify, datetime.today() + timedelta(days=int(invoice_notify)))
-        print(datetime.today() - timedelta(days=int(invoice_notify)))
         if is_invoice_notify:
             invoice_renewals = self.env['account.move'].search([('state','=','posted'),('invoice_date_due', '=', datetime.today() + timedelta(days=int(invoice_notify)))])
-            print("invoigggggggggggggggggggg",invoice_renewals)
         for invoice in invoice_renewals:
             invoice_user_id = invoice.invoice_user_id
-            print('bjbkbkkjffffffffff',invoice_user_id)
             notification = {
                 'activity_type_id': self.env.ref('rent_customize.invoice_expire_notification').id,
                 'res_id': invoice.id,
@@ -55,8 +50,6 @@ class RentalOrder(models.Model):
                 'note': "A kind reminder to inform customer to pay the due payment"
             }
             xxxx = self.env['mail.activity'].create(notification)
-            print(xxxx)
-
 
 
 class SaleOrder(models.Model):

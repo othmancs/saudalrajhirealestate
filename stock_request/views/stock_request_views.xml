@@ -7,34 +7,61 @@
         <field name="arch" type="xml">
             <form string="Stock Request">
                 <header>
-                    <button string="Confirm" name="action_confirm" type="object" class="oe_highlight" states="approve" groups="stock_request.group_stock_request_confirm"/>
-                    <button string="Approve" name="action_approve" type="object" class="oe_highlight" states="draft" groups="stock_request.group_stock_approve"/>
+                    <button name="action_submit" states="draft" string="Submit" type="object" class="oe_highlight"
+                    groups="stock_request.group_stock_request_user"/>
+                    <button string="Approve" name="action_approve" type="object" class="oe_highlight"
+                            attrs="{'invisible': ['|',('state', '!=', 'to_approve'), ('is_manager', '=', False)]}"
+                            groups="stock_request.group_stock_approve"/>
+                    <button string="Confirm" name="action_confirm" type="object" class="oe_highlight" states="approve"
+                            groups="stock_request.group_stock_request_confirm"/>
                     <button string="Cancel" name="action_cancel"
                             type="object" class="oe_highlight"
-                            states="draft,approve,confirmed"
+                            states="draft,to_approve,approve,confirmed"
                             groups="stock_request.group_stock_request_manager"/>
                     <!-- <button string="Create Picking" type="object" class="oe_highlight" name="" groups="stock_request.group_stock_request_manager" states="confirmed"/> -->
-                    <field name="state" force_save="1" widget="statusbar" statusbar_visible="draft,confirmed,done" />
+                    <field name="state" force_save="1" widget="statusbar" statusbar_visible="draft,confirmed,done"/>
                 </header>
                 <sheet>
                     <field name="fully_transfered" invisible="1"/>
                     <div class="oe_button_box" name="button_box">
-                        <button type="object" name="action_view_picking" class="oe_stat_button" icon="fa-truck" attrs="{'invisible': [('delivery_count', '=', 0)]}">
+                        <button type="object" name="action_view_picking" class="oe_stat_button" icon="fa-truck"
+                                attrs="{'invisible': [('delivery_count', '=', 0)]}">
                             <field name="delivery_count" widget="statinfo" string="Transfers"/>
+                        </button>
+                        <button
+                                type="object"
+                                name="action_view_purchase_order"
+                                class="oe_stat_button"
+                                attrs="{'invisible':[('purchase_count', '=', 0)]}"
+                                icon="fa-shopping-cart"
+                        >
+                            <field
+                                    name="purchase_count"
+                                    widget="statinfo"
+                                    string="Purchase Orders"
+                            />
+                        </button>
+                        <button type="object" name="action_open_agreement" class="oe_stat_button"
+                                icon="fa-shopping-cart">
+                            <field name="agreement_count" widget="statinfo" string="Agreements"
+                                   attrs="{'invisible': [('agreement_count', '=', 0)]}"/>
                         </button>
                     </div>
                     <group>
                         <group>
                             <field name="name"/>
                             <field name="date_order" invisible="1"/>
-                            <!-- <field name="employee_id"/> -->
+                            <field name="user_id" readonly="1" force_save="1"/>
+                            <field name="employee_id" invisible="1"/>
                         </group>
-                        <group >
+                        <group>
                             <field name="date_quotation"/>
                             <field name="location_dest_id"
                                    domain="[('usage', '=', 'internal')]"
                                    attrs="{'required':[('state','=', 'confirmed')],'readonly':[('state', 'in', ['picking','done'])]}"/>
-                            <field name="user_id" readonly="1" force_save="1"/>
+                            <field name="manager_id"/>
+                            <field name="is_manager" invisible="1"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
                             <field name="check_state" invisible="1"/>
                         </group>
                     </group>
@@ -47,14 +74,20 @@
                                       editable="bottom">
                                     <field name="product_id"/>
                                     <field name="state" invisible="1"/>
-                                    <button name="action_open_quants" type="object" title="History" attrs="{'invisible': [('state', 'in',('draft','done'))]}" icon="fa-bars" style="font-size: 1rem;" groups="stock_request.group_stock_request_manager"/>
-                                    <button name="action_do_purchase" type="object" title="History" attrs="{'invisible': [('state', 'in',('draft','done'))]}" icon="fa-cart-arrow-down" style="font-size: 1.5rem;" groups="stock_request.group_stock_request_manager"/>
+                                    <button name="action_open_quants" type="object" title="History"
+                                            attrs="{'invisible': [('state', 'in',('draft','done'))]}" icon="fa-bars"
+                                            style="font-size: 1rem;"
+                                            groups="stock_request.group_stock_request_manager"/>
+                                    <button name="action_do_purchase" type="object" title="History"
+                                            attrs="{'invisible': [('state', 'not in',('approve'))]}"
+                                            icon="fa-cart-arrow-down" style="font-size: 1.5rem;"
+                                            groups="stock_request.group_stock_request_manager"/>
                                     <field name="request_qty"/>
-                                    <field name="qty"  groups="stock_request.group_stock_approve"/>
+                                    <field name="qty" groups="stock_request.group_stock_approve"/>
                                     <field name="qty_in_transfer"/>
                                     <field name="transferred_qty"/>
                                     <field name="purchased_qty"/>
-                                    <field name ="available_qty"/>
+                                    <field name="available_qty"/>
                                     <!-- <field name="transfer_status"/> -->
                                 </tree>
                                 <form string="Order lines">
@@ -63,7 +96,7 @@
                                         <field name="qty"/>
                                         <field name="transferred_qty"/>
                                         <field name="purchased_qty"/>
-                                        <field name ="available_qty"/>
+                                        <field name="available_qty"/>
                                         <field name="state" invisible="1"/>
                                         <field name="notice"/>
                                         <field name="transfer_status"/>
@@ -72,15 +105,7 @@
                             </field>
                             <div class="oe_clear"/>
                         </page>
-                        <page string="Transfers">
-                            <field name="transfer_ids">
-                                <tree string="Transfers">
-                                    <field name="name"/>
-                                    <field name="state"/>
-                                </tree>
-                            </field>
-                            <div class="oe_clear"/>
-                        </page>
+
                         <page string="Picking">
                             <field name="picking_ids">
                                 <tree string="Picking">
@@ -142,22 +167,29 @@
         <field name="model">stock.request</field>
         <field name="arch" type="xml">
             <search string="Search Request">
-                <field name="name" string="Stock Request" filter_domain="['|', ('name', 'ilike', self), ('employee_id', 'ilike', self)]"/>
+                <field name="name" string="Stock Request"
+                       filter_domain="['|', ('name', 'ilike', self), ('employee_id', 'ilike', self)]"/>
                 <field name="date_quotation"/>
                 <field name="employee_id"/>
                 <filter string="Draft" name="new" domain="[('state', '=', 'draft')]" help="Draft Stock Requests"/>
-                <filter string="Confirmed" name="confirmed" domain="[('state', '=', 'confirmed')]" help="Confirmed Stock Requests"/>
-                <filter string="Waiting" name="picking" domain="[('state', '=', 'picking')]" help="Waiting for picking Stock Requests"/>
-                <filter string="Transfered" name="transfered" domain="[('state', '=', 'done')]" help="Transfered Stock Requests"/>
+                <filter string="Confirmed" name="confirmed" domain="[('state', '=', 'confirmed')]"
+                        help="Confirmed Stock Requests"/>
+                <filter string="Waiting" name="picking" domain="[('state', '=', 'picking')]"
+                        help="Waiting for picking Stock Requests"/>
+                <filter string="Transfered" name="transfered" domain="[('state', '=', 'done')]"
+                        help="Transfered Stock Requests"/>
                 <separator/>
                 <filter string="Date" name="date_quotation" date="date_quotation"/>
                 <separator/>
                 <group expand="0" string="Group By">
                     <filter string="Requester" name="requester" domain="[]" context="{'group_by': 'employee_id'}"/>
                     <filter string="Status" name="status" domain="[]" context="{'group_by': 'state'}"/>
-                    <filter string="Date" name="by_date" domain="[]" context="{'group_by': 'date_quotation'}" help="Requests by Date"/>
-                    <filter string="Source Location" name="location_src_id" domain="[]" context="{'group_by': 'location_src_id'}" />
-                    <filter string="Destination Location" name="location_dest_id" domain="[]" context="{'group_by': 'location_dest_id'}" />
+                    <filter string="Date" name="by_date" domain="[]" context="{'group_by': 'date_quotation'}"
+                            help="Requests by Date"/>
+                    <filter string="Source Location" name="location_src_id" domain="[]"
+                            context="{'group_by': 'location_src_id'}"/>
+                    <filter string="Destination Location" name="location_dest_id" domain="[]"
+                            context="{'group_by': 'location_dest_id'}"/>
 
                 </group>
             </search>
@@ -178,9 +210,9 @@
                 Click to create a new order.
             </p>
             <p>
-            Use this menu to browse previous quotations. To record new
-            quotations, you may use the menu <i>Your Session</i> for
-            the touchscreen interface.
+                Use this menu to browse previous quotations. To record new
+                quotations, you may use the menu <i>Your Session</i> for
+                the touchscreen interface.
             </p>
         </field>
     </record>

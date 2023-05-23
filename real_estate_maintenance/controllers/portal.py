@@ -85,8 +85,12 @@ class ProjectCustomerPortal(CustomerPortal):
 
     @http.route(['/my/maintenance-request'], type='http', methods=["POST"], auth="user", website=True)
     def portal_maintenance_request_new(self, **post):
+
+        product_id = request.env['product.product'].browse(int(post['property_id']))
         maintenance_request = request.env['maintenance.request'].create({
             'property_id': int(post['property_id']),
+            'property_rent_id': product_id.property_id.id,
+            'operating_unit_id': product_id.property_id.property_address_area.id,
             'requester_id': request.env.user.partner_id.id,
             'issue_type': int(post['issue_type']),
             'issue_description': post['issue_description']

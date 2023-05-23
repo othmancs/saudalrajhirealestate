@@ -133,6 +133,7 @@ var _t = core._t;
                     self.$searchview_buttons.find('.account_partner_filter').click();
                     self.$searchview_buttons.find('.account_analytic_filter').click();
                     self.$searchview_buttons.find('.account_analytic_group_filter').click();
+                    self.$searchview_buttons.find('.account_operating_unit_id_filter').click();
                 });
              },
         }),
@@ -142,6 +143,7 @@ var _t = core._t;
 
             self._super();
 
+            // Anaylitic group filter
             if (this.report_options.analytic_group) {
                 
                 if (!this.M2MBranchFilters) {
@@ -163,34 +165,27 @@ var _t = core._t;
                 }
             }
 
-                  // analytic filter
-        if (this.report_options.analytic) {
-            console.log("00000000000000000000000000000000000000000000000000000", this.report_options.analytic_accounts)
-            console.log("00000000000000000000000000000000000000000000000000000", this.report_options.analytic_accounts.map(Number))
-            if (!this.M2MFilters) {
-                var fields = {};
-                if (this.report_options.analytic_accounts) {
-                    fields['analytic_accounts'] = {
-                        label: _t('Accounts'),
-                        modelName: 'account.analytic.account',
-                        value: this.report_options.analytic_accounts.map(Number),
-                    };
+            // Operating Unit filter
+            if (this.report_options.operating_unit_id) {
+                
+                if (!this.M2MBranchFilters) {
+                    var fields = {};
+                    if ('operating_unit_ids' in this.report_options) {
+                        fields['operating_unit_id'] = {
+                            label: _t('Operating Unit'),
+                            modelName: 'operating.unit',
+                            value: this.report_options.operating_unit_ids.map(Number),
+                        };
+                    }
+
+                    if (!_.isEmpty(fields)) {
+                        this.M2MBranchFilters = new M2MBranchFilters(this, fields);
+                        this.M2MBranchFilters.appendTo(this.$searchview_buttons.find('.js_account_operating_unit_m2m'));
+                    }
+                } else {
+                    this.$searchview_buttons.find('.js_account_operating_unit_m2m').append(this.M2MBranchFilters.$el);
                 }
-                if (this.report_options.analytic_tags) {
-                    fields['analytic_tags'] = {
-                        label: _t('Tags'),
-                        modelName: 'account.analytic.tag',
-                        value: this.report_options.analytic_tags.map(Number),
-                    };
-                }
-                if (!_.isEmpty(fields)) {
-                    this.M2MFilters = new M2MFilters(this, fields);
-                    this.M2MFilters.appendTo(this.$searchview_buttons.find('.js_account_analytic_m2m'));
-                }
-            } else {
-                this.$searchview_buttons.find('.js_account_analytic_m2m').append(this.M2MFilters.$el);
             }
-        }
         },
 
     });

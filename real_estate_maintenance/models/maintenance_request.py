@@ -1,5 +1,6 @@
 from odoo import fields, models, api, _
 from odoo.exceptions import UserError
+from datetime import datetime, date
 
 
 class MaintenanceRequest(models.Model):
@@ -15,6 +16,7 @@ class MaintenanceRequest(models.Model):
     MAINTENANCE_REQUEST_STATES = [('new', 'New'), ('confirm', 'Confirmed'), ('ongoing', 'In Progress'),
                                   ('closed', 'Closed'), ('refused', 'Refused')]
     INVOICING_STATES = [('on-company', 'On The Company'), ('on-partner', 'On The Requester')]
+    MAINTENANCE_TYPE = [('electric', 'Electric'), ('plumbing', 'Plumbing'), ('wall', 'Wall')]
     name = fields.Char()
     maintenance_responsible_id = fields.Many2one("hr.employee", "Maintenance Responsible")
     property_id = fields.Many2one("product.product", string="Property")
@@ -23,10 +25,12 @@ class MaintenanceRequest(models.Model):
     maintenance_request_product_line_ids = fields.One2many("maintenance.request.product", "maintenance_request_id")
     request_date = fields.Date(string="Request Date", default=fields.Date.today())
     visit_date = fields.Date(string="Visit Date")
+    end_date = fields.Date(string="End Date", readonly=True)
     issue_type = fields.Many2one("maintenance.issue.type", "Issue Type")
     issue_description = fields.Text("Issue Description")
     refuse_reason = fields.Text("Refuse Reason")
     invoice_status = fields.Selection(INVOICING_STATES, "Invoicing Status")
+    maintenance_type = fields.Selection(MAINTENANCE_TYPE, "Maintenace Type")
     attachment_ids = fields.One2many('ir.attachment', compute='_compute_attachment_ids', string="Main Attachments",
                                      help="Attachments that don't come from a message.")
     company_id = fields.Many2one('res.company', string="Company", required=True, default=lambda self: self.env.company)
@@ -53,10 +57,23 @@ class MaintenanceRequest(models.Model):
 
     property_rent_id = fields.Many2one(
         comodel_name='rent.property',
-        string='Property',
+        string='Building',
         readonly=True,
     )
 
+    @api.onchange('property_rent_id')
+    def _onchange_property_rent_id(self):
+        domain = []
+        if self.property_rent_id:
+            domain = [('property_id', '=', self.property_rent_id.id)]
+        return {'domain': {'property_id': domain}}
+    
+    @api.onchange('property_id')
+    def _onchange_property_id(self):
+        if self.property_id:
+            self.property_rent_id = self.property_id.property_id
+            self.operating_unit_id = self.property_id.property_id.property_address_area
+        
     def action_view_stock_pickings(self):
         action = self.env['ir.actions.act_window']._for_xml_id('stock.action_picking_tree_all')
         action['domain'] = [('maintenance_request_id', '=', self.id)]
@@ -153,7 +170,7 @@ class MaintenanceRequest(models.Model):
 
     def action_close(self):
         self.create_bills()
-        # self.action_create_picking_new()
+        self.end_date = date.today()
         self.write({"state": "closed"})
 
     def action_refuse(self):

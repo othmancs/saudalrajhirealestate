@@ -1,0 +1,183 @@
+<odoo>
+    <record id="action_report_payment_claim" model="ir.actions.report">
+        <field name="name">مطالبة بسداد متأخرات</field>
+        <field name="model">rental.letter.template</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">rent_customize.report_payment_claim_template</field>
+        <field name="report_file">rent_customize.report_payment_claim_template</field>
+        <field name="binding_model_id" eval="False"/>
+        <field name="binding_type">report</field>
+    </record>
+    <template id="report_payment_claim_template">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+
+                <t t-set="o" t-value="o.with_context({'lang':'en_US'})"/>
+                <t t-if="o and 'company_id' in o">
+                    <t t-set="company" t-value="o.company_id"></t>
+                </t>
+                <t t-if="not o or not 'company_id' in o">
+                    <t t-set="company" t-value="res_company"></t>
+                </t>
+                <t t-set="data_report_margin_top" t-value="35"/>
+                <t t-set="data_report_header_spacing" t-value="35"/>
+                <t t-set="data_report_dpi" t-value="110"/>
+                <t t-call="rent_customize.reports_template_layout">
+
+                    <div class="page" style="line-height: 2;font-family:MonixBold ;">
+                        <div class="oe_structure"/>
+                        <table align="center" class="table table-bordered" cellpadding="1" cellspacing="1"
+                               style="width:100%; border:0; font-size:18px;" dir="rtl">
+                            <tbody>
+                                <tr style="height:18px;">
+                                    <td align="right" style="border:0;">
+                                        <p align="left">التاريخ:
+                                            <span t-esc="o.get_date_hijri(o.today_date)"/>هـ
+                                        </p>
+                                        <p align="left">الموافق:
+                                            <span t-esc="o['today_date']"/>م
+                                        </p>
+                                        <p align="left">خطاب رقم:
+                                            <span t-esc="o['number']"/>
+                                        </p>
+
+                                        <h4 lang="ar-SA" style="padding-top:20px;" align="center">مطالبة بسداد متأخرات
+                                        </h4>
+                                    </td>
+                                </tr>
+                                <tr style="height:18px;">
+                                    <td align="right" style="border:0;">
+                                        <p>السيد / السادة
+                                            &#160;&#160;&#160;&#160;
+                                            <span t-esc="o['assigner_id'].partner_id.name"/> &#160;&#160;&#160;&#160;
+                                            المحترم/المحترمين
+                                        </p>
+                                        <p align="right">السلام عليكم ورحمة الله وبركاته</p>
+                                    </td>
+                                </tr>
+                                <tr style="height:18px;">
+                                    <td align="right" style="border:0;">الموضوع: مطالبة سداد أجرة</td>
+                                </tr>
+                                <tr style="height:18px;">
+                                    <td align="right" style="border:0;">
+
+                                        <p>
+                                            إشارة إلى الموضوع أعلاه وإشارةً لعقد الأجرة الموقع معكم بتاريخ
+                                            <span t-esc="o['beginning_contract']"/>م
+                                            وحيث أنّه قد ترتب عليكم عدة أقساط متأخرة عن استئجاركم الوحدة
+                                            رقم معرض / مكتب/شقة
+                                            &#160;&#160;
+                                            <span t-esc="o.unit_id.product_id.unit_number"/>
+                                            &#160;&#160;
+                                            في العقار الكائن بحي
+                                            <span t-esc="o.unit_id.property_number.property_name"/>
+                                            بمدينة الرياض، ولم يتم السداد حتى تاريخه علما بأن المتأخرات المترتبة عليكم
+                                            كالآتي:
+                                        </p>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <table align="center" class="table table-bordered" cellpadding="1" cellspacing="1"
+                               style="width:100%;float: right; font-size:18px;" dir="rtl">
+                            <tbody>
+                                <tr style="height:18px;">
+                                    <td style="height:18px; border: 1px solid black;" align="right">الفترة من تاريخ</td>
+                                    <td style="height:18px; border: 1px solid black;" align="right">الى تاريخ</td>
+                                    <td style="height:18px; border: 1px solid black;" align="right">المبلغ المستحق</td>
+                                    <td style="height:18px; border: 1px solid black;" align="right">الضريبة</td>
+                                    <td style="height:18px; border: 1px solid black;" align="right">الإجمالي</td>
+                                </tr>
+                                <t t-foreach="o.invoice_ids" t-as="line">
+                                    <tr style="height:18px;">
+                                        <td style="height:18px; border: 1px solid black;" align="right">
+                                            <span t-esc="line.date_from"/>
+                                        </td>
+                                        <td style="height:18px; border: 1px solid black;" align="right">
+                                            <span t-esc="line.date_to"/>
+                                        </td>
+                                        <td style="height:18px; border: 1px solid black;" align="right">
+                                            <span t-esc="line.amount"/>
+                                        </td>
+                                        <td style="height:18px; border: 1px solid black;" align="right">
+                                            <span t-esc="line.tax_amount"/>
+                                        </td>
+                                        <td style="height:18px; border: 1px solid black;" align="right">
+                                            <t t-set="total" t-value="line['amount'] * line['tax_amount']"/>
+                                        </td>
+                                    </tr>
+                                </t>
+
+                            </tbody>
+                        </table>
+                        <table align="center" class="table table-bordered" cellpadding="1" cellspacing="1"
+                               style="width:100%;float: right; border:0; font-size:18px;" dir="rtl">
+                            <tbody>
+                                <tr style="height:18px;">
+                                    <td align="right" style="border:0;">
+
+                                        <p>
+                                            عليه نأمل من سعادتكم التكرم بالسداد في مدة أقصاها
+                                            (&#160;&#160;<span t-esc="o['payment_period']"/>&#160;&#160;)
+                                            من تاريخ هذا الإنذار،
+                                            وإلا سنضطر وبكل أسف لاتخاذ الإجراء القانوني في حقكم. وسيتم مطالبتكم برسوم
+                                            التكاليف القضائية وأتعاب المحاماة الناتجة عن نظر الدعاوى القضائية.
+                                        </p>
+                                        <p>
+                                            تنويه / المطالبة تصدر آليا ولا يعني إرسالها للمستأجر
+                                            أي التزام تعاقدي أو نقض خطابات سبق أن وجهت له بتعديل أو الغاء أو نقض
+                                            الالتزامات التعاقدية معه.
+                                        </p>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div style="page-break-inside: avoid;">
+                            <div align="right">
+                                <p dir="rtl">
+                                    علماً أن تحويل الأجرة يكون فقط على حساب الشركة الآتي:
+                                </p>
+                            </div>
+                            <table align="center" class="table table-bordered" cellpadding="1" cellspacing="1"
+                                   style="width:100%; font-size:18px;" dir="rtl">
+                                <tbody>
+                                    <tr style="height:18px;">
+                                        <td style="height:18px; border: 1px solid black;" align="center">شركة الراجحي
+                                            العقارية
+                                        </td>
+                                    </tr>
+                                    <tr style="height:18px;">
+                                        <td style="height:18px; border: 1px solid black;" align="center">
+                                            <span t-esc="o.bank_id.bank_id.name"/>
+                                        </td>
+                                    </tr>
+                                    <tr style="height:18px;">
+                                        <td style="height:18px; border: 1px solid black;" align="right">رقم الحساب:
+                                            <span t-esc="o.bank_account"/>
+                                        </td>
+                                    </tr>
+                                    <tr style="height:18px;">
+                                        <td style="height:18px; border: 1px solid black;" align="right">رقم الايبان:
+                                            <span t-esc="o.iban"/>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <table align="center" class="table table-bordered" cellpadding="1" cellspacing="1"
+                               style="width:100%;float: right; font-size:18px; border:0px; margin-top:90px;" dir="rtl">
+                            <tbody>
+                                <tr style="height:18px;">
+                                    <td align="center" style="border:0;">اسم المستلم</td>
+                                    <td align="center" style="border:0;">إدارة العقار</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

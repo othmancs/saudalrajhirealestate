@@ -1,0 +1,110 @@
+<odoo>
+    <record id="action_report_contract_termination" model="ir.actions.report">
+        <field name="name">إشعار بإنهاء التعاقد</field>
+        <field name="model">rental.letter.template</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">rent_customize.report_contract_termination_template</field>
+        <field name="report_file">rent_customize.report_contract_termination_template</field>
+        <field name="binding_model_id" eval="False"/>
+        <field name="binding_type">report</field>
+    </record>
+    <template id="report_contract_termination_template">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+
+                <t t-set="o" t-value="o.with_context({'lang':'en_US'})"/>
+                <t t-if="o and 'company_id' in o">
+                    <t t-set="company" t-value="o.company_id"></t>
+                </t>
+                <t t-if="not o or not 'company_id' in o">
+                    <t t-set="company" t-value="res_company"></t>
+                </t>
+                <t t-set="data_report_margin_top" t-value="35"/>
+                <t t-set="data_report_header_spacing" t-value="35"/>
+                <t t-set="data_report_dpi" t-value="110"/>
+                <t t-call="rent_customize.reports_template_layout">
+
+                    <div class="page" style="line-height: 2;font-family:MonixBold ;">
+                        <div class="oe_structure"/>
+
+                        <h4 lang="ar-SA" style="padding-top:20px;" align="center">إشعار بإنهاء التعاقد</h4>
+                        <table align="center" class="table table-bordered" cellpadding="1" cellspacing="1"
+                               style="width:100%;float: right; border:0; font-size:18px;" dir="rtl">
+                            <tbody>
+                                <tr style="height:18px;">
+                                    <td colspan="2" align="right" style="border:0;">
+                                        <p>السيد / السادة &#160;&#160;&#160;&#160;&#160;
+                                            <span t-esc="o['assigner_id'].partner_id.name"/>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
+                                            المحترمين
+                                        </p>
+                                        <p align="center">السلام عليكم ورحمة الله وبركاته</p>
+                                        <br/>
+                                        <br/>
+                                    </td>
+                                </tr>
+                                <tr style="height:18px;">
+                                    <td colspan="2" align="right" style="border:0;text-decoration: underline;">
+                                            الموضوع: إشعار بإنهاء التعاقد
+                                    </td>
+                                </tr>
+                                <tr style="height:18px;">
+                                    <td colspan="2" align="right" style="border:0;">
+                                        <p>
+                                            إشارة للموضوع أعلاه وإشارة إلى العقد الموقع معكم والمؤرخ في
+                                            <span t-esc="o.get_date_hijri(o.beginning_contract)"/>هـ
+                                            الموافق
+                                            <span t-esc="o['beginning_contract']"/>م
+                                            ، والمتضمن استئجاركم شقة/معرض/مكتب بالدور
+                                            &#160;&#160;
+                                            <span t-esc="o.unit_id.product_id.unit_number"/>
+                                            &#160;&#160;
+                                            في العقار
+                                            الكائن بحي
+                                            <span t-esc="o.unit_id.property_number.property_name"/>
+                                            وحيث أن عقد الإيجار المشار له أعلاه ينتهي بتاريخ
+                                            <span t-esc="o['end_contract']"/>م
+                                            ، وحيث تضمن العقد أنّه في حال عدم الرغبة بالتجديد يتم إشعار المستأجر قبل
+                                            انتهاء العقد بـ
+                                            (<span t-esc="o['termination_notice_period']"/>)
+                                            يوم.
+                                        </p>
+                                        <p>
+                                            عليه نفيدكم بعدم رغبتنا بالتجديد معكم، وبذلك يكون تاريخ انتهاء العلاقة
+                                            التعاقدية بتاريخ
+                                            <span t-esc="o.get_date_hijri(o.end_contractual_relationship)"/>هـ
+                                            .
+                                        </p>
+                                        <p>
+                                            ونطلب من سعادتكم إخلاء العين المؤجرة بشكل كامل قبل تاريخ
+                                            <span t-esc="o.get_date_hijri(o.leased_property)"/>هـ
+                                            ،
+                                            وتسليم العقار كما كان بموجب محضر استلام رسمي حيث لن يعتد بأي طريقة لاستلام
+                                            العقار إلا بموجب هذا المحضر الموقع من الشركة. وفي حال تأخركم بتسليم العقار
+                                            عن المدة المحددة أعلاه سكون الأجرة اليومية حسب ما نص عليه العقد بقيمة
+                                            (<span t-esc="o['fee']"/>) عن كل يوم.
+                                        </p>
+                                    </td>
+                                </tr>
+                                <tr style="height:18px;">
+                                    <td colspan="2" align="right" style="border:0;">
+                                        <p>اسم المستلم:</p>
+                                        <p>التايخ:</p>
+                                        <p>التوقيع:</p>
+                                    </td>
+                                </tr>
+                                <tr style="height:18px;">
+                                    <td align="right" style="border:0;">مشرف العقار</td>
+                                    <td align="center" style="border:0;">مدير العقارات</td>
+                                </tr>
+                                <tr style="height:18px;">
+                                    <td align="right" style="border:0;"></td>
+                                    <td align="right" style="border:0;"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

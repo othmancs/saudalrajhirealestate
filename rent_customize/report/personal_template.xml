@@ -1,0 +1,191 @@
+<odoo>
+    <record id="action_report_personal" model="ir.actions.report">
+        <field name="name">طلب تأجير فردي</field>
+        <field name="model">rental.letter.template</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">rent_customize.report_personal_template</field>
+        <field name="report_file">rent_customize.report_personal_template</field>
+        <field name="binding_model_id" eval="False"/>
+        <field name="binding_type">report</field>
+    </record>
+    <template id="report_personal_template">
+       <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+
+                <t t-set="o" t-value="o.with_context({'lang':'en_US'})"/>
+                <t t-if="o and 'company_id' in o">
+                    <t t-set="company" t-value="o.company_id"></t>
+                </t>
+                <t t-if="not o or not 'company_id' in o">
+                    <t t-set="company" t-value="res_company"></t>
+                </t>
+                <t t-set="data_report_margin_top" t-value="35"/>
+                    <t t-set="data_report_header_spacing" t-value="35"/>
+                    <t t-set="data_report_dpi" t-value="110"/>
+                <t t-call="rent_customize.reports_template_layout">
+
+                    <div class="page" style="line-height: 2;font-family:MonixBold ;">
+                        <div align="center">
+                            <h1>طلب تأجير أفراد</h1>
+
+                        </div>
+                        <h3 align="right">بيانات العقار</h3>
+                    <div class="row">
+                        <table align="center" class="table table-bordered"
+                               style="width:100%;font-size:20px; border:2px solid black; margin-bottom:20px;" dir="rtl">
+                            <tbody>
+                                <tr style="height:18px;">
+                                    <td style="height:18px; width:20%; border:2px solid black;text-align: right;">الموقع</td>
+                                    <td style="height:18px; width:80%; border:2px solid black;text-align: right;"><span t-esc="o['location']"/></td>
+                                </tr>
+                                <tr style="height:18px;">
+                                    <td style="height:18px; width:20%; border:2px solid black;text-align: right;">نوع العقار</td>
+                                    <td style="height:18px; width:80%; border:2px solid black;text-align: right;">
+                                         <span t-esc="o['property_type_id'].property_type_name"/>
+                                    </td>
+                                </tr>
+                                <tr style="height:18px;">
+                                    <td style="height:18px; width:20%; border:2px solid black;text-align: right;">القيمة الايجارية السابقة</td>
+                                    <td style="height:18px; width:80%; border:2px solid black;text-align: right;"><span t-esc="o['rental_value']"/></td>
+                                </tr>
+                                <tr style="height:18px;">
+                                    <td style="height:18px; width:20%; border:2px solid black;text-align: right;">القيمة الايجارية المقترحة</td>
+                                    <td style="height:18px; width:80%; border:2px solid black;text-align: right;"><span t-esc="o['new_rental_value']"/></td>
+                                </tr>
+                                <tr style="height:18px;">
+                                    <td style="height:18px; width:20%; border:2px solid black;text-align: right;">اسباب التغيير</td>
+                                    <td style="height:18px; width:80%; border:2px solid black;text-align: right;"><span t-esc="o['change_reason']"/></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                        <h3 align="right">بيانات المستأجر</h3>
+                         <div class="row">
+                        <table align="center" class="table table-bordered mt32" cellpadding="1" cellspacing="1"
+                               style="width:100%; font-size:18px; border:2px solid black; margin-bottom:20px;" dir="rtl">
+                            <tbody>
+                                <tr style="height:18px;">
+                                    <td style="height:18px; width:20%; border:2px solid black;text-align: right;">اسم المستأجر</td>
+                                    <td style="height:18px; width:80%; border:2px solid black;text-align: right;"><span t-esc="o['partner_id'].name"/></td>
+                                </tr>
+                               <tr style="height:18px;">
+                                    <td style="height:18px; width:20%; border:2px solid black;text-align: right;">رقم الهوية </td>
+                                    <td style="height:18px; width:80%; border:2px solid black;text-align: right;"><span t-esc="o['partner_id'].national_id_number"/></td>
+                                </tr>
+                                <tr style="height:18px;">
+                                    <td style="height:18px; width:20%; border:2px solid black;text-align: right;">ارقام التواصل الشخصي والعمل</td>
+                                    <td style="height:18px; width:80%; border:2px solid black;"><span t-esc="o['partner_id'].mobile"/></td>
+                                </tr>
+                                <tr style="height:18px;">
+                                    <td style="height:18px; width:20%; border:2px solid black;text-align: right;">جهة العمل</td>
+                                    <td style="height:18px; width:80%; border:2px solid black;text-align: right;"><span t-esc="o['employer']"/></td>
+                                </tr>
+                                <tr style="height:18px;">
+                                    <td style="height:18px; width:20%; border:2px solid black;text-align: right;">الوظيفة</td>
+                                    <td style="height:18px; width:80%; border:2px solid black;text-align: right;"><span t-esc="o['job']"/></td>
+                                </tr>
+                                <tr style="height:18px;">
+                                    <td style="height:18px; width:20%; border:2px solid black;text-align: right;">تعريف بالراتب من العمل</td>
+                                    <td style="height:18px; width:80%; border:2px solid black;"><span t-esc="o['salary_definition']"/></td>
+                                </tr>
+                                <tr style="height:18px;">
+                                    <td style="height:18px; width:20%; border:2px solid black;text-align: right;">الحالة الاجتماعية</td>
+                                    <td style="height:18px; width:80%; border:2px solid black;"><span t-esc="o['martial_status']"/></td>
+                                </tr>
+                                <tr style="height:18px;">
+                                    <td style="height:18px; width:20%; border:2px solid black;text-align: right;">عدد أفراد العائلة</td>
+                                    <td style="height:18px; width:80%; border:2px solid black;text-align: right;"><span t-esc="o['family_members']"/></td>
+                                </tr>
+                                <tr style="height:18px;">
+                                    <td style="height:18px; width:20%; border:2px solid black;text-align: right;">تقرير سمة</td>
+                                    <td style="height:18px; width:80%; border:2px solid black;text-align: right;"><span t-esc="o['simah_report']"/></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                         </div>
+                              <div class="row">
+                        <table align="center" class="table table-bordered mt32" cellpadding="1" cellspacing="1"
+                               style="width:100%; font-size:18px; border:0px; margin-bottom:30px;" dir="rtl">
+                            <tbody>
+                                <tr style="height:18px;">
+                                    <td style="height:18px; border:0px;text-align: right;">* التاكد من عدم وجود قضايا حقوقية بخصوص الايجار</td>
+                                </tr>
+                                <tr style="height:18px;">
+                                    <td style="height:18px; border:0px;text-align: right;">* يجب ارفاق المستندات المؤيدة للمعلومات اعلاه</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                              </div>
+                         <div class="row">
+                        <table align="center" class="table table-bordered mt32" cellpadding="1" cellspacing="1"
+                               style="width:100%; font-size:18px; margin-bottom:120px;" dir="rtl">
+                            <tbody>
+                                <tr style="height:18px;">
+                                    <td style="height:18px; border:2px solid black;"></td>
+                                    <td style="height:18px; border:2px solid black;text-align: center;">الاسم</td>
+                                    <td style="height:18px; border:2px solid black;text-align: center;">الرأي</td>
+                                    <td style="height:18px; border:2px solid black;text-align: center;">التوقيع</td>
+                                </tr>
+                                <tr style="height:18px;">
+                                    <td style="height:18px; border:2px solid black;text-align: right;">مسؤول الإئتمان</td>
+                                    <td style="height:18px; border:2px solid black;"><span t-esc="o['insurance_officer']"/></td>
+                                    <td style="height:18px; border:2px solid black;"><span t-esc="o['insurance_officer_opinion']"/></td>
+                                    <td style="height:18px; border:2px solid black;"></td>
+                                </tr>
+                                <tr style="height:18px;">
+                                    <td style="height:18px; border:2px solid black;text-align: right;">مدير العقار</td>
+                                    <td style="height:18px; border:2px solid black;"><span t-esc="o['property_manager']"/></td>
+                                    <td style="height:18px; border:2px solid black;"><span t-esc="o['property_manager_opinion']"/></td>
+                                    <td style="height:18px; border:2px solid black;"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                         </div>
+                         <div class="row">
+                        <table align="center" class="table table-bordered mt32" cellpadding="1" cellspacing="1"
+                               style="width:100%;font-size:18px; border:0px; margin-right:80px;" dir="rtl">
+                            <tbody>
+                                <tr style="height:18px;">
+                                    <td style="height:18px; border:0px;" align="right">الرئيس التنفيذي</td>
+                                </tr>
+                                <tr style="height:18px;">
+                                    <td style="height:18px; border:0px;" align="right">
+                                        <p>
+                                            <span>موافق</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;
+                                            <t t-if="o.chief_executive">
+                                                <input type="checkbox" id="oe_import_tracking" checked="checked"/>
+                                            </t>
+                                            <t t-if="not o.chief_executive">
+                                                <input type="checkbox" id="oe_import_tracking"/>
+                                            </t>
+                                        </p>
+                                    </td>
+                                </tr>
+                                 <tr style="height:18px;">
+                                    <td style="height:18px; border:0px;" align="right">
+                                        <p>
+                                            <span>غير موافق</span>&#160;&#160;
+                                            <t t-if="o.chief_executive_no">
+                                                <input type="checkbox" id="oe_import_tracking" checked="checked"/>
+                                            </t>
+                                            <t t-if="not o.chief_executive_no">
+                                                <input type="checkbox" id="oe_import_tracking"/>
+                                            </t>
+                                        </p>
+                                    </td>
+                                </tr>
+                                <tr style="height:18px;">
+                                    <td style="height:18px; border:0px;text-align: right;" align="center">
+                                        التوقيع
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </t>
+        </t>
+       </t>
+    </template>
+</odoo>

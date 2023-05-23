@@ -3,19 +3,36 @@
     <data>
         <template id="search_template_analytic_group">
             <button t-if="options.get('analytic_group')" type="button"
-                    class="o-no-caret btn btn-secondary dropdown-toggle account_analytic_group_filter" data-toggle="dropdown">
-                <span class="fa fa-folder-open"/>
-                Analytic Group
-            </button>
+                class="o-no-caret btn btn-secondary dropdown-toggle account_analytic_group_filter"
+                data-toggle="dropdown">
+                <span class="fa fa-folder-open" /> Analytic Group </button>
             <ul class="dropdown-menu o_filter_menu" role="menu">
-                <li class="o_account_report_search js_account_analytic_group_m2m"/>
+                <li class="o_account_report_search js_account_analytic_group_m2m" />
+            </ul>
+        </template>
+
+
+        <template id="search_template_operating_unit_id">
+            <button t-if="options.get('operating_unit_id')" type="button"
+                class="o-no-caret btn btn-secondary dropdown-toggle account_operating_unit_id_filter"
+                data-toggle="dropdown">
+                <span class="fa fa-folder-open" /> Operating Unit </button>
+            <ul class="dropdown-menu o_filter_menu" role="menu">
+                <li class="o_account_report_search js_account_operating_unit_id_m2m" />
             </ul>
         </template>
 
         <template id="browseinfo_search_template" inherit_id="account_reports.search_template">
             <xpath expr="//div[hasclass('o_account_reports_filter_analytic')]" position="before">
-                <div class="btn-group o_dropdown o_account_reports_filter_analytic_group" t-if="options.get('analytic_group') != None">
-                    <t t-call="plustech_account_reports.search_template_analytic_group"/>
+
+                <div class="btn-group o_dropdown o_account_reports_filter_analytic_group"
+                    t-if="options.get('analytic_group') != None">
+                    <t t-call="plustech_account_reports.search_template_analytic_group" />
+                </div>
+
+                <div class="btn-group o_dropdown o_account_reports_filter_operation"
+                    t-if="options.get('operating_unit_id') != None">
+                    <t t-call="plustech_account_reports.search_template_operating_unit_id" />
                 </div>
             </xpath>
         </template>

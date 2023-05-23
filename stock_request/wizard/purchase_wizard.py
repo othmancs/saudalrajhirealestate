@@ -62,29 +62,57 @@ class PurchaseWizard(models.TransientModel):
     qty = fields.Float(string='Quantity')
     date = fields.Datetime(string='Deadline Time',
                            default=fields.Datetime.now())
+    purchase_operation_type = fields.Selection([('tender', 'Make Tender'), ('rfq', 'Make RFQ')],
+                                               default=lambda self: self.env.company.purchase_operation_type)
     
     def do_order(self):
         active_request = self.env.context.get('stock_request_id')
         active_line = self.env.context.get('active_id')
-        obj = self.env['stock.request'].browse(active_request)
-        line_object = self.env['stock.request.line'].browse(active_line)
+        request_id = self.env['stock.request'].browse(active_request)
+        request_line_id = self.env['stock.request.line'].browse(active_line)
         picking_type_id = self.env['stock.picking.type'].search([('code', '=', 'incoming'),('return_picking_type_id','!=', False)])
+        if self.purchase_operation_type == 'rfq':
+            self._create_rfq(picking_type_id, request_id, request_line_id)
+        elif self.purchase_operation_type == 'tender':
+            self._create_tender(picking_type_id, request_id, request_line_id)
+        request_line_id.transfer_status = 'purchase'
+
+    def _create_rfq(self, picking_type_id, request_id, request_line_id):
         order_id = self.env['purchase.order'].search(
-            [('stock_request_id', '=', obj.id),('partner_id','=',self.partner_id.id),('state','=', 'draft')])
+            [('stock_request_id', '=', request_id.id), ('partner_id', '=', self.partner_id.id), ('state', '=', 'draft')])
         if not order_id:
             order = {
                 'partner_id': self.partner_id.id,
                 'date_order': self.date,
                 'picking_type_id': picking_type_id.id,
-                'stock_request_id': active_request,
+                'stock_request_id': request_id.id,
                 # 'warehouse_id': self.branch_id.warehouse_id.id,
             }
             order_id = self.env['purchase.order'].create(order)
-        for rec in self:
+        else:
             self.env['purchase.order.line'].create({
-                'product_id': line_object.product_id.id,
+                'product_id': request_line_id.product_id.id,
                 'product_qty': self.qty,
                 'order_id': order_id.id,
-                'request_line_id': line_object.id,
+                'request_line_id': request_line_id.id,
             })
-        line_object.transfer_status = 'purchase'
+
+    def _create_tender(self, picking_type_id, request_id, request_line_id):
+        tender_id = self.env['purchase.requisition'].search(
+            [('request_id', '=', request_id.id), ('vendor_id', '=', self.partner_id.id),
+             ('state', '=', 'draft')])
+        if not tender_id:
+            tender_val = {
+                'vendor_id': self.partner_id.id,
+                'ordering_date': self.date,
+                'picking_type_id': picking_type_id.id,
+                'request_id': request_id.id,
+            }
+            tender_id = self.env['purchase.requisition'].create(tender_val)
+        self.env['purchase.requisition.line'].create({
+            'product_id': request_line_id.product_id.id,
+            'product_qty': self.qty,
+            'requisition_id': tender_id.id,
+        })
+
+
