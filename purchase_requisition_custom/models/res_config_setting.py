@@ -4,7 +4,7 @@ from odoo import api, fields, models, _
 class ResCompany(models.Model):
     _inherit = 'res.company'
 
-    recommender_ids = fields.Many2many('res.users', string='Recommenders')
+    recommender_ids = fields.Many2many('res.users', 'user_recommends_rel', 'x_id', 'user_id',string='Recommenders')
 
 
 class PurchaseConfigSettings(models.TransientModel):
