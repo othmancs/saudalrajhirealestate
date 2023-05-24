@@ -1,0 +1,78 @@
+<odoo>
+    <data>
+        <record id="contract_master_data_view_form" model="ir.ui.view">
+            <field name="name">contract.master.data.tree.form</field>
+            <field name="model">contract.master.data</field>
+            <field name="arch" type="xml">
+                <tree create="0">
+                    <field name="property_number" optional="show"/>
+                    <field name="product_id" optional="show"/>
+                    <field name="unit_area" optional="show"/>
+                    <field name="unit_floor_number" optional="show"/>
+                    <field name="property_has_parking" widget="boolean_toggle" optional="show"/>
+                    <field name="furniture_bedroom_no" optional="show"/>
+                    <field name="furniture_bathroom_no" optional="show"/>
+                    <field name="living" optional="show"/>
+                    <field name="lift" optional="show"/>
+                    <field name="balcony" optional="show"/>
+                    <field name="garden" optional="show"/>
+                    <!-- <field name="garden_des" optional="show"/> -->
+
+
+
+                    <field name="furniture_kitchen_installed" optional="show"/>
+                    <field name="partner_id" optional="show"/>
+                    <field name="contract" optional="show"/>
+                    <field name="contract_number" optional="show"/>
+                    <field name="name" optional="show"/>
+                    <field name="price_unit" optional="show"/>
+                    <field name="contract_service_fees" optional="show"/>
+                    <field name="deposit" optional="show"/>
+                    <field name="price_tax" optional="show"/>
+                    <field name="unit_electricity" optional="show"/>
+                    <field name="unit_water" optional="show"/>
+                    <field name="unit_gas" optional="show"/>
+                    <field name="insurance_value" optional="show"/>
+                    <field name="fromdate" optional="show"/>
+                    <field name="todate" optional="show"/>
+                    
+                    
+                    <field name="installment_due" optional="show"/>
+                    <field name="premium_due_with_insurance" optional="show"/>
+                    <field name="new_due_date" optional="show"/>
+                    <field name="indebtedness_due_date" optional="show"/>
+                    <field name="number_of_payment" optional="show"/>
+                    <field name="indebtedness_amount" optional="show"/>
+                    <field name="total_amount_with_trade_tax" optional="show"/>
+                    <field name="total_overdue_and_due" optional="show"/>
+                    <field name="contact_number" optional="show"/>
+                    <field name="id_number" optional="show"/>
+                    <field name="date_o_birth" optional="show"/>
+                    <field name="method_of_payment" optional="show"/>
+
+
+                </tree>
+            </field>
+        </record>
+
+
+        <record id="contract_master_data_action" model="ir.actions.act_window">
+            <field name="name">contract.master.data</field>
+            <field name="res_model">contract.master.data</field>
+            <field name="view_mode">tree</field>
+            <!-- <field name="view_type">form</field> -->
+        </record>
+
+        <!-- <record id="action_price_analysis_report" model="ir.actions.act_window">
+            <field name="name">Sale Price Analysis</field>
+            <field name="res_model">price.analysis.report</field>
+            <field name="view_mode">tree,graph,pivot</field>
+            <field name="view_id" />
+            <field name="search_view_id" ref="view_price_analysis_report_search" />
+            <field name="context">{'group_by':[]}</field>
+        </record> -->
+
+        <menuitem id="contract_master_data_action_menu" name="Contract Master Data" parent="sale_renting.menu_rental_reporting" sequence="19" action="contract_master_data_action"/>
+    </data>
+
+</odoo>

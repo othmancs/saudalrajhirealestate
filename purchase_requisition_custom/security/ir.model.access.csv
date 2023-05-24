@@ -1,0 +1,9 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_tender_recommendation_wizard,tender.recommendation.wizard,model_tender_recommendation_wizard,,1,1,1,1
+access_purchase_requisition_recommendation,purchase.requisition.recommendation,model_purchase_requisition_recommendation,,1,1,1,1
+
+
+
+
+
+

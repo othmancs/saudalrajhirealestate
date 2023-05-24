@@ -22,6 +22,32 @@
                 <xpath expr="//button[2]" position="attributes">
                     <attribute name="groups">purchase_requisition_custom.group_purchase_requisition_reviewer_3</attribute>
                 </xpath>
+                  <xpath expr="//button[@name='action_open']" position="after">
+                   <button string="Recommend" name="%(purchase_requisition_custom.tender_recommendation_wizard_action)d"
+                           type="action" attrs="{'invisible': [('can_recommend', '=', False)]}"
+                        />
+                </xpath>
+                <xpath expr="//page[@name='products']" position="after">
+                    <page string="Recommendations" name="recommendations">
+                        <field name="can_recommend" invisible="1"/>
+                        <field name="recommendation_line_ids" readonly="1">
+                            <tree string="Recommendations" editable="bottom">
+                                <field name="user_id" />
+                                <field name="recommendation_date"/>
+                                <field name="recommendation_state"/>
+                                <field name="recommendation"/>
+                            </tree>
+                            <form string="Recommendations">
+                                <group>
+                                      <field name="user_id" />
+                                <field name="recommendation_date"/>
+                                <field name="recommendation_state"/>
+                                <field name="recommendation" />
+                                </group>
+                            </form>
+                        </field>
+                    </page>
+                </xpath>
             </field>
         </record>
     </data>

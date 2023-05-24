@@ -247,7 +247,7 @@
                     <button name="action_pickup" type="object" class="btn-primary" string="PICKUP"
                             groups="rent_customize.group_pickup_rental_order"
                             attrs="{'invisible':['|', ('rental_status','not in',['sent']), ('state', 'not in', ['sale', 'done'])]}"/>
-                    <button name="action_transfer" type="object" class="btn-primary" string="Transfer"
+                    <button name="action_transfer" type="object" class="btn-primary" string="Contract Sale"
                             attrs="{'invisible':[ ('transferred', '=', True)]}"/>
                     <!--                    <button name="%(rent_customize.apartment_transfer_wizard_action)d" type="action" class="btn-primary" string="Print Transfer"-->
                     <!--                            attrs="{'invisible':[ ('transferred', '!=', True)]}"/>-->

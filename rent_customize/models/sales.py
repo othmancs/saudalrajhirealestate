@@ -239,10 +239,12 @@ class SaleOrder(models.Model):
     
     def action_transfer(self):
         for rec in self:
-            uninvoiced = len(rec.order_contract_invoice.filtered(lambda ll: ll.status == 'uninvoiced').ids)
-            print("XXXXXXXXXXXXXXXXXXXXXXXXXXXXX", uninvoiced)
-            if uninvoiced <1:
-                raise ValidationError(_("There is no draft invoice to be invoiced or transferred"))
+            # uninvoiced = len(rec.order_contract_invoice.filtered(lambda ll: ll.status == 'uninvoiced').ids)
+            # if uninvoiced <1:
+            #     raise ValidationError(_("There is no draft invoice to be invoiced or transferred"))
+            unpaid_invoices = len(rec.invoice_ids.filtered(lambda line: line.payment_state in ['not_paid', 'in_payment','partial']).ids)
+            if unpaid_invoices > 0:
+                raise ValidationError(_("There is unpaid invoices to be paid or reconciled!"))
             form_view_id = self.env.ref('rent_customize.transfer_view_form').ids
             return {
                 'name': 'Transfer Apartment',
