@@ -35,6 +35,10 @@
                                        string="Customer"/>
                                 <field name="partner_id" attrs="{'required': [('subject', 'in', ('commercial','personal'))],
                                 'invisible': [('subject', 'not in', ('commercial', 'personal'))]}" string="Customer"/>
+                                 <field name="assigner_identity"
+                                       attrs="{'invisible': [('subject', 'not in', ('transfer'))]}"/>
+                                <field name="assigner_identity_date"
+                                       attrs="{'invisible': [('subject', 'not in', ('transfer'))]}"/>
                                 <field name="authorized_identity" string="Tenant ID"
                                        attrs="{'invisible': [('subject', 'not in', ('personal'))]}"/>
                                 <field name="location"
@@ -101,9 +105,9 @@
                                         'required':[('subject', 'in', ('pickup','return'))]}"/>
                                 <field name="new_rental_id" context="{'letter':True}" string="Assignee"
                                        attrs="{'invisible': [('subject', '!=', 'transfer')], 'required':[('subject', 'in', ('transfer'))]}"/>
-                                <field name="national_id_assigner"
+                                <field name="assignee_identity"
                                        attrs="{'invisible': [('subject', 'not in', ('transfer'))]}"/>
-                                <field name="national_id_assigner_date"
+                                <field name="assignee_identity_date"
                                        attrs="{'invisible': [('subject', 'not in', ('transfer'))]}"/>
                                 <field name="city" attrs="{'invisible': [('subject', 'not in', ('transfer'))]}"/>
 
@@ -116,7 +120,7 @@
 
                                 <field name="number" attrs="{'invisible': [('subject', 'not in', ('payment_claim'))]}"/>
                                 <field name="payment_period"
-                                       attrs="{'invisible': [('subject', 'not in', ('commercial','payment_claim'))]}"/>
+                                       attrs="{'invisible': [('subject', 'not in', ('payment_claim'))]}"/>
                                 <field name="bank_id"
                                        attrs="{'invisible': [('subject', 'not in', ('payment_claim'))]}"/>
                                 <field name="company_partner_id" invisible="1"/>
@@ -185,6 +189,7 @@
                                             <field name="date_from"/>
                                             <field name="date_to"/>
                                             <field name="amount"/>
+                                            <field name="tax_ids" widget="many2many_tags"/>
                                             <field name="tax_amount"/>
 
                                         </tree>

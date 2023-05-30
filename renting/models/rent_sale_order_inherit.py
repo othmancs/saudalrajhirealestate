@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from datetime import datetime
+from datetime import timedelta, date, datetime
 
 from dateutil.relativedelta import relativedelta
 
@@ -411,3 +411,10 @@ class RentSaleOrderLine(models.Model):
 
     def get_rental_order_line_description(self):
         return ""
+    
+    @api.depends('return_date')
+    def _compute_is_late(self):
+        now = fields.Date.today()
+        for line in self:
+            # By default, an order line is considered late only if it has one hour of delay
+            line.is_late = line.return_date and line.return_date < now

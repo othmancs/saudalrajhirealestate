@@ -27,20 +27,37 @@ class AccountReport(models.AbstractModel):
             return options
         options['operating_unit_id'] = True
         options['operating_unit_ids'] = previous_options and previous_options.get('operating_unit_ids') or []
-        print(".. ,,,,,,, mmmmm  ", options['operating_unit_id'])
-        print(".. ,,,,,,, mmmmm  ", options['operating_unit_ids'])
         selected_operating_unit_ids = [int(partner) for partner in options['operating_unit_ids']]
         selected_operating_unit = selected_operating_unit_ids and self.env['operating.unit'].browse(selected_operating_unit_ids) or self.env['operating.unit']
         options['selected_operating_unit_ids'] = selected_operating_unit.mapped('name')
+
         return options
     
     @api.model
     def _get_options(self, previous_options=None):
         # OVERRIDE
         options = super(AccountReport, self)._get_options(previous_options)
-        self._init_operation(options, previous_options)
         self._init_analytic_group(options, previous_options)
+        self._init_operation(options, previous_options)
+
         return options
+    
+    # @api.model
+    # def _get_options_analytic_domain(self, options):
+    #     domain = []
+    #     if options.get('analytic_accounts'):
+    #         analytic_account_ids = [int(acc) for acc in options['analytic_accounts']]
+    #         domain.append(('analytic_account_id', 'in', analytic_account_ids))
+    #     if options.get('analytic_tags'):
+    #         analytic_tag_ids = [int(tag) for tag in options['analytic_tags']]
+    #         domain.append(('analytic_tag_ids', 'in', analytic_tag_ids))
+    #     if options.get('analytic_group'):
+    #         analytic_group_ids = [int(gro) for gro in options['analytic_group_ids']]
+    #         domain.append(('analytic_group', 'in', analytic_group_ids))
+
+    #         # domain += [('analytic_group', 'in', options.get('analytic_group_ids'))]
+    #     print("... .. .. .     ",domain)
+    #     return domain
 
     def _set_context(self, options):
         ctx = super(AccountReport, self)._set_context(options)
@@ -63,6 +80,5 @@ class AccountReport(models.AbstractModel):
             options['selected_analytic_group_ids'] = [self.env['account.analytic.group'].browse(int(ag)).name for ag in options.get('analytic_group_ids', [])]
 
         if options and options.get('operating_unit_id'):
-            print(".......................",[self.env['operating.unit'].browse(int(ou)).name for ou in options.get('operating_unit_ids', [])])
             options['selected_operating_unit_ids'] = [self.env['operating.unit'].browse(int(ou)).name for ou in options.get('operating_unit_ids', [])]
         return info

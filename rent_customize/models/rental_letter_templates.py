@@ -34,11 +34,13 @@ class RentalLetterTemplate(models.Model):
                                 ], string='Subject', required=True)
 
     today_date = fields.Date(string='Request Date', default=fields.Date.context_today)
-    national_id_assigner = fields.Char(string='National ID No. Assigner')
-    national_id_assigner_date = fields.Date()
+    assigner_identity = fields.Char(related='assigner_id.partner_id.national_id_number', string='Assigner ID',
+                                    readonly=False)
+    assigner_identity_date = fields.Date(string='Assigner ID Issue Date')
     unit_id = fields.Many2one('sale.order.line', string='Unit Number', domain="[('order_id', '=', assigner_id)]")
     property_id = fields.Many2one('rent.property', related="unit_id.property_number", string="Property")
-    state_unit_id = fields.Many2one('rent.sale.state', string='Unit Number', domain="[('sale_order_id', '=', assigner_id)]")
+    state_unit_id = fields.Many2one('rent.sale.state', string='Unit Number',
+                                    domain="[('sale_order_id', '=', assigner_id)]")
     city = fields.Char(string='City')
     neighborhood = fields.Char(string='Neighborhood')
     cash_receipts = fields.Char(string='Cash Receipts No.')
@@ -94,7 +96,7 @@ class RentalLetterTemplate(models.Model):
     authorized_manager_id = fields.Char(string='Authorized Manager')
     authorized_identity = fields.Char(string='Authorized Manager Identity')
     targeted_group = fields.Char(string='Targeted Group')
-    invoice_ids = fields.Many2many('rent.due.invoice', 'letter_template_id', string='Due Invoices')
+    invoice_ids = fields.One2many('rent.due.invoice', 'letter_template_id', string='Due Invoices')
     door_good = fields.Boolean(string='جيد')
     door_bad = fields.Boolean(string='سئ')
     door_comment = fields.Char(string='حدد')
@@ -139,7 +141,7 @@ class RentalLetterTemplate(models.Model):
     water_payment = fields.Boolean('تم السداد')
     water_not_payment = fields.Boolean('لم يتم السداد ')
     contract_value = fields.Monetary(string="Contract Value", related="assigner_id.amount_total")
-    due_amount = fields.Float(string="Contract Value", related="assigner_id.amount_remain")
+    due_amount = fields.Float(string="Contract Due Value", related="assigner_id.amount_remain")
     deposits_paid = fields.Monetary(string="التأمين المدفوع")
     mangement_accept = fields.Boolean('نعم')
     mangement_refused = fields.Boolean('لا')
@@ -164,6 +166,9 @@ class RentalLetterTemplate(models.Model):
     leased_property = fields.Date(string='Date of leased property')
     vacating_the_property = fields.Char(string='Days vacating the property')
     new_rental_year = fields.Date(string='New Rental Year')
+    assignee_identity = fields.Char(related='new_rental_id.partner_id.national_id_number', string='Assignee ID',
+                                    readonly=False)
+    assignee_identity_date = fields.Date(string='Assignee ID Issue Date')
     rental_value_old = fields.Monetary(string="Rental Value")
     rental_value_new = fields.Monetary(string="Rental Value new")
 
@@ -230,9 +235,10 @@ class RentDueInvoice(models.Model):
 
     date_from = fields.Date(string='Date From')
     date_to = fields.Date(string='Date To')
-    amount = fields.Float(string='Amount')
+    amount = fields.Float(string='Due Amount')
     tax_amount = fields.Float(string='Tax Amount')
     total = fields.Float(string='Total')
+    tax_ids = fields.Many2many('account.tax', string="Taxes")
     letter_template_id = fields.Many2one('rental.letter.template')
 
     # @api.depends('amount','tax_amount')

@@ -1,4 +1,4 @@
-odoo.define('account_accountant_branch.account_report_generic', function (require) {
+odoo.define('plustech_account_reports.account_report_generic_1_dd', function (require) {
 'use strict';
 
 var core = require('web.core');
@@ -17,7 +17,7 @@ var QWeb = core.qweb;
 var _t = core._t;
 
     
-    var M2MBranchFilters = Widget.extend(StandaloneFieldManagerMixin, {
+    var M2MBranchFilters_1 = Widget.extend(StandaloneFieldManagerMixin, {
         /**
          * @constructor
          * @param {Object} fields
@@ -130,10 +130,9 @@ var _t = core._t;
                 self.report_options.analytic_accounts = ev.data.analytic_accounts;
                 self.report_options.analytic_tags = ev.data.analytic_tags;
                 return self.reload().then(function () {
-                    self.$searchview_buttons.find('.account_partner_filter').click();
-                    self.$searchview_buttons.find('.account_analytic_filter').click();
                     self.$searchview_buttons.find('.account_analytic_group_filter').click();
-                    self.$searchview_buttons.find('.account_operating_unit_id_filter').click();
+                    self.$searchview_buttons.find('.account_partner_filter').click();
+                    self.$searchview_buttons.find('.account_analytic_filter').click(); 
                 });
              },
         }),
@@ -144,9 +143,10 @@ var _t = core._t;
             self._super();
 
             // Anaylitic group filter
+
             if (this.report_options.analytic_group) {
                 
-                if (!this.M2MBranchFilters) {
+                if (!this.M2MBranchFilters_1) {
                     var fields = {};
                     if ('analytic_group_ids' in this.report_options) {
                         fields['analytic_group'] = {
@@ -157,36 +157,15 @@ var _t = core._t;
                     }
 
                     if (!_.isEmpty(fields)) {
-                        this.M2MBranchFilters = new M2MBranchFilters(this, fields);
-                        this.M2MBranchFilters.appendTo(this.$searchview_buttons.find('.js_account_analytic_group_m2m'));
+                        this.M2MBranchFilters_1 = new M2MBranchFilters_1(this, fields);
+                        this.M2MBranchFilters_1.appendTo(this.$searchview_buttons.find('.js_account_analytic_group_m2m'));
                     }
                 } else {
-                    this.$searchview_buttons.find('.js_account_analytic_group_m2m').append(this.M2MBranchFilters.$el);
+                    this.$searchview_buttons.find('.js_account_analytic_group_m2m').append(this.M2MBranchFilters_1.$el);
                 }
             }
 
-            // Operating Unit filter
-            if (this.report_options.operating_unit_id) {
-                
-                if (!this.M2MBranchFilters) {
-                    var fields = {};
-                    console.log("aaaaaaaaaaaaaa")
-                    if ('operating_unit_ids' in this.report_options) {
-                        fields['operating_unit_id'] = {
-                            label: _t('Operating Unit'),
-                            modelName: 'operating.unit',
-                            value: this.report_options.operating_unit_ids.map(Number),
-                        };
-                    }
-
-                    if (!_.isEmpty(fields)) {
-                        this.M2MBranchFilters = new M2MBranchFilters(this, fields);
-                        this.M2MBranchFilters.appendTo(this.$searchview_buttons.find('.js_account_operating_unit_m2m'));
-                    }
-                } else {
-                    this.$searchview_buttons.find('.js_account_operating_unit_m2m').append(this.M2MBranchFilters.$el);
-                }
-            }
+         
         },
 
     });

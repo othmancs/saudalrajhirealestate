@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_contract_reminder_report_tree" model="ir.ui.view">
+        <field name="name">contract.reminder.report.view.tree</field>
+        <field name="model">contract.reminder.report</field>
+        <field name="arch" type="xml">
+            <tree string="Contracts Reminder Report" create="0" edit="0">
+                <field name="contract_id"/>
+                <field name="contract_number"/>
+                <field name="property_id"/>
+                <field name="product_id"/>
+                <field name="customer_id"/>
+                <field name="amount"/>
+                <field name="paid_amount"/>
+                <field name="contract_start_date"/>
+                <field name="contract_end_date"/>
+                <field name="invoice_date"/>
+                <field name="invoice_date_due"/>
+                <field name="reminder_date"/>
+                <field name="payment_state"/>
+                <field name="company_id" optional="hide" groups="base.group_multi_company"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_contract_reminder_report_search" model="ir.ui.view">
+        <field name="name">contract.reminder.report.search</field>
+        <field name="model">contract.reminder.report</field>
+        <field name="arch" type="xml">
+            <search string="Contracts Reminder Report">
+                <field name="customer_id"/>
+                <group expand="1" string="Group By">
+                    <filter string="Customer" name="customer" context="{'group_by':'customer_id'}"/>
+                    <filter string="Company" name="company" groups="base.group_multi_company"
+                            context="{'group_by':'company_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_contract_reminder_report" model="ir.actions.act_window">
+        <field name="name">Contracts Reminder Report</field>
+        <field name="res_model">contract.reminder.report</field>
+        <field name="view_mode">tree</field>
+        <field name="view_id"/>
+        <field name="search_view_id" ref="view_contract_reminder_report_search"/>
+        <field name="context">{'group_by':[]}</field>
+    </record>
+
+      <menuitem id="menu_report_contract_reminder"
+                  name="Contracts Reminder Report"
+                  action="action_contract_reminder_report"
+                  parent="sale_renting.menu_rental_reporting"
+                  sequence="5"/>
+
+
+
+</odoo>

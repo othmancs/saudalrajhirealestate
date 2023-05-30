@@ -7,4 +7,4 @@ from odoo import models
 class AccountChartOfAccountReportIn(models.AbstractModel):
     _inherit = "account.coa.report"
 
-    filter_branch = True
+    filter_analytic_group = True

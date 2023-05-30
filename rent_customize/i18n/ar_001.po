@@ -6,16 +6,19 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 15.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-03-12 10:24+0000\n"
-"PO-Revision-Date: 2023-03-12 13:51+0300\n"
+"POT-Creation-Date: 2023-05-24 06:23+0000\n"
+"PO-Revision-Date: 2023-05-24 06:23+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
+"Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
-"Language: ar\n"
-"X-Generator: Poedit 2.3\n"
+
+#. module: rent_customize
+#: model:ir.actions.report,print_report_name:rent_customize.report_transfer_apratment
+msgid "'Transfer - %s' % (object.name)"
+msgstr ""
 
 #. module: rent_customize
 #: model_terms:ir.ui.view,arch_db:rent_customize.customize_product_template_form_view
@@ -23,10 +26,171 @@ msgid "(refresh)"
 msgstr "(تحديث)"
 
 #. module: rent_customize
+#: model:ir.actions.report,name:rent_customize.action_report_pickup
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_pickup_template
+msgid "(نموذج استلام العين المؤجرة من المستأجر)"
+msgstr ""
+
+#. module: rent_customize
+#: model:ir.actions.report,name:rent_customize.action_report_return
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_return_template
+msgid "(نموذج تسليم العين المؤجرة من المستأجر)"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_transfer_template_apratment
+msgid "(هوية وطنية/ إقامة نظامية) رقم"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_template_transfer
+msgid "(هوية وطنية/إقامة نظامية) رقم"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_vacating_raj_template
+msgid ""
+")\n"
+"\n"
+"                                            لليوم الواحد."
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_payment_claim_template
+msgid ""
+")\n"
+"                                            من تاريخ هذا الإنذار،\n"
+"                                            وإلا سنضطر وبكل أسف لاتخاذ الإجراء القانوني في حقكم. وسيتم مطالبتكم برسوم\n"
+"                                            التكاليف القضائية وأتعاب المحاماة الناتجة عن نظر الدعاوى القضائية."
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_contract_termination_template
+msgid ""
+")\n"
+"                                            يوم."
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_value_update_template
+msgid ""
+")\n"
+"                                    ابتداء من السنة الإيجارية الجديدة وذلك بتاريخ"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_value_update_template
+msgid ""
+")\n"
+"                                    بقيمة إيجارية وقدرها\n"
+"                                    ("
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_value_update_template
+msgid ""
+")\n"
+"                                    عن كل يوم.\n"
+"                                    <br/><br/>"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_value_update_template
+msgid ""
+")\n"
+"                                    ونظرا لإن القيمة السوقية للإيجار في المنطقة للشقق المماثلة تقدر بأعلى لذا نبلغكم بأن المالك يرغب بزيادة الأجرة الى\n"
+"                                    ("
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_value_update_template
+msgid ""
+")\n"
+"                                    يوم من تاريخ نهاية العقد. وفي حال تأخيركم تسليم العقار عن المدة المحددة أعلاه ستكون الأجرة اليومية بقيمة\n"
+"                                    ("
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_contract_termination_template
+msgid ") عن كل يوم."
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_commercial_template
+msgid ""
+"* التاكد من عدم وجود قضايا حقوقية بخصوص\n"
+"                                            الايجار"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_personal_template
+msgid "* التاكد من عدم وجود قضايا حقوقية بخصوص الايجار"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_commercial_template
+msgid ""
+"* يجب ارفاق المستندات المؤيدة للمعلومات\n"
+"                                            اعلاه"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_personal_template
+msgid "* يجب ارفاق المستندات المؤيدة للمعلومات اعلاه"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_pickup_template
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_return_template
+msgid ":خاص بالإدارة"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_transfer_template_apratment
+msgid ""
+"<b>\n"
+"                                إدارة العقارات\n"
+"                            </b>"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_transfer_template_apratment
+msgid ""
+"<b>\n"
+"                                وقع المتنازل والمتنازل إليه أمامي بعد مراجعة هوياتهم.\n"
+"                            </b>"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_vacating_raj_template
+msgid ""
+"<br/>\n"
+"                                            الموافق:"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_vacating_raj_template
+msgid ""
+"<br/>\n"
+"                                        <br/>\n"
+"                                        خطاب اخلاء عقار\n"
+"                                        <br/>\n"
+"                                        <br/>"
+msgstr ""
+
+#. module: rent_customize
 #: model_terms:ir.ui.view,arch_db:rent_customize.customize_product_template_form_view
 msgid ""
 "<br/>\n"
 "                                    <span attrs=\"{'invisible': [('date_localization', '=', False)]}\">Updated on:</span>"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_transfer_template_apratment
+msgid ""
+"<span>\n"
+"                                حرر هذا التنازل من ثلاثة نسخ استلم كل طرف نسخة للعمل بموجبها. والله الموفق\n"
+"                            </span>"
 msgstr ""
 
 #. module: rent_customize
@@ -40,9 +204,130 @@ msgid "<span>Lat :</span>"
 msgstr ""
 
 #. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_pickup_template
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_return_template
+msgid "<span>تم السداد</span>"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_pickup_template
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_return_template
+msgid "<span>جيد</span>"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_pickup_template
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_return_template
+msgid "<span>سيء</span>"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_commercial_template
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_personal_template
+msgid "<span>غير موافق</span>"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_pickup_template
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_return_template
+msgid "<span>لا يوجد</span>"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_pickup_template
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_return_template
+msgid "<span>لا</span>"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_pickup_template
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_return_template
+msgid "<span>لم يتم السداد</span>"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_commercial_template
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_personal_template
+msgid "<span>موافق</span>"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_pickup_template
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_return_template
+msgid "<span>نعم</span>"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_pickup_template
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_return_template
+msgid "<span>يوجد</span>"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_value_update_template
+msgid "<u>الموضوع: خطاب تحديث القيمة الإيجارية</u>"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_vacating_raj_template
+msgid "<u>الموضوع:اخلاء عقار</u>"
+msgstr ""
+
+#. module: rent_customize
 #: model:ir.model.fields.selection,name:rent_customize.selection__sale_order__state__sale
 msgid "Acceptance"
-msgstr "قبول"
+msgstr ""
+
+#. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__message_needaction
+msgid "Action Needed"
+msgstr ""
+
+#. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__activity_ids
+msgid "Activities"
+msgstr ""
+
+#. module: rent_customize
+#: model:ir.model,name:rent_customize.model_mail_activity
+msgid "Activity"
+msgstr "النشاط"
+
+#. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__activity_exception_decoration
+msgid "Activity Exception Decoration"
+msgstr ""
+
+#. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__activity_state
+msgid "Activity State"
+msgstr ""
+
+#. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__activity_type_icon
+msgid "Activity Type Icon"
+msgstr ""
+
+#. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_rent_due_invoice__amount
+#: model:ir.model.fields,field_description:rent_customize.field_rent_log__amount
+msgid "Amount"
+msgstr ""
+
+#. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_sale_order__annual_amount
+msgid "Annual Amount"
+msgstr ""
+
+#. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_sale_order__annual_increase_type
+msgid "Annual INcrease Type"
+msgstr ""
+
+#. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_sale_order__annual_increase
+msgid "Annual Increase ?"
+msgstr ""
 
 #. module: rent_customize
 #: model:ir.model.fields,field_description:rent_customize.field_sale_order__apartment_insurance
@@ -50,9 +335,35 @@ msgid "Apartment Insurance"
 msgstr "تأمين الشقة"
 
 #. module: rent_customize
+#: model:ir.model,name:rent_customize.model_transfer_apartment_wizard
+msgid "Apartment Transfering"
+msgstr ""
+
+#. module: rent_customize
+#: model:ir.model.fields.selection,name:rent_customize.selection__sale_order__state__approve
+msgid "Approved"
+msgstr ""
+
+#. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__assignee
+#: model_terms:ir.ui.view,arch_db:rent_customize.rent_value_update_form
+msgid "Assignee"
+msgstr "المتنازل إليه"
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.rent_value_update_form
+msgid "Assigner"
+msgstr "المتنازل"
+
+#. module: rent_customize
 #: model:ir.model,name:rent_customize.model_ir_attachment
 msgid "Attachment"
 msgstr "مرفق"
+
+#. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__message_attachment_count
+msgid "Attachment Count"
+msgstr ""
 
 #. module: rent_customize
 #: model:ir.model.fields,field_description:rent_customize.field_rent_sale_state__delivery_attachment_ids
@@ -62,7 +373,33 @@ msgid "Attachments"
 msgstr "المرفقات"
 
 #. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__authorized_manager_id
+msgid "Authorized Manager"
+msgstr "اسم المدير المفوض"
+
+#. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__authorized_identity
+msgid "Authorized Manager Identity"
+msgstr "رقم هوية المدير المفوض"
+
+#. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__bank_id
+msgid "Bank"
+msgstr ""
+
+#. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__bank_account
+msgid "Bank Account"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.rent_value_update_form
+msgid "CEO"
+msgstr "الرئيس التنفيذي"
+
+#. module: rent_customize
 #: model_terms:ir.ui.view,arch_db:rent_customize.rent_sale_order_r_inherit_form2
+#: model_terms:ir.ui.view,arch_db:rent_customize.view_transfer_apartment_wizard
 msgid "Cancel"
 msgstr "إلغاء"
 
@@ -72,9 +409,60 @@ msgid "Cancelled"
 msgstr "ملغي"
 
 #. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__cash_receipts_date
+msgid "Cash Receipts Date"
+msgstr "تاريخ سند القبض"
+
+#. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__cash_receipts
+msgid "Cash Receipts No."
+msgstr "رقم سند القبض"
+
+#. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__cash_receipts_value
+msgid "Cash Receipts Value"
+msgstr "مبلغ المدفوع"
+
+#. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__change_reason
+msgid "Change Reason"
+msgstr "اسباب التغيير"
+
+#. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__fee
+msgid "Charges day's rental"
+msgstr "إيجار اليومي"
+
+#. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__city
+msgid "City"
+msgstr "المدينة"
+
+#. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__crn
+msgid "Commercial Registration Number"
+msgstr "رقم السجل التجاري"
+
+#. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__company_id
+msgid "Company"
+msgstr ""
+
+#. module: rent_customize
+#: model:ir.model,name:rent_customize.model_res_config_settings
+msgid "Config Settings"
+msgstr "ضبط الاعدادات"
+
+#. module: rent_customize
 #: model_terms:ir.ui.view,arch_db:rent_customize.rental_order_form_view2
 msgid "Confirmed"
 msgstr "مؤكد"
+
+#. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__contact_number
+#: model_terms:ir.ui.view,arch_db:rent_customize.rent_value_update_form
+msgid "Contact Number"
+msgstr "ارقام التواصل "
 
 #. module: rent_customize
 #: model:ir.model.fields,field_description:rent_customize.field_sale_order__context_order
@@ -87,14 +475,41 @@ msgid "Contract"
 msgstr "عقد"
 
 #. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__contract_date
+#: model_terms:ir.ui.view,arch_db:rent_customize.rent_value_update_form
+msgid "Contract Date"
+msgstr "تاريخ العقد"
+
+#. module: rent_customize
+#: model:mail.activity.type,name:rent_customize.contract_expire_notification
+msgid "Contract Expiration Date Notification"
+msgstr ""
+
+#. module: rent_customize
 #: model:ir.actions.act_window,name:rent_customize.filter_dates_action
 msgid "Contract In Dates"
 msgstr "تاريخ العقد"
 
 #. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_res_config_settings__contract_notify
+msgid "Contract Renewal Days"
+msgstr ""
+
+#. module: rent_customize
 #: model:ir.ui.menu,name:rent_customize.contract_menu_report
 msgid "Contract Report"
 msgstr "تقرير العقد"
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.view_order_form_rent_customize
+msgid "Contract Sale"
+msgstr ""
+
+#. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__contract_value
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__due_amount
+msgid "Contract Value"
+msgstr "قيمة العقد"
 
 #. module: rent_customize
 #: model_terms:ir.actions.act_window,help:rent_customize.rental_furnished_product_template_action
@@ -103,18 +518,60 @@ msgstr "إنشاء شقة مفروشة جديدة!"
 
 #. module: rent_customize
 #: model:ir.model.fields,field_description:rent_customize.field_contract_wizard__create_uid
+#: model:ir.model.fields,field_description:rent_customize.field_rent_due_invoice__create_uid
+#: model:ir.model.fields,field_description:rent_customize.field_rent_log__create_uid
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__create_uid
+#: model:ir.model.fields,field_description:rent_customize.field_transfer_apartment_wizard__create_uid
 msgid "Created by"
 msgstr "انشأ من قبل"
 
 #. module: rent_customize
 #: model:ir.model.fields,field_description:rent_customize.field_contract_wizard__create_date
+#: model:ir.model.fields,field_description:rent_customize.field_rent_due_invoice__create_date
+#: model:ir.model.fields,field_description:rent_customize.field_rent_log__create_date
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__create_date
+#: model:ir.model.fields,field_description:rent_customize.field_transfer_apartment_wizard__create_date
 msgid "Created on"
 msgstr "تم إنشاؤها فى"
+
+#. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__currency_id
+msgid "Currency"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_custody_filter
+msgid "Current Month"
+msgstr ""
+
+#. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_sale_order__transfer_customer_id
+msgid "Custoemr To Transfer"
+msgstr ""
+
+#. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__assigner_id
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__partner_id
+#: model_terms:ir.ui.view,arch_db:rent_customize.eviction_report_tree
+#: model_terms:ir.ui.view,arch_db:rent_customize.rent_value_update_form
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_custody_filter
+msgid "Customer"
+msgstr "العميل"
+
+#. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__daily_rent_value
+msgid "Daily Rent Value"
+msgstr ""
 
 #. module: rent_customize
 #: model:ir.model.fields,field_description:rent_customize.field_sale_order__damage_amount
 msgid "Damage Amount"
 msgstr "مبلغ الضرر"
+
+#. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_rent_due_invoice__date_from
+msgid "Date From"
+msgstr "الفترة من تاريخ "
 
 #. module: rent_customize
 #: model:ir.model.fields,field_description:rent_customize.field_product_product__date_localization
@@ -123,14 +580,105 @@ msgid "Date Localization"
 msgstr "التاريخ للموقع"
 
 #. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_rent_due_invoice__date_to
+msgid "Date To"
+msgstr "الى تاريخ"
+
+#. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__end_contractual_relationship
+msgid "Date end of the contractual relationship"
+msgstr ""
+
+#. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__leased_property
+msgid "Date of leased property"
+msgstr ""
+
+#. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__vacating_the_property
+msgid "Days vacating the property"
+msgstr "أقصى مدة لإخلاء العقار"
+
+#. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__delay_date
+msgid "Delay Date"
+msgstr ""
+
+#. module: rent_customize
 #: model:ir.model.fields,field_description:rent_customize.field_contract_wizard__display_name
+#: model:ir.model.fields,field_description:rent_customize.field_rent_due_invoice__display_name
+#: model:ir.model.fields,field_description:rent_customize.field_rent_log__display_name
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__display_name
+#: model:ir.model.fields,field_description:rent_customize.field_transfer_apartment_wizard__display_name
 msgid "Display Name"
 msgstr "اسم العرض"
+
+#. module: rent_customize
+#: model:ir.model.fields.selection,name:rent_customize.selection__rental_letter_template__martial_status__divorced
+msgid "Divorced"
+msgstr ""
+
+#. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__invoice_ids
+msgid "Due Invoices"
+msgstr ""
+
+#. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__employer
+msgid "Employer"
+msgstr "جهة العمل"
 
 #. module: rent_customize
 #: model:ir.model.fields,field_description:rent_customize.field_contract_wizard__end_date
 msgid "End Date"
 msgstr "تاريخ الانتهاء"
+
+#. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__eviction_period
+msgid "Eviction Period"
+msgstr ""
+
+#. module: rent_customize
+#: model:ir.actions.act_window,name:rent_customize.eviction_report_action
+#: model:ir.ui.menu,name:rent_customize.menu_report_eviction_all
+msgid "Eviction Report"
+msgstr ""
+
+#. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__eviction_state
+msgid "Eviction State"
+msgstr "حالة الإخلاء"
+
+#. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__family_members
+msgid "Family Members"
+msgstr "عدد أفراد العائلة"
+
+#. module: rent_customize
+#: model:ir.model.fields.selection,name:rent_customize.selection__sale_order__annual_increase_type__fixed
+msgid "Fixed amount"
+msgstr ""
+
+#. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__message_follower_ids
+msgid "Followers"
+msgstr ""
+
+#. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__message_partner_ids
+msgid "Followers (Partners)"
+msgstr ""
+
+#. module: rent_customize
+#: model:ir.model.fields,help:rent_customize.field_rental_letter_template__activity_type_icon
+msgid "Font awesome icon e.g. fa-tasks"
+msgstr ""
+
+#. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_rent_log__fromdate
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__beginning_contract
+msgid "From Date"
+msgstr ""
 
 #. module: rent_customize
 #: model_terms:ir.ui.view,arch_db:rent_customize.furnished_product_template_search_view
@@ -172,29 +720,158 @@ msgid "Geolocation"
 msgstr "تحديد الموقع الجغرافي"
 
 #. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_custody_filter
+msgid "Group By"
+msgstr ""
+
+#. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__has_message
+msgid "Has Message"
+msgstr ""
+
+#. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__iban
+msgid "IBAN"
+msgstr ""
+
+#. module: rent_customize
 #: model:ir.model.fields,field_description:rent_customize.field_contract_wizard__id
+#: model:ir.model.fields,field_description:rent_customize.field_rent_due_invoice__id
+#: model:ir.model.fields,field_description:rent_customize.field_rent_log__id
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__id
+#: model:ir.model.fields,field_description:rent_customize.field_transfer_apartment_wizard__id
 msgid "ID"
 msgstr ""
 
 #. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__activity_exception_icon
+msgid "Icon"
+msgstr ""
+
+#. module: rent_customize
+#: model:ir.model.fields,help:rent_customize.field_rental_letter_template__activity_exception_icon
+msgid "Icon to indicate an exception activity."
+msgstr ""
+
+#. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_transfer_apartment_wizard__identification_id
+msgid "Identification"
+msgstr ""
+
+#. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_transfer_apartment_wizard__identification_id_date
+msgid "Identification Id Date"
+msgstr ""
+
+#. module: rent_customize
+#: model:ir.model.fields,help:rent_customize.field_rental_letter_template__message_needaction
+#: model:ir.model.fields,help:rent_customize.field_rental_letter_template__message_unread
+msgid "If checked, new messages require your attention."
+msgstr ""
+
+#. module: rent_customize
+#: model:ir.model.fields,help:rent_customize.field_rental_letter_template__message_has_error
+#: model:ir.model.fields,help:rent_customize.field_rental_letter_template__message_has_sms_error
+msgid "If checked, some messages have a delivery error."
+msgstr ""
+
+#. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__insurance_officer
+#: model_terms:ir.ui.view,arch_db:rent_customize.rent_value_update_form
+msgid "Insurance Officer"
+msgstr "مسؤول الإئتمان"
+
+#. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__insurance_value
+msgid "Insurance Value"
+msgstr "قيمة التأمين"
+
+#. module: rent_customize
+#: model:mail.activity.type,name:rent_customize.invoice_expire_notification
+msgid "Invoice Expiration Date Notification"
+msgstr ""
+
+#. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_res_config_settings__invoice_notify
+msgid "Invoice Renewal Days"
+msgstr ""
+
+#. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__message_is_follower
+msgid "Is Follower"
+msgstr ""
+
+#. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__job
+msgid "Job"
+msgstr "الوظيفة"
+
+#. module: rent_customize
+#: model:ir.model,name:rent_customize.model_account_move
+msgid "Journal Entry"
+msgstr "قيد اليومية"
+
+#. module: rent_customize
 #: model:ir.model.fields,field_description:rent_customize.field_contract_wizard____last_update
+#: model:ir.model.fields,field_description:rent_customize.field_rent_due_invoice____last_update
+#: model:ir.model.fields,field_description:rent_customize.field_rent_log____last_update
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template____last_update
+#: model:ir.model.fields,field_description:rent_customize.field_transfer_apartment_wizard____last_update
 msgid "Last Modified on"
 msgstr ""
 
 #. module: rent_customize
 #: model:ir.model.fields,field_description:rent_customize.field_contract_wizard__write_uid
+#: model:ir.model.fields,field_description:rent_customize.field_rent_due_invoice__write_uid
+#: model:ir.model.fields,field_description:rent_customize.field_rent_log__write_uid
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__write_uid
+#: model:ir.model.fields,field_description:rent_customize.field_transfer_apartment_wizard__write_uid
 msgid "Last Updated by"
 msgstr ""
 
 #. module: rent_customize
 #: model:ir.model.fields,field_description:rent_customize.field_contract_wizard__write_date
+#: model:ir.model.fields,field_description:rent_customize.field_rent_due_invoice__write_date
+#: model:ir.model.fields,field_description:rent_customize.field_rent_log__write_date
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__write_date
+#: model:ir.model.fields,field_description:rent_customize.field_transfer_apartment_wizard__write_date
 msgid "Last Updated on"
 msgstr ""
 
 #. module: rent_customize
+#: model:ir.model.fields.selection,name:rent_customize.selection__rental_letter_template__martial_status__cohabitant
+msgid "Legal Cohabitant"
+msgstr ""
+
+#. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__number
+msgid "Letter No."
+msgstr ""
+
+#. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_rent_due_invoice__letter_template_id
+msgid "Letter Template"
+msgstr ""
+
+#. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__location
+msgid "Location"
+msgstr "الموقع"
+
+#. module: rent_customize
 #: model:ir.model.fields.selection,name:rent_customize.selection__sale_order__state__done
 msgid "Locked"
-msgstr "مغلق"
+msgstr "مقفل"
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.reports_template_layout
+msgid "Logo"
+msgstr ""
+
+#. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__message_main_attachment_id
+msgid "Main Attachment"
+msgstr ""
 
 #. module: rent_customize
 #: model_terms:ir.ui.view,arch_db:rent_customize.view_crm_template_google_map
@@ -202,9 +879,152 @@ msgid "Maps"
 msgstr "خرائط"
 
 #. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__martial_status
+msgid "Marital Status"
+msgstr "الحالة الاجتماعية"
+
+#. module: rent_customize
+#: model:ir.model.fields.selection,name:rent_customize.selection__rental_letter_template__martial_status__married
+msgid "Married"
+msgstr ""
+
+#. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__message_has_error
+msgid "Message Delivery error"
+msgstr ""
+
+#. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__message_ids
+msgid "Messages"
+msgstr ""
+
+#. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__my_activity_date_deadline
+msgid "My Activity Deadline"
+msgstr ""
+
+#. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__national_address_main_center
+msgid "National Address Of The Main Center"
+msgstr "العنوان الوطني للمركز الرئيسي"
+
+#. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__national_id_assigner
+msgid "National ID No. Assigner"
+msgstr ""
+
+#. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__national_id_assigner_date
+msgid "National Id Assigner Date"
+msgstr ""
+
+#. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__nature_of_commerce
+msgid "Nature of commerce"
+msgstr "طبيعة التجارة"
+
+#. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__neighborhood
+msgid "Neighborhood"
+msgstr "الحي"
+
+#. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__new_contract_date
+msgid "New Contract Date"
+msgstr ""
+
+#. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__new_rental_id
+#: model:ir.model.fields,field_description:rent_customize.field_sale_order__new_rental_id
+#: model_terms:ir.ui.view,arch_db:rent_customize.rent_view_order_form
+msgid "New Rental"
+msgstr ""
+
+#. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__new_rental_value
+msgid "New Rental Value"
+msgstr ""
+
+#. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__new_rental_year
+msgid "New Rental Year"
+msgstr "تاريخ ألإيجار الجديد"
+
+#. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__activity_calendar_event_id
+msgid "Next Activity Calendar Event"
+msgstr ""
+
+#. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__activity_date_deadline
+msgid "Next Activity Deadline"
+msgstr ""
+
+#. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__activity_summary
+msgid "Next Activity Summary"
+msgstr ""
+
+#. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__activity_type_id
+msgid "Next Activity Type"
+msgstr ""
+
+#. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_mail_activity__notification_sent
+msgid "Notification Sent"
+msgstr ""
+
+#. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__message_needaction_counter
+msgid "Number of Actions"
+msgstr ""
+
+#. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__message_has_error_counter
+msgid "Number of errors"
+msgstr ""
+
+#. module: rent_customize
+#: model:ir.model.fields,help:rent_customize.field_rental_letter_template__message_needaction_counter
+msgid "Number of messages which requires an action"
+msgstr ""
+
+#. module: rent_customize
+#: model:ir.model.fields,help:rent_customize.field_rental_letter_template__message_has_error_counter
+msgid "Number of messages with delivery error"
+msgstr ""
+
+#. module: rent_customize
+#: model:ir.model.fields,help:rent_customize.field_rental_letter_template__message_unread_counter
+msgid "Number of unread messages"
+msgstr ""
+
+#. module: rent_customize
 #: model:ir.model.fields.selection,name:rent_customize.selection__sale_order__state__occupied
 msgid "Occupied"
 msgstr "محجوز"
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.rent_view_order_form
+msgid "Old Rental"
+msgstr ""
+
+#. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_sale_order__old_rent_ids
+#: model_terms:ir.ui.view,arch_db:rent_customize.view_order_form_rent_customize
+msgid "Old Rents"
+msgstr ""
+
+#. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__insurance_officer_opinion
+msgid "Opinion"
+msgstr "الرأي"
+
+#. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_rent_log__order_id
+msgid "Order"
+msgstr ""
 
 #. module: rent_customize
 #: model_terms:ir.ui.view,arch_db:rent_customize.view_order_form_rent_customize
@@ -212,9 +1032,24 @@ msgid "PICKUP"
 msgstr "حجز"
 
 #. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__company_partner_id
+msgid "Partner"
+msgstr ""
+
+#. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__payment_period
+msgid "Payment Period"
+msgstr ""
+
+#. module: rent_customize
+#: model:ir.model.fields.selection,name:rent_customize.selection__sale_order__annual_increase_type__percentage
+msgid "Percentage"
+msgstr ""
+
+#. module: rent_customize
 #: model:ir.model,name:rent_customize.model_rental_order_wizard
 msgid "Pick-up/Return products"
-msgstr "استلام/إرجاع المنتجات"
+msgstr "استلام/إرجاع المنتجات "
 
 #. module: rent_customize
 #: model_terms:ir.ui.view,arch_db:rent_customize.rental_order_form_view2
@@ -230,7 +1065,22 @@ msgstr "استلام طلب الإيجار"
 #: code:addons/rent_customize/models/sales.py:0
 #, python-format
 msgid "Please define an accounting sales journal for the company %s (%s)."
-msgstr "الرجاء تحديد دفتر يومية مبيعات محاسبة للشركة %s (%s)."
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.rent_value_update_form
+msgid "Print Letter"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.view_transfer_apartment_wizard
+msgid "Print Report"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.view_order_form_rent_customize
+msgid "Print Transfer"
+msgstr ""
 
 #. module: rent_customize
 #: model:ir.model,name:rent_customize.model_product_template
@@ -243,6 +1093,7 @@ msgid "Products"
 msgstr "منتجات"
 
 #. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__property_id
 #: model:ir.model.fields,field_description:rent_customize.field_sale_rental_schedule__property_id
 msgid "Property"
 msgstr "العقار"
@@ -258,6 +1109,31 @@ msgid "Property Address Build"
 msgstr "المجمع"
 
 #. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.rent_value_update_form
+msgid "Property Manager"
+msgstr "مدير العقار"
+
+#. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__property_type_id
+msgid "Property Type"
+msgstr "نوع العقار"
+
+#. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__property_manager
+msgid "Property manager"
+msgstr "مدير العقار"
+
+#. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__property_manager_opinion
+msgid "Property manager Opinion"
+msgstr "الرأي"
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.rent_value_update_form
+msgid "Proposed Rental Value"
+msgstr "القيمة الايجارية المقترحة"
+
+#. module: rent_customize
 #: model:ir.model.fields.selection,name:rent_customize.selection__sale_order__state__draft
 msgid "Quotation"
 msgstr "عرض سعر"
@@ -266,6 +1142,11 @@ msgstr "عرض سعر"
 #: model:ir.model.fields.selection,name:rent_customize.selection__sale_order__state__sent
 msgid "Quotation Sent"
 msgstr "تم إرسال عرض السعر"
+
+#. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__ref
+msgid "Reference"
+msgstr ""
 
 #. module: rent_customize
 #: model_terms:ir.ui.view,arch_db:rent_customize.refund_insurance_view_form
@@ -290,9 +1171,40 @@ msgid "Renew"
 msgstr "تجديد"
 
 #. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_rent_log__rent_id
+msgid "Rent"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.rent_value_update_form
+msgid "Rent Due Invoice"
+msgstr "المتأخرات"
+
+#. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_product_product__rent_unit_price
+#: model:ir.model.fields,field_description:rent_customize.field_product_template__rent_unit_price
+msgid "Rent Unit Price"
+msgstr ""
+
+#. module: rent_customize
+#: model:ir.model,name:rent_customize.model_rental_letter_template
+msgid "Rental Letter Templates"
+msgstr "خطابات العقارات"
+
+#. module: rent_customize
+#: model:ir.ui.menu,name:rent_customize.rent_rental_value_update_menu
+msgid "Rental Letters"
+msgstr "خطابات العقارات"
+
+#. module: rent_customize
 #: model:ir.model,name:rent_customize.model_sale_rental_schedule
 msgid "Rental Schedule"
-msgstr "جدول التأجير"
+msgstr "جدول التأجير "
+
+#. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_sale_order__rental_status
+msgid "Rental Status"
+msgstr "حالة التأجير "
 
 #. module: rent_customize
 #: model:ir.model.fields,field_description:rent_customize.field_ir_attachment__rental_type
@@ -300,9 +1212,61 @@ msgid "Rental Type"
 msgstr "نوع الإيجار"
 
 #. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__rental_value
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__rental_value_old
+msgid "Rental Value"
+msgstr "القيمة الايجارية السابقة"
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.rent_value_update_tree
+msgid "Rental Value Update"
+msgstr ""
+
+#. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__rental_value_new
+msgid "Rental Value new"
+msgstr ""
+
+#. module: rent_customize
+#: code:addons/rent_customize/models/move.py:0
+#: code:addons/rent_customize/models/sales.py:0
+#: code:addons/rent_customize/models/sales.py:0
+#: code:addons/rent_customize/models/sales.py:0
+#: model_terms:ir.ui.view,arch_db:rent_customize.renting_custom_view_move_form
+#, python-format
+msgid "Renting Order"
+msgstr ""
+
+#. module: rent_customize
+#: model:res.groups,name:rent_customize.show_renting_order_group
+msgid "Renting Order From Invoice"
+msgstr ""
+
+#. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__renting_purpose
+msgid "Renting Purpose"
+msgstr "الغرض من الاستئجار"
+
+#. module: rent_customize
 #: model:ir.ui.menu,name:rent_customize.menu_rental_reporting_child
 msgid "Reporting"
 msgstr "التقارير"
+
+#. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__today_date
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_custody_filter
+msgid "Request Date"
+msgstr "تاريخ الطلب"
+
+#. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__user_id
+msgid "Responsible"
+msgstr "الموظف المسؤول"
+
+#. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__activity_user_id
+msgid "Responsible User"
+msgstr ""
 
 #. module: rent_customize
 #: model_terms:ir.ui.view,arch_db:rent_customize.rental_order_form_view2
@@ -310,14 +1274,82 @@ msgid "Returned"
 msgstr "مرتجع"
 
 #. module: rent_customize
+#: model:res.groups,name:rent_customize.review_rental_order
+msgid "Review Orders"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.rental_order_form_view2
+msgid "Reviewed"
+msgstr ""
+
+#. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__message_has_sms_error
+msgid "SMS Delivery error"
+msgstr ""
+
+#. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__salary_definition
+msgid "Salary Definition"
+msgstr "تعريف بالراتب من العمل"
+
+#. module: rent_customize
 #: model:ir.model,name:rent_customize.model_sale_order
 msgid "Sales Order"
 msgstr "أمر البيع"
 
 #. module: rent_customize
+#: model:ir.model,name:rent_customize.model_sale_order_line
+msgid "Sales Order Line"
+msgstr "بند أمر المبيعات"
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_custody_filter
+msgid "Search Custody"
+msgstr ""
+
+#. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_res_config_settings__is_contract_notify
+#: model:ir.model.fields,field_description:rent_customize.field_sale_order__is_contract_notify
+msgid "Send Contract Notification"
+msgstr ""
+
+#. module: rent_customize
+#: model:ir.actions.server,name:rent_customize.ir_cron_send_notifications0000_ir_actions_server
+#: model:ir.cron,cron_name:rent_customize.ir_cron_send_notifications0000
+#: model:ir.cron,name:rent_customize.ir_cron_send_notifications0000
+msgid "Send Contract Notifications"
+msgstr ""
+
+#. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_account_bank_statement_line__is_invoice_notify
+#: model:ir.model.fields,field_description:rent_customize.field_account_move__is_invoice_notify
+#: model:ir.model.fields,field_description:rent_customize.field_account_payment__is_invoice_notify
+#: model:ir.model.fields,field_description:rent_customize.field_res_config_settings__is_invoice_notify
+msgid "Send Invoice Notification"
+msgstr ""
+
+#. module: rent_customize
+#: model:ir.actions.server,name:rent_customize.ir_cron_send_notifications00001_ir_actions_server
+#: model:ir.cron,cron_name:rent_customize.ir_cron_send_notifications00001
+#: model:ir.cron,name:rent_customize.ir_cron_send_notifications00001
+msgid "Send Invoice Notifications"
+msgstr ""
+
+#. module: rent_customize
 #: model_terms:ir.ui.view,arch_db:rent_customize.contract_view_form
 msgid "Show Report"
 msgstr "عرض تقرير"
+
+#. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__simah_report
+msgid "Simah Report"
+msgstr "تقرير سمة"
+
+#. module: rent_customize
+#: model:ir.model.fields.selection,name:rent_customize.selection__rental_letter_template__martial_status__single
+msgid "Single"
+msgstr ""
 
 #. module: rent_customize
 #: model:ir.model.fields,field_description:rent_customize.field_contract_wizard__start_date
@@ -326,13 +1358,59 @@ msgstr "تاريخ البدء"
 
 #. module: rent_customize
 #: model:ir.model.fields,field_description:rent_customize.field_sale_order__state
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_custody_filter
 msgid "Status"
 msgstr "الحالة"
+
+#. module: rent_customize
+#: model:ir.model.fields,help:rent_customize.field_rental_letter_template__activity_state
+msgid ""
+"Status based on activities\n"
+"Overdue: Due date is already passed\n"
+"Today: Activity date is today\n"
+"Planned: Future activities."
+msgstr ""
+
+#. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__subject
+msgid "Subject"
+msgstr "نوع الخطاب"
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.rental_order_form_view2
+msgid "Submit"
+msgstr ""
+
+#. module: rent_customize
+#: model:res.groups,name:rent_customize.submit_rental_order
+msgid "Submit Orders"
+msgstr ""
 
 #. module: rent_customize
 #: model_terms:ir.ui.view,arch_db:rent_customize.view_rent_property_build_form
 msgid "Sync Analytic Account Ref"
 msgstr "مزامنة المرجع للحساب التحليلي"
+
+#. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__targeted_group
+msgid "Targeted Group"
+msgstr "الفئة المستهدفة"
+
+#. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_rent_due_invoice__tax_amount
+msgid "Tax Amount"
+msgstr ""
+
+#. module: rent_customize
+#: model:ir.actions.act_window,name:rent_customize.rent_letter_template
+#: model:ir.ui.menu,name:rent_customize.rent_rental_letter_templates_menu
+msgid "Templates"
+msgstr "الخطابات"
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.rent_value_update_form
+msgid "Tenant ID"
+msgstr ""
 
 #. module: rent_customize
 #: model:ir.model.fields.selection,name:rent_customize.selection__sale_order__state__termination
@@ -341,15 +1419,156 @@ msgid "Termination"
 msgstr "فسخ عقد"
 
 #. module: rent_customize
+#: model:ir.model.fields.selection,name:rent_customize.selection__rental_letter_template__eviction_state__done
+msgid "Termination Done"
+msgstr "تم الإخلاء"
+
+#. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__termination_notice_period
+msgid "Termination Notice Period"
+msgstr ""
+
+#. module: rent_customize
+#: model:ir.model.fields.selection,name:rent_customize.selection__rental_letter_template__eviction_state__refused
+msgid "Termination Refused"
+msgstr "رفض"
+
+#. module: rent_customize
+#: code:addons/rent_customize/models/sales.py:0
+#, python-format
+msgid "There is unpaid invoices to be paid or reconciled!"
+msgstr ""
+
+#. module: rent_customize
+#: model:ir.model.fields.selection,name:rent_customize.selection__sale_order__rental_status__approve
+msgid "To Approve"
+msgstr ""
+
+#. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_rent_log__todate
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__end_contract
+msgid "To Date"
+msgstr ""
+
+#. module: rent_customize
+#: model:ir.model.fields.selection,name:rent_customize.selection__sale_order__rental_status__review
+#: model:ir.model.fields.selection,name:rent_customize.selection__sale_order__state__review
+msgid "To Review"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_custody_filter
+msgid "Today"
+msgstr ""
+
+#. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_rent_due_invoice__total
+msgid "Total"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.transfer_view_form
+msgid "Transfer"
+msgstr ""
+
+#. module: rent_customize
+#: model:ir.actions.act_window,name:rent_customize.apartment_transfer_wizard_action
+#: model:ir.actions.report,name:rent_customize.report_transfer_apratment
+msgid "Transfer Apartment"
+msgstr ""
+
+#. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_sale_order__transfer_context_order
+msgid "Transfer Context Order"
+msgstr ""
+
+#. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__transfer_date
+#: model:ir.model.fields,field_description:rent_customize.field_sale_order__transfer_date
+#: model:ir.model.fields,field_description:rent_customize.field_transfer_apartment_wizard__transfer_date
+msgid "Transfer Date"
+msgstr "تاريخ التنازل"
+
+#. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_transfer_apartment_wizard__transfer_from_id
+msgid "Transfer From"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.transfer_view_form
+msgid "Transfer and print"
+msgstr ""
+
+#. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_sale_order__transferred_id
+msgid "Transferred"
+msgstr ""
+
+#. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_sale_order__transferred
+msgid "Transferred ?"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.rent_view_order_form
+msgid "Transferred from"
+msgstr ""
+
+#. module: rent_customize
+#: model:ir.model.fields,help:rent_customize.field_rental_letter_template__activity_exception_decoration
+msgid "Type of the exception activity on record."
+msgstr ""
+
+#. module: rent_customize
 #: model_terms:ir.ui.view,arch_db:rent_customize.customize_product_template_form_view
 msgid "Unit Location"
 msgstr "موقع الوحدة"
+
+#. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__state_unit_id
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__unit_id
+msgid "Unit Number"
+msgstr "الوحدة"
 
 #. module: rent_customize
 #: model:ir.model.fields,field_description:rent_customize.field_product_product__unit_rented
 #: model:ir.model.fields,field_description:rent_customize.field_product_template__unit_rented
 msgid "Unit Rented"
 msgstr "الوحدة مؤجرة"
+
+#. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__message_unread
+msgid "Unread Messages"
+msgstr ""
+
+#. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__message_unread_counter
+msgid "Unread Messages Counter"
+msgstr ""
+
+#. module: rent_customize
+#: model:mail.activity.type,name:rent_customize.unresolved_contract_activity_notification
+msgid "Unresolved Contract Activity Notification"
+msgstr ""
+
+#. module: rent_customize
+#: model:ir.actions.server,name:rent_customize.ir_cron_send_notifications00002_ir_actions_server
+#: model:ir.cron,cron_name:rent_customize.ir_cron_send_notifications00002
+#: model:ir.cron,name:rent_customize.ir_cron_send_notifications00002
+msgid "Unresolved Contract Notifications"
+msgstr ""
+
+#. module: rent_customize
+#: model:mail.activity.type,name:rent_customize.unresolved_invoice_activity_notification
+msgid "Unresolved Invoice Activity Notification"
+msgstr ""
+
+#. module: rent_customize
+#: model:ir.actions.server,name:rent_customize.ir_cron_send_notifications00003_ir_actions_server
+#: model:ir.cron,cron_name:rent_customize.ir_cron_send_notifications00003
+#: model:ir.cron,name:rent_customize.ir_cron_send_notifications00003
+msgid "Unresolved Invoice Notifications"
+msgstr ""
 
 #. module: rent_customize
 #: model:ir.actions.server,name:rent_customize.update_invoice_status_action_server
@@ -364,6 +1583,21 @@ msgid "Update Product Rent"
 msgstr "تحديث إيجار المنتج"
 
 #. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__website_message_ids
+msgid "Website Messages"
+msgstr ""
+
+#. module: rent_customize
+#: model:ir.model.fields,help:rent_customize.field_rental_letter_template__website_message_ids
+msgid "Website communication history"
+msgstr ""
+
+#. module: rent_customize
+#: model:ir.model.fields.selection,name:rent_customize.selection__rental_letter_template__martial_status__widower
+msgid "Widower"
+msgstr ""
+
+#. module: rent_customize
 #: model_terms:ir.actions.act_window,help:rent_customize.rental_furnished_product_template_action
 msgid ""
 "You can also create additional products or services to sell by checking *Can be Sold* in the product\n"
@@ -371,6 +1605,12 @@ msgid ""
 msgstr ""
 "يمكنك أيضًا إنشاء منتجات أو خدمات إضافية للبيع عن طريق تحديد * يمكن بيعها * في المنتج\n"
 "                     النموذج (مثل التأمين)."
+
+#. module: rent_customize
+#: code:addons/rent_customize/models/sales.py:0
+#, python-format
+msgid "You need to add at least one line before Submitting."
+msgstr ""
 
 #. module: rent_customize
 #: model:ir.model,name:rent_customize.model_contract_wizard
@@ -393,13 +1633,34 @@ msgid "delivery"
 msgstr "توصيل"
 
 #. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__e_invoice_date
+msgid "e-invoice Date"
+msgstr "تاريخ فاتورة التأمين"
+
+#. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__e_invoice
+msgid "e-invoice No."
+msgstr "رقم فاتورة التأمين"
+
+#. module: rent_customize
 #: model:ir.model.fields.selection,name:rent_customize.selection__ir_attachment__rental_type__receipt
 msgid "receipt"
 msgstr "إيصال"
 
 #. module: rent_customize
 #: model_terms:ir.ui.view,arch_db:rent_customize.refund_insurance_view_form
+#: model_terms:ir.ui.view,arch_db:rent_customize.transfer_view_form
 msgid "refund_insurance_form"
+msgstr ""
+
+#. module: rent_customize
+#: model:ir.model,name:rent_customize.model_rent_due_invoice
+msgid "rent.due.invoice"
+msgstr ""
+
+#. module: rent_customize
+#: model:ir.model,name:rent_customize.model_rent_log
+msgid "rent.log"
 msgstr ""
 
 #. module: rent_customize
@@ -418,11 +1679,1251 @@ msgid "rent.sale.state"
 msgstr ""
 
 #. module: rent_customize
+#: code:addons/rent_customize/models/sales.py:0
+#, python-format
+msgid "ألأخد"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_payment_claim_template
+msgid "إدارة العقار"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_template_transfer
+msgid "إدارة العقارات"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_payment_claim_template
+msgid "إشارة إلى الموضوع أعلاه وإشارةً لعقد الأجرة الموقع معكم بتاريخ"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_vacating_raj_template
+msgid ""
+"إشارة الى الموضوع أعلاه وبالإشارة الى عقد الإيجار الإلكتروني المبرم معكم\n"
+"                                            <br/>\n"
+"                                            بتاريخ"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_contract_termination_template
+msgid "إشارة للموضوع أعلاه وإشارة إلى العقد الموقع معكم والمؤرخ في"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_value_update_template
+msgid ""
+"إشارة للموضوع أعلاه وبالإشارة الى عقد الإيجار الإلكتروني المبرم معكم بتاريخ"
+msgstr ""
+
+#. module: rent_customize
+#: model:ir.actions.report,name:rent_customize.action_report_contract_termination
+#: model:ir.model.fields.selection,name:rent_customize.selection__rental_letter_template__subject__termination
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_contract_termination_template
+msgid "إشعار بإنهاء التعاقد"
+msgstr ""
+
+#. module: rent_customize
+#: model:ir.model.fields.selection,name:rent_customize.selection__rental_letter_template__subject__eviction
+msgid "اخلاء عقار"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_commercial_template
+msgid ""
+"ارقام التواصل الشخصي\n"
+"                                            والعمل"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_personal_template
+msgid "ارقام التواصل الشخصي والعمل"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_commercial_template
+msgid ""
+"ارقام التواصل مع\n"
+"                                            الادارة"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_commercial_template
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_personal_template
+msgid "اسباب التغيير"
+msgstr ""
+
+#. module: rent_customize
+#: model:ir.model.fields.selection,name:rent_customize.selection__rental_letter_template__subject__pickup
+msgid "استلام العين المؤجرة من المستأجر"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_value_update_template
+msgid "استلام المستأجر"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_pickup_template
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_return_template
+msgid "اسم العقار:"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_commercial_template
+msgid "اسم المدير المفوض"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_commercial_template
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_personal_template
+msgid "اسم المستأجر"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_vacating_raj_template
+msgid ""
+"اسم المستأجر\n"
+"                                            :"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_pickup_template
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_return_template
+msgid "اسم المستأجر:"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_payment_claim_template
+msgid "اسم المستلم"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_contract_termination_template
+msgid "اسم المستلم:"
+msgstr ""
+
+#. module: rent_customize
+#: code:addons/rent_customize/models/sales.py:0
+#, python-format
+msgid "الأربعاء"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_payment_claim_template
+msgid "الإجمالي"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_transfer_template_apratment
+msgid "الإسم /"
+msgstr ""
+
+#. module: rent_customize
+#: code:addons/rent_customize/models/sales.py:0
+#, python-format
+msgid "الاثنين"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_commercial_template
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_personal_template
+msgid "الاسم"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_template_transfer
+msgid "الاسم/"
+msgstr ""
+
+#. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__deposits_paid
+msgid "التأمين المدفوع"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_pickup_template
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_return_template
+msgid "التأمين المدفوع:"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_payment_claim_template
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_pickup_template
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_return_template
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_vacating_raj_template
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_value_update_template
+msgid "التاريخ:"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_contract_termination_template
+msgid "التايخ:"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_commercial_template
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_personal_template
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_return_template
+msgid "التوقيع"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_transfer_template_apratment
+msgid "التوقيع /"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_template_transfer
+msgid "التوقيع/"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_contract_termination_template
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_pickup_template
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_vacating_raj_template
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_value_update_template
+msgid "التوقيع:"
+msgstr ""
+
+#. module: rent_customize
+#: code:addons/rent_customize/models/sales.py:0
+#, python-format
+msgid "الثلاثاء"
+msgstr ""
+
+#. module: rent_customize
+#: code:addons/rent_customize/models/sales.py:0
+#, python-format
+msgid "الجمعة"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_pickup_template
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_return_template
+msgid "الحائط"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_personal_template
+msgid "الحالة الاجتماعية"
+msgstr ""
+
+#. module: rent_customize
+#: code:addons/rent_customize/models/sales.py:0
+#, python-format
+msgid "الخميس"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_commercial_template
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_personal_template
+msgid "الرأي"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_commercial_template
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_personal_template
+msgid "الرئيس التنفيذي"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_pickup_template
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_return_template
+msgid "السباكة"
+msgstr ""
+
+#. module: rent_customize
+#: code:addons/rent_customize/models/sales.py:0
+#, python-format
+msgid "السبت"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_contract_termination_template
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_payment_claim_template
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_vacating_raj_template
+msgid "السلام عليكم ورحمة الله وبركاته"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_value_update_template
+msgid "السلام عليكم ورحمة الله وبركاته وبعد:"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_contract_termination_template
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_payment_claim_template
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_value_update_template
+msgid "السيد / السادة"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_payment_claim_template
+msgid "الضريبة"
+msgstr ""
+
+#. module: rent_customize
 #: model:ir.model.fields,field_description:rent_customize.field_sale_rental_schedule__property_number
 msgid "العقار"
 msgstr ""
 
 #. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_commercial_template
+msgid ""
+"العنوان الوطني\n"
+"                                            للمركز الرئيسي"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_commercial_template
+msgid "الغرض من الاستئجار"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_commercial_template
+msgid "الفئة المستهدفة"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_payment_claim_template
+msgid "الفترة من تاريخ"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_commercial_template
+msgid ""
+"القيمة الايجارية\n"
+"                                            السابقة"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_commercial_template
+msgid ""
+"القيمة الايجارية\n"
+"                                            المقترحة"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_personal_template
+msgid "القيمة الايجارية السابقة"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_personal_template
+msgid "القيمة الايجارية المقترحة"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_template_transfer
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_transfer_template_apratment
+msgid "الكائنة في مدينة"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_pickup_template
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_return_template
+msgid "الكهرباء"
+msgstr ""
+
+#. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__elec_amount
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__remaining_amount
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__rental_payments
+msgid "المبلغ"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_pickup_template
+msgid ""
+"المبلغ\n"
+"                                            المتبقي للمستأجر"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_return_template
+msgid "المبلغ المتبقي للمستأجر"
+msgstr ""
+
+#. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__electricity_amount_due
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__water_amount_due
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_payment_claim_template
+msgid "المبلغ المستحق"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_pickup_template
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_return_template
+msgid "المبلغ المستحق:"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_pickup_template
+msgid "المبلغ:"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_template_transfer
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_transfer_template_apratment
+msgid "المتنازل"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_template_transfer
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_transfer_template_apratment
+msgid "المتنازل إليه"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_vacating_raj_template
+msgid "المحترم"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_payment_claim_template
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_value_update_template
+msgid "المحترم/المحترمين"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_contract_termination_template
+msgid "المحترمين"
+msgstr ""
+
+#. module: rent_customize
 #: model_terms:ir.ui.view,arch_db:rent_customize.rent_sale_order_r_inherit_form2
 msgid "المرفقات"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_pickup_template
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_return_template
+msgid "المسؤول عن المبنى"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_vacating_raj_template
+msgid "المستأجر"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_pickup_template
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_return_template
+msgid "الملاحظات"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_payment_claim_template
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_pickup_template
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_return_template
+msgid "الموافق:"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_contract_termination_template
+msgid "الموضوع: إشعار بإنهاء التعاقد"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_payment_claim_template
+msgid "الموضوع: مطالبة سداد أجرة"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_commercial_template
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_personal_template
+msgid "الموقع"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_template_transfer
+msgid ""
+"الموقع أدناه\n"
+"                                            مستأجر العين رقم"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_pickup_template
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_return_template
+msgid "النوافذ"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_personal_template
+msgid "الوظيفة"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_payment_claim_template
+msgid "الى تاريخ"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_template_transfer
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_transfer_template_apratment
+msgid "انه في يوم"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_pickup_template
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_return_template
+msgid "بداية العقد:"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_payment_claim_template
+msgid ""
+"بمدينة الرياض، ولم يتم السداد حتى تاريخه علما بأن المتأخرات المترتبة عليكم\n"
+"                                            كالآتي:"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_transfer_template_apratment
+msgid "بموجب (هوية وطنية / إقامة) رقم"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_template_transfer
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_transfer_template_apratment
+msgid "بموجب عقد الإيجار رقم"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_commercial_template
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_personal_template
+msgid "بيانات العقار"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_commercial_template
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_personal_template
+msgid "بيانات المستأجر"
+msgstr ""
+
+#. module: rent_customize
+#: model:ir.model.fields.selection,name:rent_customize.selection__rental_letter_template__subject__value_update
+msgid "تحديث القيمة الإيجارية"
+msgstr ""
+
+#. module: rent_customize
+#: model:ir.model.fields.selection,name:rent_customize.selection__rental_letter_template__subject__return
+msgid "تسليم العين المؤجرة من المستأجر"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_pickup_template
+msgid ""
+"تصفية\n"
+"                                            عداد الكهرباء"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_return_template
+msgid "تصفية عداد الكهرباء"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_personal_template
+msgid "تعريف بالراتب من العمل"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_personal_template
+msgid "تقرير سمة"
+msgstr ""
+
+#. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__elec_payment
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__water_payment
+msgid "تم السداد"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_template_transfer
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_transfer_template_apratment
+msgid "تنازل عن عقد إيجار"
+msgstr ""
+
+#. module: rent_customize
+#: model:ir.actions.report,name:rent_customize.action_report_transfer
+#: model:ir.model.fields.selection,name:rent_customize.selection__rental_letter_template__subject__transfer
+msgid "تنازل عن عقد ايجار"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_payment_claim_template
+msgid ""
+"تنويه / المطالبة تصدر آليا ولا يعني إرسالها للمستأجر\n"
+"                                            أي التزام تعاقدي أو نقض خطابات سبق أن وجهت له بتعديل أو الغاء أو نقض\n"
+"                                            الالتزامات التعاقدية معه."
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_vacating_raj_template
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_value_update_template
+msgid "توقيع إدارة العقار"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_personal_template
+msgid "جهة العمل"
+msgstr ""
+
+#. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__door_good
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__elec_good
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__wall_good
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__water_good
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__window_good
+msgid "جيد"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_pickup_template
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_return_template
+msgid ""
+"حالة\n"
+"                                            الأبواب"
+msgstr ""
+
+#. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__door_comment
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__elec_comment
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__wall_comment
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__water_comment
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__window_comment
+msgid "حدد"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_pickup_template
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_return_template
+msgid "حدد:"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_template_transfer
+msgid ""
+"حرر هذا التنازل من ثلاثة نسخ استلم كل طرف نسخة للعمل بموجبها. والله الموفق"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_template_transfer
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_transfer_template_apratment
+msgid "حي:"
+msgstr ""
+
+#. module: rent_customize
+#: model:ir.actions.report,name:rent_customize.action_report_vacating
+msgid "خطاب اخلاء عقار"
+msgstr ""
+
+#. module: rent_customize
+#: model:ir.actions.report,name:rent_customize.action_report_value_update
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_value_update_template
+msgid "خطاب تحديث القيمة الإيجارية"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_payment_claim_template
+msgid "خطاب رقم:"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_payment_claim_template
+msgid "رقم الايبان:"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_payment_claim_template
+msgid "رقم الحساب:"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_commercial_template
+msgid "رقم السجل التجاري"
+msgstr ""
+
+#. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_rent_sale_invoices__contract_number
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__contract_number
+msgid "رقم العقد"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_personal_template
+msgid "رقم الهوية"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_pickup_template
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_return_template
+msgid "رقم الوحدة:"
+msgstr ""
+
+#. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__electricity_meter_no
+msgid "رقم عداد الكهرباء"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_pickup_template
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_return_template
+msgid "رقم عداد الكهرباء:"
+msgstr ""
+
+#. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__water_meter_no
+msgid "رقم عداد المياه"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_pickup_template
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_return_template
+msgid "رقم عداد المياه:"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_commercial_template
+msgid ""
+"رقم هوية المدير\n"
+"                                            المفوض"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_template_transfer
+msgid ""
+"ريال،\n"
+"                                            وكذلك\n"
+"                                            تنازلت عن قيمة التأمين البالغ قدرها"
+msgstr ""
+
+#. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__door_bad
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__elec_bad
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__wall_bad
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__water_bad
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__window_bad
+msgid "سئ"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_payment_claim_template
+msgid ""
+"شركة الراجحي\n"
+"                                            العقارية"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_commercial_template
+msgid "طبيعة التجارة"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_personal_template
+msgid "طلب تأجير أفراد"
+msgstr ""
+
+#. module: rent_customize
+#: model:ir.actions.report,name:rent_customize.action_report_commercial
+#: model:ir.model.fields.selection,name:rent_customize.selection__rental_letter_template__subject__commercial
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_commercial_template
+msgid "طلب تأجير تجاري"
+msgstr ""
+
+#. module: rent_customize
+#: model:ir.actions.report,name:rent_customize.action_report_personal
+#: model:ir.model.fields.selection,name:rent_customize.selection__rental_letter_template__subject__personal
+msgid "طلب تأجير فردي"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_personal_template
+msgid "عدد أفراد العائلة"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_payment_claim_template
+msgid "علماً أن تحويل الأجرة يكون فقط على حساب الشركة الآتي:"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_payment_claim_template
+msgid ""
+"عليه نأمل من سعادتكم التكرم بالسداد في مدة أقصاها\n"
+"                                            ("
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_contract_termination_template
+msgid ""
+"عليه نفيدكم بعدم رغبتنا بالتجديد معكم، وبذلك يكون تاريخ انتهاء العلاقة\n"
+"                                            التعاقدية بتاريخ"
+msgstr ""
+
+#. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__chief_executive_no
+msgid "غير موافق"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_contract_termination_template
+msgid ""
+"في العقار\n"
+"                                            الكائن بحي"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_payment_claim_template
+msgid "في العقار الكائن بحي"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_value_update_template
+msgid ""
+"في العقار الواقع في حي\n"
+"                                        ("
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_pickup_template
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_return_template
+msgid "قيمة الإيجار:"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_vacating_raj_template
+msgid "كما نود ن نشعركم انه في حال تأخير اخلاء الوحدة المؤجرة بتاريخ"
+msgstr ""
+
+#. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__customer_refused
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__elec_no
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__mangement_refused
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__remaining_amount_no
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__rental_payments_no
+msgid "لا"
+msgstr ""
+
+#. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__elec_not_found
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__water_not_found
+msgid "لا يوجد"
+msgstr ""
+
+#. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__elec_not_payment
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__water_not_payment
+msgid "لم يتم السداد "
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_template_transfer
+msgid ""
+"م\n"
+"\n"
+"                                            إلى السيد/"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_vacating_raj_template
+msgid ""
+"م\n"
+"                                             والمتضمن تأجير شقة رقم"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_vacating_raj_template
+msgid ""
+"م\n"
+"                                            (تاريخ نهاية العقد)"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_vacating_raj_template
+msgid ""
+"م\n"
+"                                            <br/>\n"
+"                                            سيتم فرض\n"
+"                                            إيجار يومي وقدره\n"
+"                                            ("
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_contract_termination_template
+msgid ""
+"م\n"
+"                                            ، والمتضمن استئجاركم شقة/معرض/مكتب بالدور"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_contract_termination_template
+msgid ""
+"م\n"
+"                                            ، وحيث تضمن العقد أنّه في حال عدم الرغبة بالتجديد يتم إشعار المستأجر قبل\n"
+"                                            انتهاء العقد بـ\n"
+"                                            ("
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_template_transfer
+msgid ""
+"م\n"
+"                                            أنا (المتنازل)"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_template_transfer
+msgid ""
+"م\n"
+"                                            بموجب (سند القبض / حوالة) رقم"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_template_transfer
+msgid ""
+"م\n"
+"                                            والبالغ قدره"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_template_transfer
+msgid ""
+"م\n"
+"                                            والذي يتجدد تلقائيا/لا يتجدد تلقائيا، قد تنازلت عن\n"
+"                                            عقد ايجار العين المذكورة أعلاه، ومبلغ الإيجار المدفوع عنها إلى تاريخ"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_payment_claim_template
+msgid ""
+"م\n"
+"                                            وحيث أنّه قد ترتب عليكم عدة أقساط متأخرة عن استئجاركم الوحدة\n"
+"                                            رقم معرض / مكتب/شقة"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_value_update_template
+msgid ""
+"م\n"
+"                                    عليه نأمل التكرم بالاطلاع والرد على خطابنا خلال مدة أقصاها أسبوع من تاريخه، وإلا سيعتبر ذلك عدم رغبة في التجديد من قبلكم، وعليه يكون العقد منتهيا بتاريخ نهايته،\n"
+"                                    ويجب عليكم إخلاء العقار خلال مدة أقصاها\n"
+"                                    ("
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_value_update_template
+msgid ""
+"م\n"
+"                                    للشقة رقم"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_transfer_template_apratment
+msgid ""
+"م\n"
+"                            بموجب (سند القبض/حوالة) رقم .......... وتاريخ      /      /     14 هـ الموافق..\n"
+"                            /.. /... م\n"
+"                            والبالغ قدره ....................................... ريال، وكذلك تنازلت عن قيمة\n"
+"                            التأمين البالغ قدرها"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_transfer_template_apratment
+msgid ""
+"م\n"
+"                            والذي يتجدد تلقائيا/لا يتجدد تلقائيا،\n"
+"                            قد تنازلت عن عقد ايجار العين المذكورة أعلاه، ومبلغ الإيجار المدفوع عنها إلى\n"
+"                            تاريخ"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_transfer_template_apratment
+msgid "م أنا (المتنازل)/"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_commercial_template
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_personal_template
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_transfer_template_apratment
+msgid "مدير العقار"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_contract_termination_template
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_pickup_template
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_return_template
+msgid "مدير العقارات"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_template_transfer
+msgid "مدير العقارات:"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_commercial_template
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_personal_template
+msgid "مسؤول الإئتمان"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_template_transfer
+msgid ""
+"مسؤولا مسئولية كاملة عن هذه العين والعقد المشار إليه وملتزما بكافة شروطه\n"
+"                                            وبنوده والتزاماته المالية السابقة واللاحقة وقد استلم العين المذكورة أعلاه\n"
+"                                            وقبل بها بحالتها الموضحة بمحضر استلامها من المتنازل علما\n"
+"                                            بأن هذا التنازل لا يسري مفعوله ولا يعتبر نافذا إلا بعد اعتماده بالتوقيع عليه\n"
+"                                            من قبل شركة الراجحي العقاريه وإلا يعتبر لاغيا.\n"
+"                                            وبعد الرضا والعلم تم التوقيع، تحريرا في"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_transfer_template_apratment
+msgid ""
+"مسئولاً مسئوليةً كاملةً عن هذه العين والعقد المشار إليه وملتزماً بكافة شروطه\n"
+"                            وبنوده والتزاماته المالية السابقة واللاحقة\n"
+"                            وقد استلم العين المذكورة أعلاه وقَبل بها بحالتها الموضحة بمحضر استلامها من\n"
+"                            المتنازل علماً بأن هذا التنازل لا يسري مفعوله ولا يعتبر نافذاً إلا بعد اعتماده\n"
+"                            بالتوقيع عليه من قبل شركة الراجحي العقارية وإلا اعتبر لا غيا."
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_contract_termination_template
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_transfer_template_apratment
+msgid "مشرف العقار"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_template_transfer
+msgid "مشرف العقار:"
+msgstr ""
+
+#. module: rent_customize
+#: model:ir.actions.report,name:rent_customize.action_report_payment_claim
+#: model:ir.model.fields.selection,name:rent_customize.selection__rental_letter_template__subject__payment_claim
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_payment_claim_template
+msgid "مطالبة بسداد متأخرات"
+msgstr ""
+
+#. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__door_note
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__elec_note
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__wall_note
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__water_note
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__window_note
+msgid "ملاحظات"
+msgstr ""
+
+#. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__note
+msgid "ملاحظة"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_pickup_template
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_return_template
+msgid "ملاحظة:"
+msgstr ""
+
+#. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__chief_executive
+msgid "موافق"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_pickup_template
+msgid ""
+"موافقة\n"
+"                                            العميل بالتسليم"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_pickup_template
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_return_template
+msgid "موافقة الإدارة على الاستلام:"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_return_template
+msgid "موافقة العميل بالتسليم:"
+msgstr ""
+
+#. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__customer_accept
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__elec_yes
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__mangement_accept
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__remaining_amount_yes
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__rental_payments_yes
+msgid "نعم"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_commercial_template
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_personal_template
+msgid "نوع العقار"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_payment_claim_template
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_pickup_template
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_return_template
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_vacating_raj_template
+msgid "هـ"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_contract_termination_template
+msgid ""
+"هـ\n"
+"                                            ."
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_contract_termination_template
+msgid ""
+"هـ\n"
+"                                            ،\n"
+"                                            وتسليم العقار كما كان بموجب محضر استلام رسمي حيث لن يعتد بأي طريقة لاستلام\n"
+"                                            العقار إلا بموجب هذا المحضر الموقع من الشركة. وفي حال تأخركم بتسليم العقار\n"
+"                                            عن المدة المحددة أعلاه سكون الأجرة اليومية حسب ما نص عليه العقد بقيمة\n"
+"                                            ("
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_contract_termination_template
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_template_transfer
+msgid ""
+"هـ\n"
+"                                            الموافق"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_transfer_template_apratment
+msgid "هـ الموافق"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_transfer_template_apratment
+msgid "هـــــــــ الموافق"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_template_transfer
+msgid "والمدفوعة حسب (الفاتورة الالكترونية / الحوالة) رقم"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_transfer_template_apratment
+msgid "والمدفوعة حسب (الفاتورة الالكترونية/الحوالة) رقم"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_transfer_template_apratment
+msgid "وبعد الرضا والعلم تم التوقيع، تحريراً في"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_template_transfer
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_transfer_template_apratment
+msgid "وتاريخ"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_template_transfer
+msgid "وتاريخ الميلاد"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_transfer_template_apratment
+msgid ""
+"وتاريخ الميلاد       /          /         14هـ وليس لي أو له بعد هذا التنازل\n"
+"                            الحق في مطالبة شركة الراجحي العقارية بأية التزامات مالية أو خلافه،\n"
+"                            وأصبحت خالي المسئولية وأصبح السيد (المتنازل له) /"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_transfer_template_apratment
+msgid ""
+"وتاريخ/ / 14هـ\n"
+"                            الموافق.. /.. /... م إلى السيد /"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_transfer_template_apratment
+msgid ""
+"وتاريخ00/00/0000.\n"
+"                            الموقع أدناه مستأجر العين رقم"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_value_update_template
+msgid "وتقبلوا تحياتنا"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_transfer_template_apratment
+msgid "وجنسيته"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_template_transfer
+msgid ""
+"وجنسيته\n"
+"                                            بموجب\n"
+"                                            (هوية وطنية / إقامة) رقم"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_contract_termination_template
+msgid "وحيث أن عقد الإيجار المشار له أعلاه ينتهي بتاريخ"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_vacating_raj_template
+msgid ""
+"وعليه\n"
+"                                            نود اشعاركم بعدم رغبتنا<br/> في تجديد العقد المشار إليه أعلاه على ان يكون يوم\n"
+"                                            استلام الوحدة الإيجارية<br/> بتاريخ"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_template_transfer
+msgid ""
+"وقع المتنازل والمتنازل إليه أمامي\n"
+"                                        بعد مراجعة هوياتهم."
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_template_transfer
+msgid ""
+"وليس\n"
+"                                            لي أو له بعد هذا التنازل الحق في مطالبة شركة الراجحي العقارية بأية التزامات\n"
+"                                            مالية أو خلافه، وأصبحت خالي المسؤولية وأصبح السيد (المتنازل له)/"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_contract_termination_template
+msgid "ونطلب من سعادتكم إخلاء العين المؤجرة بشكل كامل قبل تاريخ"
+msgstr ""
+
+#. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__elec_found
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__water_found
+msgid "يوجد"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_pickup_template
+msgid ""
+"يوجد\n"
+"                                            مستحقات للمؤجر"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_return_template
+msgid "يوجد مستحقات للمؤجر"
 msgstr ""

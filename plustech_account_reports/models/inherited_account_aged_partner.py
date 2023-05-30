@@ -4,73 +4,26 @@
 from odoo import models, api, fields, _
 from odoo.tools.misc import format_date
 
-
-class AccountMove(models.Model):
-    _inherit = 'account.move'
-
-    branch_name = fields.Char(string='Branch Name', related='branch_id.name', store=True, index=True)
-
-
-class AccountMoveLine(models.Model):
-    _inherit = 'account.move.line'
-
-    branch_name = fields.Char(string='Branch Name', related='branch_id.name', store=True, index=True)
-
-
 class AccountAgedPartner(models.AbstractModel):
     _inherit = 'account.aged.partner'
 
-    filter_branch = True
-
-    branch_id = fields.Many2one('branch.branch')
-    branch_name = fields.Char(group_operator='max')
-
-    @api.model
-    def _get_column_details(self, options):
-        columns = [
-            self._header_column(),
-            self._field_column('report_date'),
-            self._field_column('account_name', name=_("Account"), ellipsis=True),
-            self._field_column('branch_name', name=_("Branch")),
-            self._field_column('expected_pay_date'),
-            self._field_column('period0', name=_("As of: %s", format_date(self.env, options['date']['date_to']))),
-            self._field_column('period1', sortable=True),
-            self._field_column('period2', sortable=True),
-            self._field_column('period3', sortable=True),
-            self._field_column('period4', sortable=True),
-            self._field_column('period5', sortable=True),
-            self._custom_column(  # Avoid doing twice the sub-select in the view
-                name=_('Total'),
-                classes=['number'],
-                formatter=self.format_value,
-                getter=(
-                    lambda v: v['period0'] + v['period1'] + v['period2'] + v['period3'] + v['period4'] + v['period5']),
-                sortable=True,
-            ),
-        ]
-
-        if self.user_has_groups('base.group_multi_currency'):
-            columns[2:2] = [
-                self._field_column('amount_currency'),
-                self._field_column('currency_id'),
-            ]
-        return columns
+    filter_analytic_group = True
 
     @api.model
     def _get_sql(self):
         options = self.env.context['report_options']
-        branch_list = []
+        analytic_group_list = []
 
-        if options.get('branch_ids'):
-            branch_list = options.get('branch_ids')
+        if options.get('analytic_group'):
+            analytic_group_list = options.get('analytic_group_ids')
         account_query = ''
-        if branch_list:
-            if len(branch_list) == 1:
-                branch = branch_list[0]
-                account_query = """ AND account_move_line.branch_id = %s """ % (str(branch))
-            elif len(branch_list) > 0:
-                branches = tuple(list(set(branch_list)))
-                account_query = """ AND account_move_line.branch_id in %s """ % (str(tuple(branches)))
+        if analytic_group_list:
+            if len(analytic_group_list) == 1:
+                analytic_group = analytic_group_list[0]
+                account_query = """ AND account_move_line.analytic_group = %s """ % (str(analytic_group))
+            elif len(analytic_group_list) > 0:
+                analytic_groups = tuple(list(set(analytic_group_list)))
+                account_query = """ AND account_move_line.analytic_group in %s """ % (str(tuple(analytic_groups)))
             query = ("""
                 SELECT
                     {move_line_fields},
@@ -85,8 +38,6 @@ class AccountAgedPartner(models.AbstractModel):
                     move.move_type AS move_type,
                     move.name AS move_name,
                     move.ref AS move_ref,
-                    move.branch_name AS branch_name,
-                    move.branch_id AS branch_id,
                     account.code || ' ' || account.name AS account_name,
                     account.code AS account_code,""" + ','.join([("""
                     CASE WHEN period_table.period_index = {i}
@@ -155,8 +106,6 @@ class AccountAgedPartner(models.AbstractModel):
                         move.move_type AS move_type,
                         move.name AS move_name,
                         move.ref AS move_ref,
-                        move.branch_name AS branch_name,
-                        move.branch_id AS branch_id,
                         account.code || ' ' || account.name AS account_name,
                         account.code AS account_code,""" + ','.join([("""
                         CASE WHEN period_table.period_index = {i}
@@ -210,16 +159,3 @@ class AccountAgedPartner(models.AbstractModel):
             }
             return self.env.cr.mogrify(query, params).decode(self.env.cr.connection.encoding)
 
-
-class ReportAccountAgedReceivable(models.Model):
-    _inherit = "account.aged.receivable"
-
-    branch_id = fields.Many2one('branch.branch')
-    branch_name = fields.Char(group_operator='max')
-
-
-class ReportAccountAgedPayable(models.Model):
-    _inherit = "account.aged.payable"
-
-    branch_id = fields.Many2one('branch.branch')
-    branch_name = fields.Char(group_operator='max')

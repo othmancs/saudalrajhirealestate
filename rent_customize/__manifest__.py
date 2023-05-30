@@ -33,6 +33,7 @@
         'report/value_update_template.xml',
         'report/contract_termination.xml',
         'report/payment_claim_template.xml',
+        'report/contract_reminder_report_views.xml',
     ],
     'assets': {
         'web.report_assets_common': [
