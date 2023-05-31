@@ -173,7 +173,7 @@ class RentalLetterTemplate(models.Model):
     rental_value_new = fields.Monetary(string="Rental Value new")
 
     def print_letter(self):
-        return self.env.ref('rent_customize.%s' % ReportActions[self.subject]).with_context(company_registry=self.env.company.registry).report_action(self)
+        return self.env.ref('rent_customize.%s' % ReportActions[self.subject]).with_context(company_registry=self.env.company.company_registry).report_action(self)
 
     @api.model
     def create(self, vals):
