@@ -8,7 +8,7 @@
     'website': "www.plustech-it.com",
     'description': """Custody Management""",
     'summary': """Manage employees custody""",
-    'depends': ['base', 'plustech_hr_employee', 'account_asset'],
+    'depends': ['base', 'account_asset'],
     'data': [
         'security/custody_security.xml',
         'security/ir.model.access.csv',

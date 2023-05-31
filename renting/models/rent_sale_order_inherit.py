@@ -83,13 +83,13 @@ class RentSaleOrder(models.Model):
     isnotelec_remain = fields.Boolean('لا')
 
     def _get_remain(self):
-        amount = 0
-        invoices_paid = self.env['account.move'].sudo().search(
-            [('invoice_origin', '=', self.name), ('payment_state', 'in', ['paid', 'in_payment'])])
-        for line in invoices_paid:
-            print(line)
-            amount += line.amount_total
-        self.amount_remain = self.amount_total - amount
+        for record in self:
+            amount = 0
+            invoices_paid = self.env['account.move'].sudo().search(
+                [('invoice_origin', '=', record.name), ('payment_state', 'in', ['paid', 'in_payment'])])
+            for line in invoices_paid:
+                amount += line.amount_total
+            record.amount_remain = record.amount_total - amount
 
     @api.depends('order_line.price_total')
     def _amount_all(self):

@@ -11,7 +11,7 @@ class EmployeeCustody(models.Model):
     name = fields.Char(string='Number#', default='New')
     employee_id = fields.Many2one(
         comodel_name='hr.employee', string='Employee', default=lambda self: self.env.user.employee_id)
-    employee_number = fields.Char(related='employee_id.employee_number', string='Employee Number')
+    employee_number = fields.Char(string='Employee Number')
     department_id = fields.Many2one(
         comodel_name='hr.department', string='Department', related="employee_id.department_id")
     job_id = fields.Many2one(comodel_name='hr.job', string='Job Title',

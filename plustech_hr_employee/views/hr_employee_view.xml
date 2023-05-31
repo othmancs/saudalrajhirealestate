@@ -89,21 +89,21 @@
                     <field name="religion_id"/>
                 </field>
 
-                <page name="hr_settings" position="after">
-                    <page name="family_info" string="Family Information" groups="hr.group_hr_user">
-                        <group string="Family">
-                            <field name="fam_ids" nolabel="1">
-                                <tree editable="bottom">
-                                    <field name="member_name"/>
-                                    <field name="relation"/>
-                                    <field name="identification_no"/>
-                                    <field name="birth_date" required="1"/>
-                                    <field name="age" invisible="0"/>
-                                </tree>
-                            </field>
-                        </group>
-                    </page>
-                </page>
+<!--                <page name="hr_settings" position="after">-->
+<!--                    <page name="family_info" string="Family Information" groups="hr.group_hr_user">-->
+<!--                        <group string="Family">-->
+<!--                            <field name="fam_ids" nolabel="1">-->
+<!--                                <tree editable="bottom">-->
+<!--                                    <field name="member_name"/>-->
+<!--                                    <field name="relation"/>-->
+<!--                                    <field name="identification_no"/>-->
+<!--                                    <field name="birth_date" required="1"/>-->
+<!--                                    <field name="age" invisible="0"/>-->
+<!--                                </tree>-->
+<!--                            </field>-->
+<!--                        </group>-->
+<!--                    </page>-->
+<!--                </page>-->
 
             </field>
         </record>

@@ -39,23 +39,23 @@ class HrEmployeeContractName(models.Model):
     employee_obj = fields.Many2one('hr.employee', invisible=1)
 
 
-class HrEmployeeFamilyInfo(models.Model):
-    """Table for keep employee family information"""
-    _name = 'hr.employee.family'
-    _description = 'HR Employee Family'
-    _rec_name = 'member_name'
-
-    member_name = fields.Char(string='Name')
-    employee_id = fields.Many2one(string="Employee", help='Select corresponding Employee', comodel_name='hr.employee',
-                                  invisible=1)
-    relation = fields.Selection([('father', 'Father'),
-                                 ('mother', 'Mother'),
-                                 ('daughter', 'Daughter'),
-                                 ('son', 'Son'),
-                                 ('spouse', 'Spouse')], string='Relationship', help='Relation with employee')
-    birth_date = fields.Date(string='Date Of Birth')
-    age = fields.Integer(compute="compute_age")
-    identification_no = fields.Char(string='ID Number')
+# class HrEmployeeFamilyInfo(models.Model):
+#     """Table for keep employee family information"""
+#     _name = 'hr.employee.family'
+#     _description = 'HR Employee Family'
+#     _rec_name = 'member_name'
+#
+#     member_name = fields.Char(string='Name')
+#     employee_id = fields.Many2one(string="Employee", help='Select corresponding Employee', comodel_name='hr.employee',
+#                                   invisible=1)
+#     relation = fields.Selection([('father', 'Father'),
+#                                  ('mother', 'Mother'),
+#                                  ('daughter', 'Daughter'),
+#                                  ('son', 'Son'),
+#                                  ('spouse', 'Spouse')], string='Relationship', help='Relation with employee')
+#     birth_date = fields.Date(string='Date Of Birth')
+#     age = fields.Integer(compute="compute_age")
+#     identification_no = fields.Char(string='ID Number')
 
     @api.depends('birth_date')
     def compute_age(self):
@@ -83,7 +83,7 @@ class HrEmployee(models.Model):
     passport_attachment_id = fields.Many2many('ir.attachment', 'passport_attachment_rel', 'passport_ref', 'attach_ref1',
                                               string="Attachment",
                                               help='You can attach the copy of Passport')
-    fam_ids = fields.One2many('hr.employee.family', 'employee_id', string='Family', help='Family Information')
+    # fam_ids = fields.One2many('hr.employee.family', 'employee_id', string='Family', help='Family Information')
     employee_id = fields.Char(store=True, readonly=True)
     employee_qr_code = fields.Binary("QR Code")
     employee_number = fields.Char(string='Employee Number')
