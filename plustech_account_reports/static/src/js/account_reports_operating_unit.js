@@ -2,15 +2,8 @@ odoo.define('plustech_account_reports.account_reports_operating_unit', function 
     'use strict';
 
     var core = require('web.core');
-    var Context = require('web.Context');
-    var AbstractAction = require('web.AbstractAction');
-    var Dialog = require('web.Dialog');
-    var datepicker = require('web.datepicker');
-    var session = require('web.session');
-    var field_utils = require('web.field_utils');
     var RelationalFields = require('web.relational_fields');
     var StandaloneFieldManagerMixin = require('web.StandaloneFieldManagerMixin');
-    var { WarningDialog } = require("@web/legacy/js/_deprecated/crash_manager_warning_dialog");
     var Widget = require('web.Widget');
     var accountReportsWidget = require('account_reports.account_report');
     var QWeb = core.qweb;
@@ -71,7 +64,7 @@ odoo.define('plustech_account_reports.account_reports_operating_unit', function 
             _.each(this.fields, function (filter, fieldName) {
                 data[fieldName] = self.widgets[fieldName].value.res_ids;
             });
-            this.trigger_up('value_changed', data);
+            this.trigger_up('value_changed_operating_unit', data);
             return result;
         },
         /**
@@ -121,18 +114,14 @@ odoo.define('plustech_account_reports.account_reports_operating_unit', function 
 
         custom_events: _.extend({}, accountReportsWidget.prototype.custom_events, {
 
-            'value_changed': function (ev) {
+            'value_changed_operating_unit': function (ev) {
                 var self = this;
 
                 console.log(ev.data)
                 self.report_options.operating_unit_ids = ev.data.operating_unit_id;
-                self.report_options.partner_ids = ev.data.partner_ids;
-                self.report_options.partner_categories = ev.data.partner_categories;
-                self.report_options.analytic_accounts = ev.data.analytic_accounts;
-                self.report_options.analytic_tags = ev.data.analytic_tags;
+                self.report_options.building_ids = ev.data.building_id;
+                self.report_options.property_ids = ev.data.property_id;
                 return self.reload().then(function () {
-                    self.$searchview_buttons.find('.account_partner_filter').click();
-                    self.$searchview_buttons.find('.account_analytic_filter').click();
                     self.$searchview_buttons.find('.account_operating_unit_id_filter').click();
                 });
             },
@@ -143,23 +132,40 @@ odoo.define('plustech_account_reports.account_reports_operating_unit', function 
 
             self._super();
 
-            if (self.report_options.operating_unit_id) {
-                if (!self.M2MBranchFilters) {
+
+            // Operating Units filter
+
+            if (this.report_options.operating_unit_id) {
+                if (!this.M2MBranchFilters) {
                     var fields = {};
-                    if (self.report_options.operating_unit_id) {
+                    if (this.report_options.operating_unit_id) {
                         fields['operating_unit_id'] = {
                             label: _t('Operating Unit'),
                             modelName: 'operating.unit',
-                            value: self.report_options.operating_unit_ids.map(Number),
+                            value: this.report_options.operating_unit_ids.map(Number),
+                        };
+                    }
+                    if (this.report_options.building_id) {
+                        fields['building_id'] = {
+                            label: _t('Building'),
+                            modelName: 'rent.property.build',
+                            value: this.report_options.building_ids.map(Number),
+                        };
+                    }
+                    if (this.report_options.property_id) {
+                        fields['property_id'] = {
+                            label: _t('Property'),
+                            modelName: 'rent.property',
+                            value: this.report_options.property_ids.map(Number),
                         };
                     }
 
                     if (!_.isEmpty(fields)) {
-                        self.M2MBranchFilters = new M2MBranchFilters(self, fields);
-                        self.M2MBranchFilters.appendTo(self.$searchview_buttons.find('.js_account_operating_unit_id_m2m'));
+                        this.M2MBranchFilters = new M2MBranchFilters(this, fields);
+                        this.M2MBranchFilters.appendTo(this.$searchview_buttons.find('.js_account_operating_unit_id_m2m'));
                     }
                 } else {
-                    self.$searchview_buttons.find('.js_account_operating_unit_id_m2m').append(self.M2MBranchFilters.$el);
+                    this.$searchview_buttons.find('.js_account_operating_unit_id_m2m').append(this.M2MBranchFilters.$el);
                 }
             }
         },

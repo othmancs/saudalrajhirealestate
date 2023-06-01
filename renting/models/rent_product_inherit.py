@@ -113,9 +113,9 @@ class RentProduct(models.Model):
     operating_unit_id = fields.Many2one('operating.unit', string='الفرع ')
     def get_sale_data(self):
         for rec in self:
-            order_line_id = rec.env['sale.order.line'].sudo().search([
-                ('product_id', '=', rec.id)
-            ],limit=1, order='id desc')
+            order_line_id = rec.env['sale.order.line'].sudo().search([('product_id', '=', rec.id)],limit=1, order='id desc')
+
+
             rec.partner_id = order_line_id.order_id.partner_id.id if order_line_id else False
             rec.last_sale_id = order_line_id.order_id.id if order_line_id else False
             rec.contract_admin_fees = order_line_id.contract_admin_fees if order_line_id else False
@@ -124,7 +124,9 @@ class RentProduct(models.Model):
             rec.fromdate = order_line_id.order_id.fromdate if order_line_id else False
             rec.operating_unit_id = order_line_id.order_id.operating_unit_id.id if order_line_id else False
             rec.todate = order_line_id.order_id.todate if order_line_id else False
-            rec.amount_paid = (sum(ll.amount_total for ll in order_line_id.order_id.invoice_ids.filtered(lambda line: line.payment_state == 'paid'))) if order_line_id else 0
+
+            rec.amount_paid = (sum(ll.price_subtotal for ll in order_line_id.order_id.invoice_ids.invoice_line_ids.filtered(lambda line: line.move_id.payment_state == 'paid' and line.product_id == rec.product_variant_id))) if order_line_id else 0
+
             rec.amount_due = (sum(order_line_id.order_id.order_line[0].price_unit / ll.sale_order_id.invoice_number for ll in
                                  order_line_id.order_id.order_contract_invoice.filtered(lambda line: line.status == 'uninvoiced')
                                  )if order_line_id.order_id.order_line else 0.0) if order_line_id else 0.0

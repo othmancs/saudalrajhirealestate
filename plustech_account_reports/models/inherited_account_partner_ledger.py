@@ -10,12 +10,12 @@ class AccountPartnerLedger(models.AbstractModel):
 
     filter_analytic_group = True
 
-    @api.model
-    def _get_options_domain(self, options):
-        domain = super(AccountPartnerLedger, self)._get_options_domain(options)
+    # @api.model
+    # def _get_options_domain(self, options):
+    #     domain = super(AccountPartnerLedger, self)._get_options_domain(options)
 
-        if options.get('analytic_group') and options.get('analytic_group_ids'):
-            domain += [('analytic_group', 'in', options.get('analytic_group_ids'))]
+    #     if options.get('analytic_group') and options.get('analytic_group_ids'):
+    #         domain += [('analytic_group', 'in', options.get('analytic_group_ids'))]
 
-        return domain
+    #     return domain
    

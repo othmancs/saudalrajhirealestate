@@ -1,19 +1,26 @@
 # -*- coding: utf-8 -*-
 # Part of BrowseInfo. See LICENSE file for full copyright and licensing details.
 
-from odoo import models
+from odoo import models, fields, api, _
 
 
 class ReportAccountFinancialReport(models.Model):
     _inherit = "account.financial.html.report"
 
-    filter_branch = True
+    filter_analytic_group = True
+    filter_operation = True
+    filter_building = True
+    filter_property = True
+
 
 
 class AccountFinancialReportLine(models.Model):
     _inherit = "account.financial.html.report.line"
 
-    filter_branch = True
+    filter_analytic_group = True
+    filter_operation = True
+    filter_building = True
+    filter_property = True
 
     def _compute_sum(self, options_list, calling_financial_report):
         ''' Compute the values to be used inside the formula for the current line.
@@ -68,15 +75,48 @@ class AccountFinancialReportLine(models.Model):
             line_domain = self._get_domain(new_options, parent_financial_report)
 
             tables, where_clause, where_params = AccountFinancialReportHtml._query_get(new_options, domain=line_domain)
+            if options.get('analytic_group_ids'):
 
-            if options.get('branch_ids'):
-                where_clause += 'and ("account_move_line"."branch_id" in ('
-                for a in range(len(options.get('branch_ids'))):
+                where_clause += 'and ("account_move_line"."analytic_group" in ('
+                for a in range(len(options.get('analytic_group_ids'))):
                     where_clause += '%s,'
                 where_clause = where_clause[:-1]
                 where_clause += '))'
 
-                for a in options.get('branch_ids'):
+                for a in options.get('analytic_group_ids'):
+                    where_params.append(int(a))
+
+            if options.get('operating_unit_ids'):
+
+                where_clause += 'and ("account_move_line"."operating_unit_id" in ('
+                for a in range(len(options.get('operating_unit_ids'))):
+                    where_clause += '%s,'
+                where_clause = where_clause[:-1]
+                where_clause += '))'
+
+                for a in options.get('operating_unit_ids'):
+                    where_params.append(int(a))
+
+            if options.get('building_ids'):
+
+                where_clause += 'and ("account_move_line"."property_address_build" in ('
+                for a in range(len(options.get('building_ids'))):
+                    where_clause += '%s,'
+                where_clause = where_clause[:-1]
+                where_clause += '))'
+
+                for a in options.get('building_ids'):
+                    where_params.append(int(a))
+
+            if options.get('property_ids'):
+
+                where_clause += 'and ("account_move_line"."property_id" in ('
+                for a in range(len(options.get('property_ids'))):
+                    where_clause += '%s,'
+                where_clause = where_clause[:-1]
+                where_clause += '))'
+
+                for a in options.get('property_ids'):
                     where_params.append(int(a))
 
             queries.append('''
@@ -124,6 +164,7 @@ class AccountFinancialReportLine(models.Model):
                 results['sum_if_neg_groupby'].setdefault(key, 0.0)
                 results['sum_if_neg_groupby'][key] += res['balance']
 
+
         return results
 
     def _compute_amls_results(self, options_list, calling_financial_report, sign=1, operator=None):
@@ -166,15 +207,48 @@ class AccountFinancialReportLine(models.Model):
             line_domain = self._get_domain(new_options, parent_financial_report)
 
             tables, where_clause, where_params = AccountFinancialReportHtml._query_get(new_options, domain=line_domain)
-            if self._context.get('branch_ids'):
-                where_clause += 'and ("account_move_line"."branch_id" in ('
-                branch_ids = self._context.get('branch_ids')
-                for a in branch_ids:
+            if self._context.get('analytic_group_ids'):
+                where_clause += 'and ("account_move_line"."analytic_group" in ('
+                analytic_group_ids = self._context.get('analytic_group_ids')
+                for a in analytic_group_ids:
                     where_clause += '%s,'
                 where_clause = where_clause[:-1]
                 where_clause += '))'
 
-                for a in branch_ids:
+                for a in analytic_group_ids:
+                    where_params.append(int(a))
+            
+            if self._context.get('operating_unit_ids'):
+                where_clause += 'and ("account_move_line"."operating_unit_id" in ('
+                operating_unit_ids = self._context.get('operating_unit_ids')
+                for a in operating_unit_ids:
+                    where_clause += '%s,'
+                where_clause = where_clause[:-1]
+                where_clause += '))'
+
+                for a in operating_unit_ids:
+                    where_params.append(int(a))
+
+            if self._context.get('building_ids'):
+                where_clause += 'and ("account_move_line"."property_address_build" in ('
+                building_ids = self._context.get('building_ids')
+                for a in building_ids:
+                    where_clause += '%s,'
+                where_clause = where_clause[:-1]
+                where_clause += '))'
+
+                for a in building_ids:
+                    where_params.append(int(a))
+
+            if self._context.get('property_ids'):
+                where_clause += 'and ("account_move_line"."property_id" in ('
+                property_ids = self._context.get('property_ids')
+                for a in property_ids:
+                    where_clause += '%s,'
+                where_clause = where_clause[:-1]
+                where_clause += '))'
+
+                for a in property_ids:
                     where_params.append(int(a))
             queries.append('''
                 SELECT

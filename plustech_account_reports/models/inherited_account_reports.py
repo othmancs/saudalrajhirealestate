@@ -9,6 +9,9 @@ class AccountReport(models.AbstractModel):
 
     filter_analytic_group = None
     filter_operation = None
+    filter_building = None
+    filter_property = None
+
 
     @api.model
     def _init_analytic_group(self, options, previous_options=None):
@@ -31,6 +34,22 @@ class AccountReport(models.AbstractModel):
         selected_operating_unit = selected_operating_unit_ids and self.env['operating.unit'].browse(selected_operating_unit_ids) or self.env['operating.unit']
         options['selected_operating_unit_ids'] = selected_operating_unit.mapped('name')
 
+        if not self.filter_building:
+            return options
+        options['building_id'] = True
+        options['building_ids'] = previous_options and previous_options.get('building_ids') or []
+        selected_building_ids = [int(partner) for partner in options['building_ids']]
+        selected_building = selected_building_ids and self.env['rent.property.build'].browse(selected_building_ids) or self.env['rent.property.build']
+        options['selected_building_ids'] = selected_building.mapped('name')
+
+        if not self.filter_property:
+            return options
+        options['property_id'] = True
+        options['property_ids'] = previous_options and previous_options.get('property_ids') or []
+        selected_property_ids = [int(partner) for partner in options['property_ids']]
+        selected_property = selected_property_ids and self.env['rent.property'].browse(selected_property_ids) or self.env['rent.property']
+        options['selected_property_ids'] = selected_property.mapped('property_name')
+
         return options
     
     @api.model
@@ -42,22 +61,6 @@ class AccountReport(models.AbstractModel):
 
         return options
     
-    # @api.model
-    # def _get_options_analytic_domain(self, options):
-    #     domain = []
-    #     if options.get('analytic_accounts'):
-    #         analytic_account_ids = [int(acc) for acc in options['analytic_accounts']]
-    #         domain.append(('analytic_account_id', 'in', analytic_account_ids))
-    #     if options.get('analytic_tags'):
-    #         analytic_tag_ids = [int(tag) for tag in options['analytic_tags']]
-    #         domain.append(('analytic_tag_ids', 'in', analytic_tag_ids))
-    #     if options.get('analytic_group'):
-    #         analytic_group_ids = [int(gro) for gro in options['analytic_group_ids']]
-    #         domain.append(('analytic_group', 'in', analytic_group_ids))
-
-    #         # domain += [('analytic_group', 'in', options.get('analytic_group_ids'))]
-    #     print("... .. .. .     ",domain)
-    #     return domain
 
     def _set_context(self, options):
         ctx = super(AccountReport, self)._set_context(options)
@@ -68,6 +71,11 @@ class AccountReport(models.AbstractModel):
         if options.get('operating_unit_ids'):
             operating_unit_ids = self.env['operating.unit'].browse([int(ou) for ou in options.get('operating_unit_ids', [])])
             ctx['operating_unit_ids'] = operating_unit_ids.ids
+        if options.get('building_ids'):
+            building_ids = self.env['rent.property.build'].browse([int(ou) for ou in options.get('building_ids', [])])
+            ctx['building_ids'] = building_ids.ids
+        if options.get('property_ids'):
+            ctx['property_ids'] = self.env['rent.property'].browse([int(ou) for ou in options.get('property_ids', [])]).ids
 
         return ctx
 
@@ -76,9 +84,12 @@ class AccountReport(models.AbstractModel):
         return a dictionary of informations that will be needed by the js widget, manager_id, footnotes, html of report and searchview, ...
         '''
         info = super(AccountReport, self).get_report_informations(options)
-        if options and options.get('analytic_group'):
+        if  options and options.get('analytic_group') is not None:
             options['selected_analytic_group_ids'] = [self.env['account.analytic.group'].browse(int(ag)).name for ag in options.get('analytic_group_ids', [])]
-
-        if options and options.get('operating_unit_id'):
+        if  options and options.get('operating_unit_ids') is not None:
             options['selected_operating_unit_ids'] = [self.env['operating.unit'].browse(int(ou)).name for ou in options.get('operating_unit_ids', [])]
+        if  options and options.get('building_ids') is not None:
+            options['selected_building_ids'] = [self.env['rent.property.build'].browse(int(ou)).name for ou in options.get('building_ids', [])]
+        if  options and options.get('property_ids') is not None:
+            options['selected_property_ids'] = [self.env['rent.property'].browse(int(ou)).property_name for ou in options.get('property_ids', [])]
         return info

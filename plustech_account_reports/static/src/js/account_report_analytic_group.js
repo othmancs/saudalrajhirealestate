@@ -1,4 +1,4 @@
-odoo.define('plustech_account_reports.account_report_generic_1_dd', function (require) {
+odoo.define('plustech_account_reports.account_report_analytic_group', function (require) {
 'use strict';
 
 var core = require('web.core');
@@ -71,7 +71,7 @@ var _t = core._t;
             _.each(this.fields, function (filter, fieldName) {
                 data[fieldName] = self.widgets[fieldName].value.res_ids;
             });
-            this.trigger_up('value_changed', data);
+            this.trigger_up('value_changed_analytic_group', data);
             return result;
         },
         /**
@@ -121,18 +121,12 @@ var _t = core._t;
 
         custom_events: _.extend({}, accountReportsWidget.prototype.custom_events, {
 
-            'value_changed': function(ev) {
+            'value_changed_analytic_group': function(ev) {
                 var self = this;
 
                 self.report_options.analytic_group_ids = ev.data.analytic_group;
-                self.report_options.partner_ids = ev.data.partner_ids;
-                self.report_options.partner_categories = ev.data.partner_categories;
-                self.report_options.analytic_accounts = ev.data.analytic_accounts;
-                self.report_options.analytic_tags = ev.data.analytic_tags;
                 return self.reload().then(function () {
                     self.$searchview_buttons.find('.account_analytic_group_filter').click();
-                    self.$searchview_buttons.find('.account_partner_filter').click();
-                    self.$searchview_buttons.find('.account_analytic_filter').click(); 
                 });
              },
         }),
