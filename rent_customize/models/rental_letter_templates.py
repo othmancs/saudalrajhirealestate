@@ -171,6 +171,18 @@ class RentalLetterTemplate(models.Model):
     assignee_identity_date = fields.Date(string='Assignee ID Issue Date')
     rental_value_old = fields.Monetary(string="Rental Value")
     rental_value_new = fields.Monetary(string="Rental Value new")
+    evacuated = fields.Boolean(string='Evacuated')
+
+    def action_evacuation(self):
+        for record in self:
+            invoice_ids = record.sudo().assigner_id.invoice_ids
+            asset_ids = invoice_ids.mapped('asset_ids')
+            for asset in asset_ids.filtered(lambda line: line.asset_type == 'sale'):
+                asset.depreciation_move_ids.filtered(lambda mov: mov.state == 'draft').button_cancel()
+                asset.write({'state': 'close'})
+            invoice_ids.filtered(lambda inv: inv.state == 'draft').button_cancel()
+            record.assigner_id.state = 'termination'
+            record.evacuated = True
 
     def print_letter(self):
         action = self.env.ref('rent_customize.%s' % ReportActions[self.subject])

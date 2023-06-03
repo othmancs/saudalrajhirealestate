@@ -17,6 +17,10 @@
             <field name="arch" type="xml">
                 <form string="">
                     <header>
+                        <button name="action_evacuation" string="Evacuation" type="object"
+                                attrs="{'invisible': ['|',('subject', '!=', 'eviction'),('evacuated', '=', True)]}"
+                                class="oe_highlight"
+                        />
                         <button name="print_letter" string="Print Letter" type="object"
                                 attrs="{'invisible': [('subject', '=', False)]}"
                                 class="oe_highlight"
@@ -26,6 +30,7 @@
                         <group>
                             <group>
                                 <field name="ref" invisible="1"/>
+                                <field name="evacuated" invisible="1"/>
                                 <field name="subject"/>
                                 <field name="assigner_id" context="{'letter':True}" string="Assigner"
                                        attrs="{'required': [('subject', 'in', ('transfer','eviction'))],

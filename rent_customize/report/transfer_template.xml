@@ -12,14 +12,14 @@
     <template id="report_template_transfer">
         <t t-call="web.html_container">
              <t t-call="rent_customize.reports_template_layout">
-                <t t-set="data_report_margin_top" t-value="12" />
-                <t t-set="data_report_header_spacing" t-value="0" />
+                <t t-set="data_report_margin_top" t-value="40" />
+                <t t-set="data_report_header_spacing" t-value="35" />
                 <t t-set="data_report_dpi" t-value="110" />
                 <t t-foreach="docs" t-as="o">
-                    <div class="page">
+                    <div class="page" style="font-family:MonixBold">
                         <div class="oe_structure"/>
-                        <table align="center" class="table table-bordered" cellpadding="1" cellspacing="1"
-                               style="width:100%;float: right; font-size:18px;" dir="rtl">
+                        <table align="center" class="table" cellpadding="1" cellspacing="1"
+                               style="width:100%;float: right; font-size:18px;border:0px;" dir="rtl">
                             <tbody>
                                 <tr style="height:18px;">
                                     <td colspan="3" style="height:18px;" align="center">
@@ -27,7 +27,7 @@
                                     </td>
                                 </tr>
                                 <tr style="height:18px;">
-                                    <td colspan="3" style="height:18px;" align="right">
+                                    <td colspan="3" style="height:18px;border:0px;" align="right">
                                         <p style="line-height: 2;font-family:MonixBold ;">انه في يوم
                                             <span t-esc="o._get_weekday_name(o.transfer_date)"/>
                                             وتاريخ
@@ -37,9 +37,9 @@
                                             أنا (المتنازل)
                                             <span t-field="o.assigner_id.partner_id"/>
                                             (هوية وطنية/إقامة نظامية) رقم
-                                            <span t-field="o.national_id_assigner"/>
+                                            <span t-field="o.assigner_identity"/>
                                             وتاريخ
-                                            <span t-field="o.national_id_assigner_date"/>
+                                            <span t-field="o.assigner_identity_date"/>
                                             الموقع أدناه
                                             مستأجر العين رقم
                                             &#160;&#160;
@@ -104,7 +104,7 @@
                                     </td>
                                 </tr>
                                 <tr style="height:18px;">
-                                    <td colspan="2" style="height:18px;" align="right">
+                                    <td colspan="2" style="height:18px;border:0px;" align="right">
                                         <p>حرر هذا التنازل من ثلاثة نسخ استلم كل طرف نسخة للعمل بموجبها. والله الموفق
                                         </p>
                                     </td>

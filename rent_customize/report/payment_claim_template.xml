@@ -10,19 +10,11 @@
     </record>
     <template id="report_payment_claim_template">
         <t t-call="web.html_container">
-            <t t-foreach="docs" t-as="o">
-
-                <t t-set="o" t-value="o.with_context({'lang':'en_US'})"/>
-                <t t-if="o and 'company_id' in o">
-                    <t t-set="company" t-value="o.company_id"></t>
-                </t>
-                <t t-if="not o or not 'company_id' in o">
-                    <t t-set="company" t-value="res_company"></t>
-                </t>
-                <t t-set="data_report_margin_top" t-value="35"/>
-                <t t-set="data_report_header_spacing" t-value="35"/>
-                <t t-set="data_report_dpi" t-value="110"/>
-                <t t-call="rent_customize.reports_template_layout">
+            <t t-set="data_report_margin_top" t-value="40"/>
+            <t t-set="data_report_header_spacing" t-value="35"/>
+            <t t-set="data_report_dpi" t-value="110"/>
+            <t t-call="rent_customize.reports_template_layout">
+                <t t-foreach="docs" t-as="o">
 
                     <div class="page" style="line-height: 2;font-family:MonixBold ;">
                         <div class="oe_structure"/>

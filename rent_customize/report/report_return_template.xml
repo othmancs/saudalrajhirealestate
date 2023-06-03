@@ -20,7 +20,7 @@
                 <t t-if="not o or not 'company_id' in o">
                     <t t-set="company" t-value="res_company"></t>
                 </t>
-                <t t-set="data_report_margin_top" t-value="35"/>
+                <t t-set="data_report_margin_top" t-value="50"/>
                 <t t-set="data_report_header_spacing" t-value="40"/>
                 <t t-set="data_report_dpi" t-value="110"/>
                 <t t-call="rent_customize.reports_template_layout">
