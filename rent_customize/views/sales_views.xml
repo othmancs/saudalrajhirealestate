@@ -13,6 +13,13 @@
                 <!--          <div class="badge-pill badge-danger float-right" attrs="{'invisible': ['|', ('state', 'not in', ['sale', 'done']),'|', ('rental_status', '!=', 'return'), ('has_late_lines', '=', False)]}">Late Return</div>-->
                 <!--          <div class="badge-pill badge-success float-right" attrs="{'invisible': ['|', ('state', 'not in', ['sale', 'done']), ('rental_status', '!=', 'returned')]}">Returned</div>-->
                 <!--        -->
+                 <xpath expr="//div[@name='button_box']" position="inside">
+                     <button type="object" name="action_open_letters" class="oe_stat_button"
+                                icon="fa-envelope">
+                            <field name="letter_count" widget="statinfo" string="Letters"
+                                   attrs="{'invisible': [('letter_count', '=', 0)]}"/>
+                        </button>
+                 </xpath>
                <xpath expr="//button[@name='action_quotation_send']" position="before">
                     <button name="action_submit" states="draft" string="Submit" type="object" class="oe_highlight"
                     groups="rent_customize.submit_rental_order"/>
