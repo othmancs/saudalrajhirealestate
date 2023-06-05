@@ -83,7 +83,7 @@ class SaleOrder(models.Model):
             rec.letter_count = len(rec.letter_ids.ids)
 
     def action_open_letters(self):
-        action = self.env.ref("purchase_requisition.action_purchase_requisition").sudo().read()[0]
+        action = self.env.ref("rent_customize.rent_letter_template").sudo().read()[0]
         action["domain"] = [("id", "in", self.letter_ids.ids)]
         action["context"] = {'default_assigner_id': self.id}
         return action
