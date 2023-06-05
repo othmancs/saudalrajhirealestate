@@ -21,6 +21,11 @@ class RentalOrder(models.TransientModel):
                 for line in rec.order_id.order_line:
                     line.product_id.unit_rented = False
                 rec.order_id.rental_status = 'returned'
+                for line in rec.rental_wizard_line_ids:
+                    letter_id = self.env['rental.letter.template'].search([('subject', '=', 'eviction'),
+                                                                           ('unit_id','=' ,line.order_line_id.id)])
+                    if letter_id:
+                        letter_id.write({'eviction_state': 'done'})
             if rec.status == 'pickup':
                 rec.order_id.state = 'occupied'
                 for line in rec.order_id.order_line:

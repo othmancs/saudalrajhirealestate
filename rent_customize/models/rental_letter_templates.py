@@ -1,6 +1,7 @@
 from odoo import api, models, fields, _
-from odoo.exceptions import UserError, ValidationError
 from hijri_converter import Hijri, Gregorian
+import ast
+
 
 ReportActions = {
     'transfer': 'action_report_transfer',
@@ -172,6 +173,17 @@ class RentalLetterTemplate(models.Model):
     rental_value_old = fields.Monetary(string="Rental Value")
     rental_value_new = fields.Monetary(string="Rental Value new")
     evacuated = fields.Boolean(string='Evacuated')
+
+    def action_open_rental_contract(self):
+        action = self.env.ref("sale_renting.rental_order_action").sudo().read()[0]
+        action["domain"] = [("id", "in", self.assigner_id.id)]
+        view_id = self.env.ref('sale_renting.rental_order_primary_form_view').id
+        action['views'] = [(view_id, 'form')]
+        action['res_id'] = self.assigner_id.id
+        ctx = ast.literal_eval(action['context'])
+        ctx.update({'create':  False, 'delete': False})
+        action['context'] = str(ctx)
+        return action
 
     def action_evacuation(self):
         for record in self:

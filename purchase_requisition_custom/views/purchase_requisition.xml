@@ -2,8 +2,19 @@
 <odoo>
     <data>
 
+        <record id="extend_view_purchase_requisition_tree" model="ir.ui.view">
+            <field name="name">purchase.requisition.tree</field>
+            <field name="model">purchase.requisition</field>
+            <field name="inherit_id" ref="purchase_requisition.view_purchase_requisition_tree"/>
+            <field name="arch" type="xml">
+                <field name="state" position="after">
+                    <field name="recommendation_line_ids" widget="many2many_tags" string="Recommended By"/>
+                </field>
+            </field>
+        </record>
+
         <record id="extend_view_purchase_requisition_form" model="ir.ui.view">
-            <field name="name">purchase.requisition</field>
+            <field name="name">purchase.requisition.form</field>
             <field name="model">purchase.requisition</field>
             <field name="inherit_id" ref="purchase_requisition.view_purchase_requisition_form"/>
             <field name="arch" type="xml">

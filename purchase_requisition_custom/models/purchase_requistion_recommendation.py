@@ -4,6 +4,7 @@ from odoo import fields, models, api
 class PurchaseRequisitionRecommendations(models.Model):
     _name = 'purchase.requisition.recommendation'
     _description = 'Purchase Requisition Recommendation'
+    _rec_name = 'user_id'
 
     user_id = fields.Many2one('res.users')
     recommendation = fields.Text(string='Recommendation', required=True)
