@@ -122,8 +122,8 @@ class StockRequest(models.Model):
                 [('location_id', '=', self.branch_id.warehouse_id.view_location_id.id)], limit=1)
             self.location_dest_id = loc.id
 
-    def _set_to_done(self):
-        pass
+    def button_done(self):
+        self.write({'state': 'done', 'date_order': fields.Date.today()})
 
     @api.onchange('user_id')
     def _onchange_user_id(self):

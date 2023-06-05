@@ -31,10 +31,10 @@ class PurchaseRequisition(models.Model):
         for rec in self:
             if rec.locked == True:
                 raise  ValidationError(_("You Can not Do this Action Which Request Had been Confirmed "))
-        return super().action_cancel()
+        return super(PurchaseRequisition, self).action_cancel()
 
     def action_draft(self):
         for rec in self:
             if rec.locked == True:
                 raise  ValidationError(_("You Can not Do this Action Which Request Had been Confirmed "))
-        return super(self, PurchaseRequisition).action_draft()
+        return super(PurchaseRequisition, self).action_draft()

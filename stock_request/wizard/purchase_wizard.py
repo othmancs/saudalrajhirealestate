@@ -113,6 +113,7 @@ class PurchaseWizard(models.TransientModel):
             'product_id': request_line_id.product_id.id,
             'product_qty': self.qty,
             'requisition_id': tender_id.id,
+            'product_uom_id': request_line_id.product_id.uom_po_id.id
         })
 
 
