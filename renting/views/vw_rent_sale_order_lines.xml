@@ -39,22 +39,22 @@
                 </tree>
             </field>
         </record>
-        <record model="ir.actions.act_window" id="rent_sale_order_lines">
+        <!-- <record model="ir.actions.act_window" id="rent_sale_order_lines">
             <field name="name">الوحدات المؤجرة</field>
             <field name="res_model">sale.order.line</field>
             <field name="type">ir.actions.act_window</field>
             <field name="view_mode">tree,form</field>
             <field name="search_view_id" ref="rent_sale_order_search_view"/>
             <field name="view_id" ref="rent_sale_order_tree_view"/>
-        </record>
-        <menuitem name="الوحدات المؤجرة" id="rent_sale_order_lines_menu"
+        </record> -->
+        <!-- <menuitem name="الوحدات المؤجرة" id="rent_sale_order_lines_menu"
                   parent="sale_renting.rental_order_menu"
                   action="rent_sale_order_lines"
                   sequence="2"/>
         <menuitem id="rent_sale_order_lines_menu2" name="الوحدات المؤجرة"
                   parent="sale_renting.menu_rental_reporting"
                   sequence="5"
-                  action="rent_sale_order_lines"/>
+                  action="rent_sale_order_lines"/> -->
 
     </data>
 </odoo>

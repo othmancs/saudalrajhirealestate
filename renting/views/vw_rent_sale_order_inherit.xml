@@ -6,83 +6,101 @@
         <record model="ir.ui.view" id="rent_sale_order_r_inherit_form">
             <field name="name">rent.sale.order.r</field>
             <field name="model">sale.order</field>
-            <field name="inherit_id" ref="sale_renting.rental_order_primary_form_view"/>
+            <field name="inherit_id" ref="sale_renting.rental_order_primary_form_view" />
             <field name="arch" type="xml">
 
-
-                <xpath expr="//button[@name='%(sale.action_view_sale_advance_payment_inv)d'][1]" position="replace">
-                    <button name="%(sale.action_view_sale_advance_payment_inv)d" string="Create Invoice"
-                            type="action" class="btn-primary"
-                            attrs="{'invisible': ['|',('invoice_status', '!=', 'to invoice'),('is_rental_order', '=', True)]}"/>
+                <xpath expr="//button[@name='open_return'][1]"
+                    position="replace">
+                    
+                <button name="open_return" type="object" class="btn-primary" string="RETURN"
+                    data-hotkey="k"
+                    attrs="{'invisible':['|',('state', 'not in', ['sale', 'done', 'occupied']),'|',('has_returnable_lines','=',False),'&amp;',('has_returnable_lines','=',True),('has_pickable_lines','=',True)]}" />
                 </xpath>
-                <xpath expr="//button[@name='%(sale.action_view_sale_advance_payment_inv)d'][2]" position="replace">
-                    <button name="%(sale.action_view_sale_advance_payment_inv)d" string="Create Invoice"
-                            type="action" context="{'default_advance_payment_method': 'percentage'}"
-                            attrs="{'invisible': ['|','|',('invoice_status', '!=', 'no'), ('state', '!=', 'sale'),('is_rental_order', '=', True)]}"/>
+
+
+                <xpath expr="//button[@name='%(sale.action_view_sale_advance_payment_inv)d'][1]"
+                    position="replace">
+                    <button name="%(sale.action_view_sale_advance_payment_inv)d"
+                        string="Create Invoice"
+                        type="action" class="btn-primary"
+                        attrs="{'invisible': ['|',('invoice_status', '!=', 'to invoice'),('is_rental_order', '=', True)]}" />
+                </xpath>
+                <xpath expr="//button[@name='%(sale.action_view_sale_advance_payment_inv)d'][2]"
+                    position="replace">
+                    <button name="%(sale.action_view_sale_advance_payment_inv)d"
+                        string="Create Invoice"
+                        type="action" context="{'default_advance_payment_method': 'percentage'}"
+                        attrs="{'invisible': ['|','|',('invoice_status', '!=', 'no'), ('state', '!=', 'sale'),('is_rental_order', '=', True)]}" />
                 </xpath>
                 <xpath expr="//button[@name='action_cancel']" position="replace">
                     <button name="action_cancel" type="object" string="Cancel"
-                            attrs="{'invisible': ['|','|', ('state', 'not in', ['draft', 'sent','sale']), ('id', '=', False), ('no_of_invoiced', '>', 0)]}"/>
-                    <field name="no_of_invoiced" invisible="1"/>
+                        attrs="{'invisible': ['|','|', ('state', 'not in', ['draft', 'sent','sale']), ('id', '=', False), ('no_of_invoiced', '>', 0)]}" />
+                    <field name="no_of_invoiced" invisible="1" />
                 </xpath>
                 <xpath expr="// field [@ name = 'order_line'] / tree / field [@ name = 'tax_id']"
-                       position="after">
-                    <field name="insurance_value" optional="hide"/>
-                    <field name="is_rental"/>
-                    <field name="contract_admin_fees" optional="hide"/>
-                    <field name="contract_service_fees" optional="hide"/>
-                    <field name="contract_admin_sub_fees" optional="hide"/>
-                    <field name="contract_service_sub_fees" optional="hide"/>
+                    position="after">
+                    <field name="insurance_value" optional="hide" />
+                    <field name="is_rental" />
+                    <field name="contract_admin_fees" optional="hide" />
+                    <field name="contract_service_fees" optional="hide" />
+                    <field name="contract_admin_sub_fees" optional="hide" />
+                    <field name="contract_service_sub_fees" optional="hide" />
                 </xpath>
-                <xpath expr="// field [@ name = 'order_line'] / tree / field [@ name = 'product_id']" position="before">
-                    <field name="property_number"/>
-                    <field name="pickup_date" invisible="1" force_save="1"/>
-                    <field name="return_date" invisible="1" force_save="1"/>
+                <xpath
+                    expr="// field [@ name = 'order_line'] / tree / field [@ name = 'product_id']"
+                    position="before">
+                    <field name="property_number" />
+                    <field name="pickup_date" invisible="1" force_save="1" />
+                    <field name="return_date" invisible="1" force_save="1" />
                 </xpath>
 
-<!--                <xpath expr="// field [@ name = 'order_line'] / tree / field [@ name = 'product_id']"-->
-<!--                       position="attributes">-->
-<!--                    <attribute name="domain">-->
-<!--                        [('product_tmpl_id.property_id','=',property_number),('product_tmpl_id.state_id','=','شاغرة')]-->
-<!--                    </attribute>-->
-<!--                    &lt;!&ndash;                    <attribute name="domain">[('product_tmpl_id.unit_number', '=',&ndash;&gt;-->
-<!--                    &lt;!&ndash;                        unit_number),('product_tmpl_id.property_id','=',property_number),('product_tmpl_id.state_id','=','شاغرة')]&ndash;&gt;-->
-<!--                    &lt;!&ndash;                    </attribute>&ndash;&gt;-->
-<!--                </xpath>-->
+                <!--                <xpath expr="// field [@ name = 'order_line'] / tree / field [@ name =
+                'product_id']"-->
+                <!--                       position="attributes">-->
+                <!--                    <attribute name="domain">-->
+                <!--
+                [('product_tmpl_id.property_id','=',property_number),('product_tmpl_id.state_id','=','شاغرة')]-->
+                <!--                    </attribute>-->
+                <!--                    &lt;!&ndash;                    <attribute name="domain">[('product_tmpl_id.unit_number',
+                '=',&ndash;&gt;-->
+                <!--                    &lt;!&ndash;
+                unit_number),('product_tmpl_id.property_id','=',property_number),('product_tmpl_id.state_id','=','شاغرة')]&ndash;&gt;-->
+                <!--                    &lt;!&ndash;                    </attribute>&ndash;&gt;-->
+                <!--                </xpath>-->
                 <xpath expr="// field [@ name = 'order_line'] / tree / field [@ name = 'name']"
-                       position="attributes">
+                    position="attributes">
                     <attribute name="required">False</attribute>
                 </xpath>
                 <xpath expr="//field[@name='partner_id']" position="after">
-                    <field name="contract_number"/>
-                    <field name="invoice_number"/>
-                    <field name="operating_unit_id"/>
+                    <field name="contract_number" />
+                    <field name="invoice_number" />
+                    <field name="operating_unit_id" />
                     <!--                    <field name="property_name"/>-->
                     <!--                    <field name="unit_number"/>-->
                 </xpath>
                 <xpath expr="//field[@name='date_order']" position="after">
-                    <label for="fromdate" string="مدة العقد"/>
+                    <label for="fromdate" string="مدة العقد" />
                     <div class="d-flex">
-                        <field name="fromdate"/>
+                        <field name="fromdate" />
                         <span class="o_form_label mx-3 oe_edit_only">الي</span>
-                        <field name="todate"/>
+                        <field name="todate" />
                     </div>
                 </xpath>
                 <xpath expr="//page[@name='order_lines']" position="after">
                     <page name="contract_info" string="بيانات العقد">
                         <group>
                             <group>
-                                <field name="order_contract"/>
+                                <field name="order_contract" />
                                 <!--                                <field name="insurance_value"/>-->
                                 <!--                                <field name="contract_admin_fees"/>-->
-                                <field name="brand_nameplate_allowed"/>
+                                <field name="brand_nameplate_allowed" />
                             </group>
 
                             <group>
-                                <field name="contract_hegira_date" placeholder="dd/mm/yyyy"/>
-                                <field name="contract_penalties"/>
-                                <field name="contractor_pen"/>
-                                <field name="contract_extra_maintenance_cost"/>
+                                <field name="contract_hegira_date" placeholder="dd/mm/yyyy" />
+                                <field name="contract_penalties" />
+                                <field name="contractor_pen" />
+                                <field name="contract_extra_maintenance_cost" />
                             </group>
                         </group>
                     </page>
@@ -90,112 +108,123 @@
                     <page name="contract_invoices" string="الفواتير">
                         <field name="order_contract_invoice" widget="section_and_note_one2many">
                             <tree editable="bottom">
-                                <field name="sequence" widget="handle"/>
-                                <field name="name"/>
-                                <field name="amount" sum="Total Amount"/>
-                                <field name="fromdate"/>
-                                <field name="todate"/>
-                                <field name="invoice_date"/>
-                                <field name="status"/>
+                                <field name="sequence" widget="handle" />
+                                <field name="name" />
+                                <field name="amount" sum="Total Amount" />
+                                <field name="fromdate" />
+                                <field name="todate" />
+                                <field name="invoice_date" />
+                                <field name="status" />
                                 <!--                                widget="toggle_button"-->
-                                <button name="create_invoices" type="object" string="Create Invoice" class="btn-success"
-                                        attrs="{'invisible':[('status','=', 'invoiced')]}"/>
+                                <button name="create_invoices" type="object" string="Create Invoice"
+                                    class="btn-success"
+                                    attrs="{'invisible':[('status','=', 'invoiced')]}" />
                             </tree>
                         </field>
                     </page>
                     <page name="property_stats" string="حالة الوحدات"
-                          attrs="{'invisible':[('rental_status','not in', ['pickup','return'])]}">
-                        <field name="order_property_state" widget="section_and_note_one2many" mode="tree,form"
-                               context="{'default_sale_order': active_id}">
+                        attrs="{'invisible':[('rental_status','not in', ['pickup','return'])]}">
+                        <field name="order_property_state" widget="section_and_note_one2many"
+                            mode="tree,form"
+                            context="{'default_sale_order': active_id}">
                             <form>
                                 <group>
-                                    <field name="sale_order" invisible="1"/>
-                                    <field name="sale_order_line_id"/>
+                                    <field name="sale_order" invisible="1" />
+                                    <field name="sale_order_line_id" />
                                     <!--                                    <field name="product_id"/>-->
                                 </group>
                                 <notebook>
                                     <page name="pickup_contract" string="التسليم">
                                         <group>
                                             <group string="حالة الأبواب">
-                                                <field name="door_good"/>
-                                                <field name="door_bad"/>
-                                                <field name="door_comment"/>
+                                                <field name="door_good" />
+                                                <field name="door_bad" />
+                                                <field name="door_comment" />
                                             </group>
                                             <group string="الحائط">
-                                                <field name="wall_good"/>
-                                                <field name="wall_bad"/>
-                                                <field name="wall_comment"/>
+                                                <field name="wall_good" />
+                                                <field name="wall_bad" />
+                                                <field name="wall_comment" />
                                             </group>
                                             <group string="النوافذ">
-                                                <field name="window_good"/>
-                                                <field name="window_bad"/>
-                                                <field name="window_comment"/>
+                                                <field name="window_good" />
+                                                <field name="window_bad" />
+                                                <field name="window_comment" />
                                             </group>
                                             <group string="السباكة">
-                                                <field name="water_good"/>
-                                                <field name="water_bad"/>
-                                                <field name="water_comment"/>
+                                                <field name="water_good" />
+                                                <field name="water_bad" />
+                                                <field name="water_comment" />
                                             </group>
                                             <group string="الكهرباء">
-                                                <field name="elec_good"/>
-                                                <field name="elec_bad"/>
-                                                <field name="elec_comment"/>
+                                                <field name="elec_good" />
+                                                <field name="elec_bad" />
+                                                <field name="elec_comment" />
                                             </group>
                                             <group string="تصفية عداد الكهرباء">
                                                 <field name="return_is_elec_filter" widget="radio"
-                                                       options="{'horizontal': true}"/>
-                                                <label for="return_iselec_paid" string="مبلغ المستحق"/>
+                                                    options="{'horizontal': true}" />
+                                                <label for="return_iselec_paid"
+                                                    string="مبلغ المستحق" />
                                                 <div>
                                                     <div class="o_row o_row_readonly">
-                                                        <field name="return_elec_remain_amount" class="oe_inline"
-                                                               options="{'horizontal': True}"/>
+                                                        <field name="return_elec_remain_amount"
+                                                            class="oe_inline"
+                                                            options="{'horizontal': True}" />
 
                                                         <span class="oe_inline">
-                                                            <field name="return_iselec_remain" widget="radio"
-                                                                   options="{'horizontal': true}"/>
+                                                            <field name="return_iselec_remain"
+                                                                widget="radio"
+                                                                options="{'horizontal': true}" />
                                                         </span>
-                                                        <field name="return_iselec_paid" widget="radio"
-                                                               options="{'horizontal': true}"/>
+                                                        <field name="return_iselec_paid"
+                                                            widget="radio"
+                                                            options="{'horizontal': true}" />
                                                     </div>
 
                                                 </div>
-                                                <field name="elec_filter"/>
+                                                <field name="elec_filter" />
                                             </group>
-                                              <group string="الملاجظات">
-                                                <field name="notes"/>
+                                            <group string="الملاجظات">
+                                                <field name="notes" />
                                             </group>
 
-                                             <group string="تصفية عداد المياه">
-<!--                                                <field name="return_is_water_filter" widget="radio"-->
-<!--                                                       options="{'horizontal': true}"/>-->
-                                                <label for="return_iswater_paid" string="مبلغ المستحق"/>
+                                            <group string="تصفية عداد المياه">
+                                                <!--                                                <field name="return_is_water_filter"
+                                                widget="radio"-->
+                                                <!--                                                       options="{'horizontal': true}"/>-->
+                                                <label for="return_iswater_paid"
+                                                    string="مبلغ المستحق" />
                                                 <div>
                                                     <div class="o_row o_row_readonly">
-                                                        <field name="return_iswater_remain_amount" class="oe_inline"
-                                                               string="In"
-                                                               options="{'horizontal': True}"/>
+                                                        <field name="return_iswater_remain_amount"
+                                                            class="oe_inline"
+                                                            string="In"
+                                                            options="{'horizontal': True}" />
 
                                                         <span class="oe_inline">
-                                                            <field name="return_iswater_remain" widget="radio"
-                                                                   options="{'horizontal': true}"/>
+                                                            <field name="return_iswater_remain"
+                                                                widget="radio"
+                                                                options="{'horizontal': true}" />
                                                         </span>
-                                                        <field name="return_iswater_paid" widget="radio"
-                                                               options="{'horizontal': true}"/>
+                                                        <field name="return_iswater_paid"
+                                                            widget="radio"
+                                                            options="{'horizontal': true}" />
                                                     </div>
 
                                                 </div>
-                                                <field name="elec_filter"/>
+                                                <field name="elec_filter" />
                                             </group>
                                             <group string="موافق العميل بالسكن">
-                                                <field name="customer_accept"/>
-                                                <field name="customer_refused"/>
+                                                <field name="customer_accept" />
+                                                <field name="customer_refused" />
                                             </group>
                                             <group string="موافقة الأدارة علي المستأجر">
-                                                <field name="mangement_accept"/>
-                                                <field name="mangement_refused"/>
+                                                <field name="mangement_accept" />
+                                                <field name="mangement_refused" />
                                             </group>
                                             <group string="ملاحظة">
-                                                <field name="manage_note"/>
+                                                <field name="manage_note" />
                                             </group>
                                         </group>
                                     </page>
@@ -203,96 +232,100 @@
                                     >
                                         <group>
                                             <group string="حالة الأبواب">
-                                                <field name="rdoor_good"/>
-                                                <field name="rdoor_bad"/>
-                                                <field name="rdoor_comment"/>
+                                                <field name="rdoor_good" />
+                                                <field name="rdoor_bad" />
+                                                <field name="rdoor_comment" />
                                             </group>
                                             <group string="الحائط">
-                                                <field name="rwall_good"/>
-                                                <field name="rwall_bad"/>
-                                                <field name="rwall_comment"/>
+                                                <field name="rwall_good" />
+                                                <field name="rwall_bad" />
+                                                <field name="rwall_comment" />
                                             </group>
                                             <group string="النوافذ">
-                                                <field name="rwindow_good"/>
-                                                <field name="rwindow_bad"/>
-                                                <field name="rwindow_comment"/>
+                                                <field name="rwindow_good" />
+                                                <field name="rwindow_bad" />
+                                                <field name="rwindow_comment" />
                                             </group>
                                             <group string="السباكة">
-                                                <field name="rwater_good"/>
-                                                <field name="rwater_bad"/>
-                                                <field name="rwater_comment"/>
+                                                <field name="rwater_good" />
+                                                <field name="rwater_bad" />
+                                                <field name="rwater_comment" />
                                             </group>
                                             <group string="الكهرباء">
-                                                <field name="relec_good"/>
-                                                <field name="relec_bad"/>
-                                                <field name="relec_comment"/>
+                                                <field name="relec_good" />
+                                                <field name="relec_bad" />
+                                                <field name="relec_comment" />
                                             </group>
                                             <group string="الملاجظات">
-                                                <field name="rnotes"/>
+                                                <field name="rnotes" />
                                             </group>
                                             <group string="يوجد مستحقات">
-                                                <field name="is_cost"/>
-                                                <field name="is_no_cost"/>
+                                                <field name="is_cost" />
+                                                <field name="is_no_cost" />
                                             </group>
                                             <group string="المبلغ المتبقي">
-                                                <field name="is_amount_rem"/>
-                                                <field name="is_no_amount_rem"/>
-                                                <field name="amount_rem" style="width:15%"/>
+                                                <field name="is_amount_rem" />
+                                                <field name="is_no_amount_rem" />
+                                                <field name="amount_rem" style="width:15%" />
                                             </group>
                                             <group string="تصفية عداد الكهرباء">
                                                 <field name="is_elec_filter" widget="radio"
-                                                       options="{'horizontal': true}"/>
+                                                    options="{'horizontal': true}" />
                                                 <!--                                                <field name="isnotelec_remain"/>-->
-                                                <label for="iselec_paid" string="مبلغ المستحق"/>
+                                                <label for="iselec_paid" string="مبلغ المستحق" />
                                                 <div>
                                                     <div class="o_row o_row_readonly">
-                                                        <field name="elec_remain_amount" class="oe_inline" string="In"
-                                                               options="{'horizontal': True}"/>
+                                                        <field name="elec_remain_amount"
+                                                            class="oe_inline" string="In"
+                                                            options="{'horizontal': True}" />
 
                                                         <span class="oe_inline">
-                                                            <field name="iselec_remain" widget="radio"
-                                                                   options="{'horizontal': true}"/>
+                                                            <field name="iselec_remain"
+                                                                widget="radio"
+                                                                options="{'horizontal': true}" />
                                                         </span>
                                                         <field name="iselec_paid" widget="radio"
-                                                               options="{'horizontal': true}"/>
-                                                        <span class="oe_inline"/>
+                                                            options="{'horizontal': true}" />
+                                                        <span class="oe_inline" />
                                                     </div>
 
                                                 </div>
-                                                <field name="relec_filter"/>
+                                                <field name="relec_filter" />
                                             </group>
 
                                             <group string="ملاحظة">
-                                                <field name="rmanage_note"/>
+                                                <field name="rmanage_note" />
                                             </group>
                                             <group string="تصفية عداد المياه">
-<!--                                                <field name="is_water_filter" widget="radio"-->
-<!--                                                       options="{'horizontal': true}"/>-->
-                                                <label for="iswater_paid" string="مبلغ المستحق"/>
+                                                <!--                                                <field name="is_water_filter" widget="radio"-->
+                                                <!--                                                       options="{'horizontal': true}"/>-->
+                                                <label for="iswater_paid" string="مبلغ المستحق" />
                                                 <div>
                                                     <div class="o_row o_row_readonly">
-                                                        <field name="iswater_remain_amount" class="oe_inline"
-                                                               string="In"
-                                                               options="{'horizontal': True}"/>
+                                                        <field name="iswater_remain_amount"
+                                                            class="oe_inline"
+                                                            string="In"
+                                                            options="{'horizontal': True}" />
 
                                                         <span class="oe_inline">
-                                                            <field name="iswater_remain" widget="radio"
-                                                                   options="{'horizontal': true}"/>
+                                                            <field name="iswater_remain"
+                                                                widget="radio"
+                                                                options="{'horizontal': true}" />
                                                         </span>
                                                         <field name="iswater_paid" widget="radio"
-                                                               options="{'horizontal': true}"/>
+                                                            options="{'horizontal': true}" />
                                                     </div>
 
                                                 </div>
-                                                <field name="rwater_filter"/>
+                                                <field name="rwater_filter" />
                                             </group>
                                         </group>
                                     </page>
                                 </notebook>
                             </form>
                             <tree>
-                                <field name="sequence" widget="handle"/>
-                                <field name="sale_order_line_id"/>
+                                <field name="sequence" widget="handle" />
+                                <field name="sale_order_line_id" />
                             </tree>
 
                         </field>
@@ -306,21 +339,20 @@
                 <xpath expr="//div[@name='button_box']" position="after">
                     <!--                    <div class="row float-right">-->
                     <div class="badge-pill badge-info float-right"
-                         attrs="{'invisible': [('full_invoiced', '=', False)]}">Fully Invoiced
+                        attrs="{'invisible': [('full_invoiced', '=', False)]}">Fully Invoiced
                     </div>
                     <div class="badge-pill badge-info float-right"
-                         attrs="{'invisible': ['|', ('full_invoiced', '=', True),('no_of_not_invoiced', '=', 0) ]}">
-                        <field name="no_of_invoiced"/>/
-                        <field name="no_of_not_invoiced"/>
+                        attrs="{'invisible': ['|', ('full_invoiced', '=', True),('no_of_not_invoiced', '=', 0) ]}">
+                        <field name="no_of_invoiced" />/ <field name="no_of_not_invoiced" />
                     </div>
                     <div class="badge-pill badge-info float-right"
-                         attrs="{'invisible': ['|', ('full_invoiced', '=', True),('no_of_not_invoiced', '=', 0) ]}">
-                        <field name="no_of_invoiced_amount"/>/
-                        <field name="no_of_not_invoiced_amount"/>
+                        attrs="{'invisible': ['|', ('full_invoiced', '=', True),('no_of_not_invoiced', '=', 0) ]}">
+                        <field name="no_of_invoiced_amount" />/ <field
+                            name="no_of_not_invoiced_amount" />
                     </div>
                     <!--                    </div>-->
 
-                    <field name="full_invoiced" invisible="1"/>
+                    <field name="full_invoiced" invisible="1" />
                 </xpath>
             </field>
         </record>
@@ -329,16 +361,17 @@
             <field name="name">rental.order.search</field>
             <field name="model">sale.order</field>
             <field name="priority">150</field>
-            <field name="inherit_id" ref="sale_renting.rental_order_view_search"/>
+            <field name="inherit_id" ref="sale_renting.rental_order_view_search" />
             <field name="arch" type="xml">
                 <xpath expr='//field[@name="team_id"]' position="after">
-                    <field name="no_of_invoiced"/>
-                    <field name="no_of_not_invoiced"/>
-                    <field name="no_of_invoiced_amount"/>
-                    <field name="no_of_not_invoiced_amount"/>
+                    <field name="no_of_invoiced" />
+                    <field name="no_of_not_invoiced" />
+                    <field name="no_of_invoiced_amount" />
+                    <field name="no_of_not_invoiced_amount" />
                 </xpath>
                 <xpath expr='//filter[@name="from_rental"]' position="after">
-                    <filter string="Fully Invoiced" domain="[('full_invoiced', '=', True)]" name="full_invoiced"/>
+                    <filter string="Fully Invoiced" domain="[('full_invoiced', '=', True)]"
+                        name="full_invoiced" />
                 </xpath>
             </field>
         </record>
@@ -346,28 +379,27 @@
         <record id="rental_order_view_kanban_bstt" model="ir.ui.view">
             <field name="name">rental.order.kanban</field>
             <field name="model">sale.order</field>
-            <field name="inherit_id" ref="sale_renting.rental_order_view_kanban"/>
+            <field name="inherit_id" ref="sale_renting.rental_order_view_kanban" />
             <!--            <field name="mode">primary</field>-->
             <field name="priority">150</field>
             <field name="arch" type="xml">
                 <field name="state" position="after">
-                    <field name="full_invoiced"/>
-                    <field name="no_of_invoiced"/>
-                    <field name="no_of_not_invoiced"/>
-                    <field name="no_of_invoiced_amount"/>
-                    <field name="no_of_not_invoiced_amount"/>
+                    <field name="full_invoiced" />
+                    <field name="no_of_invoiced" />
+                    <field name="no_of_not_invoiced" />
+                    <field name="no_of_invoiced_amount" />
+                    <field name="no_of_not_invoiced_amount" />
                 </field>
                 <xpath expr="//div[hasclass('oe_kanban_bottom_left')][1]" position="after">
                     <!--                    <div class="oe_kanban_bottom_right">-->
                     <div class="o_kanban_inline_block "
-                         attrs="{'invisible': ['|', ('full_invoiced', '=', True),('no_of_not_invoiced', '=', 0) ]}">
-                        <field name="no_of_invoiced"/>/
-                        <field name="no_of_not_invoiced"/>-
-                        <field name="no_of_invoiced_amount"/>/
-                        <field name="no_of_not_invoiced_amount"/>
+                        attrs="{'invisible': ['|', ('full_invoiced', '=', True),('no_of_not_invoiced', '=', 0) ]}">
+                        <field name="no_of_invoiced" />/ <field name="no_of_not_invoiced" />- <field
+                            name="no_of_invoiced_amount" />/ <field name="no_of_not_invoiced_amount" />
                     </div>
 
-                    <div class="o_kanban_record_title" attrs="{'invisible': [('full_invoiced', '=', False)]}">Fully
+                    <div class="o_kanban_record_title"
+                        attrs="{'invisible': [('full_invoiced', '=', False)]}">Fully
                         Invoiced
                     </div>
                     <!--                    </div>-->
@@ -382,16 +414,16 @@
             <field name="model">sale.order</field>
             <field name="arch" type="xml">
                 <tree create="false" edit="false">
-                    <field name="name" readonly="1" decoration-bf="1"/>
-                    <field name="fromdate"/>
-                    <field name="todate"/>
-                    <field name="operating_unit_id" readonly="1"/>
-                    <field name="no_of_invoiced"/>
-                    <field name="no_of_invoiced_amount"/>
-                    <field name="no_of_not_invoiced"/>
-                    <field name="no_of_not_invoiced_amount"/>
-                    <field name="no_of_posted_invoiced"/>
-                    <field name="no_of_posted_invoiced_amount"/>
+                    <field name="name" readonly="1" decoration-bf="1" />
+                    <field name="fromdate" />
+                    <field name="todate" />
+                    <field name="operating_unit_id" readonly="1" />
+                    <field name="no_of_invoiced" />
+                    <field name="no_of_invoiced_amount" />
+                    <field name="no_of_not_invoiced" />
+                    <field name="no_of_not_invoiced_amount" />
+                    <field name="no_of_posted_invoiced" />
+                    <field name="no_of_posted_invoiced_amount" />
                 </tree>
             </field>
         </record>
@@ -399,13 +431,14 @@
             <field name="name">Confirmed Contract</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">sale.order</field>
-            <field name="view_ids" eval="[(5, 0, 0),(0, 0, {'view_mode': 'tree', 'view_id': ref('confirmed_contract_view_tree')}) ]"/>
+            <field name="view_ids"
+                eval="[(5, 0, 0),(0, 0, {'view_mode': 'tree', 'view_id': ref('confirmed_contract_view_tree')}) ]" />
             <field name="domain">[('state', '=', 'sale')]</field>
             <field name="view_mode">tree</field>
         </record>
         <menuitem id="confirmed_contract_menu" name="Confirmed Contract"
-                  parent="sale_renting.menu_rental_reporting"
-                  sequence="15"
-                  action="confirmed_contract_action"/>
+            parent="sale_renting.menu_rental_reporting"
+            sequence="15"
+            action="confirmed_contract_action" />
     </data>
 </odoo>

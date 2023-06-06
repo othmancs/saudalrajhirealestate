@@ -3,19 +3,26 @@
     <data>
         <record id="group_pickup_rental_order" model="res.groups">
             <field name="name">Pickup Rental Order</field>
-            <field name="users" eval="[(4, ref('base.user_admin'))]"/>
+            <field name="users" eval="[(4, ref('base.user_admin'))]" />
         </record>
         <record id="show_renting_order_group" model="res.groups">
             <field name="name">Renting Order From Invoice</field>
-            <field name="users" eval="[(4, ref('base.user_admin'))]"/>
+            <field name="users" eval="[(4, ref('base.user_admin'))]" />
         </record>
-         <record id="submit_rental_order" model="res.groups">
+
+
+        <record model="ir.module.category" id="sales_work_fllow">
+            <field name="name">Sales WorkFllow</field>
+        </record>
+        <record id="submit_rental_order" model="res.groups">
             <field name="name">Submit Orders</field>
-            <field name="users" eval="[(4, ref('base.user_admin'))]"/>
+            <field name="category_id" ref="sales_work_fllow"/>
+            <field name="users" eval="[(4, ref('base.user_admin'))]" />
         </record>
-          <record id="review_rental_order" model="res.groups">
+        <record id="review_rental_order" model="res.groups">
             <field name="name">Review Orders</field>
-            <field name="users" eval="[(4, ref('base.user_admin'))]"/>
+            <field name="category_id" ref="sales_work_fllow"/>
+            <field name="users" eval="[(4, ref('base.user_admin'))]" />
         </record>
 
           <record id="rule_rental_letter_template_multi_company" model="ir.rule">

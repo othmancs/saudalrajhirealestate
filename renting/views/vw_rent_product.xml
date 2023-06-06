@@ -11,36 +11,20 @@
                     <field name="property_address_build"/>
                     <field name="property_id" string="العقار"/>
                     <field name="name" string="رقم الوحدة"/>
-                    <field name="product_variant_count" invisible="1"/>
                     <field name="partner_id"/>
-                    <field name="sale_ok" invisible="1"/>
-                    <field name="currency_id" invisible="1"/>
-                    <field name="cost_currency_id" invisible="1"/>
-                    <field name="priority" widget="priority" optional="show" nolabel="1"/>
                     <field name="last_sale_id" string="رقم العقد"/>
                     <field name="unit_state"  invisible="1"/>
-                    <field name="state_id" string="مؤجرة / شاغرة"/>
-                    <field name="default_code" invisible="1" optional="show"/>
-                    <field name="barcode"  invisible="1" optional="hide" attrs="{'readonly': [('product_variant_count', '&gt;', 1)]}"/>
-                    <field name="company_id"  invisible="1" options="{'no_create': True}" groups="base.group_multi_company"
-                           optional="hide"/>
-                    <field name="list_price" invisible="1" string="Sales Price" widget="monetary"
-                           options="{'currency_field': 'currency_id'}" optional="show" decoration-muted="not sale_ok"/>
-                    <field name="standard_price" invisible="1" widget="monetary" options="{'currency_field': 'cost_currency_id'}"
-                           optional="show" readonly="1"/>
-                    <field name="categ_id" invisible="1" optional="hide"/>
-                    <field name="detailed_type" invisible="1" optional="hide" readonly="1"/>
-                    <field name="type" invisible="1"/>
-                    <field name="uom_id" readonly="1" invisible="1" optional="show" groups="uom.group_uom"/>
-                    <field name="active" invisible="1"/>
-                    <field name="activity_exception_decoration" invisible="1" widget="activity_exception"/>
-                    <field name="amount_paid"/>
-                    <field name="amount_due"/>
+                    <field name="state_id" string="الحالة"/>
+                    <field name="amount_paid" sum="Total"/>
+                    <field name="amount_due" sum="Total"/>
+                    <field name="contract_total" sum="Total"/>
                     <field name="fromdate"/>
                     <field name="todate"/>
-                    <field name="contract_admin_fees"/>
-                    <field name="contract_service_fees"/>
-                    <field name="insurance_value"/>
+                    <field name="contract_admin_fees" sum="Total"/>
+                    <field name="contract_admin_sub_fees" sum="Total"/>
+                    <field name="contract_service_fees" sum="Total"/>
+                    <field name="contract_service_sub_fees" sum="Total"/>
+                    <field name="insurance_value" sum="Total"/>
                 </tree>
             </field>
         </record>
@@ -52,7 +36,7 @@
                 (0, 0, {'view_mode': 'tree', 'view_id': ref('rental_2order_view_tree')}) ]"/>
             <field name="view_mode">tree</field>
         </record>
-        <menuitem id="item_rented" name="Items Rented"
+        <menuitem id="item_rented" name="Units Rented"
                   parent="sale_renting.menu_rental_reporting"
                   sequence="15"
                   action="item_rented_action"/>

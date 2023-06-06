@@ -238,7 +238,7 @@ class RentPropertybuilding(models.Model):
     property_address_area = fields.Many2one('rent.property.state', string='الفرع ')
     property_address_city = fields.Many2one('rent.property.city', string='City')
     ref_analytic_account = fields.Integer(string='رقم اشارة الحساب التحليلي')
-    company_id = fields.Many2one('res.company', string='company', readonly=True, default=lambda self: self.env.company)
+    company_id = fields.Many2one('res.company', string='company', readonly=False, default=lambda self: self.env.company)
 
 
 

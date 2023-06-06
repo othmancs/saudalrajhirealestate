@@ -68,7 +68,7 @@ class RentProduct(models.Model):
     unit_sales_count = fields.Integer(string='Total Sales', compute='_unit_sales_count', readonly=True)
     unit_price = fields.Float(string='قيمة الوحدة', compute='_get_unit_price')
     unit_price_unit = fields.Char(string='مدة تأجير الوحدة')
-    state_id = fields.Char()
+    state_id = fields.Char(string="الحالة", store=True)
     analytic_account = fields.Many2one('account.analytic.account', string='الحساب التحليلي', readonly=True)
     ref_analytic_account = fields.Char(string='رقم اشارة الحساب التحليلي', readonly=True)
     property_analytic_account = fields.Many2one('account.analytic.account', string='الحساب التحليلي للعقار',
@@ -107,13 +107,16 @@ class RentProduct(models.Model):
     contract_admin_fees = fields.Float(compute="get_sale_data", string='رسوم إدارية')
     contract_service_fees = fields.Float(compute="get_sale_data", string='رسوم الخدمات')
     insurance_value = fields.Float(compute="get_sale_data", string='قيمة التأمين')
-    fromdate = fields.Date(compute="get_sale_data", string='تاريخ الإستلام')
-    todate = fields.Date(compute="get_sale_data", string='تاريخ التسليم')
-    last_sale_id = fields.Many2one('sale.order', compute="get_sale_data")
+    fromdate = fields.Date(compute="get_sale_data", string='تاريخ بداية العقد')
+    todate = fields.Date(compute="get_sale_data", string='تاريخ نهاية العقد')
+    last_sale_id = fields.Many2one('sale.order', string='رقم العقد', compute="get_sale_data", store=True)
     operating_unit_id = fields.Many2one('operating.unit', string='الفرع ')
+    contract_total = fields.Float(compute="get_sale_data", string='قيمة العقد')
+    contract_service_sub_fees = fields.Float(string='رسوم الخدمات')
+    contract_admin_sub_fees = fields.Float(string='رسوم ادارية خاضعة')
     def get_sale_data(self):
         for rec in self:
-            order_line_id = rec.env['sale.order.line'].sudo().search([('product_id', '=', rec.id)],limit=1, order='id desc')
+            order_line_id = rec.env['sale.order.line'].sudo().search([('product_id', '=', rec.id), ('state','=','occupied')],limit=1, order='id desc')
 
 
             rec.partner_id = order_line_id.order_id.partner_id.id if order_line_id else False
@@ -126,6 +129,9 @@ class RentProduct(models.Model):
             rec.todate = order_line_id.order_id.todate if order_line_id else False
 
             rec.amount_paid = (sum(ll.price_subtotal for ll in order_line_id.order_id.invoice_ids.invoice_line_ids.filtered(lambda line: line.move_id.payment_state == 'paid' and line.product_id == rec.product_variant_id))) if order_line_id else 0
+            rec.contract_total = order_line_id.order_id.amount_total
+            rec.contract_service_sub_fees = order_line_id.contract_service_sub_fees
+            rec.contract_admin_sub_fees = order_line_id.contract_admin_sub_fees
 
             rec.amount_due = (sum(order_line_id.order_id.order_line[0].price_unit / ll.sale_order_id.invoice_number for ll in
                                  order_line_id.order_id.order_contract_invoice.filtered(lambda line: line.status == 'uninvoiced')
@@ -179,6 +185,7 @@ class RentProduct(models.Model):
         return res
     def _get_state(self):
         for rec in self:
+            print(";;;; ;;;;;     ", rec.name)
             rec.unit_state = 'شاغرة'
             rec.state_id = 'شاغرة'
             order = rec.env['sale.order.line'].sudo().search([

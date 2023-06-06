@@ -59,6 +59,9 @@
                             <field name="company_id" invisible="1"/>
                             <field name="state" invisible="1"/>
                             <field name="damage_amount"/>
+                            <field name="product_ids" widget="many2many_tags" readonly="1" invisible="0" force_save="1"/>
+                            <field name="product_id" options="{'no_create':True,'no_open':True}" domain="[('id','in', product_ids)]"/>
+                            <!--  -->
                             <field name="refund_amount" invisible="1"/>
                             <field name="context_order" invisible="1"/>
                         </group>
@@ -114,6 +117,7 @@
             <field name="inherit_id" ref="renting.rent_sale_order_r_inherit_form"/>
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='contract_extra_maintenance_cost']" position="after">
+
                     <field name="apartment_insurance" required="1"/>
                     <field name="refund_insurance"/>
                 </xpath>
@@ -147,10 +151,10 @@
         </record>
 
 
-<!--          <record id="sale.view_order_form" model="ir.ui.view">-->
-<!--                                  <field name="priority" eval="15"/>-->
+         <record id="sale.view_order_form" model="ir.ui.view">
+                                 <field name="priority" eval="15"/>
 
-<!--          </record>-->
+         </record>
 
         <record id="rent_view_order_form" model="ir.ui.view">
             <field name="name">sale.order</field>
@@ -270,6 +274,7 @@
                     <field name="rental_status" invisible="1"/>
                 </xpath>
                 <xpath expr="//field[@name='payment_term_id']" position="after">
+
                     <field name="annual_increase"/>
                     <field name="annual_increase_type"
                            attrs="{'invisible':[('annual_increase', '!=', True)], 'required':[('annual_increase', '=', True)]}"/>

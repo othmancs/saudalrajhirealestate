@@ -5,6 +5,8 @@ from dateutil.relativedelta import relativedelta
 
 from odoo import models, fields, api, _
 from odoo.exceptions import UserError
+from odoo.tools import float_compare, format_datetime, format_time
+
 
 
 class RentSaleOrder(models.Model):
@@ -82,6 +84,12 @@ class RentSaleOrder(models.Model):
     iselec_remain = fields.Boolean('نعم')
     isnotelec_remain = fields.Boolean('لا')
 
+    def open_return(self):
+        status = "return"
+        precision = self.env['decimal.precision'].precision_get('Product Unit of Measure')
+        lines_to_return = self.order_line.filtered(
+            lambda r: r.state in ['sale', 'done', 'occupied'] and r.is_rental and float_compare(r.qty_delivered, r.qty_returned, precision_digits=precision) > 0)
+        return self._open_rental_wizard(status, lines_to_return.ids)
     def _get_remain(self):
         for record in self:
             amount = 0
