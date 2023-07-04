@@ -36,11 +36,7 @@
                 (0, 0, {'view_mode': 'tree', 'view_id': ref('rental_2order_view_tree')}) ]"/>
             <field name="view_mode">tree</field>
         </record>
-        <menuitem id="item_rented" name="Units Rented"
-                  parent="sale_renting.menu_rental_reporting"
-                  sequence="15"
-                  groups="rent_customize.renting_report_unit"
-                  action="item_rented_action"/>
+      
 
     </data>
 </odoo>
