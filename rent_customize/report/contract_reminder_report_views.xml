@@ -55,11 +55,6 @@
                   sequence="5"/>
 
 
-        <menuitem id="item_rented" name="Units Rented"
-                  parent="sale_renting.menu_rental_reporting"
-                  sequence="15"
-                  groups="rent_customize.renting_report_unit"
-                  action="renting.item_rented_action"/>
 
 
 

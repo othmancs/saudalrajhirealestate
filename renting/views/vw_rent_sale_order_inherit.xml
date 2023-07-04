@@ -377,7 +377,6 @@
             <field name="domain">[('state', '=', 'sale')]</field>
             <field name="view_mode">tree</field>
         </record>
-        <menuitem id="confirmed_contract_menu" name="Confirmed Contract" parent="sale_renting.menu_rental_reporting" sequence="15" groups="rent_customize.renting_report_confirmed_contract" action="confirmed_contract_action" />
 
     </data>
 </odoo>
