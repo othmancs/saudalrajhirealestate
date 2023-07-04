@@ -28,42 +28,51 @@
                                    dir="rtl">
                                 <tbody>
                                     <tr style="height:18px;">
-                                        <td style="height:18px; width:20%; border:2px solid black;text-align: right;">
+                                        <td style="height:18px; width:50%; border:2px solid black;text-align: right;">
                                             الموقع
                                         </td>
-                                        <td style="height:18px; width:80%; border:2px solid black;text-align: right;">
+                                        <td style="height:18px;  border:2px solid black;text-align: right;">
                                             <span t-esc="o['location']"/>
                                         </td>
                                     </tr>
                                     <tr style="height:18px;">
-                                        <td style="height:18px; width:20%; border:2px solid black;text-align: right;">
+                                        <td style="height:18px; width:50%; border:2px solid black;text-align: right;">
                                             نوع العقار
                                         </td>
-                                        <td style="height:18px; width:80%; border:2px solid black;text-align: right;">
+                                        <td style="height:18px;  border:2px solid black;text-align: right;">
                                             <span t-esc="o['property_type_id'].property_type_name"/>
                                         </td>
                                     </tr>
                                     <tr style="height:18px;">
-                                        <td style="height:18px; width:20%; border:2px solid black;text-align: right;">
+                                        <td style="height:18px; width:50%; border:2px solid black;text-align: right;">
                                             القيمة الايجارية السابقة
                                         </td>
-                                        <td style="height:18px; width:80%; border:2px solid black;text-align: right;">
+                                        <td style="height:18px; width:50%; border:2px solid black;text-align: right;">
                                             <span t-esc="o['rental_value']"/>
                                         </td>
                                     </tr>
-                                    <tr style="height:18px;">
-                                        <td style="height:18px; width:20%; border:2px solid black;text-align: right;">
-                                            القيمة الايجارية المقترحة
+
+                                      <tr style="height:18px;">
+                                        <td style="height:18px; width:50%; border:2px solid black;text-align: right;">
+                                            القيمة الايجارية المعتمدة/سنوي
                                         </td>
-                                        <td style="height:18px; width:80%; border:2px solid black;text-align: right;">
+                                        <td style="height:18px; width:50%; border:2px solid black;text-align: right;">
+                                            <span t-esc="o['new_rental_value']"/>
+                                        </td>
+                                    </tr>
+                                     <tr style="height:18px;">
+                                        <td style="height:18px; width:50%; border:2px solid black;text-align: right;">
+                                            نسبة الايجار الشهري الى الراتب الشهري لا تتعدى 25%
+                                        </td>
+                                        <td style="height:18px; width:50%; border:2px solid black;text-align: right;">
                                             <span t-esc="o['new_rental_value']"/>
                                         </td>
                                     </tr>
                                     <tr style="height:18px;">
-                                        <td style="height:18px; width:20%; border:2px solid black;text-align: right;">
+                                        <td style="height:18px; width:50%; border:2px solid black;text-align: right;">
                                             اسباب التغيير
                                         </td>
-                                        <td style="height:18px; width:80%; border:2px solid black;text-align: right;">
+                                        <td style="height:18px; width:50%; border:2px solid black;text-align: right;">
                                             <span t-esc="o['change_reason']"/>
                                         </td>
                                     </tr>
@@ -78,74 +87,74 @@
                                    dir="rtl">
                                 <tbody>
                                     <tr style="height:18px;">
-                                        <td style="height:18px; width:20%; border:2px solid black;text-align: right;">
+                                        <td style="height:18px; width:50%; border:2px solid black;text-align: right;">
                                             اسم المستأجر
                                         </td>
-                                        <td style="height:18px; width:80%; border:2px solid black;text-align: right;">
+                                        <td style="height:18px; width:50%; border:2px solid black;text-align: right;">
                                             <span t-esc="o['partner_id'].name"/>
                                         </td>
                                     </tr>
                                     <tr style="height:18px;">
-                                        <td style="height:18px; width:20%; border:2px solid black;text-align: right;">
+                                        <td style="height:18px; width:50%; border:2px solid black;text-align: right;">
                                             رقم الهوية
                                         </td>
-                                        <td style="height:18px; width:80%; border:2px solid black;text-align: right;">
+                                        <td style="height:18px; width:50%; border:2px solid black;text-align: right;">
                                             <span t-esc="o['partner_id'].national_id_number"/>
                                         </td>
                                     </tr>
                                     <tr style="height:18px;">
-                                        <td style="height:18px; width:20%; border:2px solid black;text-align: right;">
+                                        <td style="height:18px; width:50%; border:2px solid black;text-align: right;">
                                             ارقام التواصل الشخصي والعمل
                                         </td>
-                                        <td style="height:18px; width:80%; border:2px solid black;">
+                                        <td style="height:18px; width:50%; border:2px solid black;">
                                             <span t-esc="o['partner_id'].mobile"/>
                                         </td>
                                     </tr>
                                     <tr style="height:18px;">
-                                        <td style="height:18px; width:20%; border:2px solid black;text-align: right;">
+                                        <td style="height:18px; width:50%; border:2px solid black;text-align: right;">
                                             جهة العمل
                                         </td>
-                                        <td style="height:18px; width:80%; border:2px solid black;text-align: right;">
+                                        <td style="height:18px; width:50%; border:2px solid black;text-align: right;">
                                             <span t-esc="o['employer']"/>
                                         </td>
                                     </tr>
                                     <tr style="height:18px;">
-                                        <td style="height:18px; width:20%; border:2px solid black;text-align: right;">
+                                        <td style="height:18px; width:50%; border:2px solid black;text-align: right;">
                                             الوظيفة
                                         </td>
-                                        <td style="height:18px; width:80%; border:2px solid black;text-align: right;">
+                                        <td style="height:18px; width:50%; border:2px solid black;text-align: right;">
                                             <span t-esc="o['job']"/>
                                         </td>
                                     </tr>
                                     <tr style="height:18px;">
-                                        <td style="height:18px; width:20%; border:2px solid black;text-align: right;">
-                                            تعريف بالراتب من العمل
+                                        <td style="height:18px; width:50%; border:2px solid black;text-align: right;">
+                                            تعريف بالراتب من العمل/ سنويا
                                         </td>
-                                        <td style="height:18px; width:80%; border:2px solid black;">
+                                        <td style="height:18px; width:50%; border:2px solid black;">
                                             <span t-esc="o['salary_definition']"/>
                                         </td>
                                     </tr>
                                     <tr style="height:18px;">
-                                        <td style="height:18px; width:20%; border:2px solid black;text-align: right;">
+                                        <td style="height:18px; width:50%; border:2px solid black;text-align: right;">
                                             الحالة الاجتماعية
                                         </td>
-                                        <td style="height:18px; width:80%; border:2px solid black;">
+                                        <td style="height:18px; width:50%; border:2px solid black;">
                                             <span t-esc="o['martial_status']"/>
                                         </td>
                                     </tr>
                                     <tr style="height:18px;">
-                                        <td style="height:18px; width:20%; border:2px solid black;text-align: right;">
+                                        <td style="height:18px; width:50%; border:2px solid black;text-align: right;">
                                             عدد أفراد العائلة
                                         </td>
-                                        <td style="height:18px; width:80%; border:2px solid black;text-align: right;">
+                                        <td style="height:18px; width:50%; border:2px solid black;text-align: right;">
                                             <span t-esc="o['family_members']"/>
                                         </td>
                                     </tr>
                                     <tr style="height:18px;">
-                                        <td style="height:18px; width:20%; border:2px solid black;text-align: right;">
+                                        <td style="height:18px; width:50%; border:2px solid black;text-align: right;">
                                             تقرير سمة
                                         </td>
-                                        <td style="height:18px; width:80%; border:2px solid black;text-align: right;">
+                                        <td style="height:18px; width:50%; border:2px solid black;text-align: right;">
                                             <span t-esc="o['simah_report']"/>
                                         </td>
                                     </tr>

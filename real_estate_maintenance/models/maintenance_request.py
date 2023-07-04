@@ -5,7 +5,8 @@ from datetime import datetime, date
 
 class MaintenanceRequest(models.Model):
     _name = 'maintenance.request'
-    _inherit = ['portal.mixin', 'mail.thread.cc', 'mail.thread', 'mail.activity.mixin', 'rating.mixin']
+    _inherit = ['portal.mixin', 'mail.thread.cc',
+                'mail.thread', 'mail.activity.mixin', 'rating.mixin']
     _mail_post_access = 'read'
     _description = 'Property Maintenance Request'
 
@@ -13,16 +14,29 @@ class MaintenanceRequest(models.Model):
     def _default_operating_unit(self):
         return self.env.user.default_operating_unit_id
 
-    MAINTENANCE_REQUEST_STATES = [('new', 'New'), ('confirm', 'Confirmed'), ('ongoing', 'In Progress'),
-                                  ('closed', 'Closed'), ('refused', 'Refused')]
-    INVOICING_STATES = [('on-company', 'On The Company'), ('on-partner', 'On The Requester')]
-    MAINTENANCE_TYPE = [('electric', 'Electric'), ('plumbing', 'Plumbing'), ('wall', 'Wall')]
+    MAINTENANCE_REQUEST_STATES = [
+        ('new', 'New'),
+        ('to_review', 'to Review'),
+        ('review', 'Waiting Property Manager'),
+        ('prop_manager', 'Waiting CEO'),
+        ('ceo', 'CEO Approved'),
+        ('confirm', 'Confirmed'),
+        ('ongoing', 'In Progress'),
+        ('closed', 'Closed'),
+        ('refused', 'Refused')]
+    INVOICING_STATES = [('on-company', 'On The Company'),
+                        ('on-partner', 'On The Requester')]
+    MAINTENANCE_TYPE = [('electric', 'Electric'), ('plumbing', 'Plumbing'),
+                        ('wall', 'Wall'), ('ac', 'Air conditioning')]
     name = fields.Char()
-    maintenance_responsible_id = fields.Many2one("hr.employee", "Maintenance Responsible")
+    maintenance_responsible_id = fields.Many2one(
+        "hr.employee", "Maintenance Responsible")
     property_id = fields.Many2one("product.product", string="Property")
     requester_id = fields.Many2one("res.partner")
-    maintenance_request_expense_line_ids = fields.One2many("maintenance.request.expense", "maintenance_request_id")
-    maintenance_request_product_line_ids = fields.One2many("maintenance.request.product", "maintenance_request_id")
+    maintenance_request_expense_line_ids = fields.One2many(
+        "maintenance.request.expense", "maintenance_request_id")
+    maintenance_request_product_line_ids = fields.One2many(
+        "maintenance.request.product", "maintenance_request_id")
     request_date = fields.Date(string="Request Date", default=fields.Date.today())
     visit_date = fields.Date(string="Visit Date")
     end_date = fields.Date(string="End Date", readonly=True)
@@ -33,9 +47,11 @@ class MaintenanceRequest(models.Model):
     maintenance_type = fields.Selection(MAINTENANCE_TYPE, "Maintenace Type")
     attachment_ids = fields.One2many('ir.attachment', compute='_compute_attachment_ids', string="Main Attachments",
                                      help="Attachments that don't come from a message.")
-    company_id = fields.Many2one('res.company', string="Company", required=True, default=lambda self: self.env.company)
+    company_id = fields.Many2one(
+        'res.company', string="Company", required=True, default=lambda self: self.env.company)
     account_move_ids = fields.One2many("account.move", "maintenance_request_id")
     customer_invoice_id = fields.Many2one("account.move")
+    rent_property_build_id = fields.Many2one("rent.property.build", string="Property")
     stock_picking_ids = fields.One2many("stock.picking", "maintenance_request_id")
     stock_pickings_count = fields.Integer("Stock Pickings Count",
                                           compute="_compute_stock_pickings_count")
@@ -43,7 +59,8 @@ class MaintenanceRequest(models.Model):
                                          compute="_compute_account_moves_count")
     state = fields.Selection(MAINTENANCE_REQUEST_STATES, "Status", default="new")
     active = fields.Boolean(default=True)
-    purchase_requisition_ids = fields.One2many("stock.request", "maintenance_request_id")
+    purchase_requisition_ids = fields.One2many(
+        "stock.request", "maintenance_request_id")
     purchase_requisition_count = fields.Integer("Purchase Requisition Count",
                                                 compute="_compute_purchase_requisition_count")
     operating_unit_id = fields.Many2one(
@@ -60,6 +77,39 @@ class MaintenanceRequest(models.Model):
         string='Building',
         readonly=True,
     )
+    unit_type = fields.Selection(
+        [('commercial', 'Commercial'), ('residential', 'Residential')], 'Unit type')
+    maintenance_categ = fields.Selection([
+        ('preventive', 'Preventive Maintenance'),
+        ('emergency', 'Emergency Maintenance'),
+        ('periodic', 'Periodic Maintenance'),
+        ('corrective', 'Corrective Maintenance'),
+    ], 'Maintenance Category')
+
+    invoicing_state = fields.Selection([
+        ('no_invoice', 'Not Paid'),
+        ('partially', 'Partially Invoicing'),
+        ('fully', 'Fully Invoicing'),
+    ], 'Invoicing State', compute="_invoicing_state_calculate")
+
+    maintain_property_type = fields.Selection([
+        ('unit', 'Unit'),
+        ('property', 'Property'),
+        ('building', 'Building'),
+    ], 'Maintained Property Type', default="unit")
+
+    deadline = fields.Date('Deadline')
+
+    def _invoicing_state_calculate(self):
+        for rec in self:
+            invoices = self.mapped('account_move_ids')
+            due_amount = self.mapped('account_move_ids.amount_residual')
+            total_amount = self.mapped('account_move_ids.amount_total')
+            rec.invoicing_state = 'no_invoice'
+            if due_amount == 0 :
+                rec.invoicing_state = 'fully'
+            if due_amount != 0 and total_amount > due_amount:
+                rec.invoicing_state = 'partially'
 
     @api.onchange('property_rent_id')
     def _onchange_property_rent_id(self):
@@ -67,15 +117,16 @@ class MaintenanceRequest(models.Model):
         if self.property_rent_id:
             domain = [('property_id', '=', self.property_rent_id.id)]
         return {'domain': {'property_id': domain}}
-    
+
     @api.onchange('property_id')
     def _onchange_property_id(self):
         if self.property_id:
             self.property_rent_id = self.property_id.property_id
             self.operating_unit_id = self.property_id.property_id.property_address_area
-        
+
     def action_view_stock_pickings(self):
-        action = self.env['ir.actions.act_window']._for_xml_id('stock.action_picking_tree_all')
+        action = self.env['ir.actions.act_window']._for_xml_id(
+            'stock.action_picking_tree_all')
         action['domain'] = [('maintenance_request_id', '=', self.id)]
         return action
 
@@ -88,7 +139,8 @@ class MaintenanceRequest(models.Model):
             rec.purchase_requisition_count = len(rec.purchase_requisition_ids)
 
     def action_view_purchase_requisition(self):
-        action = self.env['ir.actions.act_window']._for_xml_id('stock_request.action_request_quantities_form')
+        action = self.env['ir.actions.act_window']._for_xml_id(
+            'stock_request.action_request_quantities_form')
         action['domain'] = [('maintenance_request_id', '=', self.id)]
         return action
 
@@ -98,10 +150,11 @@ class MaintenanceRequest(models.Model):
 
     @api.model
     def create(self, vals):
-        vals['name'] = self.env['ir.sequence'].sudo().get('sequence.maintenance.request')
+        vals['name'] = self.env['ir.sequence'].sudo().get(
+            'sequence.maintenance.request')
         if 'issue_type' in vals:
             vals.update({'invoice_status':
-                             self.env["maintenance.issue.type"].browse(vals['issue_type']).invoice_status})
+                         self.env["maintenance.issue.type"].browse(vals['issue_type']).invoice_status})
         res = super(MaintenanceRequest, self).create(vals)
         res._send_notification_email()
         return res
@@ -133,11 +186,51 @@ class MaintenanceRequest(models.Model):
         for maintenance_request in self:
             attachment_ids = self.env['ir.attachment'].sudo().search([('res_id', '=', maintenance_request.id),
                                                                       ('res_model', '=', 'maintenance.request')]).ids
-            message_attachment_ids = maintenance_request.mapped('message_ids.attachment_ids').ids
-            maintenance_request.attachment_ids = [(6, 0, list(set(attachment_ids) - set(message_attachment_ids)))]
+            message_attachment_ids = maintenance_request.mapped(
+                'message_ids.attachment_ids').ids
+            maintenance_request.attachment_ids = [
+                (6, 0, list(set(attachment_ids) - set(message_attachment_ids)))]
+
+    def action_activity_feedback(self):
+        activities = self.env['mail.activity'].search([
+            ('res_model', '=', 'maintenance.request'),
+            ('res_id', '=', self.id)])
+        activities.sudo().action_feedback()
+
+    def get_res_users(self, group_ext_id):
+        user_ids = self.env['res.users']
+        if self.state == 'to_review':
+            user_ids += self.env.company.maintenance_request_to_notify_user_id
+        user_ids += self.env.ref(group_ext_id).users
+        return user_ids
+
+    def action_to_review(self):
+        self.action_activity_feedback()
+        self.state = 'to_review'
+        user_ids = self.get_res_users('real_estate_maintenance.group_maintenance_review')
+        self._send_notification(self.id, '', user_ids)
+
+    def action_review(self):
+        self.action_activity_feedback()
+        self.state = 'review'
+        user_ids = self.get_res_users('real_estate_maintenance.group_maintenance_property_manager')
+        self._send_notification(self.id, '', user_ids)
+
+    def prop_manager(self):
+        self.action_activity_feedback()
+        self.state = 'prop_manager'
+        user_ids = self.get_res_users('real_estate_maintenance.group_maintenance_ceo')
+        self._send_notification(self.id, '', user_ids)
+
+    def action_ceo(self):
+        self.action_activity_feedback()
+        self.state = 'ceo'
+        user_ids = self.get_res_users('real_estate_maintenance.group_maintenance_confirm')
+        self._send_notification(self.id, '', user_ids)
 
     def action_confirm(self):
         ctx = self.env.context
+        self.action_activity_feedback()
         return {
             'type': 'ir.actions.act_window',
             'name': _('Schedule Maintenance'),
@@ -150,7 +243,8 @@ class MaintenanceRequest(models.Model):
     def action_create_pr(self):
         for record in self:
             if len(record.maintenance_request_product_line_ids) == 0:
-                raise UserError(_("Please add consumed products in order to create purchase requisition"))
+                raise UserError(
+                    _("Please add consumed products in order to create purchase requisition"))
 
             pr_obj = self.env['stock.request']
             lines = []
@@ -169,7 +263,7 @@ class MaintenanceRequest(models.Model):
         self.write({"state": "ongoing"})
 
     def action_close(self):
-        self.create_bills()
+        # self.create_bills()
         self.end_date = date.today()
         self.write({"state": "closed"})
 
@@ -184,6 +278,22 @@ class MaintenanceRequest(models.Model):
             'context': ctx
         }
 
+    def _send_notification(self, res_id, note, user_ids):
+        for user in user_ids :
+            notification = {
+                'activity_type_id': self.env.ref('real_estate_maintenance.real_estate_maintenance_activity').id,
+                'res_id': res_id,
+                'res_model_id': self.env['ir.model'].search([('model', '=', 'maintenance.request')], limit=1).id,
+                'icon': 'fa-pencil-square-o',
+                'date_deadline': fields.Date.today(),
+                'user_id': user.id,
+                'note': note
+            }
+            try:
+                self.env['mail.activity'].create(notification)
+            except:
+                pass
+
     def create_bills(self):
         bill_vals = self._prepare_bill()
         for partner in self.maintenance_request_expense_line_ids.mapped('partner_id'):
@@ -196,7 +306,8 @@ class MaintenanceRequest(models.Model):
 
     def get_delivery_picking_type(self):
         self.ensure_one()
-        delivery_operation = self.env['stock.picking.type'].search([('code', '=', 'outgoing')], limit=1)
+        delivery_operation = self.env['stock.picking.type'].search(
+            [('code', '=', 'outgoing')], limit=1)
 
         return delivery_operation
 
@@ -213,14 +324,15 @@ class MaintenanceRequest(models.Model):
             'origin': self.name,
             'move_type': "one",
             'location_id': location_src_id.id,
-            'location_dest_id': picking_type.default_location_dest_id.id or
-                                self.env.ref("stock.stock_location_customers").id,
+            'location_dest_id': picking_type.default_location_dest_id.id
+            or self.env.ref("stock.stock_location_customers").id,
         }
         return picking_vals
 
     def action_create_picking_new(self):
         for rec in self:
-            location_ids = rec.maintenance_request_product_line_ids.mapped('location_id')
+            location_ids = rec.maintenance_request_product_line_ids.mapped(
+                'location_id')
             for location_src_id in location_ids:
                 location_lines = rec.maintenance_request_product_line_ids.filtered(
                     lambda pl: pl.location_id.id == location_src_id.id)
@@ -272,7 +384,8 @@ class MaintenanceRequest(models.Model):
         invoice_vals['invoice_line_ids'] = [[0, 0, invoice_line_vals]]
         invoice_id = self.env["account.move"].create(invoice_vals)
         self.customer_invoice_id = invoice_id.id
-        action = self.env["ir.actions.actions"]._for_xml_id("account.action_move_out_invoice_type")
+        action = self.env["ir.actions.actions"]._for_xml_id(
+            "account.action_move_out_invoice_type")
         form_view = [(self.env.ref('account.view_move_form').id, 'form')]
         action['views'] = form_view
         action['res_id'] = invoice_id.id
@@ -280,7 +393,8 @@ class MaintenanceRequest(models.Model):
 
     def action_view_invoices(self):
         invoices = self.mapped('account_move_ids')
-        action = self.env["ir.actions.actions"]._for_xml_id("account.action_move_out_invoice_type")
+        action = self.env["ir.actions.actions"]._for_xml_id(
+            "account.action_move_out_invoice_type")
         if len(invoices) > 1:
             action['domain'] = [('id', 'in', invoices.ids)]
         elif len(invoices) == 1:
@@ -303,7 +417,8 @@ class MaintenanceRequest(models.Model):
             }
             return res
         else:
-            raise UserError(_("Please define maintenance invoicing product in settings!"))
+            raise UserError(
+                _("Please define maintenance invoicing product in settings!"))
 
     def _prepare_invoice(self):
         invoice_vals = {

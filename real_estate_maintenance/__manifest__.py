@@ -10,6 +10,7 @@
     'data': [
         'security/security.xml',
         'security/ir.model.access.csv',
+        'data/mail_activity.xml',
         'data/maintenance_request_data.xml',
         'views/maintenance_request_views.xml',
         'views/maintenance_issue_type_views.xml',

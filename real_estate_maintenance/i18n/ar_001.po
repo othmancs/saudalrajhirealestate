@@ -698,7 +698,7 @@ msgstr "الوحدات"
 #. module: real_estate_maintenance
 #: model:ir.model.fields,field_description:real_estate_maintenance.field_maintenance_request__property_id
 msgid "Property"
-msgstr "العقارات"
+msgstr "الوحدة"
 
 #. module: real_estate_maintenance
 #: model:ir.model,name:real_estate_maintenance.model_maintenance_request

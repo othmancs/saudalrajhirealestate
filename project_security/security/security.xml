@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record model="ir.module.category" id="project_group_categ">
+            <field name="name">Project</field>
+        </record>
+
+        <record id="project_admin_group" model="res.groups">
+            <field name="name">Project Admin</field>
+            <field name="users" eval="[(4, ref('base.user_admin'))]" />
+            <field name="category_id" ref="project_security.project_group_categ"/>
+        </record>
+
+        <record id="project_task_create_group" model="res.groups">
+            <field name="name">Task Creater</field>
+            <field name="users" eval="[(4, ref('base.user_admin'))]" />
+            <field name="category_id" ref="project_security.project_group_categ"/>
+        </record>
+
+        <record id="project_sub_task_create_group" model="res.groups">
+            <field name="name">Sub-Task Creater</field>
+            <field name="users" eval="[(4, ref('base.user_admin'))]" />
+            <field name="category_id" ref="project_security.project_group_categ"/>
+        </record>
+<!-- 
+        <record id="project_write_group" model="res.groups">
+            <field name="name">Write</field>
+            <field name="users" eval="[(4, ref('base.user_admin'))]" />
+            <field name="category_id" ref="project_security.project_group_categ"/>
+        </record> -->
+
+        <record id="project_task_delete_group" model="res.groups">
+            <field name="name">Delete Task</field>
+            <field name="users" eval="[(4, ref('base.user_admin'))]" />
+            <field name="category_id" ref="project_security.project_group_categ"/>
+        </record>
+
+        <record id="project_update_state_group" model="res.groups">
+            <field name="name">Update State</field>
+            <field name="users" eval="[(4, ref('base.user_admin'))]" />
+            <field name="category_id" ref="project_security.project_group_categ"/>
+        </record>
+
+      
+
+    </data>
+</odoo>

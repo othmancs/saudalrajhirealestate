@@ -4,35 +4,17 @@
      License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl-3.0) -->
 <odoo>
 
-    <record id="ir_rule_renting_allowed_operating_units"
-            model="ir.rule">
+
+    <record id="ir_rule_renting_allowed_operating_units" model="ir.rule">
         <field name="model_id" ref="renting.model_rent_property"/>
+        <field name="name">Property from allowed operating units</field>
         <field name="domain_force">['|',('property_address_area','=',False),('property_address_area','in',
             user.operating_unit_ids.ids)]
         </field>
-        <field name="name">Property from allowed operating units</field>
         <field name="global" eval="True"/>
-        <!--        <field eval="0" name="perm_unlink"/>-->
-        <!--        <field eval="0" name="perm_write"/>-->
-        <!--        <field eval="1" name="perm_read"/>-->
-        <!--        <field eval="0" name="perm_create"/>-->
     </record>
-<!--    <record id="ir_rule_products_allowed_operating_units"-->
-<!--            model="ir.rule">-->
-<!--        <field name="model_id" ref="renting.model_product_template"/>-->
-<!--        <field name="domain_force">['|',('property_id.property_address_area','=',False),('property_id.property_address_area','in',-->
-<!--            user.operating_unit_ids.ids)]-->
-<!--        </field>-->
-<!--        <field name="name">Property from allowed operating units</field>-->
-<!--        <field name="global" eval="True"/>-->
-<!--        &lt;!&ndash;        <field eval="0" name="perm_unlink"/>&ndash;&gt;-->
-<!--        &lt;!&ndash;        <field eval="0" name="perm_write"/>&ndash;&gt;-->
-<!--        &lt;!&ndash;        <field eval="1" name="perm_read"/>&ndash;&gt;-->
-<!--        &lt;!&ndash;        <field eval="0" name="perm_create"/>&ndash;&gt;-->
-<!--    </record>-->
 
-    <record id="ir_rule_sale_order_line_allowed_operating_units"
-            model="ir.rule">
+    <record id="ir_rule_sale_order_line_allowed_operating_units" model="ir.rule">
         <field name="model_id" ref="sale.model_sale_order_line"/>
         <field name="domain_force">['|',('operating_unit_id','=',False),('operating_unit_id','in',
             user.operating_unit_ids.ids)]
@@ -46,26 +28,25 @@
     </record>
 
 
-        <record id="rule_rent_property" model="ir.rule">
-            <field name="name">Rent Property Multi Company</field>
-            <field name="model_id" ref="model_rent_property"/>
-            <field eval="True" name="global"/>
-            <field name="domain_force">['|',('company_id','=',False),('company_id', 'in', company_ids)]</field>
-        </record>
 
-        <record id="rule_rent_property_build" model="ir.rule">
-            <field name="name">Rent Property Build Multi Company</field>
-            <field name="model_id" ref="model_rent_property_build"/>
-            <field eval="True" name="global"/>
-            <field name="domain_force">['|',('company_id','=',False),('company_id', 'in', company_ids)]</field>
-        </record>
 
-    <record id="ir_rule_sale_report_allowed_operating_units"
-            model="ir.rule">
+    <record id="rule_rent_property" model="ir.rule">
+        <field name="name">Rent Property Multi Company</field>
+        <field name="model_id" ref="model_rent_property"/>
+        <field eval="True" name="global"/>
+        <field name="domain_force">['|',('company_id','=',False),('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="rule_rent_property_build" model="ir.rule">
+        <field name="name">Rent Property Build Multi Company</field>
+        <field name="model_id" ref="model_rent_property_build"/>
+        <field eval="True" name="global"/>
+        <field name="domain_force">['|',('company_id','=',False),('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="ir_rule_sale_report_allowed_operating_units" model="ir.rule">
         <field name="model_id" ref="sale.model_sale_report"/>
-        <field name="domain_force">['|',('operating_unit_id','=',False),('operating_unit_id','in',
-            user.operating_unit_ids.ids)]
-        </field>
+        <field name="domain_force">['|',('operating_unit_id','=',False),('operating_unit_id','in',user.operating_unit_ids.ids)]</field>
         <field name="name">Sales Report from allowed operating units</field>
         <field name="global" eval="True"/>
         <field eval="0" name="perm_unlink"/>
@@ -73,5 +54,37 @@
         <field eval="1" name="perm_read"/>
         <field eval="0" name="perm_create"/>
     </record>
+
+    <record model="ir.module.category" id="renting_property_categ">
+        <field name="name">Renting Property</field>
+    </record>
+
+    <record id="renting_property_create" model="res.groups">
+        <field name="name">Create</field>
+        <field name="users" eval="[(4, ref('base.user_admin'))]" />
+        <field name="category_id" ref="renting.renting_property_categ"/>
+    </record>
+
+    <record id="renting_property_read" model="res.groups">
+        <field name="name">Read</field>
+        <field name="users" eval="[(4, ref('base.user_admin'))]" />
+        <field name="category_id" ref="renting.renting_property_categ"/>
+    </record>
+
+    <record id="renting_property_write" model="res.groups">
+        <field name="name">Write</field>
+        <field name="users" eval="[(4, ref('base.user_admin'))]" />
+        <field name="category_id" ref="renting.renting_property_categ"/>
+    </record>
+
+    <record id="renting_property_del" model="res.groups">
+        <field name="name">Delete</field>
+        <field name="users" eval="[(4, ref('base.user_admin'))]" />
+        <field name="category_id" ref="renting.renting_property_categ"/>
+    </record>
+
+
+
+
 
 </odoo>

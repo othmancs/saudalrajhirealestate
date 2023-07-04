@@ -151,6 +151,8 @@
                                        attrs="{'invisible': [('subject', '!=', 'value_update')]}"/>
                                 <field name="leased_property"
                                        attrs="{'invisible': [('subject', '!=', 'termination')]}"/>
+                                <field name="end_contractual_relationship"  attrs="{'invisible': [('subject', '!=', 'eviction')]}"
+                                       string="Eviction Date"/>
                                 <field name="fee"
                                        attrs="{'invisible': [('subject', 'not in', ('transfer','eviction','value_update','termination'))]}"/>
                                 <field name="contract_number"

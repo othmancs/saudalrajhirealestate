@@ -50,12 +50,16 @@
                                     <tr style="height:18px;">
                                         <td colspan="3" style="height:18px; font-weight: bold;border: 0px;"
                                             align="right">
-                                            <p>اسم المستأجر
-                                                :
+                                            <div class="row" style="width:50%;">
+                                                <div class="col-8">
+                                                    <p>الأستاذ/
                                                 <span t-esc="o['assigner_id'].partner_id.name"/>
-                                                &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
-                                                المحترم
                                             </p>
+                                                </div>
+                                                <div class="col-4">
+                                                    <p>المحترم</p>
+                                                </div>
+                                            </div>
                                             <p>السلام عليكم ورحمة الله وبركاته</p>
                                         </td>
                                     </tr>
@@ -69,38 +73,47 @@
 
                                         <td colspan="3" style="height:18px; border: 0px;" align="right">
                                             <p style="font-size: 14pt;font-family:MonixBold;">
-                                                إشارة الى الموضوع أعلاه وبالإشارة الى عقد الإيجار الإلكتروني المبرم معكم
-                                                <br/>
+                                                إشارة إلى الموضوع أعلاه وبالإشارة إلى عقد الإيجار الإلكتروني المبرم معكم
                                                 بتاريخ
-                                                <span t-esc="o['beginning_contract']"/>م
-                                                والمتضمن تأجير شقة رقم
+                                                <span t-esc="o['beginning_contract'].strftime('%%Y/%%m/%%d')"/>م
+                                                والمتضمن تأجير<br/> شقة رقم
                                                 &#160;&#160;
                                                 <span t-esc="o.unit_id.product_id.unit_number"/>
                                                 &#160;&#160;
-                                                وعليه
-                                                نود اشعاركم بعدم رغبتنا
+                                                م بقيمة  <span t-esc="'{0:,.2f}'.format(o.unit_id.price_subtotal)"/>ريال
+                                                و المنتهي بتاريخ <span t-esc="o['end_contract'].strftime('%%Y/%%m/%%d')"/>م.
                                                 <br/>
-                                                في تجديد العقد المشار إليه أعلاه على ان يكون يوم
+                                                عليه
+                                                نود اشعاركم بإخلاء العقار المشار له
+                                              أعلاه على ان يكون يوم
                                                 استلام الوحدة الإيجارية
-                                                <br/>
                                                 بتاريخ
-                                                <span t-esc="o['end_contract']"/>م
-                                                (تاريخ نهاية العقد)
+                                                <span t-if="o['end_contractual_relationship']" t-esc="o['end_contractual_relationship'].strftime('%%Y/%%m/%%d')"/>م
                                             </p>
                                             <p style="font-size: 14pt;font-family: 'Times New Roman', Times, serif;">
                                                 كما نود ن نشعركم انه في حال تأخير اخلاء الوحدة المؤجرة بتاريخ
-                                                <span t-esc="o['delay_date']"/>م
-                                                <br/>
+                                                 <span t-if="o['end_contractual_relationship']" t-esc="o['end_contractual_relationship'].strftime('%%Y/%%m/%%d')"/>م
+
                                                 سيتم فرض
-                                                إيجار يومي وقدره
-                                                (<span t-esc="o['fee']"/>)
+                                                إيجار<br/> يومي وقدره
+                                                (<span t-esc="o['fee']"/>ريال)
 
                                                 لليوم الواحد.
                                             </p>
 
                                         </td>
                                     </tr>
-                                    <tr style="height:18px;">
+
+
+                                </tbody>
+                            </table>
+
+                        </div>
+                        <br/><br/><br/><br/>
+                        <div class="row">
+                            <table align="center" class="table" cellpadding="1" cellspacing="1"
+                                   style="width:100%;font-size:18px;border: 0px;" dir="rtl">
+                                  <tr style="height:18px;">
 
                                         <td style="height:18px; width:33%; font-weight: bold;border: 0px;"
                                             align="right">
@@ -117,10 +130,7 @@
                                             <p></p>
                                         </td>
                                     </tr>
-
-                                </tbody>
                             </table>
-
                         </div>
                     </div>
                 </t>

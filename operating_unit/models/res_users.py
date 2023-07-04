@@ -35,13 +35,11 @@ class ResUsers(models.Model):
         column1="user_id",
         column2="operating_unit_id",
         string="Operating Units",
-        default=lambda self: self._default_operating_units(),
     )
 
     default_operating_unit_id = fields.Many2one(
         comodel_name="operating.unit",
         string="Default Operating Unit",
-        default=lambda self: self._default_operating_unit(),
     )
 
     @api.depends("groups_id", "assigned_operating_unit_ids")

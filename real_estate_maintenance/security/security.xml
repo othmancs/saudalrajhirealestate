@@ -1,15 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
-    <record model="ir.module.category" id="model_category_real_estate_maintenance">
+    <record model="ir.module.category" id="category_real_estate_maintenance">
         <field name="name">Maintenance</field>
         <field name="description">Maintenance</field>
         <field name="sequence">21</field>
     </record>
 
+    <record id="group_maintenance_submit" model="res.groups">
+        <field name="name">Maintenance Submit</field>
+        <field name="category_id" ref="real_estate_maintenance.category_real_estate_maintenance"/>
+    </record>
+
+    <record id="group_maintenance_confirm" model="res.groups">
+        <field name="name">Maintenance Confirm</field>
+        <field name="category_id" ref="real_estate_maintenance.category_real_estate_maintenance"/>
+    </record>
+
+    <record id="group_maintenance_review" model="res.groups">
+        <field name="name">Maintenance Review</field>
+        <field name="category_id" ref="real_estate_maintenance.category_real_estate_maintenance"/>
+    </record>
+
     <record id="group_maintenance_manager" model="res.groups">
         <field name="name">Maintenance Manager</field>
-        <field name="category_id" ref="model_category_real_estate_maintenance"/>
+        <field name="category_id" ref="real_estate_maintenance.category_real_estate_maintenance"/>
+    </record>
+    <record id="group_maintenance_property_manager" model="res.groups">
+        <field name="name">Maintenance Property Manager</field>
+        <field name="category_id" ref="real_estate_maintenance.category_real_estate_maintenance"/>
+    </record>
+
+    <record id="group_maintenance_create_bills" model="res.groups">
+        <field name="name">Maintenance Create Bill</field>
+        <field name="category_id" ref="real_estate_maintenance.category_real_estate_maintenance"/>
+    </record>
+
+    <record id="group_maintenance_ceo" model="res.groups">
+        <field name="name">Maintenance CEO</field>
+        <field name="category_id" ref="real_estate_maintenance.category_real_estate_maintenance"/>
+    </record>
+
+    <record id="group_maintenance_property_manager" model="res.groups">
+        <field name="name">Maintenance Property Manager</field>
+        <field name="category_id" ref="real_estate_maintenance.category_real_estate_maintenance"/>
+    </record>
+
+    <record id="group_maintenance_refuse" model="res.groups">
+        <field name="name">Maintenance Refuse</field>
+        <field name="category_id" ref="real_estate_maintenance.category_real_estate_maintenance"/>
     </record>
 
 </odoo>

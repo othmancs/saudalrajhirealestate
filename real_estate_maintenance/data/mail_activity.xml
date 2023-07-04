@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <data>
+        <record id="real_estate_maintenance_activity" model="mail.activity.type">
+            <field name="name">Approval</field>
+            <field name="icon">fa-pencil-square-o</field>
+            <field name="delay_count">0</field>
+            <field name="sequence">12</field>
+        </record>
+    </data>
+</odoo>

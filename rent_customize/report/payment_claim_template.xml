@@ -33,7 +33,7 @@
                                             <span t-esc="o['number']"/>
                                         </p>
 
-                                        <h4 lang="ar-SA" style="padding-top:20px;" align="center">مطالبة بسداد متأخرات
+                                        <h4 lang="ar-SA" style="padding-top:20px;" align="center">مطالبة بالسداد
                                         </h4>
                                     </td>
                                 </tr>
@@ -44,7 +44,7 @@
                                             <span t-esc="o['assigner_id'].partner_id.name"/> &#160;&#160;&#160;&#160;
                                             المحترم/المحترمين
                                         </p>
-                                        <p align="right">السلام عليكم ورحمة الله وبركاته</p>
+                                        <p align="right">السلام عليكم ورحمة الله وبركاته &#160;&#160;&#160;&#160;وبعد</p>
                                     </td>
                                 </tr>
                                 <tr style="height:18px;">
@@ -55,16 +55,12 @@
 
                                         <p>
                                             إشارة إلى الموضوع أعلاه وإشارةً لعقد الأجرة الموقع معكم بتاريخ
-                                            <span t-esc="o['beginning_contract']"/>م
-                                            وحيث أنّه قد ترتب عليكم عدة أقساط متأخرة عن استئجاركم الوحدة
-                                            رقم معرض / مكتب/شقة
-                                            &#160;&#160;
-                                            <span t-esc="o.unit_id.product_id.unit_number"/>
-                                            &#160;&#160;
-                                            في العقار الكائن بحي
-                                            <span t-esc="o.unit_id.property_number.property_name"/>
-                                            بمدينة الرياض، ولم يتم السداد حتى تاريخه علما بأن المتأخرات المترتبة عليكم
-                                            كالآتي:
+                                            <span t-esc="o['beginning_contract'].strftime('%%Y/%%m/%%d')"/>م
+                                            للعقار الكائن بحي<span t-esc="o.unit_id.property_number.property_name"/>
+                                            وحدة رقم <span t-esc="o.unit_id.product_id.unit_number"/> <span t-esc="o.unit_id.product_id.rent_config_unit_type_id.unit_type_name"/>
+                                            بمدينة <span t-field="o.unit_id.property_number.property_address_city"/>,
+                                            نبلغكم بحلول قسط الإيجار المستحق عليكم حسب التفصيل
+                                            الآتي:
                                         </p>
                                     </td>
                                 </tr>
@@ -110,13 +106,12 @@
                                     <td align="right" style="border:0;">
 
                                         <p>
-                                            عليه نأمل من سعادتكم التكرم بالسداد في مدة أقصاها
+                                            عليه نأمل من سعادتكم عمل اللازم لسداد المبلغ حسب العقد و ذلك في مدة أقصاها
                                             (&#160;&#160;<span t-esc="o['payment_period']"/>&#160;&#160;)
-                                            من تاريخ هذا الإنذار،
-                                            وإلا سنضطر وبكل أسف لاتخاذ الإجراء القانوني في حقكم. وسيتم مطالبتكم برسوم
-                                            التكاليف القضائية وأتعاب المحاماة الناتجة عن نظر الدعاوى القضائية.
+                                            من تاريخ هذا الإشعار.
                                         </p>
-                                        <p>
+                                        <br/>
+                                        <p style="color:red;">
                                             تنويه / المطالبة تصدر آليا ولا يعني إرسالها للمستأجر
                                             أي التزام تعاقدي أو نقض خطابات سبق أن وجهت له بتعديل أو الغاء أو نقض
                                             الالتزامات التعاقدية معه.
@@ -156,13 +151,19 @@
                                     </tr>
                                 </tbody>
                             </table>
+                            <br/><br/>
+                            <div dir="rtl" class="text-center">
+                                <h5>شاكرين و مدرين لكم حسن التعاون و التقدير... </h5>
+                            </div>
                         </div>
 
                         <table align="center" class="table table-bordered" cellpadding="1" cellspacing="1"
                                style="width:100%;float: right; font-size:18px; border:0px; margin-top:90px;" dir="rtl">
                             <tbody>
-                                <tr style="height:18px;">
-                                    <td align="center" style="border:0;">اسم المستلم</td>
+                                <tr style="height:18px;" dir="rtl">
+                                    <td align="right" style="border:0;">اسم المستلم
+                                        <h2 t-field="o['assigner_id'].partner_id.name"/>
+                                    </td>
                                     <td align="center" style="border:0;">إدارة العقار</td>
                                 </tr>
                             </tbody>

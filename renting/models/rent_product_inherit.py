@@ -10,7 +10,7 @@ class RentProduct(models.Model):
     unit_area = fields.Float(string='مساحة الوحدة')
     unit_floor_number = fields.Char(string='رقم الطابق')
     unit_rooms_number = fields.Char(string='عدد الغرف')
-    unit_state = fields.Char(compute='_get_state', string='الحالة', default='شاغرة')
+    unit_state = fields.Char(compute='_get_state', string='الحالة')
 
     rent_unit_area = fields.Float(string='المساحة')
 
@@ -183,11 +183,20 @@ class RentProduct(models.Model):
                         total_insurance_value += record.insurance_value
                     line['insurance_value'] = total_insurance_value
         return res
+    
+    @api.depends('unit_state','state_id')
     def _get_state(self):
         for rec in self:
-            print(";;;; ;;;;;     ", rec.name)
             rec.unit_state = 'شاغرة'
             rec.state_id = 'شاغرة'
+            maintenance_id = rec.env['maintenance.request'].sudo().search([
+                ('property_id.product_tmpl_id', '=', rec.id),
+                ('state', 'in',('confirm','ongoing'))
+            ])
+            if maintenance_id :
+                rec.state_id = 'تحت الصيانة'
+                rec.unit_state = 'تحت الصيانة'
+                return
             order = rec.env['sale.order.line'].sudo().search([
                 ('product_id', '=', rec.id),
                 ('property_number', '=', rec.property_id.property_name)

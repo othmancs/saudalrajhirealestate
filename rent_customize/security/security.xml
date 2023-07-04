@@ -1,36 +1,138 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
+        <!-- #################  RENTING SECURITY GROUPS & RULES  ################## -->
+
+        <record model="ir.module.category" id="sales_work_fllow">
+            <field name="name">Renting</field>
+        </record>
+        <record id="submit_rental_order" model="res.groups">
+            <field name="name">Submit Orders</field>
+            <field name="users" eval="[(4, ref('base.user_admin'))]" />
+            <field name="category_id" ref="rent_customize.sales_work_fllow"/>
+        </record>
+        <record id="review_rental_order" model="res.groups">
+            <field name="name">Review Orders</field>
+            <field name="users" eval="[(4, ref('base.user_admin'))]" />
+            <field name="category_id" ref="rent_customize.sales_work_fllow"/>
+        </record>
+
+        <record id="sale_contract_rental_order" model="res.groups">
+            <field name="name">Contract Sale</field>
+            <field name="users" eval="[(4, ref('base.user_admin'))]" />
+            <field name="category_id" ref="rent_customize.sales_work_fllow"/>
+        </record>
+
+        <record id="confirm_contract_rental_order" model="res.groups">
+            <field name="name">Contract Confirm</field>
+            <field name="users" eval="[(4, ref('base.user_admin'))]" />
+            <field name="category_id" ref="rent_customize.sales_work_fllow"/>
+        </record>
+
+        <record id="renew_contract_rental_order" model="res.groups">
+            <field name="name">Renew Contract</field>
+            <field name="users" eval="[(4, ref('base.user_admin'))]" />
+            <field name="category_id" ref="rent_customize.sales_work_fllow"/>
+        </record>
+
+        <record id="cancel_contract_rental_order" model="res.groups">
+            <field name="name">cancel Contract</field>
+            <field name="users" eval="[(4, ref('base.user_admin'))]" />
+            <field name="category_id" ref="rent_customize.sales_work_fllow"/>
+        </record>
+
+        <record id="termination_contract_rental_order" model="res.groups">
+            <field name="name">Termination Contract</field>
+            <field name="users" eval="[(4, ref('base.user_admin'))]" />
+            <field name="category_id" ref="rent_customize.sales_work_fllow"/>
+        </record>
+
         <record id="group_pickup_rental_order" model="res.groups">
             <field name="name">Pickup Rental Order</field>
             <field name="users" eval="[(4, ref('base.user_admin'))]" />
+            <field name="category_id" ref="rent_customize.sales_work_fllow"/>
         </record>
         <record id="show_renting_order_group" model="res.groups">
             <field name="name">Renting Order From Invoice</field>
             <field name="users" eval="[(4, ref('base.user_admin'))]" />
+            <field name="category_id" ref="rent_customize.sales_work_fllow"/>
         </record>
 
-
-        <record model="ir.module.category" id="sales_work_fllow">
-            <field name="name">Sales WorkFllow</field>
-        </record>
-        <record id="submit_rental_order" model="res.groups">
-            <field name="name">Submit Orders</field>
-            <field name="category_id" ref="sales_work_fllow"/>
+        <record id="renting_config_group" model="res.groups">
+            <field name="name">Renting Configuration</field>
             <field name="users" eval="[(4, ref('base.user_admin'))]" />
-        </record>
-        <record id="review_rental_order" model="res.groups">
-            <field name="name">Review Orders</field>
-            <field name="category_id" ref="sales_work_fllow"/>
-            <field name="users" eval="[(4, ref('base.user_admin'))]" />
+            <field name="category_id" ref="rent_customize.sales_work_fllow"/>
         </record>
 
-          <record id="rule_rental_letter_template_multi_company" model="ir.rule">
+        <!-- #################  RENT LETTER SECURITY GROUPS & RULES  ################## -->
+
+        <record model="ir.module.category" id="rental_letter_template_category">
+            <field name="name">Rent Letter template</field>
+        </record>
+
+        <record id="rental_letter_template_manager" model="res.groups">
+            <field name="name">Manager : Create &amp; Delete</field>
+            <field name="users" eval="[(4, ref('base.user_admin'))]" />
+            <field name="category_id" ref="rent_customize.rental_letter_template_category"/>
+        </record>
+
+        <record id="rule_rental_letter_template_multi_company" model="ir.rule">
             <field name="name">Letter Template Multi Company</field>
             <field name="model_id" ref="model_rental_letter_template" />
             <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in',
                 company_ids)]
             </field>
         </record>
+
+        <!-- #################  RENTING REPORTS SECURITY GROUPS ################## -->
+        <record model="ir.module.category" id="renting_report_security">
+            <field name="name">Renting Reports</field>
+        </record>
+        
+        <record id="renting_report_eviction" model="res.groups">
+            <field name="name">Eviction Report</field>
+            <field name="users" eval="[(4, ref('base.user_admin'))]" />
+            <field name="category_id" ref="rent_customize.renting_report_security"/>
+        </record>
+
+        <record id="renting_report_Reporting" model="res.groups">
+            <field name="name">Reporting</field>
+            <field name="users" eval="[(4, ref('base.user_admin'))]" />
+            <field name="category_id" ref="rent_customize.renting_report_security"/>
+        </record>
+
+        <record id="renting_report_contract" model="res.groups">
+            <field name="name">Contract</field>
+            <field name="users" eval="[(4, ref('base.user_admin'))]" />
+            <field name="category_id" ref="rent_customize.renting_report_security"/>
+        </record>
+
+  
+
+        <record id="renting_report_contract_reminder" model="res.groups">
+            <field name="name">Contracts Reminder Report</field>
+            <field name="users" eval="[(4, ref('base.user_admin'))]" />
+            <field name="category_id" ref="rent_customize.renting_report_security"/>
+        </record>
+
+        <record id="renting_report_unit" model="res.groups">
+            <field name="name">Units Rented</field>
+            <field name="users" eval="[(4, ref('base.user_admin'))]" />
+            <field name="category_id" ref="rent_customize.renting_report_security"/>
+        </record>
+
+        <record id="renting_report_confirmed_contract" model="res.groups">
+            <field name="name">Confirmed Contract</field>
+            <field name="users" eval="[(4, ref('base.user_admin'))]" />
+            <field name="category_id" ref="rent_customize.renting_report_security"/>
+        </record>
+
+        <record id="renting_report_contract_master_data" model="res.groups">
+            <field name="name">Contract Master Data</field>
+            <field name="users" eval="[(4, ref('base.user_admin'))]" />
+            <field name="category_id" ref="rent_customize.renting_report_security"/>
+        </record>
+
+
     </data>
 </odoo>

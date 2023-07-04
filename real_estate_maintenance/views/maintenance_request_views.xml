@@ -9,48 +9,36 @@
             <field name="arch" type="xml">
                 <form string="Maintenance Request">
                     <header>
-                        <button type="object" name="action_confirm"
-                            groups="real_estate_maintenance.group_maintenance_manager"
-                            string="Confirm" class="oe_highlight" states="new" />
-                         <button type="object" name="action_create_pr" string="Create Purchase Requisition"
-                            class="oe_highlight"
-                            states="confirm" />
-                        <button type="object" name="action_ongoing" string="Start"
-                            class="oe_highlight"
-                            states="confirm" />
-                        <button type="object" name="action_close" string="Close"
-                            class="oe_highlight" states="ongoing" />
-                        <button type="object" name="action_refuse"
-                            groups="real_estate_maintenance.group_maintenance_manager"
-                            string="Refuse" class="oe_highlight" states="new" />
+                        <button type="object" name="action_to_review" groups="real_estate_maintenance.group_maintenance_submit" string="Submit" class="oe_highlight" states="new" />
+                        <button type="object" name="action_confirm" groups="real_estate_maintenance.group_maintenance_confirm" string="Confirm" class="oe_highlight" states="ceo" />
+                        <button type="object" name="action_review" groups="real_estate_maintenance.group_maintenance_review" string="Review" class="oe_highlight" states="to_review" />
+                        <button type="object" name="prop_manager" groups="real_estate_maintenance.group_maintenance_property_manager" string="Property Manager" class="oe_highlight" states="review" />
+                        <button type="object" name="action_ceo" groups="real_estate_maintenance.group_maintenance_ceo"  string="CEO" class="oe_highlight" states="prop_manager" />
+                        <button type="object" name="action_create_pr" string="Create Purchase Requisition" class="oe_highlight" states="ceo" />
+                        <button type="object" name="action_ongoing" string="Start" class="oe_highlight" states="confirm" />
+                        <button type="object" name="action_close" string="Close" class="oe_highlight" states="ongoing" />
+                        <button type="object" name="action_refuse" groups="real_estate_maintenance.group_maintenance_refuse" string="Refuse" class="oe_highlight" states="new" />
+                        <button type="object" name="create_bills"  groups="real_estate_maintenance.group_maintenance_create_bills" string="Create Invoice" class="oe_highlight" />
                         <field name="customer_invoice_id" invisible="1" />
-                        <button type="object" name="action_create_invoice" string="Create Invoice"
-                            class="oe_highlight"
-                            attrs="{'invisible': ['|', '|', ('invoice_status', '=', 'on-company'), ('customer_invoice_id', '!=', False), ('state', '!=', 'closed')]}" />
+                        <button type="object" name="action_create_invoice" string="Create Invoice" class="oe_highlight" attrs="{'invisible': ['|', '|', ('invoice_status', '=', 'on-company'), ('customer_invoice_id', '!=', False), ('state', '!=', 'closed')]}" />
                         <field name="state" widget="statusbar" />
                     </header>
                     <sheet>
                         <div name="button_box" class="oe_button_box">
-<!--                            <field name="stock_picking_ids" invisible="1" />-->
-<!--                            <button class="oe_stat_button"-->
-<!--                                type="object" name="action_view_stock_pickings"-->
-<!--                                icon="fa-truck">-->
-<!--                                <field string="Pickings" name="stock_pickings_count"-->
-<!--                                    widget="statinfo" />-->
-<!--                            </button>-->
-                             <field name="purchase_requisition_ids" invisible="1" />
-                            <button class="oe_stat_button"
-                                type="object" name="action_view_purchase_requisition"
-                               icon="fa-book">
-                                <field string="Purchase Requisitions" name="purchase_requisition_count"
-                                    widget="statinfo" />
+                            <!--                            <field name="stock_picking_ids" invisible="1" />-->
+                            <!--                            <button class="oe_stat_button"-->
+                            <!-- type="object" name="action_view_stock_pickings"-->
+                            <!-- icon="fa-truck">-->
+                            <!--                                <field string="Pickings" name="stock_pickings_count"-->
+                            <!-- widget="statinfo" />-->
+                            <!--                            </button>-->
+                            <field name="purchase_requisition_ids" invisible="1" />
+                            <button class="oe_stat_button" type="object" name="action_view_purchase_requisition" icon="fa-book">
+                                <field string="Purchase Requisitions" name="purchase_requisition_count" widget="statinfo" />
                             </button>
                             <field name="account_move_ids" invisible="1" />
-                            <button class="oe_stat_button"
-                                type="object" name="action_view_invoices"
-                                icon="fa-money">
-                                <field string="Invoices &amp; Bills" name="account_moves_count"
-                                    widget="statinfo" />
+                            <button class="oe_stat_button" type="object" name="action_view_invoices" icon="fa-money">
+                                <field string="Invoices &amp; Bills" name="account_moves_count" widget="statinfo" />
                             </button>
                         </div>
                         <div class="oe_title">
@@ -60,71 +48,59 @@
                         </div>
                         <group>
                             <group>
-                                <field name="request_date" required="1"
-                                    attrs="{'readonly': [('state', 'in', ('closed', 'refused'))]}" />
+                                <field name="request_date" required="1" attrs="{'readonly': [('state', 'in', ('closed', 'refused'))]}" />
                                 <field name="visit_date" attrs="{'readonly': [('state', 'in', ('closed', 'refused'))]}" />
                                 <field name="end_date" />
+                                <field name="invoicing_state" />
+                                <field name="deadline" />
+
                             </group>
                             <group>
-                                <field name="operating_unit_id" required="1"
-                                    attrs="{'readonly': [('state', 'in', ('closed', 'refused'))]}" />
-                                <field name="property_rent_id"
-                                    domain="[('property_address_area', '=', operating_unit_id)]"
-                                    required="1"
-                                    attrs="{'readonly': [('state', 'in', ('closed', 'refused'))]}" />
-                                <field name="property_id"
-                                    domain="[('property_id', '=', property_rent_id)]" required="1"
-                                    attrs="{'readonly': [('state', 'in', ('closed', 'refused'))]}" />
+                                <field name="maintain_property_type" />
+                                <field name="operating_unit_id" required="1" attrs="{'readonly': [('state', 'in', ('closed', 'refused'))]}" />
+                                <field name="property_rent_id" domain="[('property_address_area', '=', operating_unit_id)]" attrs="{'required': [('maintain_property_type', 'in', ('building','unit'))],'invisible': [('maintain_property_type', 'not in', ('building','unit'))],'readonly': [('state', 'in', ('closed', 'refused'))]}" />
+                                <field name="property_id" domain="[('property_id', '=', property_rent_id)]" attrs="{'required': [('maintain_property_type', 'in', ('unit'))],'invisible': [('maintain_property_type', 'not in', ('unit'))],'readonly': [('state', 'in', ('closed', 'refused'))]}" />
+                                <field name="rent_property_build_id" attrs="{'required': [('maintain_property_type', 'in', ('property'))],'invisible': [('maintain_property_type', 'not in', ('property'))],'readonly': [('state', 'in', ('closed', 'refused'))]}" />
                             </group>
                         </group>
                         <group>
                             <group>
-                                <field name="requester_id"
-                                    attrs="{'readonly': [('state', 'in', ('closed', 'refused'))]}" />
+                                <field name="requester_id" attrs="{'readonly': [('state', 'in', ('closed', 'refused'))]}" />
                                 <field name="issue_type" attrs="{'readonly': [('state', 'in', ('closed', 'refused'))]}" />
+                                <field name="unit_type" attrs="{'readonly': [('state', 'in', ('closed', 'refused'))]}" />
+                                <field name="maintenance_categ" attrs="{'readonly': [('state', 'in', ('closed', 'refused'))]}" />
                                 <field name="maintenance_type" widget="radio" attrs="{'readonly': [('state', 'in', ('closed', 'refused'))]}" />
-                                <field name="invoice_status"
-                                    attrs="{'readonly': [('state', 'in', ('closed', 'refused'))]}" />
-                                <field name="maintenance_responsible_id"
-                                    attrs="{'readonly': [('state', 'in', ('closed', 'refused'))]}" />
+                                <field name="invoice_status" attrs="{'readonly': [('state', 'in', ('closed', 'refused'))]}" />
+                                <field name="maintenance_responsible_id" attrs="{'readonly': [('state', 'in', ('closed', 'refused'))]}" />
                             </group>
                         </group>
                         <notebook>
-                            <page string="Consumed Products"
-                                attrs="{'invisible': [('state', 'in', ('new'))]}"
-                                name="consumed_products">
-                                <field name="maintenance_request_product_line_ids"
-                                    attrs="{'readonly': [('state', 'in', ('closed', 'refused'))]}">
+                            <page string="Consumed Products" attrs="{'invisible': [('state', 'in', ('new'))]}" name="consumed_products">
+                                <field name="maintenance_request_product_line_ids" attrs="{'readonly': [('state', 'in', ('closed', 'refused'))]}">
                                     <tree editable="bottom">
                                         <field name="product_id" />
-                                        <field name="location_id"  invisible="1"/>
+                                        <field name="location_id" invisible="1"/>
                                         <field name="quantity" />
                                     </tree>
                                 </field>
                             </page>
-                            <page string="Expenses"
-                                attrs="{'invisible': [('state', 'in', ('new'))]}"
-                                name="expenses">
-                                <field name="maintenance_request_expense_line_ids"
-                                    attrs="{'readonly': [('state', 'in', ('closed', 'refused'))]}">
+                            <page string="Expenses" attrs="{'invisible': [('state', 'in', ('new'))]}" name="expenses">
+                                <field name="maintenance_request_expense_line_ids" attrs="{'readonly': [('state', 'in', ('closed', 'refused'))]}">
                                     <tree editable="bottom">
                                         <field name="partner_id" />
                                         <field name="product_id" />
                                         <field name="quantity" />
                                         <field name="price_unit" />
+                                        <field name="analytic_account_id" />
                                         <field name="tax_ids" widget="many2many_tags" />
                                     </tree>
                                 </field>
                             </page>
                             <page string="Issue Description" name="issue_description">
-                                <field name="issue_description"
-                                    widget="text"
-                                    readonly="1" />
+                                <field name="issue_description" widget="text" readonly="0" />
                             </page>
                             <page string="Refuse Justification" name="refuse_justification">
-                                <field name="refuse_reason"
-                                    widget="text"
-                                    readonly="1" />
+                                <field name="refuse_reason" widget="text" readonly="0" />
                             </page>
                         </notebook>
                     </sheet>
@@ -143,20 +119,28 @@
             <field name="model">maintenance.request</field>
             <field name="arch" type="xml">
                 <search string="Search">
-                    <group>
-                        <field name="name"
-                            filter_domain="['|', ('name', 'ilike', self), '|', ('property_id', 'ilike', self), ('requester_id', 'ilike', self)]"
-                            string="Maintenance Request" />
-                        <filter string="Confirmed" name="state_confirmed"
-                            domain="[('state', '=', 'confirm')]" />
+                    <group string="State">
                         <filter string="New" name="state_new" domain="[('state', '=', 'new')]" />
-                        <filter string="Archived" name="state_archived"
-                            domain="[('active', '=', False)]" />
-                        <filter string="Ongoing" name="state_ongoing"
-                            domain="[('state', '=', 'ongoing')]" />
-                        <filter string="Closed" name="state_closed"
-                            domain="[('state', '=', 'closed')]" />
-
+                        <filter string="To Review" name="to_review" domain="[('state', '=', 'to_review')]" />
+                        <filter string="Waiting Property Manager" name="review" domain="[('state', '=', 'review')]" />
+                        <filter string="Waiting CEO" name="prop_manager" domain="[('state', '=', 'prop_manager')]" />
+                        <filter string="CEO Approved" name="ceo" domain="[('state', '=', 'ceo')]" />
+                        <filter string="Confirmed" name="state_confirmed" domain="[('state', '=', 'confirm')]" />
+                        <filter string="Ongoing" name="state_ongoing" domain="[('state', '=', 'ongoing')]" />
+                        <filter string="Closed" name="state_closed" domain="[('state', '=', 'closed')]" />
+                        <filter string="Refused" name="refused" domain="[('state', '=', 'refused')]" />
+                    </group>
+                    <group>
+                        <field name="name" filter_domain="['|', ('name', 'ilike', self), '|', ('property_id', 'ilike', self), ('requester_id', 'ilike', self)]" string="Maintenance Request" />
+                        <filter string="Archived" name="state_archived" domain="[('active', '=', False)]" />
+                        <field name="request_date"/>
+                        <field name="visit_date"/>
+                        <filter string="State" name="state" context="{'group_by': 'state'}"/>
+                        <filter string="Requester" name="requester_id" context="{'group_by': 'requester_id'}"/>
+                        <filter string="Maintenance Responsible" name="maintenance_responsible_id" context="{'group_by': 'maintenance_responsible_id'}"/>
+                        <filter string="Property" name="requester_id" context="{'group_by': 'property_id'}"/>
+                        <filter string="Visit Date" name="visit_date" context="{'group_by': 'visit_date:day'}"/>
+                        <filter string="Request Date" name="request_date" context="{'group_by': 'request_date:day'}"/>
                     </group>
                 </search>
             </field>
@@ -175,6 +159,8 @@
                     <field name="visit_date" />
                     <field name="issue_type" />
                     <field name="invoice_status" />
+                    <field name="invoicing_state"/>
+
                     <field name="maintenance_responsible_id" />
                     <field name="state" />
                 </tree>
@@ -226,17 +212,12 @@
         </record>
 
         <!-- Main Menu Item -->
-        <menuitem id="real_estate_maintenance_menu_root"
-            web_icon="real_estate_maintenance,static/description/icon.png"
-            name="Real Estate Maintenance" sequence="70" />
+        <menuitem id="real_estate_maintenance_menu_root" web_icon="real_estate_maintenance,static/description/icon.png" name="Real Estate Maintenance" sequence="70" />
 
         <!-- Menu Item -->
-        <menuitem id="real_estate_maintenance_menu_request"
-            parent="real_estate_maintenance_menu_root"
-            action="maintenance_request_act_window"
-            name="Maintenance Requests" sequence="70" />
+        <menuitem id="real_estate_maintenance_menu_request" parent="real_estate_maintenance_menu_root" action="maintenance_request_act_window" name="Maintenance Requests" sequence="70" />
 
-        
+
 
         <record id="real_estate_maintenance_tree_view_report" model="ir.ui.view">
             <field name="name">Maintenance</field>
@@ -265,9 +246,6 @@
             <field name="view_mode">tree</field>
         </record>
 
-        <menuitem id="real_estate_maintenance_menu_report"
-            parent="real_estate_maintenance_menu_root"
-            action="real_estate_maintenance_action_report"
-            name="Report" sequence="70" />
+        <menuitem id="real_estate_maintenance_menu_report" parent="real_estate_maintenance_menu_root" action="real_estate_maintenance_action_report" name="Report" sequence="70" />
     </data>
 </odoo>

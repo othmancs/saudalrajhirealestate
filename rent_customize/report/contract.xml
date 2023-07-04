@@ -28,12 +28,13 @@
             <field name="view_mode">form</field>
             <field name="target">new</field>
         </record>
-        <menuitem id="sale_renting.menu_rental_reporting" name="Reporting" parent="sale_renting.rental_menu_root"
-                  sequence="5" groups="sales_team.group_sale_manager"/>
-        <menuitem id="menu_rental_reporting_child" name="Reporting" parent="sale_renting.menu_rental_reporting"
-                  sequence="5" groups="sales_team.group_sale_manager" action="sale_renting.action_rental_report"/>
-        <menuitem id="contract_menu_report" name="Contract Report" parent="sale_renting.menu_rental_reporting"
-                  sequence="5" groups="sales_team.group_sale_manager" action="contract_report_action"/>
+
+        <menuitem id="sale_renting.menu_rental_reporting" name="Reports" parent="sale_renting.rental_menu_root" sequence="9" groups="sales_team.group_sale_manager"/>
+
+
+        <menuitem id="menu_rental_reporting_child" name="Reporting" parent="sale_renting.menu_rental_reporting" sequence="5" groups="rent_customize.renting_report_Reporting" action="sale_renting.action_rental_report"/>
+
+        <menuitem id="contract_menu_report" name="Contract Report" parent="sale_renting.menu_rental_reporting" sequence="8" groups="rent_customize.renting_report_contract" action="contract_report_action"/>
 
     </data>
 </odoo>

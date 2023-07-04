@@ -2,6 +2,9 @@ id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_contract_wizard,contract_wizard,model_contract_wizard,,1,1,1,1
 access_rent_log,rent_log,model_rent_log,,1,1,1,1
 access_transfer_apartment_wizard,transfer.apartment.wizard,model_transfer_apartment_wizard,,1,1,1,1
-access_rental_letter_template,rental.letter.template,model_rental_letter_template,,1,1,1,1
 access_rent_due_invoice,rent.due.invoice,model_rent_due_invoice,,1,1,1,1
 access_contract_reminder_report,contract.reminder.report,model_contract_reminder_report,,1,1,1,1
+
+
+access_rental_letter_template,rental.letter.template,model_rental_letter_template,rent_customize.rental_letter_template_manager,1,1,1,1
+access_rental_letter_template_user,rental.letter.template.user,model_rental_letter_template,base.group_user,1,1,0,0

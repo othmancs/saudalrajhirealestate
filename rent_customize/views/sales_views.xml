@@ -13,34 +13,27 @@
                 <!--          <div class="badge-pill badge-danger float-right" attrs="{'invisible': ['|', ('state', 'not in', ['sale', 'done']),'|', ('rental_status', '!=', 'return'), ('has_late_lines', '=', False)]}">Late Return</div>-->
                 <!--          <div class="badge-pill badge-success float-right" attrs="{'invisible': ['|', ('state', 'not in', ['sale', 'done']), ('rental_status', '!=', 'returned')]}">Returned</div>-->
                 <!--        -->
-                 <xpath expr="//div[@name='button_box']" position="inside">
-                     <button type="object" name="action_open_letters" class="oe_stat_button"
-                                icon="fa-envelope">
-                            <field name="letter_count" widget="statinfo" string="Letters"
-                                   attrs="{'invisible': [('letter_count', '=', 0)]}"/>
-                        </button>
-                 </xpath>
-               <xpath expr="//button[@name='action_quotation_send']" position="before">
-                    <button name="action_submit" states="draft" string="Submit" type="object" class="oe_highlight"
-                    groups="rent_customize.submit_rental_order"/>
-                   <button name="action_review" states="review" string="Reviewed" type="object" class="oe_highlight"
-                   groups="rent_customize.review_rental_order"/>
+                <xpath expr="//div[@name='button_box']" position="inside">
+                    <button type="object" name="action_open_letters" class="oe_stat_button" icon="fa-envelope">
+                        <field name="letter_count" widget="statinfo" string="Letters" attrs="{'invisible': [('letter_count', '=', 0)]}"/>
+                    </button>
+                </xpath>
+                <xpath expr="//button[@name='action_quotation_send']" position="before">
+                    <button name="action_submit" states="draft" string="Submit" type="object" class="oe_highlight" groups="rent_customize.submit_rental_order"/>
+                    <button name="action_review" states="review" string="Reviewed" type="object" class="oe_highlight" groups="rent_customize.review_rental_order"/>
                 </xpath>
                 <xpath expr="//div[@class='badge-pill badge-info float-right']" position="replace">
-                    <div class="badge-pill badge-info float-right"
-                         attrs="{'invisible': ['|', ('state', 'not in', ['sale', 'done']),'|', ('rental_status', '!=', 'sent'), ('has_late_lines', '=', True)]}">
+                    <div class="badge-pill badge-info float-right" attrs="{'invisible': ['|', ('state', 'not in', ['sale', 'done']),'|', ('rental_status', '!=', 'sent'), ('has_late_lines', '=', True)]}">
                         Confirmed
                     </div>
                 </xpath>
                 <xpath expr="//div[@class='badge-pill badge-warning float-right']" position="replace">
-                    <div class="badge-pill badge-warning float-right"
-                         attrs="{'invisible': ['|','|', ('state', 'not in', ['done', 'occupied']), ('rental_status', '!=', 'pickup'), ('has_late_lines', '=', True)]}">
+                    <div class="badge-pill badge-warning float-right" attrs="{'invisible': ['|','|', ('state', 'not in', ['done', 'occupied']), ('rental_status', '!=', 'pickup'), ('has_late_lines', '=', True)]}">
                         Picked-up
                     </div>
                 </xpath>
                 <xpath expr="//div[@class='badge-pill badge-success float-right']" position="replace">
-                    <div class="badge-pill badge-success float-right"
-                         attrs="{'invisible': ['|', ('state', 'not in', ['cancel','termination']), ('rental_status', '!=', 'returned')]}">
+                    <div class="badge-pill badge-success float-right" attrs="{'invisible': ['|', ('state', 'not in', ['cancel','termination']), ('rental_status', '!=', 'returned')]}">
                         Returned
                     </div>
                 </xpath>
@@ -97,8 +90,7 @@
                     </sheet>
                     <footer>
                         <button name="do_transfer" type="object" string="Transfer" class="oe_highlight"/>
-                        <button name="do_transfer_and_print" type="object" string="Transfer and print" invisible="1"
-                                class="oe_highlight"/>
+                        <button name="do_transfer_and_print" type="object" string="Transfer and print" invisible="1" class="oe_highlight"/>
                     </footer>
                 </form>
             </field>
@@ -121,27 +113,22 @@
                     <field name="apartment_insurance" required="1"/>
                     <field name="refund_insurance"/>
                 </xpath>
-                <xpath expr="//sheet/notebook/page[@name='property_stats']//field[@name='order_property_state']//page[@name='pickup_contract']"
-                       position="inside">
+                <xpath expr="//sheet/notebook/page[@name='property_stats']//field[@name='order_property_state']//page[@name='pickup_contract']" position="inside">
                     <group string="المرفقات">
                         <field name="receipt_attachment_ids" widget="many2many_binary" nolabel="1"/>
                     </group>
                 </xpath>
-                <xpath expr="//sheet/notebook/page[@name='property_stats']//field[@name='order_property_state']//page[@name='return_contract']"
-                       position="inside">
+                <xpath expr="//sheet/notebook/page[@name='property_stats']//field[@name='order_property_state']//page[@name='return_contract']" position="inside">
                     <group string="المرفقات">
                         <field name="delivery_attachment_ids" widget="many2many_binary" nolabel="1"/>
                     </group>
                 </xpath>
                 <xpath expr="//button[@name='action_cancel']" position="replace">
                     <field name="no_of_invoiced" invisible="1"/>
-                    <button name="action_cancel" type="object" string="Cancel"
-                            attrs="{'invisible': ['|','|', ('state', 'not in', ['sent', 'sale', 'occupied', 'termination']), ('id', '=', False), ('no_of_invoiced', '>', 0)]}"/>
-                    <button name="action_termination" type="object" string="Termination" class="oe_highlight"
-                            states="occupied"/>
-                    <button name="action_refund_insurance" type="object" string="Refund Insurance" class="oe_highlight"
-                            attrs="{'invisible':['|', ('refund_insurance', '=', True), ('state', '!=', 'termination')]}"/>
-                    <button name="renew_contract" type="object" string="Renew" class="oe_highlight"/>
+                    <button name="action_cancel" type="object" string="Cancel" groups="rent_customize.cancel_contract_rental_order" attrs="{'invisible': ['|','|', ('state', 'not in', ['sent', 'sale', 'occupied', 'termination']), ('id', '=', False), ('no_of_invoiced', '>', 0)]}"/>
+                    <button name="action_termination" type="object" string="Termination" class="oe_highlight" groups="rent_customize.termination_contract_rental_order" states="occupied"/>
+                    <button name="action_refund_insurance" type="object" string="Refund Insurance" class="oe_highlight" attrs="{'invisible':['|', ('refund_insurance', '=', True), ('state', '!=', 'termination')]}"/>
+                    <button name="renew_contract" type="object" string="Renew" groups="rent_customize.renew_contract_rental_order" class="oe_highlight"/>
                     <!-- attrs="{'invisible':[('state', 'not in', ['occupied', 'termination'])]}" -->
                     <field name="no_of_invoiced" invisible="1"/>
                     <field name="has_late_lines" invisible="1"/>
@@ -151,10 +138,10 @@
         </record>
 
 
-         <record id="sale.view_order_form" model="ir.ui.view">
-                                 <field name="priority" eval="15"/>
+        <record id="sale.view_order_form" model="ir.ui.view">
+            <field name="priority" eval="15"/>
 
-         </record>
+        </record>
 
         <record id="rent_view_order_form" model="ir.ui.view">
             <field name="name">sale.order</field>
@@ -167,26 +154,27 @@
                 <xpath expr="//button[@name='action_confirm'][2]" position="attributes">
                     <attribute name="attrs">{'invisible': [('state', 'not in', ['approve'])]}</attribute>
                 </xpath>
+                <xpath expr="//button[@name='action_confirm'][2]" position="attributes">
+                    <attribute name="groups">rent_customize.confirm_contract_rental_order</attribute>
+                </xpath>
                 <div class="oe_button_box" position="inside">
                     <field name="transferred_id" invisible="1"/>
                     <field name="new_rental_id" invisible="1"/>
-                    <button class="oe_stat_button" attrs="{'invisible':[('new_rental_id', '=', False)]}"
-                            name="action_view_transfer" type="object" icon="fa-building-o">
+                    <button class="oe_stat_button" attrs="{'invisible':[('new_rental_id', '=', False)]}" name="action_view_transfer" type="object" icon="fa-building-o">
                         New Rental
                     </button>
                     <field name="old_rent_ids" invisible="1"/>
-                    <button class="oe_stat_button" attrs="{'invisible':[('old_rent_ids', '=', [])]}"
-                            name="action_view_old_contract" type="object" icon="fa-building-o">
+                    <button class="oe_stat_button" attrs="{'invisible':[('old_rent_ids', '=', [])]}" name="action_view_old_contract" type="object" icon="fa-building-o">
                         Old Rental
                     </button>
-                    <button class="oe_stat_button" attrs="{'invisible':[('transferred_id', '=', False)]}"
-                            name="action_view_transferred" type="object" icon="fa-building-o">
+                    <button class="oe_stat_button" attrs="{'invisible':[('transferred_id', '=', False)]}" name="action_view_transferred" type="object" icon="fa-building-o">
                         Transferred from
                     </button>
                 </div>
 
             </field>
         </record>
+
         <record id="sale_renting.rental_order_action" model="ir.actions.act_window">
             <field name="name">Rental Orders</field>
             <field name="type">ir.actions.act_window</field>
@@ -224,10 +212,7 @@
                     <field name="partner_id"/>
                     <field name="user_id" optional="show" widget="many2one_avatar_user"/>
                     <field name="amount_total"/>
-                    <field name="rental_status" widget="badge"
-                           decoration-info="rental_status == 'draft' or rental_status == 'sent'"
-                           decoration-warning="rental_status == 'pickup'"
-                           decoration-success="rental_status == 'return'"/>
+                    <field name="rental_status" widget="badge" decoration-info="rental_status == 'draft' or rental_status == 'sent'" decoration-warning="rental_status == 'pickup'" decoration-success="rental_status == 'return'"/>
                 </tree>
             </field>
         </record>
@@ -249,21 +234,17 @@
                     <field name="fromdate" invisible="1"/>
                     <field name="todate" invisible="1"/>
                 </xpath>
-<!--                <xpath expr="//field[@name='order_line']/tree/field[@name='product_id']" position="attributes">-->
-<!--                    <attribute name="context">-->
-<!--                        [('product_tmpl_id.property_id','=',property_number),('unit_rented','=',False)]-->
-<!--                    </attribute>-->
-<!--                </xpath>-->
+                <!--                <xpath expr="//field[@name='order_line']/tree/field[@name='product_id']" position="attributes">-->
+                <!--                    <attribute name="context">-->
+                <!-- [('product_tmpl_id.property_id','=',property_number),('unit_rented','=',False)]-->
+                <!--                    </attribute>-->
+                <!--                </xpath>-->
                 <xpath expr="//button[@name='action_quotation_send']" position="before">
-                    <button name="action_pickup" type="object" class="btn-primary" string="PICKUP"
-                            groups="rent_customize.group_pickup_rental_order"
-                            attrs="{'invisible':['|', ('rental_status','not in',['sent']), ('state', 'not in', ['sale', 'done'])]}"/>
-                    <button name="action_transfer" type="object" class="btn-primary" string="Contract Sale"
-                            attrs="{'invisible':[ ('transferred', '=', True)]}"/>
+                    <button name="action_pickup" type="object" class="btn-primary" string="PICKUP" groups="rent_customize.group_pickup_rental_order" attrs="{'invisible':['|', ('rental_status','not in',['sent']), ('state', 'not in', ['sale', 'done'])]}"/>
+                    <button name="action_transfer" type="object" class="btn-primary" string="Contract Sale" groups="rent_customize.sale_contract_rental_order" attrs="{'invisible':[ ('transferred', '=', True)]}"/>
                     <!--                    <button name="%(rent_customize.apartment_transfer_wizard_action)d" type="action" class="btn-primary" string="Print Transfer"-->
-                    <!--                            attrs="{'invisible':[ ('transferred', '!=', True)]}"/>-->
-                    <button name="print_transfer" type="object" class="btn-primary" string="Print Transfer"
-                            attrs="{'invisible':[ ('transferred', '!=', True)]}"/>
+                    <!-- attrs="{'invisible':[ ('transferred', '!=', True)]}"/>-->
+                    <button name="print_transfer" type="object" class="btn-primary" string="Print Transfer" attrs="{'invisible':[ ('transferred', '!=', True)]}"/>
 
 
                     <field name="transferred" invisible="1"/>
@@ -276,8 +257,7 @@
                 <xpath expr="//field[@name='payment_term_id']" position="after">
 
                     <field name="annual_increase"/>
-                    <field name="annual_increase_type"
-                           attrs="{'invisible':[('annual_increase', '!=', True)], 'required':[('annual_increase', '=', True)]}"/>
+                    <field name="annual_increase_type" attrs="{'invisible':[('annual_increase', '!=', True)], 'required':[('annual_increase', '=', True)]}"/>
                     <field name="annual_amount" attrs="{'invisible':[ ('annual_increase', '!=', True)]}"/>
                 </xpath>
                 <xpath expr="//notebook" position="inside">
@@ -293,6 +273,13 @@
                     </page>
                 </xpath>
             </field>
+        </record>
+
+
+
+
+        <record model="ir.ui.menu" id="sale_renting.menu_rental_config">
+            <field name="groups_id" eval="[(6,0,[ref('rent_customize.renting_config_group')])]"/>
         </record>
 
         <record id="update_invoice_status_action_server" model="ir.actions.server">

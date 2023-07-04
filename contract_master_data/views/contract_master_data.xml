@@ -72,7 +72,7 @@
             <field name="context">{'group_by':[]}</field>
         </record> -->
 
-        <menuitem id="contract_master_data_action_menu" name="Contract Master Data" parent="sale_renting.menu_rental_reporting" sequence="19" action="contract_master_data_action"/>
+        <menuitem id="contract_master_data_action_menu" name="Contract Master Data" parent="sale_renting.menu_rental_reporting" groups="rent_customize.renting_report_contract_master_data" sequence="19" action="contract_master_data_action"/>
     </data>
 
 </odoo>

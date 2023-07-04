@@ -51,6 +51,7 @@
                   name="Contracts Reminder Report"
                   action="action_contract_reminder_report"
                   parent="sale_renting.menu_rental_reporting"
+                  groups="rent_customize.renting_report_contract_reminder"
                   sequence="5"/>
 
 

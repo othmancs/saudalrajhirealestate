@@ -55,6 +55,7 @@
                   name="Eviction Report"
                   action="eviction_report_action"
                   parent="sale_renting.menu_rental_reporting"
+                  groups="rent_customize.renting_report_eviction"
                   sequence="4"/>
 
     </data>
