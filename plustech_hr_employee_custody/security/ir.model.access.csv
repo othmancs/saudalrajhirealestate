@@ -1,5 +1,6 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_plustech_hr_employee_custody_plustech_hr_employee_custody,plustech_hr_employee_custody,model_employee_custody,employee_custody_user,1,1,1,1
+access_hr_custody_user,hr.custody.user,model_employee_custody,employee_custody_user,1,0,0,0
+access_hr_custody_manager,hr.custody.manager,model_employee_custody,employee_custody_manager,1,1,1,1
 access_renew_renew,renew_renew,model_renew_renew,employee_custody_user,1,1,1,1
 access_custody_line,custody_line,model_custody_line,employee_custody_user,1,1,1,1
 access_product_product,product.product custody manager,model_product_product,employee_custody_manager,1,1,1,1

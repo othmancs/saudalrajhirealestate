@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="crossovered_budget_view_form_inherit" model="ir.ui.view">
+            <field name="name">crossovered.budget.form.inherit</field>
+            <field name="model">crossovered.budget</field>
+            <field name="inherit_id" ref="account_budget.crossovered_budget_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//button[@name='action_budget_confirm']" position="attributes">
+                    <attribute name="groups">account_security.group_account_budget_review,account_security.group_account_budget_confirm</attribute>
+                </xpath>
+                 <xpath expr="//button[@name='action_budget_validate']" position="attributes">
+                    <attribute name="groups">account_security.group_account_budget_confirm</attribute>
+                </xpath>
+                 <xpath expr="//button[@name='action_budget_done']" position="attributes">
+                    <attribute name="groups">account_security.group_account_budget_confirm</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <!--     menuitems   -->
+        <record id="account_budget.menu_act_crossovered_budget_view" model="ir.ui.menu">
+            <field name="groups_id"
+                   eval="[(6,0, [ref('account_security.group_account_budget_confirm'),
+                   ref('account_security.group_account_budget_create'), ref('account_security.group_account_budget_review')])]"/>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+
+        <record id="group_account_reconciliation" model="res.groups">
+            <field name="name">Show Reconciliations Menu</field>
+        </record>
+
+        <record id="group_account_tax_adjustment" model="res.groups">
+            <field name="name">Show Tax Adjustment Menu</field>
+        </record>
+
+        <record id="group_account_lock_dates" model="res.groups">
+            <field name="name">Show Lock Dates Menu</field>
+        </record>
+        <record id="group_account_configuration" model="res.groups">
+            <field name="name">Show Accounting Configuration Menu</field>
+        </record>
+        <record id="group_account_partner_merge" model="res.groups">
+            <field name="name">Show Partner Merge Action</field>
+        </record>
+        <record id="group_account_create_product" model="res.groups">
+            <field name="name">Access to Create Product</field>
+        </record>
+
+        <!--     Customer Invoices   -->
+        <record model="ir.module.category" id="module_category_accounting_accounting_customer_invoice">
+            <field name="name">Customer Invoices</field>
+            <field name="parent_id" ref="base.module_category_accounting_accounting"/>
+            <field name="sequence">10</field>
+        </record>
+
+        <record id="group_account_customer_invoice_confirm" model="res.groups">
+            <field name="name">Confirm Customer Invoices</field>
+            <field name="category_id" ref="module_category_accounting_accounting_customer_invoice"/>
+        </record>
+
+        <record id="group_account_customer_invoices_create" model="res.groups">
+            <field name="name">Create Customer Invoices</field>
+            <field name="category_id" ref="module_category_accounting_accounting_customer_invoice"/>
+        </record>
+
+        <record id="group_account_customer_invoices_review" model="res.groups">
+            <field name="name">Review Customer Invoices</field>
+            <field name="category_id" ref="module_category_accounting_accounting_customer_invoice"/>
+        </record>
+
+        <!--     Vendor Bills   -->
+        <record model="ir.module.category" id="module_category_accounting_accounting_vendor_bills">
+            <field name="name">Vendor Bills</field>
+            <field name="parent_id" ref="base.module_category_accounting_accounting"/>
+            <field name="sequence">10</field>
+        </record>
+
+        <record id="group_account_vendor_bill_confirm" model="res.groups">
+            <field name="name">Confirm Vendor Bills</field>
+            <field name="category_id" ref="module_category_accounting_accounting_vendor_bills"/>
+        </record>
+
+        <record id="group_account_vendor_bill_create" model="res.groups">
+            <field name="name">Create Vendor Bills</field>
+            <field name="category_id" ref="module_category_accounting_accounting_vendor_bills"/>
+        </record>
+
+        <record id="group_account_vendor_bill_review" model="res.groups">
+            <field name="name">Review Vendor Bills</field>
+            <field name="category_id" ref="module_category_accounting_accounting_vendor_bills"/>
+        </record>
+
+        <!--     Journal Entries   -->
+        <record model="ir.module.category" id="module_category_accounting_accounting_journal_entries">
+            <field name="name">Journal Entries</field>
+            <field name="parent_id" ref="base.module_category_accounting_accounting"/>
+            <field name="sequence">10</field>
+        </record>
+
+        <record id="group_account_journal_entry_confirm" model="res.groups">
+            <field name="name">Confirm Journal Entries</field>
+            <field name="category_id" ref="module_category_accounting_accounting_journal_entries"/>
+        </record>
+
+        <record id="group_account_journal_entry_create" model="res.groups">
+            <field name="name">Create Journal Entries</field>
+            <field name="category_id" ref="module_category_accounting_accounting_journal_entries"/>
+        </record>
+
+        <record id="group_account_journal_entry_review" model="res.groups">
+            <field name="name">Review Journal Entries</field>
+            <field name="category_id" ref="module_category_accounting_accounting_journal_entries"/>
+        </record>
+
+        <!--     Customer Payments   -->
+        <record model="ir.module.category" id="module_category_accounting_accounting_customer_payment">
+            <field name="name">Customer Payments</field>
+            <field name="parent_id" ref="base.module_category_accounting_accounting"/>
+            <field name="sequence">10</field>
+        </record>
+
+        <record id="group_account_customer_payment_confirm" model="res.groups">
+            <field name="name">Confirm Customer Payment</field>
+            <field name="category_id" ref="module_category_accounting_accounting_customer_payment"/>
+        </record>
+
+        <record id="group_account_customer_payment_create" model="res.groups">
+            <field name="name">Create Customer Payment</field>
+            <field name="category_id" ref="module_category_accounting_accounting_customer_payment"/>
+        </record>
+
+        <record id="group_account_customer_payment_review" model="res.groups">
+            <field name="name">Review Customer Payment</field>
+            <field name="category_id" ref="module_category_accounting_accounting_customer_payment"/>
+        </record>
+
+        <!--     Vendor Payments   -->
+        <record model="ir.module.category" id="module_category_accounting_accounting_vendor_payment">
+            <field name="name">Vendor Payments</field>
+            <field name="parent_id" ref="base.module_category_accounting_accounting"/>
+            <field name="sequence">10</field>
+        </record>
+
+        <record id="group_account_vendor_payment_confirm" model="res.groups">
+            <field name="name">Confirm Vendor Payment</field>
+            <field name="category_id" ref="module_category_accounting_accounting_vendor_payment"/>
+        </record>
+
+        <record id="group_account_vendor_payment_create" model="res.groups">
+            <field name="name">Create Vendor Payment</field>
+            <field name="category_id" ref="module_category_accounting_accounting_vendor_payment"/>
+        </record>
+
+        <record id="group_account_vendor_payment_review" model="res.groups">
+            <field name="name">Review Vendor Payment</field>
+            <field name="category_id" ref="module_category_accounting_accounting_vendor_payment"/>
+        </record>
+
+        <!--      accounting reports   -->
+
+        <record model="ir.module.category" id="module_category_accounting_accounting_reports">
+            <field name="name">Accounting Reports</field>
+            <field name="parent_id" ref="base.module_category_accounting_accounting"/>
+            <field name="sequence">11</field>
+        </record>
+
+        <record id="group_account_profit_and_los" model="res.groups">
+            <field name="name">Profit and Los</field>
+            <field name="category_id" ref="module_category_accounting_accounting_reports"/>
+        </record>
+
+        <record id="group_account_balance_sheet" model="res.groups">
+            <field name="name">Balance Sheet</field>
+            <field name="category_id" ref="module_category_accounting_accounting_reports"/>
+        </record>
+
+        <record id="group_account_executive_summary" model="res.groups">
+            <field name="name">Executive</field>
+            <field name="category_id" ref="module_category_accounting_accounting_reports"/>
+        </record>
+        <record id="group_account_trial_balance" model="res.groups">
+            <field name="name">Trial Balance</field>
+            <field name="category_id" ref="module_category_accounting_accounting_reports"/>
+        </record>
+        <record id="group_account_general_ledger" model="res.groups">
+            <field name="name">General Ledger</field>
+            <field name="category_id" ref="module_category_accounting_accounting_reports"/>
+        </record>
+
+         <record id="group_account_partner_ledger" model="res.groups">
+            <field name="name">Partner Ledger</field>
+            <field name="category_id" ref="module_category_accounting_accounting_reports"/>
+        </record>
+         <record id="group_account_cash_flow" model="res.groups">
+            <field name="name">Cash Flow</field>
+            <field name="category_id" ref="module_category_accounting_accounting_reports"/>
+        </record>
+
+        <record id="group_account_aged_receivable" model="res.groups">
+            <field name="name">Aged Receivable</field>
+            <field name="category_id" ref="module_category_accounting_accounting_reports"/>
+        </record>
+         <record id="group_account_aged_payable" model="res.groups">
+            <field name="name">Aged Payable</field>
+            <field name="category_id" ref="module_category_accounting_accounting_reports"/>
+        </record>
+        <record id="group_account_partner_ageing" model="res.groups">
+            <field name="name">Partner Ageing</field>
+            <field name="category_id" ref="module_category_accounting_accounting_reports"/>
+        </record>
+        <record id="group_account_tax_report" model="res.groups">
+            <field name="name">Tax Report</field>
+            <field name="category_id" ref="module_category_accounting_accounting_reports"/>
+        </record>
+
+    </data>
+</odoo>

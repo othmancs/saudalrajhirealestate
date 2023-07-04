@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!--     menuitems   -->
+        <record id="account_reports.account_financial_html_report_menu_1" model="ir.ui.menu">
+            <field name="groups_id"
+                   eval="[(6,0, [ref('account_security.group_account_profit_and_los')])]"/>
+        </record>
+
+        <record id="account_dynamic_reports.account_report_pl_wiz" model="ir.ui.menu">
+            <field name="groups_id"
+                   eval="[(6,0, [ref('account_security.group_account_profit_and_los')])]"/>
+        </record>
+
+        <record id="account_reports.account_financial_html_report_menu_2" model="ir.ui.menu">
+            <field name="groups_id"
+                   eval="[(6,0, [ref('account_security.group_account_balance_sheet')])]"/>
+        </record>
+        <record id="account_dynamic_reports.account_report_bs_wiz" model="ir.ui.menu">
+            <field name="groups_id"
+                   eval="[(6,0, [ref('account_security.group_account_balance_sheet')])]"/>
+        </record>
+         <record id="account_dynamic_reports.account_report_tb_wiz" model="ir.ui.menu">
+            <field name="groups_id"
+                   eval="[(6,0, [ref('account_security.group_account_trial_balance')])]"/>
+        </record>
+         <record id="account_reports.menu_action_account_report_coa" model="ir.ui.menu">
+            <field name="groups_id"
+                   eval="[(6,0, [ref('account_security.group_account_trial_balance')])]"/>
+        </record>
+         <record id="account_dynamic_reports.account_report_gl_wiz" model="ir.ui.menu">
+            <field name="groups_id"
+                   eval="[(6,0, [ref('account_security.group_account_general_ledger')])]"/>
+        </record>
+        <record id="account_reports.menu_action_account_report_general_ledger" model="ir.ui.menu">
+            <field name="groups_id"
+                   eval="[(6,0, [ref('account_security.group_account_general_ledger')])]"/>
+        </record>
+         <record id="account_reports.menu_action_account_report_partner_ledger" model="ir.ui.menu">
+            <field name="groups_id"
+                   eval="[(6,0, [ref('account_security.group_account_partner_ledger')])]"/>
+        </record>
+         <record id="account_dynamic_reports.account_report_plg_wiz" model="ir.ui.menu">
+            <field name="groups_id"
+                   eval="[(6,0, [ref('account_security.group_account_partner_ledger')])]"/>
+        </record>
+         <record id="account_dynamic_reports.account_report_cf_wiz" model="ir.ui.menu">
+            <field name="groups_id"
+                   eval="[(6,0, [ref('account_security.group_account_cash_flow')])]"/>
+        </record>
+        <record id="account_reports.menu_action_account_report_aged_receivable" model="ir.ui.menu">
+            <field name="groups_id"
+                   eval="[(6,0, [ref('account_security.group_account_aged_receivable')])]"/>
+        </record>
+        <record id="account_reports.menu_action_account_report_aged_payable" model="ir.ui.menu">
+            <field name="groups_id"
+                   eval="[(6,0, [ref('account_security.group_account_aged_payable')])]"/>
+        </record>
+         <record id="account_dynamic_reports.account_report_pa_wiz" model="ir.ui.menu">
+            <field name="groups_id"
+                   eval="[(6,0, [ref('account_security.group_account_partner_ageing')])]"/>
+        </record>
+         <record id="account_reports.menu_action_account_report_gt" model="ir.ui.menu">
+            <field name="groups_id"
+                   eval="[(6,0, [ref('account_security.group_account_tax_report')])]"/>
+        </record>
+    </data>
+</odoo>

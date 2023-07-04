@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="view_account_payment_form_inherit" model="ir.ui.view">
+            <field name="name">account.payment.form.inherit</field>
+            <field name="model">account.payment</field>
+            <field name="inherit_id" ref="account.view_account_payment_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//button[@name='action_post']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+                <xpath expr="//button[@name='action_post']" position="before">
+                    <button name="action_review" string="Review Done" type="object" class="oe_highlight"
+                            groups="account_security.group_account_customer_payment_review"
+                            attrs="{'invisible':['|',('payment_type', '!=', 'inbound'),('state','!=', 'draft')]}"
+                    />
+                    <button name="action_post" string="Confirm" type="object" class="oe_highlight"
+                            attrs="{'invisible': ['|',('payment_type', '!=', 'inbound'),('state', '!=', 'review')]}"
+                            data-hotkey="v"
+                            groups="account_security.group_account_customer_payment_confirm"/>
+
+                    <button name="action_review" string="Review Done" type="object" class="oe_highlight"
+                            groups="account_security.group_account_vendor_payment_review"
+                            attrs="{'invisible':['|',('payment_type', '!=', 'outbound'),('state','!=', 'draft')]}"
+                    />
+                    <button name="action_post" string="Confirm" type="object" class="oe_highlight"
+                            attrs="{'invisible': ['|',('payment_type', '!=', 'outbound'),('state', '!=', 'review')]}"
+                            data-hotkey="v"
+                            groups="account_security.group_account_vendor_payment_confirm"/>
+                </xpath>
+            </field>
+        </record>
+
+
+        <!--     menuitems   -->
+        <record id="account.menu_action_account_payments_receivable" model="ir.ui.menu">
+            <field name="groups_id"
+                   eval="[(6,0, [ref('account_security.group_account_customer_payment_confirm'),
+                           ref('account_security.group_account_customer_payment_create'),
+                           ref('account_security.group_account_customer_payment_review')])]"/>
+        </record>
+
+        <record id="account.menu_action_account_payments_payable" model="ir.ui.menu">
+            <field name="groups_id"
+                   eval="[(6,0, [ref('account_security.group_account_vendor_payment_confirm'),
+                           ref('account_security.group_account_vendor_payment_create'),
+                           ref('account_security.group_account_vendor_payment_review')])]"/>
+        </record>
+    </data>
+</odoo>

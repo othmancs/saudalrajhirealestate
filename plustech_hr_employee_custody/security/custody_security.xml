@@ -16,22 +16,6 @@
         <field name="users" eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]"/>
     </record>
 
-    <record id="employee_custody_hr_approval" model="res.groups">
-        <field name="name">HR Approval</field>
-        <field name="category_id" ref="base.module_category_human_resources_custody"/>
-        <field name="implied_ids" eval="[(4, ref('plustech_hr_employee_custody.employee_custody_user'))]"/>
-    </record>
-    <record id="employee_custody_delivery_approval" model="res.groups">
-        <field name="name">Delivery Approval</field>
-        <field name="category_id" ref="base.module_category_human_resources_custody"/>
-        <field name="implied_ids" eval="[(4, ref('plustech_hr_employee_custody.employee_custody_user'))]"/>
-    </record>
-
-    <record id="employee_custody_return_approval" model="res.groups">
-        <field name="name">Return Approval</field>
-        <field name="category_id" ref="base.module_category_human_resources_custody"/>
-        <field name="implied_ids" eval="[(4, ref('plustech_hr_employee_custody.employee_custody_user'))]"/>
-    </record>
 
     <record id="employee_custody_personal_rule" model="ir.rule">
         <field name="name">Personal custody</field>

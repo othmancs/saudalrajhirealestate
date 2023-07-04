@@ -1,0 +1,31 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* journal_restriction_user
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 15.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-10-01 12:22+0000\n"
+"PO-Revision-Date: 2022-10-01 12:22+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: journal_restriction_user
+#: model:ir.model.fields,field_description:journal_restriction_user.field_account_journal__allowed_user_ids
+msgid "Allowed Users"
+msgstr "المستخدمين المسموحين"
+
+#. module: journal_restriction_user
+#: model:ir.model,name:journal_restriction_user.model_account_journal
+msgid "Journal"
+msgstr "دفتر اليومية"
+
+#. module: journal_restriction_user
+#: model:res.groups,name:journal_restriction_user.group_user_journal_restrict
+msgid "Journal Restriction"
+msgstr "تقيد دفاتر اليومية"

@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="view_move_form_inherit" model="ir.ui.view">
+            <field name="name">account.move.form.inherit</field>
+            <field name="model">account.move</field>
+            <field name="inherit_id" ref="account.view_move_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//button[@name='action_post'][1]" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//button[@name='action_post'][2]" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//button[@name='action_post']" position="before">
+                    <button name="action_review" string="Review Done" type="object" class="oe_highlight"
+                            groups="account_security.group_account_customer_invoices_review"
+                            attrs="{'invisible':['|',('move_type', 'in', ('entry','in_invoice','in_refund', 'in_receipt')),('state','!=', 'draft')]}"
+                    />
+                    <button name="action_post" string="Confirm" class="oe_highlight" type="object"
+                            groups="account_security.group_account_customer_invoice_confirm,account.group_account_invoice"
+                            data-hotkey="v"
+                            attrs="{'invisible': ['|', '|', '|', ('state', '!=', 'review'), ('auto_post', '=', True),
+                         ('move_type', 'in', ('entry','in_invoice','in_refund', 'in_receipt')), ('display_inactive_currency_warning','=',True)]}"/>
+                    <button name="action_review" string="Review Done" type="object" class="oe_highlight"
+                            groups="account_security.group_account_vendor_bill_review"
+                            attrs="{'invisible':['|',('move_type', 'in', ('entry','out_invoice','out_refund', 'out_receipt')),('state','!=', 'draft')]}"
+                    />
+
+                    <button name="action_post" string="Confirm" class="oe_highlight" type="object"
+                            groups="account_security.group_account_vendor_bill_confirm,account.group_account_invoice"
+                            data-hotkey="v"
+                            attrs="{'invisible': ['|', '|', '|', ('state', '!=', 'review'), ('auto_post', '=', True),
+                         ('move_type', 'in', ('entry','out_invoice','out_refund', 'out_receipt')), ('display_inactive_currency_warning','=',True)]}"/>
+
+                    <button name="action_review" string="Review Done" type="object" class="oe_highlight"
+                            groups="account_security.group_account_journal_entry_review"
+                            attrs="{'invisible':['|',('move_type', '!=', 'entry'),('state','!=', 'draft')]}"
+                    />
+                    <button name="action_post" string="Post" class="oe_highlight" type="object"
+                            groups="account_security.group_account_journal_entry_confirm,account.group_account_invoice"
+                            data-hotkey="v"
+                            attrs="{'invisible': ['|', '|', ('state', '!=', 'review'), ('auto_post', '=', True), ('move_type', '!=', 'entry')]}"/>
+
+                </xpath>
+                <xpath expr="//button[@id='account_invoice_payment_btn']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//button[@id='account_invoice_payment_btn']" position="after">
+                    <button name="action_register_payment" id="account_invoice_payment_btn" type="object"
+                            class="oe_highlight"
+                            attrs="{'invisible': ['|', '|', ('state', '!=', 'posted'), ('payment_state', 'not in', ('not_paid', 'partial')), ('move_type', 'not in', ('out_invoice', 'out_refund',  'out_receipt'))]}"
+                            context="{'dont_redirect_to_payments': True}" string="Register Payment" data-hotkey="g"
+                            groups="account_security.group_account_customer_payment_create"/>
+                    <button name="action_register_payment" id="account_invoice_payment_btn" type="object"
+                            class="oe_highlight"
+                            attrs="{'invisible': ['|', '|', ('state', '!=', 'posted'), ('payment_state', 'not in', ('not_paid', 'partial')), ('move_type', 'not in', ('in_invoice', 'in_refund',  'in_receipt'))]}"
+                            context="{'dont_redirect_to_payments': True}" string="Register Payment" data-hotkey="g"
+                            groups="account_security.group_account_vendor_payment_create"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="base.action_partner_merge" model="ir.actions.act_window">
+            <field name="groups_id" eval="[(4,ref('account_security.group_account_partner_merge'))]"/>
+        </record>
+
+        <!--     menuitems   -->
+        <record id="account_accountant.menu_action_manual_reconciliation" model="ir.ui.menu">
+            <field name="groups_id"
+                   eval="[(6,0, [ref('account_security.group_account_reconciliation')])]"/>
+        </record>
+
+        <record id="account.menu_action_tax_adjustment" model="ir.ui.menu">
+            <field name="groups_id"
+                   eval="[(6,0, [ref('account_security.group_account_tax_adjustment')])]"/>
+        </record>
+
+        <record id="account_accountant.menu_action_change_lock_date" model="ir.ui.menu">
+            <field name="groups_id"
+                   eval="[(6,0, [ref('account_security.group_account_lock_dates')])]"/>
+        </record>
+        <record id="account.menu_finance_configuration" model="ir.ui.menu">
+            <field name="groups_id"
+                   eval="[(6,0, [ref('account_security.group_account_configuration')])]"/>
+        </record>
+
+         <record id="account.menu_action_move_journal_line_form" model="ir.ui.menu">
+            <field name="groups_id"
+                   eval="[(6,0, [ref('account_security.group_account_journal_entry_confirm'),
+                   ref('account_security.group_account_journal_entry_create'),
+                   ref('account_security.group_account_journal_entry_review')])]"/>
+        </record>
+    </data>
+</odoo>

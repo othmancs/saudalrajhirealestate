@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+        <record model="ir.module.category" id="base.module_category_accounting_accounting_assets">
+            <field name="sequence">7</field>
+        </record>
+
+        <record id="group_account_asset_create" model="res.groups">
+            <field name="name">Create Asset</field>
+            <field name="category_id" ref="base.module_category_accounting_accounting_assets"/>
+        </record>
+
+        <record id="group_account_asset_review" model="res.groups">
+            <field name="name">Review Asset</field>
+            <field name="category_id" ref="base.module_category_accounting_accounting_assets"/>
+        </record>
+        <record id="group_account_asset_confirm" model="res.groups">
+            <field name="name">Confirm Asset</field>
+            <field name="category_id" ref="base.module_category_accounting_accounting_assets"/>
+        </record>
+
+        <record id="asset_create_rule" model="ir.rule">
+            <field name="name">asset:create-write-delete</field>
+            <field name="model_id" ref="account_asset.model_account_asset"/>
+            <field name="groups" eval="[(4, ref('account_security.group_account_asset_create'))]"/>
+            <field name="domain_force">[(1, '=', '1)]</field>
+        </record>
+        <record id="asset_review_rule" model="ir.rule">
+            <field name="name">asset: readonly</field>
+            <field name="model_id" ref="account_asset.model_account_asset"/>
+            <field name="groups" eval="[(4, ref('account_security.group_account_asset_review'))]"/>
+            <field name="domain_force">[('asset_type', '=', 'purchase'),
+                ('state', '!=', 'model'), ('parent_id', '=', False)]
+            </field>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+
+        <record id="asset_confirm_rule" model="ir.rule">
+            <field name="name">asset: readonly-write</field>
+            <field name="model_id" ref="account_asset.model_account_asset"/>
+            <field name="groups" eval="[(4, ref('account_security.group_account_asset_confirm'))]"/>
+            <field name="domain_force">[('asset_type', '=', 'purchase'),
+                ('state', '!=', 'model'), ('parent_id', '=', False)]
+            </field>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+
+        <!--   Deferred revenues -->
+        <record model="ir.module.category" id="module_category_accounting_accounting_deferred_revenues">
+            <field name="name">Deferred revenues</field>
+            <field name="parent_id" ref="base.module_category_accounting_accounting_assets"/>
+            <field name="sequence">8</field>
+        </record>
+
+        <record id="group_account_deferred_revenue_create" model="res.groups">
+            <field name="name">Create Deferred Revenues</field>
+            <field name="category_id" ref="module_category_accounting_accounting_deferred_revenues"/>
+        </record>
+
+        <record id="group_account_deferred_revenue_review" model="res.groups">
+            <field name="name">Review Deferred Revenues</field>
+            <field name="category_id" ref="module_category_accounting_accounting_deferred_revenues"/>
+        </record>
+        <record id="group_account_deferred_revenue_confirm" model="res.groups">
+            <field name="name">Confirm Deferred Revenues</field>
+            <field name="category_id" ref="module_category_accounting_accounting_deferred_revenues"/>
+        </record>
+
+         <record id="deferred_revenue_review_rule" model="ir.rule">
+            <field name="name">deferred revenue: readonly</field>
+            <field name="model_id" ref="account_asset.model_account_asset"/>
+            <field name="groups" eval="[(4, ref('account_security.group_account_deferred_revenue_review'))]"/>
+            <field name="domain_force">[('asset_type', '=', 'sale'),
+                ('state', '!=', 'model'), ('parent_id', '=', False)]
+            </field>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+
+        <record id="deferred_revenue_confirm_rule" model="ir.rule">
+            <field name="name">deferred revenue: readonly-write</field>
+            <field name="model_id" ref="account_asset.model_account_asset"/>
+            <field name="groups" eval="[(4, ref('account_security.group_account_deferred_revenue_confirm'))]"/>
+            <field name="domain_force">[('asset_type', '=', 'sale'),
+                ('state', '!=', 'model'), ('parent_id', '=', False)]
+            </field>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+
+        <!--   Deferred Expenses -->
+        <record model="ir.module.category" id="module_category_accounting_accounting_deferred_expense">
+            <field name="name">Deferred Expenses</field>
+            <field name="parent_id" ref="base.module_category_accounting_accounting_assets"/>
+            <field name="sequence">9</field>
+        </record>
+
+        <record id="group_account_deferred_expense_confirm" model="res.groups">
+            <field name="name">Confirm Deferred Expenses</field>
+            <field name="category_id" ref="module_category_accounting_accounting_deferred_expense"/>
+        </record>
+
+        <record id="group_account_deferred_expense_create" model="res.groups">
+            <field name="name">Create Deferred Expenses</field>
+            <field name="category_id" ref="module_category_accounting_accounting_deferred_expense"/>
+        </record>
+
+        <record id="group_account_deferred_expense_review" model="res.groups">
+            <field name="name">Review Deferred Expenses</field>
+            <field name="category_id" ref="module_category_accounting_accounting_deferred_expense"/>
+        </record>
+
+        <record id="deferred_expense_review_rule" model="ir.rule">
+            <field name="name">deferred expense: readonly</field>
+            <field name="model_id" ref="account_asset.model_account_asset"/>
+            <field name="groups" eval="[(4, ref('account_security.group_account_deferred_expense_review'))]"/>
+            <field name="domain_force">[('asset_type', '=', 'expense'),
+                ('state', '!=', 'model'), ('parent_id', '=', False)]
+            </field>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+
+        <record id="deferred_expense_confirm_rule" model="ir.rule">
+            <field name="name">deferred expense: readonly-write</field>
+            <field name="model_id" ref="account_asset.model_account_asset"/>
+            <field name="groups" eval="[(4, ref('account_security.group_account_deferred_expense_confirm'))]"/>
+            <field name="domain_force">[('asset_type', '=', 'expense'),
+                ('state', '!=', 'model'), ('parent_id', '=', False)]
+            </field>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+
+
+
+    </data>
+</odoo>

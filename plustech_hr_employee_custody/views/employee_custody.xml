@@ -13,13 +13,13 @@
                                 attrs="{'invisible': ['|',('is_manager', '=', False),('state', '!=', 'submit')]}"/>
                         <button string="Hr Approve" name="action_hrm" states="l_m_approve" type="object"
                                 class="oe_highlight"
-                                groups="plustech_hr_employee_custody.employee_custody_hr_approval"/>
+                                groups="plustech_hr_employee_custody.employee_custody_manager"/>
                         <button string="Delivered" name="action_delivered" states="hrm" type="object"
                                 class="oe_highlight"
-                                groups="plustech_hr_employee_custody.employee_custody_delivery_approval"/>
+                                groups="plustech_hr_employee_custody.employee_custody_manager"/>
                         <button string="Return" name="action_returned" states="delivered" type="object"
                                 class="oe_highlight"
-                                groups="plustech_hr_employee_custody.employee_custody_return_approval"/>
+                                groups="plustech_hr_employee_custody.employee_custody_manager"/>
 
                         <field name="state" widget="statusbar"/>
                     </header>

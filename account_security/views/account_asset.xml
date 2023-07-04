@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="view_account_asset_form_inherit" model="ir.ui.view">
+            <field name="name">account.asset.form</field>
+            <field name="model">account.asset</field>
+            <field name="inherit_id" ref="account_asset.view_account_asset_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//button[@name='validate']" position="before">
+                    <button name="action_review" states="draft" string="Review Done" type="object" class="oe_highlight"
+                    groups="account_security.group_account_asset_review"/>
+                </xpath>
+                <xpath expr="//button[@name='validate']" position="attributes">
+                    <attribute name="states">review</attribute>
+                    <attribute name="groups">account_security.group_account_asset_confirm</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="account_asset.menu_action_account_asset_form" model="ir.ui.menu">
+            <field name="groups_id"
+                   eval="[(6,0, [ref('account_security.group_account_asset_create'), ref('account_security.group_account_asset_review'),
+                   ref('account_security.group_account_asset_confirm')])]"/>
+        </record>
+
+         <record id="account_asset.menu_action_account_revenue_recognition" model="ir.ui.menu">
+            <field name="groups_id"
+                   eval="[(6,0, [ref('account_security.group_account_deferred_revenue_create'), ref('account_security.group_account_deferred_revenue_review'),
+                   ref('account_security.group_account_deferred_revenue_confirm')])]"/>
+        </record>
+
+          <record id="account_asset.menu_action_account_expense_recognition" model="ir.ui.menu">
+            <field name="groups_id"
+                   eval="[(6,0, [ref('account_security.group_account_deferred_expense_create'), ref('account_security.group_account_deferred_expense_review'),
+                   ref('account_security.group_account_deferred_expense_confirm')])]"/>
+        </record>
+    </data>
+</odoo>

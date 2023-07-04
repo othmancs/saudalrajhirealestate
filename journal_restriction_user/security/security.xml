@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="group_user_journal_restrict" model="res.groups">
+            <field name="name">Journal Restriction</field>
+        </record>
+
+        <record id="rule_user_journal_restrict" model="ir.rule">
+            <field name="name">User see his journal only </field>
+            <field name="model_id" ref="account.model_account_journal"/>
+            <field name="groups" eval="[(4,ref('journal_restriction_user.group_user_journal_restrict'))]"/>
+            <field name="domain_force">[('allowed_user_ids', 'in', user.id)]</field>
+        </record>
+    </data>
+</odoo>
