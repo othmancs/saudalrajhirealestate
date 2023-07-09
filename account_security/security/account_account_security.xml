@@ -1,26 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data noupdate="0">
+        <!--     finance general   -->
+        <record model="ir.module.category" id="module_category_accounting_accounting_administration">
+            <field name="name">Accounting Administration</field>
+            <field name="parent_id" ref="base.module_category_accounting_accounting"/>
+            <field name="sequence">11</field>
+        </record>
 
         <record id="group_account_reconciliation" model="res.groups">
             <field name="name">Show Reconciliations Menu</field>
+            <field name="category_id" ref="module_category_accounting_accounting_administration"/>
         </record>
 
         <record id="group_account_tax_adjustment" model="res.groups">
             <field name="name">Show Tax Adjustment Menu</field>
+            <field name="category_id" ref="module_category_accounting_accounting_administration"/>
+
         </record>
 
         <record id="group_account_lock_dates" model="res.groups">
             <field name="name">Show Lock Dates Menu</field>
+            <field name="category_id" ref="module_category_accounting_accounting_administration"/>
+
         </record>
         <record id="group_account_configuration" model="res.groups">
             <field name="name">Show Accounting Configuration Menu</field>
+            <field name="category_id" ref="module_category_accounting_accounting_administration"/>
+
         </record>
         <record id="group_account_partner_merge" model="res.groups">
             <field name="name">Show Partner Merge Action</field>
+            <field name="category_id" ref="module_category_accounting_accounting_administration"/>
+
         </record>
         <record id="group_account_create_product" model="res.groups">
             <field name="name">Access to Create Product</field>
+            <field name="category_id" ref="module_category_accounting_accounting_administration"/>
+
+        </record>
+        <record id="group_account_employee_expense" model="res.groups">
+            <field name="name">Access Employee Expense</field>
+            <field name="category_id" ref="module_category_accounting_accounting_administration"/>
+
+        </record>
+        <record id="group_account_direct_transfer" model="res.groups">
+            <field name="name">Access Direct Transfers</field>
+            <field name="category_id" ref="module_category_accounting_accounting_administration"/>
+
         </record>
 
         <!--     Customer Invoices   -->
@@ -164,11 +191,11 @@
             <field name="category_id" ref="module_category_accounting_accounting_reports"/>
         </record>
 
-         <record id="group_account_partner_ledger" model="res.groups">
+        <record id="group_account_partner_ledger" model="res.groups">
             <field name="name">Partner Ledger</field>
             <field name="category_id" ref="module_category_accounting_accounting_reports"/>
         </record>
-         <record id="group_account_cash_flow" model="res.groups">
+        <record id="group_account_cash_flow" model="res.groups">
             <field name="name">Cash Flow</field>
             <field name="category_id" ref="module_category_accounting_accounting_reports"/>
         </record>
@@ -177,7 +204,7 @@
             <field name="name">Aged Receivable</field>
             <field name="category_id" ref="module_category_accounting_accounting_reports"/>
         </record>
-         <record id="group_account_aged_payable" model="res.groups">
+        <record id="group_account_aged_payable" model="res.groups">
             <field name="name">Aged Payable</field>
             <field name="category_id" ref="module_category_accounting_accounting_reports"/>
         </record>

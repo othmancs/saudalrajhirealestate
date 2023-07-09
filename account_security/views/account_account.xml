@@ -92,5 +92,13 @@
                    ref('account_security.group_account_journal_entry_create'),
                    ref('account_security.group_account_journal_entry_review')])]"/>
         </record>
+        <record id="hr_expense.menu_hr_expense_account_employee_expenses" model="ir.ui.menu">
+            <field name="groups_id"
+                   eval="[(6,0, [ref('account_security.group_account_employee_expense')])]"/>
+        </record>
+        <record id="account_auto_transfer.menu_auto_transfer" model="ir.ui.menu">
+            <field name="groups_id"
+                   eval="[(6,0, [ref('account_security.group_account_direct_transfer')])]"/>
+        </record>
     </data>
 </odoo>
