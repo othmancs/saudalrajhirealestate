@@ -366,6 +366,8 @@
                     <field name="no_of_not_invoiced_amount" />
                     <field name="no_of_posted_invoiced" />
                     <field name="no_of_posted_invoiced_amount" />
+                    <field name="no_of_paid_invoiced" />
+                    <field name="no_of_paid_invoiced_amount" />
                 </tree>
             </field>
         </record>

@@ -695,7 +695,7 @@ msgstr "اسم العقد..."
 #. module: contracts_management
 #: model:ir.model.fields,field_description:contracts_management.field_tender_quotation__tender_contract_number
 msgid "Contract Number"
-msgstr "رقم العقد"
+msgstr "رقم  عقد ايجار"
 
 #. module: contracts_management
 #: model:mail.message.subtype,description:contracts_management.mt_tender_contract_in_progress

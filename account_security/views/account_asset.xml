@@ -7,14 +7,28 @@
             <field name="model">account.asset</field>
             <field name="inherit_id" ref="account_asset.view_account_asset_form"/>
             <field name="arch" type="xml">
+                                <xpath expr="//button[@name='validate']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
                 <xpath expr="//button[@name='validate']" position="before">
-                    <button name="action_review" states="draft" string="Review Done" type="object" class="oe_highlight"
+                    <button name="validate" attrs="{'invisible': ['|',('asset_type', '!=', 'purchase'),('state','!=', 'review')]}"
+                            string="Confirm" type="object" class="oe_highlight"
+                    groups="account_security.group_account_asset_confirm"/>
+                    <button name="validate" attrs="{'invisible': ['|',('asset_type', '!=', 'sale'),('state','!=', 'review')]}"
+                            string="Confirm" type="object" class="oe_highlight"
+                    groups="account_security.group_account_deferred_revenue_confirm"/>
+                    <button name="validate" attrs="{'invisible': ['|',('asset_type', '!=', 'expense'),('state','!=', 'review')]}"
+                            string="Confirm" type="object" class="oe_highlight"
+                    groups="account_security.group_account_deferred_expense_confirm"/>
+
+                    <button name="action_review" attrs="{'invisible': ['|',('asset_type', '!=', 'purchase'),('state','!=', 'draft')]}" string="Review Done" type="object" class="oe_highlight"
                     groups="account_security.group_account_asset_review"/>
+                     <button name="action_review" attrs="{'invisible': ['|',('asset_type', '!=', 'sale'),('state','!=', 'draft')]}" string="Review Done" type="object" class="oe_highlight"
+                    groups="account_security.group_account_deferred_revenue_review"/>
+                     <button name="action_review" attrs="{'invisible': ['|',('asset_type', '!=', 'expense'),('state','!=', 'draft')]}" string="Review Done" type="object" class="oe_highlight"
+                    groups="account_security.group_account_deferred_expense_review"/>
                 </xpath>
-                <xpath expr="//button[@name='validate']" position="attributes">
-                    <attribute name="states">review</attribute>
-                    <attribute name="groups">account_security.group_account_asset_confirm</attribute>
-                </xpath>
+
             </field>
         </record>
 

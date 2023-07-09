@@ -1,4 +1,5 @@
 from . import account_move
+from . import account_journal
 from . import maintenance_request
 from . import maintenance_request_expense
 from . import maintenance_request_product

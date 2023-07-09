@@ -14,6 +14,7 @@
         'data/maintenance_request_data.xml',
         'views/maintenance_request_views.xml',
         'views/maintenance_issue_type_views.xml',
+        'views/account_journal.xml',
         'views/res_config_settings_views.xml',
         'templates/maintenance_request_portal_templates.xml',
         'wizards/wiz_maintenance_request_refuse_views.xml',

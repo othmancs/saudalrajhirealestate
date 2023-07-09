@@ -1,0 +1,18 @@
+<odoo>
+    <data>
+        <record id="view_account_journal_form" model="ir.ui.view">
+            <field name="name">account.journal.form</field>
+            <field name="model">account.journal</field>
+            <field name="inherit_id" ref="account.view_account_journal_form" />
+            <field name="arch" type="xml">
+                <xpath expr="//form/sheet/notebook/page[@name='advanced_settings']" position="inside">
+                    <group>
+                        <group string="Is Custody">
+                            <field name="is_custody"/>
+                        </group>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 15.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-24 06:23+0000\n"
-"PO-Revision-Date: 2023-05-24 06:23+0000\n"
+"POT-Creation-Date: 2023-07-09 07:23+0000\n"
+"PO-Revision-Date: 2023-07-09 07:23+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -48,27 +48,10 @@ msgid "(هوية وطنية/إقامة نظامية) رقم"
 msgstr ""
 
 #. module: rent_customize
-#: model_terms:ir.ui.view,arch_db:rent_customize.report_vacating_raj_template
-msgid ""
-")\n"
-"\n"
-"                                            لليوم الواحد."
-msgstr ""
-
-#. module: rent_customize
 #: model_terms:ir.ui.view,arch_db:rent_customize.report_payment_claim_template
 msgid ""
 ")\n"
-"                                            من تاريخ هذا الإنذار،\n"
-"                                            وإلا سنضطر وبكل أسف لاتخاذ الإجراء القانوني في حقكم. وسيتم مطالبتكم برسوم\n"
-"                                            التكاليف القضائية وأتعاب المحاماة الناتجة عن نظر الدعاوى القضائية."
-msgstr ""
-
-#. module: rent_customize
-#: model_terms:ir.ui.view,arch_db:rent_customize.report_contract_termination_template
-msgid ""
-")\n"
-"                                            يوم."
+"                                            من تاريخ هذا الإشعار."
 msgstr ""
 
 #. module: rent_customize
@@ -111,8 +94,10 @@ msgid ""
 msgstr ""
 
 #. module: rent_customize
-#: model_terms:ir.ui.view,arch_db:rent_customize.report_contract_termination_template
-msgid ") عن كل يوم."
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_personal_template
+msgid ""
+"* التاكد من عدم وجود\n"
+"                                            قضايا حقوقية بخصوص الايجار"
 msgstr ""
 
 #. module: rent_customize
@@ -124,7 +109,9 @@ msgstr ""
 
 #. module: rent_customize
 #: model_terms:ir.ui.view,arch_db:rent_customize.report_personal_template
-msgid "* التاكد من عدم وجود قضايا حقوقية بخصوص الايجار"
+msgid ""
+"* يجب ارفاق المستندات\n"
+"                                            المؤيدة للمعلومات اعلاه"
 msgstr ""
 
 #. module: rent_customize
@@ -135,8 +122,11 @@ msgid ""
 msgstr ""
 
 #. module: rent_customize
-#: model_terms:ir.ui.view,arch_db:rent_customize.report_personal_template
-msgid "* يجب ارفاق المستندات المؤيدة للمعلومات اعلاه"
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_payment_claim_template
+msgid ""
+",\n"
+"                                            نبلغكم بحلول قسط الإيجار المستحق عليكم حسب التفصيل\n"
+"                                            الآتي:"
 msgstr ""
 
 #. module: rent_customize
@@ -165,17 +155,17 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:rent_customize.report_vacating_raj_template
 msgid ""
 "<br/>\n"
-"                                            الموافق:"
+"                                                الموافق:"
 msgstr ""
 
 #. module: rent_customize
 #: model_terms:ir.ui.view,arch_db:rent_customize.report_vacating_raj_template
 msgid ""
 "<br/>\n"
-"                                        <br/>\n"
-"                                        خطاب اخلاء عقار\n"
-"                                        <br/>\n"
-"                                        <br/>"
+"                                            <br/>\n"
+"                                            خطاب اخلاء عقار\n"
+"                                            <br/>\n"
+"                                            <br/>"
 msgstr ""
 
 #. module: rent_customize
@@ -309,7 +299,7 @@ msgid "Activity Type Icon"
 msgstr ""
 
 #. module: rent_customize
-#: model:ir.model.fields,field_description:rent_customize.field_rent_due_invoice__amount
+#: model:ir.model.fields,field_description:rent_customize.field_contract_reminder_report__amount
 #: model:ir.model.fields,field_description:rent_customize.field_rent_log__amount
 msgid "Amount"
 msgstr ""
@@ -320,13 +310,13 @@ msgid "Annual Amount"
 msgstr ""
 
 #. module: rent_customize
-#: model:ir.model.fields,field_description:rent_customize.field_sale_order__annual_increase_type
-msgid "Annual INcrease Type"
+#: model:ir.model.fields,field_description:rent_customize.field_sale_order__annual_increase
+msgid "Annual Increase ?"
 msgstr ""
 
 #. module: rent_customize
-#: model:ir.model.fields,field_description:rent_customize.field_sale_order__annual_increase
-msgid "Annual Increase ?"
+#: model:ir.model.fields,field_description:rent_customize.field_sale_order__annual_increase_type
+msgid "Annual Increase Type"
 msgstr ""
 
 #. module: rent_customize
@@ -351,9 +341,29 @@ msgid "Assignee"
 msgstr "المتنازل إليه"
 
 #. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__assignee_identity
+msgid "Assignee ID"
+msgstr ""
+
+#. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__assignee_identity_date
+msgid "Assignee ID Issue Date"
+msgstr ""
+
+#. module: rent_customize
 #: model_terms:ir.ui.view,arch_db:rent_customize.rent_value_update_form
 msgid "Assigner"
 msgstr "المتنازل"
+
+#. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__assigner_identity
+msgid "Assigner ID"
+msgstr ""
+
+#. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__assigner_identity_date
+msgid "Assigner ID Issue Date"
+msgstr ""
 
 #. module: rent_customize
 #: model:ir.model,name:rent_customize.model_ir_attachment
@@ -444,19 +454,27 @@ msgid "Commercial Registration Number"
 msgstr "رقم السجل التجاري"
 
 #. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_contract_reminder_report__company_id
 #: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__company_id
+#: model_terms:ir.ui.view,arch_db:rent_customize.view_contract_reminder_report_search
 msgid "Company"
 msgstr ""
 
 #. module: rent_customize
 #: model:ir.model,name:rent_customize.model_res_config_settings
 msgid "Config Settings"
-msgstr "ضبط الاعدادات"
+msgstr "تهيئة الإعدادات "
 
 #. module: rent_customize
 #: model_terms:ir.ui.view,arch_db:rent_customize.rental_order_form_view2
 msgid "Confirmed"
 msgstr "مؤكد"
+
+#. module: rent_customize
+#: model:ir.ui.menu,name:rent_customize.confirmed_contract_menu
+#: model:res.groups,name:rent_customize.renting_report_confirmed_contract
+msgid "Confirmed Contract"
+msgstr ""
 
 #. module: rent_customize
 #: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__contact_number
@@ -471,14 +489,31 @@ msgstr ""
 
 #. module: rent_customize
 #: model:ir.actions.act_window,name:rent_customize.contract_report_action
+#: model:res.groups,name:rent_customize.renting_report_contract
+#: model_terms:ir.ui.view,arch_db:rent_customize.rent_value_update_form
 msgid "Contract"
 msgstr "عقد"
+
+#. module: rent_customize
+#: model:res.groups,name:rent_customize.confirm_contract_rental_order
+msgid "Contract Confirm"
+msgstr ""
 
 #. module: rent_customize
 #: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__contract_date
 #: model_terms:ir.ui.view,arch_db:rent_customize.rent_value_update_form
 msgid "Contract Date"
 msgstr "تاريخ العقد"
+
+#. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__due_amount
+msgid "Contract Due Value"
+msgstr ""
+
+#. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_contract_reminder_report__contract_end_date
+msgid "Contract End Date"
+msgstr ""
 
 #. module: rent_customize
 #: model:mail.activity.type,name:rent_customize.contract_expire_notification
@@ -491,6 +526,21 @@ msgid "Contract In Dates"
 msgstr "تاريخ العقد"
 
 #. module: rent_customize
+#: model:res.groups,name:rent_customize.renting_report_contract_master_data
+msgid "Contract Master Data"
+msgstr ""
+
+#. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_contract_reminder_report__contract_number
+msgid "Contract Number"
+msgstr ""
+
+#. module: rent_customize
+#: model:ir.model,name:rent_customize.model_contract_reminder_report
+msgid "Contract Reminder Report"
+msgstr ""
+
+#. module: rent_customize
 #: model:ir.model.fields,field_description:rent_customize.field_res_config_settings__contract_notify
 msgid "Contract Renewal Days"
 msgstr ""
@@ -501,15 +551,29 @@ msgid "Contract Report"
 msgstr "تقرير العقد"
 
 #. module: rent_customize
+#: model:res.groups,name:rent_customize.sale_contract_rental_order
 #: model_terms:ir.ui.view,arch_db:rent_customize.view_order_form_rent_customize
 msgid "Contract Sale"
 msgstr ""
 
 #. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_contract_reminder_report__contract_start_date
+msgid "Contract Start Date"
+msgstr ""
+
+#. module: rent_customize
 #: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__contract_value
-#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__due_amount
 msgid "Contract Value"
 msgstr "قيمة العقد"
+
+#. module: rent_customize
+#: model:ir.actions.act_window,name:rent_customize.action_contract_reminder_report
+#: model:ir.ui.menu,name:rent_customize.menu_report_contract_reminder
+#: model:res.groups,name:rent_customize.renting_report_contract_reminder
+#: model_terms:ir.ui.view,arch_db:rent_customize.view_contract_reminder_report_search
+#: model_terms:ir.ui.view,arch_db:rent_customize.view_contract_reminder_report_tree
+msgid "Contracts Reminder Report"
+msgstr ""
 
 #. module: rent_customize
 #: model_terms:ir.actions.act_window,help:rent_customize.rental_furnished_product_template_action
@@ -550,11 +614,13 @@ msgid "Custoemr To Transfer"
 msgstr ""
 
 #. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_contract_reminder_report__customer_id
 #: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__assigner_id
 #: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__partner_id
 #: model_terms:ir.ui.view,arch_db:rent_customize.eviction_report_tree
 #: model_terms:ir.ui.view,arch_db:rent_customize.rent_value_update_form
 #: model_terms:ir.ui.view,arch_db:rent_customize.report_custody_filter
+#: model_terms:ir.ui.view,arch_db:rent_customize.view_contract_reminder_report_search
 msgid "Customer"
 msgstr "العميل"
 
@@ -605,6 +671,7 @@ msgid "Delay Date"
 msgstr ""
 
 #. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_contract_reminder_report__display_name
 #: model:ir.model.fields,field_description:rent_customize.field_contract_wizard__display_name
 #: model:ir.model.fields,field_description:rent_customize.field_rent_due_invoice__display_name
 #: model:ir.model.fields,field_description:rent_customize.field_rent_log__display_name
@@ -616,6 +683,11 @@ msgstr "اسم العرض"
 #. module: rent_customize
 #: model:ir.model.fields.selection,name:rent_customize.selection__rental_letter_template__martial_status__divorced
 msgid "Divorced"
+msgstr ""
+
+#. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_rent_due_invoice__amount
+msgid "Due Amount"
 msgstr ""
 
 #. module: rent_customize
@@ -634,6 +706,17 @@ msgid "End Date"
 msgstr "تاريخ الانتهاء"
 
 #. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__evacuated
+msgid "Evacuated"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.eviction_report_tree
+#: model_terms:ir.ui.view,arch_db:rent_customize.rent_value_update_form
+msgid "Eviction Date"
+msgstr "تاريخ الاخلاء"
+
+#. module: rent_customize
 #: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__eviction_period
 msgid "Eviction Period"
 msgstr ""
@@ -641,6 +724,7 @@ msgstr ""
 #. module: rent_customize
 #: model:ir.actions.act_window,name:rent_customize.eviction_report_action
 #: model:ir.ui.menu,name:rent_customize.menu_report_eviction_all
+#: model:res.groups,name:rent_customize.renting_report_eviction
 msgid "Eviction Report"
 msgstr ""
 
@@ -678,7 +762,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:rent_customize.field_rent_log__fromdate
 #: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__beginning_contract
 msgid "From Date"
-msgstr ""
+msgstr "تاريخ بداية العقد"
 
 #. module: rent_customize
 #: model_terms:ir.ui.view,arch_db:rent_customize.furnished_product_template_search_view
@@ -721,6 +805,7 @@ msgstr "تحديد الموقع الجغرافي"
 
 #. module: rent_customize
 #: model_terms:ir.ui.view,arch_db:rent_customize.report_custody_filter
+#: model_terms:ir.ui.view,arch_db:rent_customize.view_contract_reminder_report_search
 msgid "Group By"
 msgstr ""
 
@@ -735,6 +820,7 @@ msgid "IBAN"
 msgstr ""
 
 #. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_contract_reminder_report__id
 #: model:ir.model.fields,field_description:rent_customize.field_contract_wizard__id
 #: model:ir.model.fields,field_description:rent_customize.field_rent_due_invoice__id
 #: model:ir.model.fields,field_description:rent_customize.field_rent_log__id
@@ -776,6 +862,11 @@ msgid "If checked, some messages have a delivery error."
 msgstr ""
 
 #. module: rent_customize
+#: model:ir.model.fields.selection,name:rent_customize.selection__contract_reminder_report__payment_state__in_payment
+msgid "In Payment"
+msgstr ""
+
+#. module: rent_customize
 #: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__insurance_officer
 #: model_terms:ir.ui.view,arch_db:rent_customize.rent_value_update_form
 msgid "Insurance Officer"
@@ -785,6 +876,16 @@ msgstr "مسؤول الإئتمان"
 #: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__insurance_value
 msgid "Insurance Value"
 msgstr "قيمة التأمين"
+
+#. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_contract_reminder_report__invoice_date
+msgid "Invoice Date"
+msgstr ""
+
+#. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_contract_reminder_report__invoice_date_due
+msgid "Invoice Due Date"
+msgstr ""
 
 #. module: rent_customize
 #: model:mail.activity.type,name:rent_customize.invoice_expire_notification
@@ -797,8 +898,18 @@ msgid "Invoice Renewal Days"
 msgstr ""
 
 #. module: rent_customize
+#: model:ir.model.fields.selection,name:rent_customize.selection__contract_reminder_report__payment_state__invoicing_legacy
+msgid "Invoicing App Legacy"
+msgstr ""
+
+#. module: rent_customize
 #: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__message_is_follower
 msgid "Is Follower"
+msgstr ""
+
+#. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_contract_reminder_report__product_id
+msgid "Item"
 msgstr ""
 
 #. module: rent_customize
@@ -812,6 +923,7 @@ msgid "Journal Entry"
 msgstr "قيد اليومية"
 
 #. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_contract_reminder_report____last_update
 #: model:ir.model.fields,field_description:rent_customize.field_contract_wizard____last_update
 #: model:ir.model.fields,field_description:rent_customize.field_rent_due_invoice____last_update
 #: model:ir.model.fields,field_description:rent_customize.field_rent_log____last_update
@@ -844,6 +956,11 @@ msgid "Legal Cohabitant"
 msgstr ""
 
 #. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_sale_order__letter_count
+msgid "Letter Count"
+msgstr ""
+
+#. module: rent_customize
 #: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__number
 msgid "Letter No."
 msgstr ""
@@ -851,6 +968,11 @@ msgstr ""
 #. module: rent_customize
 #: model:ir.model.fields,field_description:rent_customize.field_rent_due_invoice__letter_template_id
 msgid "Letter Template"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.rental_order_form_view2
+msgid "Letters"
 msgstr ""
 
 #. module: rent_customize
@@ -871,6 +993,11 @@ msgstr ""
 #. module: rent_customize
 #: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__message_main_attachment_id
 msgid "Main Attachment"
+msgstr ""
+
+#. module: rent_customize
+#: model:res.groups,name:rent_customize.rental_letter_template_manager
+msgid "Manager : Create & Delete"
 msgstr ""
 
 #. module: rent_customize
@@ -907,16 +1034,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__national_address_main_center
 msgid "National Address Of The Main Center"
 msgstr "العنوان الوطني للمركز الرئيسي"
-
-#. module: rent_customize
-#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__national_id_assigner
-msgid "National ID No. Assigner"
-msgstr ""
-
-#. module: rent_customize
-#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__national_id_assigner_date
-msgid "National Id Assigner Date"
-msgstr ""
 
 #. module: rent_customize
 #: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__nature_of_commerce
@@ -968,6 +1085,11 @@ msgstr ""
 #. module: rent_customize
 #: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__activity_type_id
 msgid "Next Activity Type"
+msgstr ""
+
+#. module: rent_customize
+#: model:ir.model.fields.selection,name:rent_customize.selection__contract_reminder_report__payment_state__not_paid
+msgid "Not Paid"
 msgstr ""
 
 #. module: rent_customize
@@ -1027,9 +1149,29 @@ msgid "Order"
 msgstr ""
 
 #. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__odoo_contract_number
+msgid "Order Reference"
+msgstr "مرجع العقد"
+
+#. module: rent_customize
 #: model_terms:ir.ui.view,arch_db:rent_customize.view_order_form_rent_customize
 msgid "PICKUP"
 msgstr "حجز"
+
+#. module: rent_customize
+#: model:ir.model.fields.selection,name:rent_customize.selection__contract_reminder_report__payment_state__paid
+msgid "Paid"
+msgstr ""
+
+#. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_contract_reminder_report__paid_amount
+msgid "Paid Amount"
+msgstr ""
+
+#. module: rent_customize
+#: model:ir.model.fields.selection,name:rent_customize.selection__contract_reminder_report__payment_state__partial
+msgid "Partially Paid"
+msgstr ""
 
 #. module: rent_customize
 #: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__company_partner_id
@@ -1039,6 +1181,11 @@ msgstr ""
 #. module: rent_customize
 #: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__payment_period
 msgid "Payment Period"
+msgstr ""
+
+#. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_contract_reminder_report__payment_state
+msgid "Payment Status"
 msgstr ""
 
 #. module: rent_customize
@@ -1093,6 +1240,7 @@ msgid "Products"
 msgstr "منتجات"
 
 #. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_contract_reminder_report__property_id
 #: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__property_id
 #: model:ir.model.fields,field_description:rent_customize.field_sale_rental_schedule__property_id
 msgid "Property"
@@ -1144,6 +1292,11 @@ msgid "Quotation Sent"
 msgstr "تم إرسال عرض السعر"
 
 #. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_contract_reminder_report__contract_id
+msgid "Ref"
+msgstr ""
+
+#. module: rent_customize
 #: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__ref
 msgid "Reference"
 msgstr ""
@@ -1166,9 +1319,19 @@ msgid "Refund Insurance"
 msgstr "تأمين الاسترداد"
 
 #. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_contract_reminder_report__reminder_date
+msgid "Reminder Date"
+msgstr ""
+
+#. module: rent_customize
 #: model_terms:ir.ui.view,arch_db:rent_customize.rent_sale_order_r_inherit_form2
 msgid "Renew"
 msgstr "تجديد"
+
+#. module: rent_customize
+#: model:res.groups,name:rent_customize.renew_contract_rental_order
+msgid "Renew Contract"
+msgstr ""
 
 #. module: rent_customize
 #: model:ir.model.fields,field_description:rent_customize.field_rent_log__rent_id
@@ -1179,6 +1342,11 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:rent_customize.rent_value_update_form
 msgid "Rent Due Invoice"
 msgstr "المتأخرات"
+
+#. module: rent_customize
+#: model:ir.module.category,name:rent_customize.rental_letter_template_category
+msgid "Rent Letter template"
+msgstr ""
 
 #. module: rent_customize
 #: model:ir.model.fields,field_description:rent_customize.field_product_product__rent_unit_price
@@ -1228,6 +1396,21 @@ msgid "Rental Value new"
 msgstr ""
 
 #. module: rent_customize
+#: model:ir.model,name:rent_customize.model_rental_order_wizard_line
+msgid "RentalOrderLine transient representation"
+msgstr "تمثيل لبند أمر التأجير العابر "
+
+#. module: rent_customize
+#: model:ir.module.category,name:rent_customize.sales_work_fllow
+msgid "Renting"
+msgstr ""
+
+#. module: rent_customize
+#: model:res.groups,name:rent_customize.renting_config_group
+msgid "Renting Configuration"
+msgstr ""
+
+#. module: rent_customize
 #: code:addons/rent_customize/models/move.py:0
 #: code:addons/rent_customize/models/sales.py:0
 #: code:addons/rent_customize/models/sales.py:0
@@ -1248,7 +1431,13 @@ msgid "Renting Purpose"
 msgstr "الغرض من الاستئجار"
 
 #. module: rent_customize
+#: model:ir.module.category,name:rent_customize.renting_report_security
+msgid "Renting Reports"
+msgstr ""
+
+#. module: rent_customize
 #: model:ir.ui.menu,name:rent_customize.menu_rental_reporting_child
+#: model:res.groups,name:rent_customize.renting_report_Reporting
 msgid "Reporting"
 msgstr "التقارير"
 
@@ -1272,6 +1461,11 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:rent_customize.rental_order_form_view2
 msgid "Returned"
 msgstr "مرتجع"
+
+#. module: rent_customize
+#: model:ir.model.fields.selection,name:rent_customize.selection__contract_reminder_report__payment_state__reversed
+msgid "Reversed"
+msgstr ""
 
 #. module: rent_customize
 #: model:res.groups,name:rent_customize.review_rental_order
@@ -1402,6 +1596,11 @@ msgid "Tax Amount"
 msgstr ""
 
 #. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_rent_due_invoice__tax_ids
+msgid "Taxes"
+msgstr ""
+
+#. module: rent_customize
 #: model:ir.actions.act_window,name:rent_customize.rent_letter_template
 #: model:ir.ui.menu,name:rent_customize.rent_rental_letter_templates_menu
 msgid "Templates"
@@ -1417,6 +1616,11 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:rent_customize.rent_sale_order_r_inherit_form2
 msgid "Termination"
 msgstr "فسخ عقد"
+
+#. module: rent_customize
+#: model:res.groups,name:rent_customize.termination_contract_rental_order
+msgid "Termination Contract"
+msgstr ""
 
 #. module: rent_customize
 #: model:ir.model.fields.selection,name:rent_customize.selection__rental_letter_template__eviction_state__done
@@ -1448,7 +1652,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:rent_customize.field_rent_log__todate
 #: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__end_contract
 msgid "To Date"
-msgstr ""
+msgstr "تاريخ نهاية العقد"
 
 #. module: rent_customize
 #: model:ir.model.fields.selection,name:rent_customize.selection__sale_order__rental_status__review
@@ -1520,6 +1724,11 @@ msgid "Type of the exception activity on record."
 msgstr ""
 
 #. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_sale_order__product_id
+msgid "Unit"
+msgstr ""
+
+#. module: rent_customize
 #: model_terms:ir.ui.view,arch_db:rent_customize.customize_product_template_form_view
 msgid "Unit Location"
 msgstr "موقع الوحدة"
@@ -1535,6 +1744,17 @@ msgstr "الوحدة"
 #: model:ir.model.fields,field_description:rent_customize.field_product_template__unit_rented
 msgid "Unit Rented"
 msgstr "الوحدة مؤجرة"
+
+#. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_sale_order__product_ids
+msgid "Unit_ids"
+msgstr ""
+
+#. module: rent_customize
+#: model:ir.ui.menu,name:rent_customize.item_rented
+#: model:res.groups,name:rent_customize.renting_report_unit
+msgid "Units Rented"
+msgstr ""
 
 #. module: rent_customize
 #: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__message_unread
@@ -1613,6 +1833,11 @@ msgid "You need to add at least one line before Submitting."
 msgstr ""
 
 #. module: rent_customize
+#: model:res.groups,name:rent_customize.cancel_contract_rental_order
+msgid "cancel Contract"
+msgstr ""
+
+#. module: rent_customize
 #: model:ir.model,name:rent_customize.model_contract_wizard
 msgid "contract.wizard"
 msgstr ""
@@ -1641,6 +1866,11 @@ msgstr "تاريخ فاتورة التأمين"
 #: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__e_invoice
 msgid "e-invoice No."
 msgstr "رقم فاتورة التأمين"
+
+#. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_sale_order__letter_ids
+msgid "letters"
+msgstr ""
 
 #. module: rent_customize
 #: model:ir.model.fields.selection,name:rent_customize.selection__ir_attachment__rental_type__receipt
@@ -1702,9 +1932,8 @@ msgstr ""
 #. module: rent_customize
 #: model_terms:ir.ui.view,arch_db:rent_customize.report_vacating_raj_template
 msgid ""
-"إشارة الى الموضوع أعلاه وبالإشارة الى عقد الإيجار الإلكتروني المبرم معكم\n"
-"                                            <br/>\n"
-"                                            بتاريخ"
+"إشارة إلى الموضوع أعلاه وبالإشارة إلى عقد الإيجار الإلكتروني المبرم معكم\n"
+"                                                بتاريخ"
 msgstr ""
 
 #. module: rent_customize
@@ -1783,32 +2012,26 @@ msgid "اسم المستأجر"
 msgstr ""
 
 #. module: rent_customize
-#: model_terms:ir.ui.view,arch_db:rent_customize.report_vacating_raj_template
-msgid ""
-"اسم المستأجر\n"
-"                                            :"
-msgstr ""
-
-#. module: rent_customize
 #: model_terms:ir.ui.view,arch_db:rent_customize.report_pickup_template
 #: model_terms:ir.ui.view,arch_db:rent_customize.report_return_template
 msgid "اسم المستأجر:"
 msgstr ""
 
 #. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_contract_termination_template
 #: model_terms:ir.ui.view,arch_db:rent_customize.report_payment_claim_template
 msgid "اسم المستلم"
-msgstr ""
-
-#. module: rent_customize
-#: model_terms:ir.ui.view,arch_db:rent_customize.report_contract_termination_template
-msgid "اسم المستلم:"
 msgstr ""
 
 #. module: rent_customize
 #: code:addons/rent_customize/models/sales.py:0
 #, python-format
 msgid "الأربعاء"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_vacating_raj_template
+msgid "الأستاذ/"
 msgstr ""
 
 #. module: rent_customize
@@ -1850,6 +2073,11 @@ msgid "التأمين المدفوع:"
 msgstr ""
 
 #. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_contract_termination_template
+msgid "التاريخ"
+msgstr ""
+
+#. module: rent_customize
 #: model_terms:ir.ui.view,arch_db:rent_customize.report_payment_claim_template
 #: model_terms:ir.ui.view,arch_db:rent_customize.report_pickup_template
 #: model_terms:ir.ui.view,arch_db:rent_customize.report_return_template
@@ -1859,12 +2087,8 @@ msgid "التاريخ:"
 msgstr ""
 
 #. module: rent_customize
-#: model_terms:ir.ui.view,arch_db:rent_customize.report_contract_termination_template
-msgid "التايخ:"
-msgstr ""
-
-#. module: rent_customize
 #: model_terms:ir.ui.view,arch_db:rent_customize.report_commercial_template
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_contract_termination_template
 #: model_terms:ir.ui.view,arch_db:rent_customize.report_personal_template
 #: model_terms:ir.ui.view,arch_db:rent_customize.report_return_template
 msgid "التوقيع"
@@ -1881,7 +2105,6 @@ msgid "التوقيع/"
 msgstr ""
 
 #. module: rent_customize
-#: model_terms:ir.ui.view,arch_db:rent_customize.report_contract_termination_template
 #: model_terms:ir.ui.view,arch_db:rent_customize.report_pickup_template
 #: model_terms:ir.ui.view,arch_db:rent_customize.report_vacating_raj_template
 #: model_terms:ir.ui.view,arch_db:rent_customize.report_value_update_template
@@ -1943,9 +2166,13 @@ msgstr ""
 
 #. module: rent_customize
 #: model_terms:ir.ui.view,arch_db:rent_customize.report_contract_termination_template
-#: model_terms:ir.ui.view,arch_db:rent_customize.report_payment_claim_template
 #: model_terms:ir.ui.view,arch_db:rent_customize.report_vacating_raj_template
 msgid "السلام عليكم ورحمة الله وبركاته"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_payment_claim_template
+msgid "السلام عليكم ورحمة الله وبركاته     وبعد"
 msgstr ""
 
 #. module: rent_customize
@@ -2013,7 +2240,12 @@ msgstr ""
 
 #. module: rent_customize
 #: model_terms:ir.ui.view,arch_db:rent_customize.report_personal_template
-msgid "القيمة الايجارية المقترحة"
+msgid "القيمة الايجارية المعتمدة/سنوي"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_contract_termination_template
+msgid "الكائن بحي"
 msgstr ""
 
 #. module: rent_customize
@@ -2175,9 +2407,7 @@ msgstr ""
 
 #. module: rent_customize
 #: model_terms:ir.ui.view,arch_db:rent_customize.report_payment_claim_template
-msgid ""
-"بمدينة الرياض، ولم يتم السداد حتى تاريخه علما بأن المتأخرات المترتبة عليكم\n"
-"                                            كالآتي:"
+msgid "بمدينة"
 msgstr ""
 
 #. module: rent_customize
@@ -2227,7 +2457,7 @@ msgstr ""
 
 #. module: rent_customize
 #: model_terms:ir.ui.view,arch_db:rent_customize.report_personal_template
-msgid "تعريف بالراتب من العمل"
+msgid "تعريف بالراتب من العمل/ سنويا"
 msgstr ""
 
 #. module: rent_customize
@@ -2333,6 +2563,11 @@ msgid "خطاب رقم:"
 msgstr ""
 
 #. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_contract_termination_template
+msgid "رقم"
+msgstr ""
+
+#. module: rent_customize
 #: model_terms:ir.ui.view,arch_db:rent_customize.report_payment_claim_template
 msgid "رقم الايبان:"
 msgstr ""
@@ -2345,12 +2580,6 @@ msgstr ""
 #. module: rent_customize
 #: model_terms:ir.ui.view,arch_db:rent_customize.report_commercial_template
 msgid "رقم السجل التجاري"
-msgstr ""
-
-#. module: rent_customize
-#: model:ir.model.fields,field_description:rent_customize.field_rent_sale_invoices__contract_number
-#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__contract_number
-msgid "رقم العقد"
 msgstr ""
 
 #. module: rent_customize
@@ -2387,10 +2616,31 @@ msgid "رقم عداد المياه:"
 msgstr ""
 
 #. module: rent_customize
+#: model:ir.model.fields,field_description:rent_customize.field_rent_sale_invoices__contract_number
+#: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__contract_number
+msgid "رقم عقد ايجار"
+msgstr ""
+
+#. module: rent_customize
 #: model_terms:ir.ui.view,arch_db:rent_customize.report_commercial_template
 msgid ""
 "رقم هوية المدير\n"
 "                                            المفوض"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_vacating_raj_template
+msgid ""
+"ريال\n"
+"                                                و المنتهي بتاريخ"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_vacating_raj_template
+msgid ""
+"ريال)\n"
+"\n"
+"                                                لليوم الواحد."
 msgstr ""
 
 #. module: rent_customize
@@ -2408,6 +2658,11 @@ msgstr ""
 #: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__water_bad
 #: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__window_bad
 msgid "سئ"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_payment_claim_template
+msgid "شاكرين و مدرين لكم حسن التعاون و التقدير..."
 msgstr ""
 
 #. module: rent_customize
@@ -2453,7 +2708,7 @@ msgstr ""
 #. module: rent_customize
 #: model_terms:ir.ui.view,arch_db:rent_customize.report_payment_claim_template
 msgid ""
-"عليه نأمل من سعادتكم التكرم بالسداد في مدة أقصاها\n"
+"عليه نأمل من سعادتكم عمل اللازم لسداد المبلغ حسب العقد و ذلك في مدة أقصاها\n"
 "                                            ("
 msgstr ""
 
@@ -2467,18 +2722,6 @@ msgstr ""
 #. module: rent_customize
 #: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__chief_executive_no
 msgid "غير موافق"
-msgstr ""
-
-#. module: rent_customize
-#: model_terms:ir.ui.view,arch_db:rent_customize.report_contract_termination_template
-msgid ""
-"في العقار\n"
-"                                            الكائن بحي"
-msgstr ""
-
-#. module: rent_customize
-#: model_terms:ir.ui.view,arch_db:rent_customize.report_payment_claim_template
-msgid "في العقار الكائن بحي"
 msgstr ""
 
 #. module: rent_customize
@@ -2521,6 +2764,16 @@ msgid "لم يتم السداد "
 msgstr ""
 
 #. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_vacating_raj_template
+msgid ""
+"م\n"
+"\n"
+"                                                سيتم فرض\n"
+"                                                إيجار<br/> يومي وقدره\n"
+"                                                ("
+msgstr ""
+
+#. module: rent_customize
 #: model_terms:ir.ui.view,arch_db:rent_customize.report_template_transfer
 msgid ""
 "م\n"
@@ -2532,40 +2785,14 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:rent_customize.report_vacating_raj_template
 msgid ""
 "م\n"
-"                                             والمتضمن تأجير شقة رقم"
-msgstr ""
-
-#. module: rent_customize
-#: model_terms:ir.ui.view,arch_db:rent_customize.report_vacating_raj_template
-msgid ""
-"م\n"
-"                                            (تاريخ نهاية العقد)"
-msgstr ""
-
-#. module: rent_customize
-#: model_terms:ir.ui.view,arch_db:rent_customize.report_vacating_raj_template
-msgid ""
-"م\n"
-"                                            <br/>\n"
-"                                            سيتم فرض\n"
-"                                            إيجار يومي وقدره\n"
-"                                            ("
+"                                                والمتضمن تأجير<br/> شقة رقم"
 msgstr ""
 
 #. module: rent_customize
 #: model_terms:ir.ui.view,arch_db:rent_customize.report_contract_termination_template
 msgid ""
 "م\n"
-"                                            ، والمتضمن استئجاركم شقة/معرض/مكتب بالدور"
-msgstr ""
-
-#. module: rent_customize
-#: model_terms:ir.ui.view,arch_db:rent_customize.report_contract_termination_template
-msgid ""
-"م\n"
-"                                            ، وحيث تضمن العقد أنّه في حال عدم الرغبة بالتجديد يتم إشعار المستأجر قبل\n"
-"                                            انتهاء العقد بـ\n"
-"                                            ("
+"                                            ، والمتضمن استئجاركم"
 msgstr ""
 
 #. module: rent_customize
@@ -2583,6 +2810,13 @@ msgid ""
 msgstr ""
 
 #. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_payment_claim_template
+msgid ""
+"م\n"
+"                                            للعقار الكائن بحي"
+msgstr ""
+
+#. module: rent_customize
 #: model_terms:ir.ui.view,arch_db:rent_customize.report_template_transfer
 msgid ""
 "م\n"
@@ -2595,14 +2829,6 @@ msgid ""
 "م\n"
 "                                            والذي يتجدد تلقائيا/لا يتجدد تلقائيا، قد تنازلت عن\n"
 "                                            عقد ايجار العين المذكورة أعلاه، ومبلغ الإيجار المدفوع عنها إلى تاريخ"
-msgstr ""
-
-#. module: rent_customize
-#: model_terms:ir.ui.view,arch_db:rent_customize.report_payment_claim_template
-msgid ""
-"م\n"
-"                                            وحيث أنّه قد ترتب عليكم عدة أقساط متأخرة عن استئجاركم الوحدة\n"
-"                                            رقم معرض / مكتب/شقة"
 msgstr ""
 
 #. module: rent_customize
@@ -2646,6 +2872,23 @@ msgid "م أنا (المتنازل)/"
 msgstr ""
 
 #. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_vacating_raj_template
+msgid "م بقيمة"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_vacating_raj_template
+msgid ""
+"م.\n"
+"                                                <br/>\n"
+"                                                عليه\n"
+"                                                نود اشعاركم بإخلاء العقار المشار له\n"
+"                                              أعلاه على ان يكون يوم\n"
+"                                                استلام الوحدة الإيجارية\n"
+"                                                بتاريخ"
+msgstr ""
+
+#. module: rent_customize
 #: model_terms:ir.ui.view,arch_db:rent_customize.report_commercial_template
 #: model_terms:ir.ui.view,arch_db:rent_customize.report_personal_template
 #: model_terms:ir.ui.view,arch_db:rent_customize.report_transfer_template_apratment
@@ -2665,8 +2908,14 @@ msgid "مدير العقارات:"
 msgstr ""
 
 #. module: rent_customize
-#: model_terms:ir.ui.view,arch_db:rent_customize.report_commercial_template
 #: model_terms:ir.ui.view,arch_db:rent_customize.report_personal_template
+msgid ""
+"مسؤول\n"
+"                                            الإئتمان"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_commercial_template
 msgid "مسؤول الإئتمان"
 msgstr ""
 
@@ -2703,9 +2952,13 @@ msgid "مشرف العقار:"
 msgstr ""
 
 #. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_payment_claim_template
+msgid "مطالبة بالسداد"
+msgstr ""
+
+#. module: rent_customize
 #: model:ir.actions.report,name:rent_customize.action_report_payment_claim
 #: model:ir.model.fields.selection,name:rent_customize.selection__rental_letter_template__subject__payment_claim
-#: model_terms:ir.ui.view,arch_db:rent_customize.report_payment_claim_template
 msgid "مطالبة بسداد متأخرات"
 msgstr ""
 
@@ -2753,6 +3006,11 @@ msgid "موافقة العميل بالتسليم:"
 msgstr ""
 
 #. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_personal_template
+msgid "نسبة الايجار الشهري الى الراتب الشهري لا تتعدى 25%"
+msgstr ""
+
+#. module: rent_customize
 #: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__customer_accept
 #: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__elec_yes
 #: model:ir.model.fields,field_description:rent_customize.field_rental_letter_template__mangement_accept
@@ -2787,14 +3045,10 @@ msgstr ""
 msgid ""
 "هـ\n"
 "                                            ،\n"
-"                                            وتسليم العقار كما كان بموجب محضر استلام رسمي حيث لن يعتد بأي طريقة لاستلام\n"
-"                                            العقار إلا بموجب هذا المحضر الموقع من الشركة. وفي حال تأخركم بتسليم العقار\n"
-"                                            عن المدة المحددة أعلاه سكون الأجرة اليومية حسب ما نص عليه العقد بقيمة\n"
-"                                            ("
+"                                            وتسليم العقار كما كان بموجب محضر استلام رسمي."
 msgstr ""
 
 #. module: rent_customize
-#: model_terms:ir.ui.view,arch_db:rent_customize.report_contract_termination_template
 #: model_terms:ir.ui.view,arch_db:rent_customize.report_template_transfer
 msgid ""
 "هـ\n"
@@ -2809,6 +3063,11 @@ msgstr ""
 #. module: rent_customize
 #: model_terms:ir.ui.view,arch_db:rent_customize.report_transfer_template_apratment
 msgid "هـــــــــ الموافق"
+msgstr ""
+
+#. module: rent_customize
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_contract_termination_template
+msgid "و السلام عليكم و رحمة الله و بركاته..."
 msgstr ""
 
 #. module: rent_customize
@@ -2878,16 +3137,13 @@ msgid ""
 msgstr ""
 
 #. module: rent_customize
-#: model_terms:ir.ui.view,arch_db:rent_customize.report_contract_termination_template
-msgid "وحيث أن عقد الإيجار المشار له أعلاه ينتهي بتاريخ"
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_payment_claim_template
+msgid "وحدة رقم"
 msgstr ""
 
 #. module: rent_customize
-#: model_terms:ir.ui.view,arch_db:rent_customize.report_vacating_raj_template
-msgid ""
-"وعليه\n"
-"                                            نود اشعاركم بعدم رغبتنا<br/> في تجديد العقد المشار إليه أعلاه على ان يكون يوم\n"
-"                                            استلام الوحدة الإيجارية<br/> بتاريخ"
+#: model_terms:ir.ui.view,arch_db:rent_customize.report_contract_termination_template
+msgid "وحيث أن عقد الإيجار المشار له أعلاه ينتهي بتاريخ"
 msgstr ""
 
 #. module: rent_customize

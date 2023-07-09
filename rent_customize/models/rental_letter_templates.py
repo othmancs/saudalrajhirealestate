@@ -66,7 +66,8 @@ class RentalLetterTemplate(models.Model):
     partner_id = fields.Many2one('res.partner', string='Customer' , related="assigner_id.partner_id", readonly=False,
                                  store=True)
     beginning_contract = fields.Date(related='assigner_id.fromdate', String='Contract Date')
-    contract_number = fields.Char(related='assigner_id.contract_number', String='Contract Number', readonly=False)
+    contract_number = fields.Char(related='assigner_id.contract_number', String='Ejar Contract Number', readonly=False)
+    odoo_contract_number = fields.Char(related='assigner_id.name', String='Contract Number', readonly=False)
     end_contract = fields.Date(related='assigner_id.todate')
     number = fields.Char(string='Letter No.')
     rental_value = fields.Float(string='Rental Value')
@@ -246,12 +247,15 @@ class SaleOrderLine(models.Model):
 
     def name_get(self):
 
-        if not self._context.get('letter_unit'):
-            return super(SaleOrderLine, self).name_get()
+        # if not self._context.get('letter_unit') or self._name =='rental.letter.template':
+        #     print("################### self._context",self._context)
+        #     return super(SaleOrderLine, self).name_get()
         res = []
+
         for line in self:
             name = str(line.product_id.name) + "[" + line.product_id.unit_number + "]"
             res.append((line.id, name))
+            print("################### name",name)
         return res
 
 

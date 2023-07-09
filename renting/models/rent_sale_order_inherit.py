@@ -12,7 +12,7 @@ from odoo.tools import float_compare, format_datetime, format_time
 class RentSaleOrder(models.Model):
     _inherit = 'sale.order'
 
-    contract_number = fields.Char(string='رقم العقد')
+    contract_number = fields.Char(string='رقم عقد منصة ايجار')
     fromdate = fields.Date(string='From Date', default=datetime.today(), copy=False, required=True)
     todate = fields.Date(string='To Date', default=datetime.today(), copy=False, required=True)
     # Fields in Contract Info Tab
@@ -214,6 +214,14 @@ class RentSaleOrder(models.Model):
     no_of_posted_invoiced = fields.Float(string="الفواتير المرحلة", compute="compute_no_invoiced")
     no_of_posted_invoiced_amount = fields.Float(string="المبالغ الفواتير المرحلة", compute="compute_no_invoiced")
 
+    no_of_paid_invoiced = fields.Float(string="الفواتر المدفوعة ", compute="compute_no_invoiced")
+    no_of_paid_invoiced_amount = fields.Float(string="مبالغ  الفواتير المدفوعة", compute="compute_no_invoiced")
+
+    
+    
+    
+    # ('payment_state', '!=', 'paid')
+    
     @api.depends('order_contract_invoice.status', 'order_contract_invoice.amount')
     def compute_no_invoiced(self):
         for order in self:
@@ -222,6 +230,8 @@ class RentSaleOrder(models.Model):
             order.no_of_invoiced_amount = 0
             order.no_of_not_invoiced_amount = 0
             order.no_of_posted_invoiced = 0
+            order.no_of_paid_invoiced = 0
+            order.no_of_paid_invoiced_amount = 0
 
             order.no_of_invoiced = len(order.order_contract_invoice.filtered(lambda s: s.status == 'invoiced'))
             order.no_of_invoiced_amount = sum(order.order_contract_invoice.filtered(lambda s: s.status == 'invoiced').mapped('amount'))
@@ -231,6 +241,10 @@ class RentSaleOrder(models.Model):
 
             order.no_of_posted_invoiced = len(order.invoice_ids.filtered(lambda s: s.state == 'posted'))
             order.no_of_posted_invoiced_amount = sum(order.invoice_ids.filtered(lambda s: s.state == 'posted').mapped('amount_total'))
+
+    
+            order.no_of_paid_invoiced = len(order.invoice_ids.filtered(lambda s: s.payment_state == 'paid'))
+            order.no_of_paid_invoiced_amount = sum(order.invoice_ids.filtered(lambda s: s.payment_state == 'paid').mapped('amount_total'))
 
     @api.depends('order_contract_invoice.status')
     def _compute_full_invoiced(self):

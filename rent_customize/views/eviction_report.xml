@@ -7,6 +7,10 @@
             <field name="model">rental.letter.template</field>
             <field name="arch" type="xml">
                 <tree create="0" delete="0">
+                    <field name="odoo_contract_number"/>
+                    <field name="beginning_contract"/>
+                    <field name="end_contract"/>
+                    <field name="end_contractual_relationship" string="Eviction Date"/>
                     <field name="contract_number"/>
                     <field name="property_id"/>
                     <field name="unit_id"/>
@@ -25,16 +29,13 @@
             <field name="model">rental.letter.template</field>
             <field name="arch" type="xml">
                 <search string="Search Custody">
-                    <filter name="request_date" string="Today"
-                            domain="[('today_date','=',time.strftime('%%Y-%%m-%%d'))]"/>
+                    <filter name="request_date" string="Today" domain="[('today_date','=',time.strftime('%%Y-%%m-%%d'))]"/>
                     <filter name="date_filter" string="Request Date" date="today_date"/>
-                    <filter name="current_month" string="Current Month"
-                            domain="[('today_date', '&gt;=', (context_today()).strftime('%Y-%m-01')),('today_date', '&lt;', (context_today() + relativedelta(months=1)).strftime('%Y-%m-01'))]"/>
+                    <filter name="current_month" string="Current Month" domain="[('today_date', '&gt;=', (context_today()).strftime('%Y-%m-01')),('today_date', '&lt;', (context_today() + relativedelta(months=1)).strftime('%Y-%m-01'))]"/>
                     <separator/>
                     <field name="partner_id"/>
                     <group expand="0" string="Group By">
-                        <filter name="group_customer" string="Customer"
-                                context="{'group_by':'partner_id'}"/>
+                        <filter name="group_customer" string="Customer" context="{'group_by':'partner_id'}"/>
                         <filter name="group_status" string="Status" context="{'group_by':'eviction_state'}"/>
                         <separator/>
                         <filter name="group_request_date" string="Request Date" context="{'group_by':'today_date'}"/>
@@ -51,12 +52,7 @@
             <field name="view_mode">tree</field>
         </record>
 
-        <menuitem id="menu_report_eviction_all"
-                  name="Eviction Report"
-                  action="eviction_report_action"
-                  parent="sale_renting.menu_rental_reporting"
-                  groups="rent_customize.renting_report_eviction"
-                  sequence="4"/>
+        <menuitem id="menu_report_eviction_all" name="Eviction Report" action="eviction_report_action" parent="sale_renting.menu_rental_reporting" groups="rent_customize.renting_report_eviction" sequence="4"/>
 
     </data>
 </odoo>

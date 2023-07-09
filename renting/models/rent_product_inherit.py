@@ -112,7 +112,7 @@ class RentProduct(models.Model):
     last_sale_id = fields.Many2one('sale.order', string='رقم العقد', compute="get_sale_data", store=True)
     operating_unit_id = fields.Many2one('operating.unit', string='الفرع ')
     contract_total = fields.Float(compute="get_sale_data", string='قيمة العقد')
-    contract_service_sub_fees = fields.Float(string='رسوم الخدمات')
+    contract_service_sub_fees = fields.Float(string=' رسوم الخدمات الخاضعة ')
     contract_admin_sub_fees = fields.Float(string='رسوم ادارية خاضعة')
     def get_sale_data(self):
         for rec in self:

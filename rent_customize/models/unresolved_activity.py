@@ -40,7 +40,8 @@ class MailActivity(models.Model):
                 }
                 self.env['mail.activity'].create(notification)
             else:
-                activity.unlink()
+                # activity.unlink()
+                pass
 
     @api.model
     def _cron_send_invoice_activity_notifications(self):

@@ -53,6 +53,8 @@
                                 <field name="end_date" />
                                 <field name="invoicing_state" />
                                 <field name="deadline" />
+                                <field name="pay_with_custody" />
+                                <field name="journal_id"  options="{'no_create': True, 'no_open': True}" domain="[('is_custody','=',True)]" attrs="{'invisible': [('pay_with_custody', '=',False)]}"/>
 
                             </group>
                             <group>

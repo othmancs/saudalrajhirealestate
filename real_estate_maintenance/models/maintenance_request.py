@@ -99,6 +99,8 @@ class MaintenanceRequest(models.Model):
     ], 'Maintained Property Type', default="unit")
 
     deadline = fields.Date('Deadline')
+    pay_with_custody = fields.Boolean('Pay With Custody')
+    journal_id = fields.Many2one('account.journal', string='Journal')
 
     def _invoicing_state_calculate(self):
         for rec in self:
@@ -298,6 +300,9 @@ class MaintenanceRequest(models.Model):
         bill_vals = self._prepare_bill()
         for partner in self.maintenance_request_expense_line_ids.mapped('partner_id'):
             bill_vals.update({"partner_id": partner.id})
+            if self.pay_with_custody :
+                bill_vals.update({"pay_with_custody": True})
+                bill_vals.update({"custody_journal_id": self.journal_id.id})
             bill_lines = []
             for line in self.maintenance_request_expense_line_ids.filtered(lambda exl: exl.partner_id.id == partner.id):
                 bill_lines.append([0, 0, line._prepare_invoice_line()])

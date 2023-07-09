@@ -69,24 +69,21 @@ class SaleOrder(models.Model):
             contract_renewals = self.env['sale.order'].search([
                 ('company_id', '=', self.env.user.company_id.id),
                 ('todate', '=', datetime.today() + timedelta(days=int(contract_notify)))
-            ], limit=1)
+            ])
             print("services_idsservices_idsservices_ids", contract_renewals)
-            partner_ids = []
-            user_ids = self.env['res.users'].search([])
-            for user in user_ids:
-                partner_ids.append(user.partner_id.id)
-                print(partner_ids)
-                for contract in contract_renewals:
-                    notification = {
-                        'activity_type_id': self.env.ref('rent_customize.contract_expire_notification').id,
-                        'res_id': contract.id,
-                        'res_model_id': self.env['ir.model'].search([('model', '=', 'sale.order')], limit=1).id,
-                        'icon': 'fa-pencil-square-o',
-                        'date_deadline': fields.Date.today(),
-                        'user_id': user.id,
-                        'note': "A kind reminder to renew the contract"
-                    }
-                    try:
-                        self.env['mail.activity'].create(notification)
-                    except:
-                        pass
+            for contract in contract_renewals:
+                    user_ids = contract.user_id
+                    for user in user_ids:
+                        notification = {
+                            'activity_type_id': self.env.ref('rent_customize.contract_expire_notification').id,
+                            'res_id': contract.id,
+                            'res_model_id': self.env['ir.model'].search([('model', '=', 'sale.order')], limit=1).id,
+                            'icon': 'fa-pencil-square-o',
+                            'date_deadline': fields.Date.today(),
+                            'user_id': user.id,
+                            'note': "A kind reminder to renew the contract"
+                        }
+                        try:
+                            self.env['mail.activity'].create(notification)
+                        except:
+                            pass
