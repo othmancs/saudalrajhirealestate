@@ -1,0 +1,365 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* account_security
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 15.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-07-09 11:07+0000\n"
+"PO-Revision-Date: 2023-07-09 11:07+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: account_security
+#: model:res.groups,name:account_security.group_account_direct_transfer
+msgid "Access Direct Transfers"
+msgstr "صلاحية التحويلات المباشرة"
+
+#. module: account_security
+#: model:res.groups,name:account_security.group_account_employee_expense
+msgid "Access Employee Expense"
+msgstr "صلاحية مصاريف االموظف"
+
+#. module: account_security
+#: model:res.groups,name:account_security.group_account_create_product
+msgid "Access to Create Product"
+msgstr "صلاحية انشاء منتج"
+
+#. module: account_security
+#: model:ir.module.category,name:account_security.module_category_accounting_accounting_administration
+msgid "Accounting Administration"
+msgstr "ادارة المالية"
+
+#. module: account_security
+#: model:ir.module.category,name:account_security.module_category_accounting_accounting_reports
+msgid "Accounting Reports"
+msgstr "تقارير المالبة"
+
+#. module: account_security
+#: model:res.groups,name:account_security.group_account_aged_payable
+msgid "Aged Payable"
+msgstr "التأخر  المستحق"
+
+#. module: account_security
+#: model:res.groups,name:account_security.group_account_aged_receivable
+msgid "Aged Receivable"
+msgstr "المتأخر المدين"
+
+#. module: account_security
+#: model:ir.model,name:account_security.model_account_asset
+msgid "Asset/Revenue Recognition"
+msgstr "إثبات الأصل/الربح"
+
+#. module: account_security
+#: model:res.groups,name:account_security.group_account_balance_sheet
+msgid "Balance Sheet"
+msgstr "الميزانية العمومية"
+
+#. module: account_security
+#: model:ir.module.category,name:account_security.module_category_accounting_accounting_budget
+msgid "Budgets"
+msgstr "الموازنة"
+
+#. module: account_security
+#: model:res.groups,name:account_security.group_account_cash_flow
+msgid "Cash Flow"
+msgstr "التدفقات النقدية"
+
+#. module: account_security
+#: model_terms:ir.ui.view,arch_db:account_security.view_account_asset_form_inherit
+#: model_terms:ir.ui.view,arch_db:account_security.view_account_payment_form_inherit
+#: model_terms:ir.ui.view,arch_db:account_security.view_move_form_inherit
+msgid "Confirm"
+msgstr "تأكيد"
+
+#. module: account_security
+#: model:res.groups,name:account_security.group_account_asset_confirm
+msgid "Confirm Asset"
+msgstr "تاكيد"
+
+#. module: account_security
+#: model:res.groups,name:account_security.group_account_customer_invoice_confirm
+msgid "Confirm Customer Invoices"
+msgstr "تاكيد"
+
+#. module: account_security
+#: model:res.groups,name:account_security.group_account_customer_payment_confirm
+msgid "Confirm Customer Payment"
+msgstr "تاكيد"
+
+#. module: account_security
+#: model:res.groups,name:account_security.group_account_deferred_expense_confirm
+msgid "Confirm Deferred Expenses"
+msgstr "تاكيد"
+
+#. module: account_security
+#: model:res.groups,name:account_security.group_account_deferred_revenue_confirm
+msgid "Confirm Deferred Revenues"
+msgstr "تاكيد"
+
+#. module: account_security
+#: model:res.groups,name:account_security.group_account_journal_entry_confirm
+msgid "Confirm Journal Entries"
+msgstr "تاكيد"
+
+#. module: account_security
+#: model:res.groups,name:account_security.group_account_vendor_bill_confirm
+msgid "Confirm Vendor Bills"
+msgstr "تاكيد"
+
+#. module: account_security
+#: model:res.groups,name:account_security.group_account_vendor_payment_confirm
+msgid "Confirm Vendor Payment"
+msgstr "تاكيد"
+
+#. module: account_security
+#: model:res.groups,name:account_security.group_account_budget_confirm
+msgid "Confirm budget"
+msgstr "تاكيد"
+
+#. module: account_security
+#: model:res.groups,name:account_security.group_account_asset_create
+msgid "Create Asset"
+msgstr "انشاء"
+
+#. module: account_security
+#: model:res.groups,name:account_security.group_account_budget_create
+msgid "Create Budget"
+msgstr "انشاء"
+
+#. module: account_security
+#: model:res.groups,name:account_security.group_account_customer_invoices_create
+msgid "Create Customer Invoices"
+msgstr "انشاء"
+
+#. module: account_security
+#: model:res.groups,name:account_security.group_account_customer_payment_create
+msgid "Create Customer Payment"
+msgstr "انشاء"
+
+#. module: account_security
+#: model:res.groups,name:account_security.group_account_deferred_expense_create
+msgid "Create Deferred Expenses"
+msgstr "انشاء"
+
+#. module: account_security
+#: model:res.groups,name:account_security.group_account_deferred_revenue_create
+msgid "Create Deferred Revenues"
+msgstr "انشاء"
+
+#. module: account_security
+#: model:res.groups,name:account_security.group_account_journal_entry_create
+msgid "Create Journal Entries"
+msgstr "انشاء"
+
+#. module: account_security
+#: model:res.groups,name:account_security.group_account_vendor_bill_create
+msgid "Create Vendor Bills"
+msgstr "انشاء"
+
+#. module: account_security
+#: model:res.groups,name:account_security.group_account_vendor_payment_create
+msgid "Create Vendor Payment"
+msgstr "انشاء"
+
+#. module: account_security
+#: model:ir.module.category,name:account_security.module_category_accounting_accounting_customer_invoice
+msgid "Customer Invoices"
+msgstr "فواتير العملاء"
+
+#. module: account_security
+#: model:ir.module.category,name:account_security.module_category_accounting_accounting_customer_payment
+msgid "Customer Payments"
+msgstr "دفعات العملاء"
+
+#. module: account_security
+#: model:ir.module.category,name:account_security.module_category_accounting_accounting_deferred_expense
+msgid "Deferred Expenses"
+msgstr "النفقات المؤجلة"
+
+#. module: account_security
+#: model:ir.module.category,name:account_security.module_category_accounting_accounting_deferred_revenues
+msgid "Deferred revenues"
+msgstr "الإيرادات المدفوعة مقدما"
+
+#. module: account_security
+#: model:res.groups,name:account_security.group_account_executive_summary
+msgid "Executive"
+msgstr "الملخص التنفيذي"
+
+#. module: account_security
+#: model:res.groups,name:account_security.group_account_general_ledger
+msgid "General Ledger"
+msgstr "دفتر الاستاذ العام"
+
+#. module: account_security
+#: model:ir.module.category,name:account_security.module_category_accounting_accounting_journal_entries
+msgid "Journal Entries"
+msgstr "قيود  اليومية"
+
+#. module: account_security
+#: model:ir.model,name:account_security.model_account_move
+msgid "Journal Entry"
+msgstr "قيد اليومية"
+
+#. module: account_security
+#: model:res.groups,name:account_security.group_account_partner_ageing
+msgid "Partner Ageing"
+msgstr ""
+
+#. module: account_security
+#: model:res.groups,name:account_security.group_account_partner_ledger
+msgid "Partner Ledger"
+msgstr "دفتر الأستاذ العام الشركاء"
+
+#. module: account_security
+#: model:ir.model,name:account_security.model_account_payment
+msgid "Payments"
+msgstr "المدفوعات"
+
+#. module: account_security
+#: model_terms:ir.ui.view,arch_db:account_security.view_move_form_inherit
+msgid "Post"
+msgstr "ترحيل"
+
+#. module: account_security
+#: model:res.groups,name:account_security.group_account_profit_and_los
+msgid "Profit and Los"
+msgstr "الأرباح و الخسائر"
+
+#. module: account_security
+#: model_terms:ir.ui.view,arch_db:account_security.view_move_form_inherit
+msgid "Register Payment"
+msgstr "تسجيل دفعة"
+
+#. module: account_security
+#: model:res.groups,name:account_security.group_account_asset_review
+msgid "Review Asset"
+msgstr "مراجعة"
+
+#. module: account_security
+#: model:res.groups,name:account_security.group_account_budget_review
+msgid "Review Budget"
+msgstr "مراجعة"
+
+#. module: account_security
+#: model:res.groups,name:account_security.group_account_customer_invoices_review
+msgid "Review Customer Invoices"
+msgstr "مراجعة"
+
+#. module: account_security
+#: model:res.groups,name:account_security.group_account_customer_payment_review
+msgid "Review Customer Payment"
+msgstr "مراجعة"
+
+#. module: account_security
+#: model:res.groups,name:account_security.group_account_deferred_expense_review
+msgid "Review Deferred Expenses"
+msgstr "مراجعة"
+
+#. module: account_security
+#: model:res.groups,name:account_security.group_account_deferred_revenue_review
+msgid "Review Deferred Revenues"
+msgstr "مراجعة"
+
+#. module: account_security
+#: model_terms:ir.ui.view,arch_db:account_security.view_account_asset_form_inherit
+#: model_terms:ir.ui.view,arch_db:account_security.view_account_payment_form_inherit
+#: model_terms:ir.ui.view,arch_db:account_security.view_move_form_inherit
+msgid "Review Done"
+msgstr "تمت المراجعة"
+
+#. module: account_security
+#: model:res.groups,name:account_security.group_account_journal_entry_review
+msgid "Review Journal Entries"
+msgstr "مراجعة"
+
+#. module: account_security
+#: model:res.groups,name:account_security.group_account_vendor_bill_review
+msgid "Review Vendor Bills"
+msgstr "مراجعة"
+
+#. module: account_security
+#: model:res.groups,name:account_security.group_account_vendor_payment_review
+msgid "Review Vendor Payment"
+msgstr "مراجعة"
+
+#. module: account_security
+#: model:ir.model.fields.selection,name:account_security.selection__account_move__state__review
+msgid "Reviewed"
+msgstr "تمت المراجعة"
+
+#. module: account_security
+#: model:res.groups,name:account_security.group_account_configuration
+msgid "Show Accounting Configuration Menu"
+msgstr "صلاحية الاعدادات التهيئة"
+
+#. module: account_security
+#: model:res.groups,name:account_security.group_account_lock_dates
+msgid "Show Lock Dates Menu"
+msgstr "صلاحية تواريخ الاقفال"
+
+#. module: account_security
+#: model:res.groups,name:account_security.group_account_partner_merge
+msgid "Show Partner Merge Action"
+msgstr "صلاحية دمج العملاء "
+
+#. module: account_security
+#: model:res.groups,name:account_security.group_account_reconciliation
+msgid "Show Reconciliations Menu"
+msgstr "صلاحية التسويات"
+
+#. module: account_security
+#: model:res.groups,name:account_security.group_account_tax_adjustment
+msgid "Show Tax Adjustment Menu"
+msgstr "صلاحية تصحيحات الضرائب"
+
+#. module: account_security
+#: model:ir.model.fields,field_description:account_security.field_account_asset__state
+#: model:ir.model.fields,field_description:account_security.field_account_move__state
+#: model:ir.model.fields,field_description:account_security.field_account_payment__state
+msgid "Status"
+msgstr "الحالة"
+
+#. module: account_security
+#: model:res.groups,name:account_security.group_account_tax_report
+msgid "Tax Report"
+msgstr "تقرير الضريبة"
+
+#. module: account_security
+#: model:ir.model.fields.selection,name:account_security.selection__account_asset__state__review
+msgid "To Confirm"
+msgstr "للمراجعة"
+
+#. module: account_security
+#: model:res.groups,name:account_security.group_account_trial_balance
+msgid "Trial Balance"
+msgstr "ميزان المراجعة"
+
+#. module: account_security
+#: model:ir.module.category,name:account_security.module_category_accounting_accounting_vendor_bills
+msgid "Vendor Bills"
+msgstr "فواتير الموردين"
+
+#. module: account_security
+#: model:ir.module.category,name:account_security.module_category_accounting_accounting_vendor_payment
+msgid "Vendor Payments"
+msgstr "مدفوعات الموردين"
+
+#. module: account_security
+#: model:ir.model.fields,help:account_security.field_account_asset__state
+msgid ""
+"When an asset is created, the status is 'Draft'.\n"
+"If the asset is confirmed, the status goes in 'Running' and the depreciation lines can be posted in the accounting.\n"
+"The 'On Hold' status can be set manually when you want to pause the depreciation of an asset for some time.\n"
+"You can manually close an asset when the depreciation is over. If the last line of depreciation is posted, the asset automatically goes in that status."
+msgstr ""
+"عندما يتم إنشاء أصل، يكون في وضع 'المسودة'.\n"
+"إذا تم تأكيد الأصل، تتغير الحالة إلى  'جاري' ويمكن ترحيل بنود الإهلاك في المحاسبة.\n"
+"يمكن تعيين الحالة 'قيد الانتظار' يدوياً عندما ترغب في إيقاف إهلاك أصل من الأصول بشكل مؤقت لفترة من الزمن.\n"
+"يمكنك إقفال الأصل يدوياً عند انتهاء الإهلاك. إذا تم ترحيل آخر بند من بنود الإهلاك، ينتقل الأصل تلقائياً إلى تلك الحالة. "
