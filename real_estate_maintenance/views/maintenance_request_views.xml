@@ -13,32 +13,44 @@
                         <button type="object" name="action_confirm" groups="real_estate_maintenance.group_maintenance_confirm" string="Confirm" class="oe_highlight" states="ceo" />
                         <button type="object" name="action_review" groups="real_estate_maintenance.group_maintenance_review" string="Review" class="oe_highlight" states="to_review" />
                         <button type="object" name="prop_manager" groups="real_estate_maintenance.group_maintenance_property_manager" string="Property Manager" class="oe_highlight" states="review" />
-                        <button type="object" name="action_ceo" groups="real_estate_maintenance.group_maintenance_ceo"  string="CEO" class="oe_highlight" states="prop_manager" />
-                        <button type="object" name="action_create_pr" string="Create Purchase Requisition" class="oe_highlight" states="ceo" />
+                        <button type="object" name="action_ceo" groups="real_estate_maintenance.group_maintenance_ceo" string="CEO" class="oe_highlight" states="prop_manager" />
+                        <button type="object" name="action_create_pr" string="Create Purchase Requisition" class="oe_highlight" attrs="{'invisible':['|','|',('purchase_requisition_count', '>', 0),('maintenance_request_product_line_ids', '=', [])]}" states="confirm,ongoing,closed" />
                         <button type="object" name="action_ongoing" string="Start" class="oe_highlight" states="confirm" />
                         <button type="object" name="action_close" string="Close" class="oe_highlight" states="ongoing" />
                         <button type="object" name="action_refuse" groups="real_estate_maintenance.group_maintenance_refuse" string="Refuse" class="oe_highlight" states="new" />
-                        <button type="object" name="create_bills"  groups="real_estate_maintenance.group_maintenance_create_bills" string="Create Invoice" class="oe_highlight" />
                         <field name="customer_invoice_id" invisible="1" />
-                        <button type="object" name="action_create_invoice" string="Create Invoice" class="oe_highlight" attrs="{'invisible': ['|', '|', ('invoice_status', '=', 'on-company'), ('customer_invoice_id', '!=', False), ('state', '!=', 'closed')]}" />
+                        <!-- <button type="object" name="action_create_invoice" string="Create Customer Invoice" class="oe_highlight" /> -->
+                        <button type="object" name="action_create_invoice"  string="Create Customer Invoice" class="oe_highlight" attrs="{'invisible': ['|', '|','|', ('invoice_status', '=', 'on-company'),('maintenance_cus_invoice_count', '>', 0), ('customer_invoice_id','=', True),('state', '!=', 'closed')]}" />
+                        <button type="object" name="create_bills" groups="real_estate_maintenance.group_maintenance_create_bills" string="Create Expense Invoice" attrs="{'invisible': ['|','|',('state', '!=', 'closed'),('maintenance_request_expense_line_ids', '=', []),('maintenance_exp_invoice_count', '>', 0)]}" class="oe_highlight" />
                         <field name="state" widget="statusbar" />
                     </header>
                     <sheet>
                         <div name="button_box" class="oe_button_box">
-                            <!--                            <field name="stock_picking_ids" invisible="1" />-->
-                            <!--                            <button class="oe_stat_button"-->
-                            <!-- type="object" name="action_view_stock_pickings"-->
-                            <!-- icon="fa-truck">-->
-                            <!--                                <field string="Pickings" name="stock_pickings_count"-->
-                            <!-- widget="statinfo" />-->
-                            <!--                            </button>-->
+                            <!-- <field name="stock_picking_ids" invisible="1" /> -->
+                            <button class="oe_stat_button" type="object" attrs="{'invisible':[('picking_count', '=', 0)]}" name="action_view_stock_pickings" icon="fa-truck">
+                                <field string="pickings" name="picking_count" widget="statinfo" />
+                            </button>
                             <field name="purchase_requisition_ids" invisible="1" />
-                            <button class="oe_stat_button" type="object" name="action_view_purchase_requisition" icon="fa-book">
+                            <button class="oe_stat_button" type="object" attrs="{'invisible':[('purchase_requisition_count', '=', 0)]}" name="action_view_purchase_requisition" icon="fa-book">
                                 <field string="Purchase Requisitions" name="purchase_requisition_count" widget="statinfo" />
                             </button>
                             <field name="account_move_ids" invisible="1" />
-                            <button class="oe_stat_button" type="object" name="action_view_invoices" icon="fa-money">
-                                <field string="Invoices &amp; Bills" name="account_moves_count" widget="statinfo" />
+                            <field name="maintenance_exp_invoice_count" invisible="1" />
+                            <field name="maintenance_cus_invoice_count" invisible="1" />
+                            <field name="sale_order_id" invisible="1" />
+
+                            <button class="oe_stat_button" type="object" attrs="{'invisible':[('maintenance_exp_invoice_count', '=', 0)]}" string="Expense Invoice" name="action_view_invoices" icon="fa-money">
+                            </button>
+
+                            <button class="oe_stat_button" type="object" attrs="{'invisible':[('sale_order_id', '=', False)]}" string="Rental Order" name="action_view_sale_order" icon="fa-signal">
+                            </button>
+
+
+                            <button class="oe_stat_button" type="object" attrs="{'invisible':[('maintenance_cus_invoice_count', '=', 0)]}" string="Customer Invoice" name="action_view_customer_invoices" icon="fa-money">
+                            </button>
+
+                            <button type="object" name="action_view_purchase_order" class="oe_stat_button" attrs="{'invisible':[('purchase_count', '=', 0)]}" icon="fa-shopping-cart">
+                                <field name="purchase_count" widget="statinfo" string="Purchase Orders" />
                             </button>
                         </div>
                         <div class="oe_title">
@@ -54,15 +66,16 @@
                                 <field name="invoicing_state" />
                                 <field name="deadline" />
                                 <field name="pay_with_custody" />
-                                <field name="journal_id"  options="{'no_create': True, 'no_open': True}" domain="[('is_custody','=',True)]" attrs="{'invisible': [('pay_with_custody', '=',False)]}"/>
+                                <field name="journal_id" options="{'no_create': True, 'no_open': True}" domain="[('is_custody','=',True)]" attrs="{'required': [('pay_with_custody', '!=',False)],'invisible': [('pay_with_custody', '=',False)]}"/>
 
                             </group>
                             <group>
                                 <field name="maintain_property_type" />
                                 <field name="operating_unit_id" required="1" attrs="{'readonly': [('state', 'in', ('closed', 'refused'))]}" />
-                                <field name="property_rent_id" domain="[('property_address_area', '=', operating_unit_id)]" attrs="{'required': [('maintain_property_type', 'in', ('building','unit'))],'invisible': [('maintain_property_type', 'not in', ('building','unit'))],'readonly': [('state', 'in', ('closed', 'refused'))]}" />
+                                <field name="rent_property_build_id" required="1" attrs="{'readonly': [('state', 'in', ('closed', 'refused'))]}" domain="[('property_address_area', '=', operating_unit_id)]"/>
+                                <field name="property_rent_id" domain="[('property_address_build', '=', rent_property_build_id)]" attrs="{'required': [('maintain_property_type', 'in', ('property','unit'))],'invisible': [('maintain_property_type', 'not in', ('property','unit'))],'readonly': [('state', 'in', ('closed', 'refused'))]}" />
                                 <field name="property_id" domain="[('property_id', '=', property_rent_id)]" attrs="{'required': [('maintain_property_type', 'in', ('unit'))],'invisible': [('maintain_property_type', 'not in', ('unit'))],'readonly': [('state', 'in', ('closed', 'refused'))]}" />
-                                <field name="rent_property_build_id" attrs="{'required': [('maintain_property_type', 'in', ('property'))],'invisible': [('maintain_property_type', 'not in', ('property'))],'readonly': [('state', 'in', ('closed', 'refused'))]}" />
+                                <!-- <field name="rent_property_build_id" attrs="{'required': [('maintain_property_type', '=', 'property')],'invisible': [('maintain_property_type', '!=', 'property')],'readonly': [('state', 'in', ('closed', 'refused'))]}" /> -->
                             </group>
                         </group>
                         <group>
@@ -71,8 +84,12 @@
                                 <field name="issue_type" attrs="{'readonly': [('state', 'in', ('closed', 'refused'))]}" />
                                 <field name="unit_type" attrs="{'readonly': [('state', 'in', ('closed', 'refused'))]}" />
                                 <field name="maintenance_categ" attrs="{'readonly': [('state', 'in', ('closed', 'refused'))]}" />
-                                <field name="maintenance_type" widget="radio" attrs="{'readonly': [('state', 'in', ('closed', 'refused'))]}" />
-                                <field name="invoice_status" attrs="{'readonly': [('state', 'in', ('closed', 'refused'))]}" />
+                                <!-- <field name="maintenance_type" widget="radio" attrs="{'readonly': [('state', 'in', ('closed', 'refused'))]}" /> -->
+                                <field name="maintenance_type_type" attrs="{'readonly': [('state', 'in', ('closed', 'refused'))]}" />
+                                <field name="invoice_status"/>
+                                <field name="exp_total" attrs="{'invisible': [('invoice_status', '!=','on-partner')]}" />
+                                <field name="inv_total" attrs="{'invisible': [('invoice_status', '!=','on-partner')]}" />
+                                <field name="add_total" attrs="{'invisible': [('invoice_status', '!=','on-partner')],'readonly': [('state', 'in', ('closede', 'refused'))]}" />
                                 <field name="maintenance_responsible_id" attrs="{'readonly': [('state', 'in', ('closed', 'refused'))]}" />
                             </group>
                         </group>
@@ -219,6 +236,43 @@
         <!-- Menu Item -->
         <menuitem id="real_estate_maintenance_menu_request" parent="real_estate_maintenance_menu_root" action="maintenance_request_act_window" name="Maintenance Requests" sequence="70" />
 
+        <!--  Cron -->
+        <record model="ir.cron" id="ir_cron_send_maintenance_reminder_request">
+            <field name="name">Unresolved Maintenance Request Reminder Notifications</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+            <field name="doall" eval="False"/>
+            <field name="model_id" ref="mail.model_mail_activity"/>
+            <field name="state">code</field>
+            <field name="code">model._cron_send_maintenance_activity_reminder_notifications()</field>
+            <field name="active" eval="True"/>
+        </record>
+
+        <record model="ir.cron" id="ir_cron_send_maintenance_request">
+            <field name="name">Unresolved Maintenance Request Notifications</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+            <field name="doall" eval="False"/>
+            <field name="model_id" ref="mail.model_mail_activity"/>
+            <field name="state">code</field>
+            <field name="code">model._cron_send_maintenance_activity_notifications()</field>
+            <field name="active" eval="True"/>
+        </record>
+
+
+        <record model="ir.cron" id="ir_cron_send_maintenance_ceo_request">
+            <field name="name">Unresolved Maintenance Request CEO Notifications</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+            <field name="doall" eval="False"/>
+            <field name="model_id" ref="mail.model_mail_activity"/>
+            <field name="state">code</field>
+            <field name="code">model._cron_send_maintenance_ceo_activity_notifications()</field>
+            <field name="active" eval="True"/>
+        </record>
 
 
         <record id="real_estate_maintenance_tree_view_report" model="ir.ui.view">
@@ -248,6 +302,6 @@
             <field name="view_mode">tree</field>
         </record>
 
-        <menuitem id="real_estate_maintenance_menu_report" parent="real_estate_maintenance_menu_root" action="real_estate_maintenance_action_report" name="Report" sequence="70" />
+        <menuitem id="real_estate_maintenance_menu_report" parent="real_estate_maintenance_menu_root" action="real_estate_maintenance_action_report" name="Report" sequence="78" />
     </data>
 </odoo>

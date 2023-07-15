@@ -117,8 +117,6 @@ class RentProduct(models.Model):
     def get_sale_data(self):
         for rec in self:
             order_line_id = rec.env['sale.order.line'].sudo().search([('product_id', '=', rec.id), ('state','=','occupied')],limit=1, order='id desc')
-
-
             rec.partner_id = order_line_id.order_id.partner_id.id if order_line_id else False
             rec.last_sale_id = order_line_id.order_id.id if order_line_id else False
             rec.contract_admin_fees = order_line_id.contract_admin_fees if order_line_id else False

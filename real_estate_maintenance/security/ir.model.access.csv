@@ -1,6 +1,7 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_maintenance_request,access.maintenance.request,model_maintenance_request,,1,1,1,1
 access_maintenance_issue_type,access.maintenance.issue.type,model_maintenance_issue_type,,1,1,1,1
+maintenance_type_type,access_maintenance_type_type,model_maintenance_type_type,,1,1,1,1
 access_maintenance_request_expense,access.maintenance.request.expense,model_maintenance_request_expense,,1,1,1,1
 access_maintenance_request_product,access.maintenance.request.product,model_maintenance_request_product,,1,1,1,1
 access_wiz_maintenance_request_refuse,access.wiz.maintenance.request.refuse,model_wiz_maintenance_request_refuse,,1,1,1,1

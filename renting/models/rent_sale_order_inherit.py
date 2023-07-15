@@ -207,12 +207,12 @@ class RentSaleOrder(models.Model):
         return result
 
     full_invoiced = fields.Boolean(string="Fully Invoiced", compute="_compute_full_invoiced", store=True)
-    no_of_invoiced = fields.Integer(string="عدد الفواتير المفوترة", compute="compute_no_invoiced")
-    no_of_not_invoiced = fields.Integer(string="عدد الفواتير الغير مفوترة", compute="compute_no_invoiced")
+    no_of_invoiced = fields.Integer(string=" الفواتير المفوترة", compute="compute_no_invoiced")
+    no_of_not_invoiced = fields.Integer(string=" الفواتير الغير مفوترة", compute="compute_no_invoiced")
     no_of_invoiced_amount = fields.Float(string="المبالغ المفوترة", compute="compute_no_invoiced")
     no_of_not_invoiced_amount = fields.Float(string="المبالغ الغير مفوترة", compute="compute_no_invoiced")
     no_of_posted_invoiced = fields.Float(string="الفواتير المرحلة", compute="compute_no_invoiced")
-    no_of_posted_invoiced_amount = fields.Float(string="المبالغ الفواتير المرحلة", compute="compute_no_invoiced")
+    no_of_posted_invoiced_amount = fields.Float(string="مبالغ الفواتير المرحلة", compute="compute_no_invoiced")
 
     no_of_paid_invoiced = fields.Float(string="الفواتر المدفوعة ", compute="compute_no_invoiced")
     no_of_paid_invoiced_amount = fields.Float(string="مبالغ  الفواتير المدفوعة", compute="compute_no_invoiced")

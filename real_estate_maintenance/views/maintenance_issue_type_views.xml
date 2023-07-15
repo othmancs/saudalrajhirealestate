@@ -46,7 +46,7 @@
 
         <!-- Menu Item -->
         <menuitem id="real_estate_maintenance_menu_issue"
-                  parent="real_estate_maintenance_menu_root"
+                  parent="real_estate_maintenance.menu_real_estate_main_config"
                   action="maintenance_issue_type_act_window"
                   name="Issue Types" sequence="70"/>
     </data>

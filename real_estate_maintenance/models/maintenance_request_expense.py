@@ -20,9 +20,10 @@ class MaintenanceRequestExpense(models.Model):
         res = {
             'name': self.product_id.name,
             'product_id': self.product_id.id,
-            'analytic_account_id': self.analytic_account_id or self.maintenance_request_id.property_id.analytic_account.id or False,
+            'analytic_account_id': self.analytic_account_id or self.maintenance_request_id.property_id.analytic_account.id or  self.maintenance_request_id.property_rent_id.analytic_account.id,
             'quantity': self.quantity,
             'price_unit': self.price_unit,
             'tax_ids': self.tax_ids.ids,
         }
+        print("##################### raaaaaaaaaas ",res)
         return res

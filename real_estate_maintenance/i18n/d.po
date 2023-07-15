@@ -230,7 +230,7 @@ msgstr "مؤكد"
 #. module: real_estate_maintenance
 #: model_terms:ir.ui.view,arch_db:real_estate_maintenance.maintenance_request_view_form
 msgid "Consumed Products"
-msgstr "المنتجات المستخدمة"
+msgstr "المنتجات المطلوبة"
 
 #. module: real_estate_maintenance
 #: model_terms:ir.ui.view,arch_db:real_estate_maintenance.portal_my_maintenance_request

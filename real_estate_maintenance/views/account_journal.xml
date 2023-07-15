@@ -14,5 +14,16 @@
                 </xpath>
             </field>
         </record>
+
+        <record id="account_move_view_inherit" model="ir.ui.view">
+            <field name="model">account.move</field>
+            <field name="inherit_id" ref="account.view_move_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div[hasclass('oe_button_box')]" position="inside">
+                    <field name="maintenance_request_id" invisible="1"/>
+                    <button name="action_view_maint_request" attrs="{'invisible':[('maintenance_request_id', '=', False)]}" icon="fa-archive" type="object" string="Maintenance"/> 
+                </xpath>
+            </field>
+        </record>
     </data>
 </odoo>

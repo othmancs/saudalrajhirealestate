@@ -9,8 +9,7 @@
             <field name="inherit_id" ref="base.res_config_settings_view_form"/>
             <field name="arch" type="xml">
                 <xpath expr="//div[hasclass('settings')]" position="inside">
-                    <div class="app_settings_block" data-string="real_estate_maintenance" string="Maintenance"
-                         data-key="real_estate_maintenance">
+                    <div class="app_settings_block" data-string="real_estate_maintenance" string="Maintenance" data-key="real_estate_maintenance">
                         <h2>Real Estate Maintenance Configuration</h2>
                         <div class="row mt16 o_settings_container">
 
@@ -22,8 +21,7 @@
                                     </div>
                                     <div class="content-group">
                                         <div class="mt16">
-                                            <field name="maintenance_request_to_notify_user_id" widget="many2many_tags"
-                                                   options="{'no_quick_create': True}"/>
+                                            <field name="maintenance_request_to_notify_user_id" widget="many2many_tags" options="{'no_quick_create': True}"/>
                                         </div>
                                     </div>
                                 </div>
@@ -36,8 +34,7 @@
                                     </div>
                                     <div class="content-group">
                                         <div class="mt16">
-                                            <field name="invoice_product_id"
-                                                   options="{'no_quick_create': True}"/>
+                                            <field name="invoice_product_id" options="{'no_quick_create': True}"/>
                                         </div>
                                     </div>
                                 </div>
@@ -57,9 +54,9 @@
             <field name="context">{'module' : 'real_estate_maintenance','bin_size': False}</field>
         </record>
 
-        <menuitem id="menu_real_estate_maintenance_config" name="Settings" parent="real_estate_maintenance_menu_root"
-                  sequence="99"
-                  action="action_real_estate_maintenance_config" groups="base.group_system"/>
+        <menuitem id="menu_real_estate_main_config" parent="real_estate_maintenance_menu_root" name="Configuration" sequence="99"/>
+
+        <menuitem id="menu_real_estate_maintenance_config" name="Settings" parent="menu_real_estate_main_config" sequence="3" action="action_real_estate_maintenance_config" groups="base.group_system"/>
 
     </data>
 </odoo>

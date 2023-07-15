@@ -9,7 +9,7 @@
        """,
     'author': 'Plus Technology Co',
     'website': 'www.plustech-it.com',
-    'depends': ['account', 'account_asset'],
+    'depends': ['account', 'account_asset','account_parent', 'bstt_account_invoice'],
     'data': [
         'security/account_asset_security.xml',
         'security/account_account_security.xml',
