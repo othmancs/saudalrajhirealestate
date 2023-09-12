@@ -886,8 +886,11 @@ msgstr "المنتج"
 msgid "Properties"
 msgstr "الوحدات"
 
+
+
 #. module: real_estate_maintenance
 #: model:ir.model.fields,field_description:real_estate_maintenance.field_maintenance_request__property_id
+#: model:ir.model.fields.selection,name:real_estate_maintenance.selection__maintenance_request__maintain_property_type__property
 #: model_terms:ir.ui.view,arch_db:real_estate_maintenance.maintenance_request_view_search
 msgid "Property"
 msgstr "عقار"
