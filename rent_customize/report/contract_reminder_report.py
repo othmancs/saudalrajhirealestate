@@ -56,7 +56,7 @@ class ContractReminderReport(models.Model):
             JOIN product_product pro ON (aml.product_id = pro.id)
             JOIN res_partner rp ON (so.partner_id = rp.id)
             LEFT JOIN product_template pt ON (pro.product_tmpl_id = pt.id)
-        WHERE so.state  IN ('occupied') and so.is_rental_order = true
+        WHERE so.rental_status  IN ('pickup', 'return') and so.is_rental_order = true
             """
 
         return query

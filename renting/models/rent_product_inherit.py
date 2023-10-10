@@ -68,7 +68,7 @@ class RentProduct(models.Model):
     unit_sales_count = fields.Integer(string='Total Sales', compute='_unit_sales_count', readonly=True)
     unit_price = fields.Float(string='قيمة الوحدة', compute='_get_unit_price')
     unit_price_unit = fields.Char(string='مدة تأجير الوحدة')
-    state_id = fields.Char(string="الحالة", store=True)
+    state_id = fields.Char(string="الحالة")
     analytic_account = fields.Many2one('account.analytic.account', string='الحساب التحليلي', readonly=True)
     ref_analytic_account = fields.Char(string='رقم اشارة الحساب التحليلي', readonly=True)
     property_analytic_account = fields.Many2one('account.analytic.account', string='الحساب التحليلي للعقار',
@@ -114,9 +114,13 @@ class RentProduct(models.Model):
     contract_total = fields.Float(compute="get_sale_data", string='قيمة العقد')
     contract_service_sub_fees = fields.Float(string=' رسوم الخدمات الخاضعة ')
     contract_admin_sub_fees = fields.Float(string='رسوم ادارية خاضعة')
+
     def get_sale_data(self):
         for rec in self:
-            order_line_id = rec.env['sale.order.line'].sudo().search([('product_id', '=', rec.id), ('state','=','occupied')],limit=1, order='id desc')
+            pp = self.env['product.product'].search([('product_tmpl_id', '=',rec.id)])
+
+            order_line_id = rec.env['sale.order.line'].sudo().search([('product_id', '=', pp.id), ('order_id.rental_status','in',['return', 'pickup'])],limit=1, order='id desc')
+            print(rec.id,  "     vv     ", order_line_id.order_id)
             rec.partner_id = order_line_id.order_id.partner_id.id if order_line_id else False
             rec.last_sale_id = order_line_id.order_id.id if order_line_id else False
             rec.contract_admin_fees = order_line_id.contract_admin_fees if order_line_id else False
@@ -139,7 +143,6 @@ class RentProduct(models.Model):
     def read_group(self, domain, fields, groupby, offset=0, limit=None, orderby=False, lazy=True):
         res = super(RentProduct, self).read_group(domain, fields, groupby, offset=offset, limit=limit, orderby=orderby,
                                                  lazy=lazy)
-        print(fields)
         if 'amount_paid' in fields:
             for line in res:
                 if '__domain' in line:
@@ -195,10 +198,16 @@ class RentProduct(models.Model):
                 rec.state_id = 'تحت الصيانة'
                 rec.unit_state = 'تحت الصيانة'
                 return
+            
+            pp = self.env['product.product'].search([('product_tmpl_id', '=',rec.id)])
             order = rec.env['sale.order.line'].sudo().search([
-                ('product_id', '=', rec.id),
+                ('product_id', '=', pp.id),
                 ('property_number', '=', rec.property_id.property_name)
             ])
+            for oo in order:
+                print(oo.order_id.name)
+                print(oo.order_id.state)
+                print(oo.order_id.rental_status)
             if order:
                 if order[0].order_id.rental_status == 'pickup':
                     rec.state_id = 'مؤجرة'

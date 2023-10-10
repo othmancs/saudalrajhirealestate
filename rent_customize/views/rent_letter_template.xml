@@ -18,6 +18,7 @@
                             <form string="">
                                    <header>
                                           <button name="print_letter" string="Print Letter" type="object" attrs="{'invisible': [('subject', '=', False)]}" class="oe_highlight" />
+                                          <button name="action_evacuation" string="Evacuation" type="object" attrs="{'invisible': [('subject', '!=', 'eviction'), ('eviction_state','=', 'done')]}" class="oe_highlight" />
                                    </header>
                                    <sheet>
                                           <div name="button_box" class="oe_button_box">

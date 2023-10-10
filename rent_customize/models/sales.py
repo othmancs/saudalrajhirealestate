@@ -100,8 +100,12 @@ class SaleOrder(models.Model):
     def _compute_allowed_products(self):
         product_ids = []
         for rec in self.order_line:
+            print("00 00      ", rec)
             product_ids.append(self.env['product.product'].search([('id', '=', rec.product_id.id)]).id)
+
+            print(".. ..    ", product_ids)
         self.product_ids = product_ids
+        
     
     def action_submit(self):
         if not self.order_line:
@@ -202,8 +206,9 @@ class SaleOrder(models.Model):
         })
 
     def action_refund_insurance(self):
+        print(".. ..   ddddd ", self.product_ids)
         action = self.env.ref("rent_customize.refund_insurance_action").read()[0]
-        # action["views"] = [(self.env.ref("rent_customize.refund_insurance_view_form").id, "form") ]
+        action["views"] = [(self.env.ref("rent_customize.refund_insurance_view_form").id, "form") ]
         self.context_order = self.id
         self.apartment_insurance = self.apartment_insurance
         self.refund_amount = self.apartment_insurance

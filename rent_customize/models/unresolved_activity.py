@@ -13,7 +13,7 @@ class MailActivity(models.Model):
         """ Cron job to send contract activity notifications """
 
         unresolved_contract_activities = self.env['mail.activity'].search([
-            ('date_deadline', '<', fields.Date.today() - timedelta(days=1)),
+            ('date_deadline', '=', fields.Date.today() - timedelta(days=1)),
             ('user_id', '!=', False),
             ('res_model_id.model', '=', 'sale.order'),
             ('res_id', '!=', False),
@@ -48,7 +48,7 @@ class MailActivity(models.Model):
         """ Cron job to send invoice activity notifications """
 
         unresolved_invoice_activities = self.env['mail.activity'].search([
-            ('date_deadline', '<', fields.Date.today() - timedelta(days=1)),
+            ('date_deadline', '=', fields.Date.today() - timedelta(days=1)),
             ('user_id', '!=', False),
             ('res_model_id', '=', 'account.move'),
             ('res_id', '!=', False),

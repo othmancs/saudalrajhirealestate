@@ -52,7 +52,7 @@
                             <field name="company_id" invisible="1"/>
                             <field name="state" invisible="1"/>
                             <field name="damage_amount"/>
-                            <field name="product_ids" widget="many2many_tags" readonly="1" invisible="0" force_save="1"/>
+                            <field name="product_ids" widget="many2many_tags" readonly="1" invisible="1" force_save="1"/>
                             <field name="product_id" options="{'no_create':True,'no_open':True}" domain="[('id','in', product_ids)]"/>
                             <!--  -->
                             <field name="refund_amount" invisible="1"/>
@@ -257,6 +257,7 @@
                 <xpath expr="//field[@name='payment_term_id']" position="after">
 
                     <field name="annual_increase"/>
+                    <field name="product_ids" invisible="1"/>
                     <field name="annual_increase_type" attrs="{'invisible':[('annual_increase', '!=', True)], 'required':[('annual_increase', '=', True)]}"/>
                     <field name="annual_amount" attrs="{'invisible':[ ('annual_increase', '!=', True)]}"/>
                 </xpath>
