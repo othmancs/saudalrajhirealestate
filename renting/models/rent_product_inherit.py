@@ -120,7 +120,6 @@ class RentProduct(models.Model):
             pp = self.env['product.product'].search([('product_tmpl_id', '=',rec.id)])
 
             order_line_id = rec.env['sale.order.line'].sudo().search([('product_id', '=', pp.id), ('order_id.rental_status','in',['return', 'pickup'])],limit=1, order='id desc')
-            print(rec.id,  "     vv     ", order_line_id.order_id)
             rec.partner_id = order_line_id.order_id.partner_id.id if order_line_id else False
             rec.last_sale_id = order_line_id.order_id.id if order_line_id else False
             rec.contract_admin_fees = order_line_id.contract_admin_fees if order_line_id else False

@@ -188,9 +188,9 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <!-- <t t-foreach="maintenance_requests" t-as="maintenance_request">
+                        <t t-foreach="maintenance_requests" t-as="maintenance_request">
                             <t t-call="real_estate_maintenance.portal_maintenance_request_item"/>
-                        </t> -->
+                        </t>
                     </tbody>
                 </t>
             </t>

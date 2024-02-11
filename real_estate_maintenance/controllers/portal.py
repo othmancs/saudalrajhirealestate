@@ -30,6 +30,7 @@ class ProjectCustomerPortal(CustomerPortal):
     @http.route(['/my/maintenance-requests', '/my/maintenance-requests/page/<int:page>'], type='http', auth="user", website=True)
     def portal_my_maintenance_requests(self, page=1, date_begin=None, date_end=None, sortby=None, filterby=None, **kw):
         values = self._prepare_portal_layout_values()
+        print(";;;;;;;;;;;;;;;;;;;;;;;;;;;;")
         maintenance_request = request.env['maintenance.request']
         domain = []
 
@@ -66,10 +67,9 @@ class ProjectCustomerPortal(CustomerPortal):
             page=page,
             step=self._items_per_page
         )
-        maintenance_requests = maintenance_request.search(domain, order=order, limit=self._items_per_page,
-                                                          offset=pager['offset'])
+        maintenance_requests = maintenance_request.search(domain, order=order, limit=self._items_per_page,offset=pager['offset'])
         request.session['my_maintenance_requests_history'] = maintenance_requests.ids[:100]
-
+        print("0000000000000000000000000000000000000000000000000    ", maintenance_requests)
         values.update({
             'date': date_begin,
             'maintenance_requests': maintenance_requests,

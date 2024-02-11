@@ -36,7 +36,9 @@ class RentalOrder(models.Model):
         """ Cron job to send notifications for invoice """
         is_invoice_notify = self.env['ir.config_parameter'].get_param('rent_customize.is_invoice_notify')
         invoice_notify = self.env['ir.config_parameter'].get_param('rent_customize.invoice_notify')
+        print(is_invoice_notify)
         if is_invoice_notify:
+            print(datetime.today() + timedelta(days=int(invoice_notify)))
             invoice_renewals = self.env['account.move'].search([('state','=','posted'),('invoice_date_due', '=', datetime.today() + timedelta(days=int(invoice_notify)))])
         for invoice in invoice_renewals:
             invoice_user_id = invoice.invoice_user_id
