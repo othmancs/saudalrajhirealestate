@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_move_line_report,access.move.line.report,model_move_line_report_wizard,,1,1,1,1
+access_move_line_report_tree,access.move.line.report.tree,model_move_line_report_tree,,1,1,1,1
+
+

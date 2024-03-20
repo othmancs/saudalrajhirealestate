@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="move_line_report_view_wizard" model="ir.ui.view">
+        <field name="name">move.line.report.view.wizard</field>
+        <field name="model">move.line.report.wizard</field>
+        <field name="arch" type="xml">
+            <form string="">
+                <group>
+                    <group>
+                        <field name="operating_unit_id"/>
+                        <field name="customer_id"/>
+                    </group>
+                    <group>
+                        <field name="company_id"/>
+                    </group>
+                </group>
+                <group>
+                    <label for="date_from" string="Date"/>
+                    <div class="o_row">
+                        <field name="date_from" widget="daterange" nolabel="1" class="oe_inline"
+                               options="{'related_end_date': 'date_to'}"/>
+                        <i class="fa fa-long-arrow-right mx-2" aria-label="Arrow icon" title="Arrow"/>
+                        <field name="date_to" widget="daterange" nolabel="1" class="oe_inline"
+                               options="{'related_start_date': 'date_from'}"/>
+                    </div>
+                </group>
+                <footer>
+                    <button name="open_view" string="Print Report" type="object" class="oe_highlight"/>
+                    <button string="Cancel" class="btn btn-default" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="move_line_report_act_window" model="ir.actions.act_window">
+        <field name="name">Move Line Report</field>
+        <field name="res_model">move.line.report.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem id="move_line_report_menu" name="Move Line Report" sequence="2" action="move_line_report_act_window"/>
+
+    <record id="move_line_view_view_tree" model="ir.ui.view">
+        <field name="name">move.line.report.tree.tree</field>
+        <field name="model">move.line.report.tree</field>
+        <field name="arch" type="xml">
+            <tree string="Report" create="0" delete="0">
+                <field name="aml_id" invisible="1"/>
+                <field name="move_id" widget="many2one"/>
+                <field name="company_id" invisible="1"/>
+                <field name="product_id" widget="many2one"/>
+                <field name="label" optional="show"/>
+                <field name="customer_id" widget="many2one"/>
+                <field name="operating_unit_id" widget="many2one" optional="show"/>
+                <field name="invoice_date" widget="date"/>
+                <field name="rent_sale_line_id" widget="many2one" optional="show"/>
+                <field name="journal_id" widget="many2one" optional="show"/>
+                <field name="analytic_account_id" widget="many2one" optional="show"/>
+                <field name="subtotal"/>
+                <field name="paid"/>
+                <field name="remaining"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="move_line_view_view_tree_search" model="ir.ui.view">
+            <field name="name">move.line.report.tree.search</field>
+            <field name="model">move.line.report.tree</field>
+            <field name="arch" type="xml">
+                <search string="Lines">
+                    <field name="move_id" string="Invoice"/>
+                    <field name="customer_id" string="Customer"/>
+                    <field name="company_id" string="Company"/>
+                    <field name="product_id" string="Product"/>
+                    <field name="operating_unit_id" string="Operating Unit"/>
+                    <field name="rent_sale_line_id" string="Rent Sale"/>
+                    <separator/>
+                    <group expand="0" string="Group By">
+                        <filter name="group_customer" string="Customer" domain="[]" context="{'group_by':'customer_id'}"/>
+                        <filter name="group_journal" string="Journal" domain="[]" context="{'group_by':'journal_id'}"/>
+                        <filter name="group_analytic" string="Analytic Account" domain="[]" context="{'group_by':'analytic_account_id'}"/>
+                        <filter name="group_product" string="Product" domain="[]" context="{'group_by':'product_id'}"/>
+                        <filter name="group_operating" string="Operating Unit" domain="[]" context="{'group_by':'operating_unit_id'}"/>
+                        <filter name="group_company" string="Company" domain="[]" context="{'group_by':'company_id'}"/>
+                    </group>
+                </search>
+             </field>
+        </record>
+</odoo>
