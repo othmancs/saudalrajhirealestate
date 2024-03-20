@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "Accounting Advanced",
+    'name': "Accounting Advanced ",
     'summary': """  Accounting Advanced""",
     'description': """  Accounting Asset  """,
     'author': "Plus Tech",
