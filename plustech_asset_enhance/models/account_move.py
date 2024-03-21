@@ -42,7 +42,6 @@ class AccountMove(models.Model):
                 todateMonth = rec.todate.month
                 todate = rec.todate.replace(day=28)
                 # todate = rec.todate.replace(month=todateMonth+1, day=1)
-                print(fromdate, "=========== ", todate)
                 date1 = datetime.strptime(str(fromdate)[:10], '%Y-%m-%d')
                 date2 = datetime.strptime(str(todate)[:10], '%Y-%m-%d')
                 difference = relativedelta(date2, date1)
@@ -206,10 +205,12 @@ class AccountMove(models.Model):
                 months = difference.months + 12 * difference.years
                 # if difference.days > 0:
                 #     months += 1
-                print(rec.fromdate, "XXXXXXXXXXXXXXXXXmionnnnnnnXXXXXXXXxXx", rec.todate)
-                print(months)
                 line.model_id.method_number = math.floor(months)
                 line.method_number = math.floor(months)
+                invoice = self.env['account.move'].search([
+                    ('asset_ids', 'in', [self.id])
+                ], order="id desc", limit=1)
+                line.method_number = invoice.invoice_months
                 line.prorata = True
                 line.prorata_date = line.acquisition_date
                 line.acquisition_date = self.fromdate or self.invoice_date

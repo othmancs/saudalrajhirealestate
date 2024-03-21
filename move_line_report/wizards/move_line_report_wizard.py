@@ -28,12 +28,33 @@ class MoveLineReportWizard(models.TransientModel):
         self.env['account.move.line'].flush(fnames=['move_id', 'account_id', 'statement_line_id'])
         self.env['account.partial.reconcile'].flush(fnames=['debit_move_id', 'credit_move_id'])
 
-        self._cr.execute("""
-                SELECT id as move_id, name, amount_total as amount_total, amount_residual as amount_residual
-                FROM account_move
-                WHERE state = 'posted'
-                AND move_type = 'out_invoice'
-            """)
+        # Initialize the SQL query with the basic selection
+        sql_query = """
+            SELECT id as move_id, name, amount_total as amount_total, amount_residual as amount_residual
+            FROM account_move
+            WHERE state = 'posted'
+            AND move_type = 'out_invoice'
+        """
+
+        # Initialize parameters list
+        params = []
+
+        # Add conditions to the SQL query based on the fields values
+        if self.company_id:
+            sql_query += " AND company_id = %s"
+            params.append(self.company_id.id)
+        if self.customer_id:
+            sql_query += " AND partner_id = %s"
+            params.append(self.customer_id.id)
+        if self.operating_unit_id:
+            sql_query += " AND operating_unit_id = %s"
+            params.append(self.operating_unit_id.id)
+        if self.date_from and self.date_to:
+            sql_query += " AND invoice_date >= %s AND invoice_date <= %s"
+            params.extend((self.date_from, self.date_to))
+
+        # Execute the SQL query with parameters
+        self._cr.execute(sql_query, tuple(params))
         data = []
         for res in self._cr.dictfetchall():
             move_id = res['move_id']
@@ -80,25 +101,12 @@ class MoveLineReportWizard(models.TransientModel):
         # Create new records in the report tree model
         self.env['move.line.report.tree'].create(data)
 
-        domain = []
-
-        if self.company_id:
-            domain.append(('company_id', '=', self.company_id.id))
-        if self.customer_id:
-            domain.append(('customer_id', '=', self.customer_id.id))
-        if self.operating_unit_id:
-            domain.append(('operating_unit_id', '=', self.operating_unit_id.id))
-        if self.date_from and self.date_to:
-            domain.append(('invoice_date', '>=', self.date_from))
-            domain.append(('invoice_date', '<=', self.date_to))
-
         # Return action to display the report
         return {
             'type': 'ir.actions.act_window',
-            'views': [(False, 'tree')],
-            'view_mode': 'tree',
+            'views': [(False, 'tree'), (False, 'pivot')],
+            'view_mode': 'tree,pivot',
             'name': _('Report'),
             'res_model': 'move.line.report.tree',
-            'domain': domain,
-            'context': {'create': False, 'search_default_group_customer':  1},
+            'context': {'create': False, 'search_default_group_customer': 1},
         }

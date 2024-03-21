@@ -39,7 +39,11 @@
         <field name="target">new</field>
     </record>
 
-    <menuitem id="move_line_report_menu" name="Move Line Report" sequence="2" action="move_line_report_act_window"/>
+    <menuitem id="move_line_report_menu"
+              name="Move Line Report"
+              sequence="2"
+              action="move_line_report_act_window"
+    web_icon="move_line_report,static/description/icon.png"/>
 
     <record id="move_line_view_view_tree" model="ir.ui.view">
         <field name="name">move.line.report.tree.tree</field>
@@ -62,6 +66,21 @@
                 <field name="remaining"/>
             </tree>
         </field>
+    </record>
+
+    <record id="move_line_report_pivot" model="ir.ui.view">
+            <field name="name">move.line.report.pivot</field>
+            <field name="model">move.line.report.tree</field>
+            <field name="arch" type="xml">
+                <pivot string="" sample="1">
+                    <field name="operating_unit_id" type="row"/>
+                    <field name="product_id" type="row"/>
+                    <field name="customer_id" type="row"/>
+                    <field name="subtotal" type="measure"/>
+                    <field name="paid" type="measure"/>
+                    <field name="remaining" type="measure"/>
+                </pivot>
+            </field>
     </record>
 
     <record id="move_line_view_view_tree_search" model="ir.ui.view">
