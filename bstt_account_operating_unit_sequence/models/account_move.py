@@ -88,18 +88,18 @@ class AccountMove(models.Model):
         for rec in self:
             rec.name = rec.last_seq
         return res
-    def action_review(self):
-        res = super(AccountMove, self).action_review()
-        for rec in self:
-            print("reviiiiiiiiiiiiiiiiiiiew",rec.name)
-            rec.name = rec.last_seq
-            print("reviiiiiiiiiiiiiiiiiiiew",rec.name)
-        return res
-    def button_draft(self):
-        res = super(AccountMove, self).button_draft()
-        for rec in self:
-            rec.name = rec.last_seq
-        return res
+    #def action_review(self):
+        #res = super(AccountMove, self).action_review()
+        #for rec in self:
+            #print("reviiiiiiiiiiiiiiiiiiiew",rec.name)
+         #   rec.name = rec.last_seq
+            #print("reviiiiiiiiiiiiiiiiiiiew",rec.name)
+        #return res
+    #def button_draft(self):
+     #   res = super(AccountMove, self).button_draft()
+      #  for rec in self:
+       #     rec.name = rec.last_seq
+        #return res
 
     # @api.onchange('journal_id')
     # def _onchange_journal(self):
