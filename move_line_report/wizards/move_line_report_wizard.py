@@ -94,6 +94,15 @@ class MoveLineReportWizard(models.TransientModel):
                             'move_id': move_id,
 
                         })
+                    elif line['rent_fees']:
+                        data.append({
+                            'aml_id': line['aml_id'],
+                            'subtotal': line['price_total'],
+                            'paid': line['price_total'] if remaining_payment > 0.0 else 0.0,
+                            'remaining': 0.0 if remaining_payment > 0.0 else line['price_total'],
+                            'move_id': move_id,
+                        })
+
 
         # Delete existing records in the report tree model
         self.env['move.line.report.tree'].search([]).unlink()
