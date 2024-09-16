@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Root menu item -->
+        <menuitem name="Tickets" id="menu_tickets_root" web_icon="customer_tickets,static/description/icon2.png"
+                  groups="customer_tickets.ticket_user_group"/>
+        <!-- Configuration menu item -->
+        <menuitem name="Ticket Configuration" parent="base.menu_custom" id="subscription_configuration"
+                  groups="base.group_no_one" sequence="100"/>
+        <!--Subscriptions Configurations Views-->
+        <record id="customer_tickets_search" model="ir.ui.view">
+            <field name="name">customer.tickets.view.search</field>
+            <field name="model">customer.tickets</field>
+            <field name="arch" type="xml">
+                <search string="Ticket">
+                    <field name="name"/>
+                    <field name="date"/>
+                    <field name="ticket_subject"/>
+                    <filter string="Draft" name="draft" domain="[('state', '=', 'draft')]"/>
+                    <filter string="Submitted" name="running" domain="[('state', '=', 'to_approve')]"/>
+                    <filter string="In Progress" name="running" domain="[('state', '=', 'in_progress')]"/>
+                    <filter string="Solved" name="solve" domain="[('state', '=', 'solved')]"/>
+                    <group expand="0" string="Group By...">
+                        <filter string="Ticket Date" name="date" domain="[]" context="{'group_by':'date'}"/>
+                        <filter string="Ticket Status" name="status" domain="[]" context="{'group_by':'state'}"/>
+                    </group>
+                    <separator/>
+                </search>
+            </field>
+        </record>
+        <record id="customer_tickets_kanban" model="ir.ui.view">
+            <field name="name">customer.tickets</field>
+            <field name="model">customer.tickets</field>
+            <field name="arch" type="xml">
+                <kanban class="o_kanban_mobile" sample="1">
+                    <field name="name"/>
+                    <field name="date"/>
+                    <field name="package_status"/>
+                    <field name="ticket_subject"/>
+                    <field name="tick_description"/>
+                    <field name="state"/>
+                    <field name="subscription_code"/>
+                    <field name="priority"/>
+                    <field name="created_days"/>
+                    <field name="package_id"/>
+                    <field name="ticket_type_id"/>
+                    <field name="ticket_user_id"/>
+                    <field name="model_id"/>
+                    <progressbar field="activity_state"
+                                 colors="{&quot;planned&quot;: &quot;success&quot;, &quot;today&quot;: &quot;warning&quot;, &quot;overdue&quot;: &quot;danger&quot;}"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div t-attf-class="oe_kanban_card oe_kanban_global_click">
+                                <div class="o_kanban_record_top mb16">
+                                    <div class="o_kanban_record_headings mt4">
+                                        <strong class="o_kanban_record_title">
+                                            <span>
+                                                <t t-esc="record.ticket_subject.value"/>
+                                            </span>
+                                        </strong>
+                                        <br/>
+                                        <strong class="o_kanban_record_title">
+                                            <span>
+                                                <t t-esc="record.model_id.value"/>
+                                            </span>
+                                        </strong>
+                                        <br/>
+                                        <strong class="o_kanban_record_title">
+                                            <span>
+                                                <t t-esc="record.ticket_user_id.value"/>
+                                            </span>
+                                        </strong>
+                                        <br/>
+                                        <strong class="o_kanban_record_title">
+                                            <span>
+                                                <t t-esc="record.ticket_type_id.value"/>
+                                            </span>
+                                        </strong>
+                                        <br/>
+                                    </div>
+                                    <strong>
+                                        <field name="created_days"/>
+                                        ago form today
+                                    </strong>
+                                </div>
+                                <div class="o_kanban_record_bottom">
+                                    <div class="oe_kanban_bottom_left text-muted">
+                                        <span>
+                                            <t t-esc="record.name.value"/>
+                                            <t t-esc="record.date.value"/>
+                                        </span>
+                                        <!--                                        <field name="activity_ids" widget="kanban_activity"/>-->
+                                    </div>
+                                    <div class="oe_kanban_bottom_right">
+                                        <field name="state" widget="label_selection" force_save="1"
+                                               options="{'classes': {'draft': 'default', 'cancel': 'default', 'solved': 'success'}}"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+        <record id="customer_tickets_tree" model="ir.ui.view">
+            <field name="name">customer.tickets.view.tree</field>
+            <field name="model">customer.tickets</field>
+            <field name="arch" type="xml">
+                <tree string="Tickets" js_class="sale_list_dashboard"
+                      decoration-danger="state in ('reject')"
+                      decoration-muted="state in ('submit')"
+                      decoration-info="state in ('in_progress')"
+                      decoration-warning="state in ('cancel')"
+                      decoration-success="state in ('solved')">
+                    <field name="id" invisible="1"/>
+                    <field name="name"/>
+                    <field name="date"/>
+                    <field name="submit_date" optional="hide"/>
+                    <field name="ticket_subject"/>
+                    <field name="ticket_type_id" optional="hide"/>
+                    <field name="ticket_user_id" optional="hide"/>
+                    <field name="model_id" optional="hide"/>
+                    <field name="subscription_id" optional="hide"/>
+                    <field name="created_days" optional="hide"/>
+                    <!--                    <field name="ticket_stage_id" string="Ticket Support Stage" optional="hide"/>-->
+                    <field name="ticket_solve_date" optional="hide"/>
+                    <field name="company_id" optional="show" readonly="1" groups="base.group_multi_company"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="customer_tickets_form" model="ir.ui.view">
+            <field name="name">customer.tickets.view.form</field>
+            <field name="model">customer.tickets</field>
+            <field name="arch" type="xml">
+                <form string="Customer Ticket">
+                    <header>
+                        <button name="action_submit" class="oe_highlight" string="Submit Ticket" states="draft"
+                                type="object"/>
+                        <!--                        <button name="action_in_progress" string="In Progress" states="submit" type="object"/>-->
+                        <button name="action_escalation" string="Escalation" class="btn-danger"
+                                attrs="{'invisible':[('state', 'in',  ['draft', 'waiting', 'solved'])]}"  type="object"/>
+                        <button name="action_solve" string="Mark as Solved" states="waiting" type="object"/>
+<!--                        <button name="action_reset_to_progess" string="in porgress" states="solved" type="object"/>-->
+                        <button name="open_feedback" class="oe_highlight" string="Feedback" states="waiting"
+                                type="object"/>
+                        <field name="state" widget="statusbar"/>
+                        <field name="escalation" invisible="1"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="date" attrs="{'readonly':[('state', '!=', 'draft')]}"/>
+                                <field name="ticket_subject" attrs="{'readonly':[('state', '!=', 'draft')]}"/>
+                                <field name="priority" widget="radio"
+                                       attrs="{'readonly':[('state', '!=', 'draft')]}"/>
+                            </group>
+                            <group>
+                                <field name="subscription_id" readonly="1" force_save="1"/>
+                                <field name="ticket_id" readonly="1" force_save="1" invisible="1"/>
+                                <field name="ticket_type_id" required="True" attrs="{'readonly':[('state', '!=', 'draft')]}"/>
+                                <field name="ticket_user_id" required="True" attrs="{'readonly':[('state', '!=', 'draft')]}"/>
+                                <field name="model_id" required="True" attrs="{'readonly':[('state', '!=', 'draft')]}"/>
+                                <field name="company_id" readonly="1" groups="base.group_multi_company"/>
+
+                            </group>
+                        </group>
+                        <group col="4">
+                            <field name="stage_state_date" invisible="1"/>
+                            <field name="attachment" invisible="1" attrs="{'readonly':[('state', '!=', 'draft')]}"/>
+                            <!-- widget="priority" -->
+                            <!--                            <field name="ticket_stage_id" widget="many2many_tags" readonly="1"/>-->
+
+                        </group>
+                        <group>
+                            <field name="tick_description" attrs="{'readonly':[('state', '!=', 'draft')]}"
+                                   placeholder="Ticket Details" nolabel="1"/>
+                        </group>
+                        <!--                        <group>-->
+                        <!--                            <field name="feedback" placeholder="Write Your Feedback" nolabel="1"/>-->
+                        <!--                        </group>-->
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" groups="base.group_user"
+                               options="{'post_refresh': 'recipients'}"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids"/>
+                    </div>
+
+                </form>
+
+            </field>
+        </record>
+        <record id="customer_tickets_action" model="ir.actions.act_window">
+            <field name="name">Submit Ticket</field>
+            <field name="res_model">customer.tickets</field>
+            <field name="view_mode">tree,kanban,form</field>
+            <field name="search_view_id" ref="customer_tickets_search"/>
+            <field name="groups_id" eval="[(4,ref('customer_tickets.ticket_user_group'))]"/>
+
+        </record>
+        <menuitem name="Tickets" action="customer_tickets_action" parent="menu_tickets_root" id="menu_customer_tickets"
+                  sequence="5"/>
+
+
+    </data>
+</odoo>

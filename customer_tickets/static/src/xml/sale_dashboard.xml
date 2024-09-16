@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates>
+    <t t-name="sale_dashboard.SaleDashboard">
+        <div class="o_sale_dashboard container">
+            <div class="row">
+                <div class="">
+                    <table class="table table-sm" >
+                        <thead>
+                            <tr >
+                                <td class="o_text">
+                                    <div>Tickets Type</div>
+                                </td>
+                                <t  t-foreach="values['ticket_type']" t-as="ticket">
+                                    <td t-attf-style="#{values['subscription_styling']}" title="All Waiting Quotes"
+                                        name="ticket_type_action">
+                                        <a href="#" t-attf-style="#{values['subscription_styling']}">  <t t-esc="ticket"/>
+                                        </a>
+                                    </td>
+                                </t>
+                            </tr>
+                            <tr>
+                                <td class="o_text">
+                                    <div>Tickets Count</div>
+                                </td>
+                                <t t-foreach="values['ticket_numbers']" t-as="number">
+                                    <td t-attf-style="#{values['subscription_styling']}" title="All Waiting Quotes"
+                                        name="sale_action_dashboard_waiting">
+                                        <a href="#" t-attf-style="#{values['subscription_styling']}">
+                                            <t t-esc="number"/>
+                                        </a>
+                                    </td>
+                                </t>
+                            </tr>
+                            <!-- <tr>
+                                <td class="o_text">
+                                    <div>Consumed Tickets</div>
+                                </td>
+                                <t t-foreach="values['ticket_consumed']" t-as="consumed">
+                                    <td t-attf-style="#{values['subscription_styling']}" title="All Waiting Quotes"
+                                        name="sale_action_dashboard_waiting">
+                                        <a href="#" t-attf-style="#{values['subscription_styling']}">
+                                            <t t-esc="consumed"/>
+                                        </a>
+                                    </td>
+                                </t>
+                            </tr> -->
+                            <tr>
+                                <td class="o_text">
+                                    <div>All Tickets</div>
+                                </td>
+                                <t t-foreach="values['all_ticket']" t-as="all_ticket">
+                                    <td t-attf-style="#{values['subscription_styling']}" title="All Waiting Quotes"
+                                        name="sale_action_dashboard_waiting">
+                                        <a href="#" t-attf-style="#{values['subscription_styling']}">
+                                            <t t-esc="all_ticket"/>
+                                        </a>
+                                    </td>
+                                </t>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="o_text">
+                                    <div>My Tickets</div>
+                                </td>
+                                <t t-foreach="values['my_ticket']" t-as="my_ticket">
+                                    <!-- class="o_main o_dashboard_action" -->
+                                    <td t-attf-style="#{values['subscription_styling']}" title="All Waiting Quotes"
+                                        name="sale_action_dashboard_waiting">
+                                        <a href="#" t-attf-style="#{values['subscription_styling']}">
+                                            <t t-esc="my_ticket"/>
+                                        </a>
+                                    </td>
+                                </t>
+
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </t>
+</templates>

@@ -1,0 +1,305 @@
+<odoo>
+    <data>
+        <!--Subscriptions Configurations Views-->
+        <record id="subscription_info_search" model="ir.ui.view">
+            <field name="name">subscription.info.view.search</field>
+            <field name="model">subscription.info</field>
+            <field name="arch" type="xml">
+                <search string="Subscriptions">
+                    <field name="subscription_code"/>
+                    <separator/>
+                </search>
+            </field>
+        </record>
+
+        <record id="subscription_info_tree" model="ir.ui.view">
+            <field name="name">subscription.info.view.tree</field>
+            <field name="model">subscription.info</field>
+            <field name="arch" type="xml">
+                <tree string="Subscriptions">
+                    <field name="subscription_code"/>
+                    <field name="package_status"/>
+                    <field name="address" invisible="1"/>
+                    <field name="db_name" invisible="1"/>
+                    <field name="user_name" invisible="1"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="subscription_info_form" model="ir.ui.view">
+            <field name="name">subscription.info.view.form</field>
+            <field name="model">subscription.info</field>
+            <field name="arch" type="xml">
+                <form string="Subscription">
+                    <header>
+                        <button name="cron_subscription_info" string="Get Data" type="object"/>
+                    </header>
+                    <sheet>
+                        <widget style="margin-top:22px" name="web_ribbon" title="Expired" bg_color="bg-danger"
+                                attrs="{'invisible': [('package_status', '!=', 'expired')]}"/>
+                        <widget style="margin-top:22px" name="web_ribbon" title="Running" bg_color="bg-success"
+                                attrs="{'invisible': [('package_status', '!=', 'running')]}"/>
+                        <div class="oe_button_box" name="button_box">
+                            <button class="oe_stat_button" string="Tickets" name="action_open_tickets" type="object"
+                                    icon="fa-ticket">
+                                <field name="tickets_count"/>
+                                <field name="ticket_ids" invisible="1"/>
+                            </button>
+                        </div>
+
+                        <div class="oe_title">
+                            <h1>
+                                <field name="plan_name" placeholder="......"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="authentication_code" required="1"/>
+                                <field name="subscription_code"/>
+                                <field name="search_customer_url" invisible="1" readonly="1" force_save="1"/>
+                                <field name="support_url" invisible="1" readonly="1" force_save="1"/>
+                                <field name="update_ticket" invisible="1" readonly="1" force_save="1"/>
+                                <!--                                <field name="plan_name" readonly="1" force_save="1"/>-->
+                                <field name="package_status" force_save="1"/>
+                                <field name="customer_package_id" invisible="1"/>
+                            </group>
+                            <group>
+                                <field name="start_date"/>
+                                <field name="exp_date"/>
+                                <field name="bg_color_hex" invisible="1"/>
+                                <field name="font_color_hex" invisible="1"/>
+                                <field name="subscription_styling" invisible="1"/>
+                                <!--                                <field name="ticket_type_id" required="1"/>-->
+                                <field name="address" invisible="1"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Plan">
+                                <field name="plan_ids" readonly="1" force_save="1">
+                                    <tree edit="0" create="0">
+                                        <field name="name"/>
+                                        <field name="numbers"/>
+                                        <!-- <field name="consumed" readonly="1" force_save="1"/> -->
+                                        <field name="available" widget="boolean_toggle"/>
+                                        <field name="active" invisible="1"/>
+                                        <field name="plus_id" invisible="1"/>
+                                    </tree>
+                                    <form>
+                                        <group>
+                                            <field name="name" readonly="1"/>
+                                            <field name="numbers" readonly="1"/>
+                                            <!-- <field name="consumed" readonly="1" force_save="1"/> -->
+                                            <field name="available" widget="boolean_toggle" readonly="1"/>
+                                            <field name="active" invisible="1"/>
+                                            <field name="plus_id" invisible="1"/>
+                                        </group>
+                                    </form>
+                                </field>
+                            </page>
+                            <page string="Activity Notification" name="activity_notification">
+                                <field name="activity_state_ids">
+                                    <tree editable="bottom">
+                                        <field name="state" attrs="{'required':[('send', '=', True)]}"/>
+                                        <field name="user_ids" widget="many2many_tags"
+                                               attrs="{'required':[('send', '=', True)]}"/>
+                                        <field name="subject" attrs="{'required':[('send', '=', True)]}"/>
+                                        <field name="body" attrs="{'required':[('send', '=', True)]}"/>
+                                        <field name="activity_type_id" attrs="{'required':[('send', '=', True)]}"/>
+                                        <field name="send"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="activity_ids" widget="mail_activity"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+        <record id="subscription_info_action" model="ir.actions.act_window">
+            <field name="name">Subscription</field>
+            <field name="res_model">subscription.info</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="subscription_info_search"/>
+        </record>
+        <record id="subscription_code_form" model="ir.ui.view">
+            <field name="name">subscription.info.view.form</field>
+            <field name="model">subscription.code</field>
+            <field name="arch" type="xml">
+                <form string="Subscription">
+                    <sheet>
+                        <group>
+                            <field name="subscription_code" required="True"/>
+                            <field name="authentication_code" required="True"/>
+                        </group>
+                    </sheet>
+                    <footer>
+                        <button string="Activate" name="activate_subscription" type="object" class="oe_highlight"
+                                data-hotkey="q"/>
+                        <button string="Cancel" class="btn btn-secondary" special="cancel" data-hotkey="z"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+        <record id="subscription_activation" model="ir.actions.act_window">
+            <field name="name">Activate Subscription</field>
+            <field name="res_model">subscription.code</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="subscription_code_form"/>
+            <field name="context">{'create': False}</field>
+            <field name="target">new</field>
+        </record>
+        <menuitem name="Subscription" action="subscription_info_action" parent="subscription_configuration"
+                  id="menu_subscription_info" groups="base.group_no_one"/>
+        <!--        Customer Dashboard-->
+        <record id="subscription_info_view_kanban" model="ir.ui.view">
+            <field name="name">subscription.info.dashboard</field>
+            <field name="model">subscription.info</field>
+            <field name="priority">200</field>
+            <field name="arch" type="xml">
+                <kanban class="oe_background_grey o_kanban_dashboard" group_create="0" create="0"
+                        js_class="account_dashboard_kanban">
+                    <field name="subscription_code"/>
+                    <field name="package_name"/>
+                    <field name="start_date"/>
+                    <field name="exp_date"/>
+                    <field name="no_tickets"/>
+                    <field name="consumed"/>
+                    <field name="remaining_tickets"/>
+                    <field name="package_status"/>
+                    <field name="auto_close"/>
+                    <field name="color"/>
+                    <field name="plan_name"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div t-attf-class="#{!selection_mode ? kanban_color(record.color.raw_value) : ''} oe_kanban_global_click"
+                                 style="width: 458px;height: 303px;">
+                                <span class="oe_kanban_color_help"
+                                      t-attf-title="In #{kanban_getcolorname(record.color.raw_value)}" role="img"
+                                      t-attf-aria-label="In #{kanban_getcolorname(record.color.raw_value)}"/>
+                                <div t-attf-class="o_kanban_card_header">
+                                    <div class="o_kanban_card_header_title">
+                                        <div class="col-6 o_primary">
+                                            <field name="package_name"/>
+                                        </div>
+                                    </div>
+                                    <br/>
+                                    <div class="container o_kanban_card_content" t-if="!selection_mode">
+                                        <div class="row">
+                                            <div class="col-12 o_kanban_primary_left">
+                                                <span>Plan :
+                                                    <b>
+                                                        <field name="plan_name"/>
+                                                    </b>
+                                                </span>
+                                            </div>
+                                            <div class="col-6 o_kanban_primary_left">
+                                                <strong>
+                                                    <span>No of Tickets:
+                                                        <field name="no_tickets"/>
+                                                    </span>
+                                                </strong>
+                                            </div>
+                                            <div class="col-6 o_kanban_primary_right">
+                                                <strong>
+                                                    <a name="action_view_open_tickets" type="object">Consumed:
+                                                        <field name="consumed"/>
+                                                    </a>
+                                                </strong>
+                                            </div>
+                                        </div>
+                                        <br/>
+                                        <div class="row">
+                                            <div class="col-6 o_kanban_primary_right">
+                                                <strong>
+                                                    <span>Remaining:
+                                                        <field name="remaining_tickets"/>
+                                                    </span>
+                                                </strong>
+                                            </div>
+                                        </div>
+                                        <br/>
+                                        <div class="row">
+                                            <div class="col-6 o_kanban_primary_left">
+                                                <strong>
+                                                    <span>Start Date:
+                                                        <field name="start_date"/>
+                                                    </span>
+                                                </strong>
+                                            </div>
+                                            <div class="col-6 o_kanban_primary_right">
+                                                <strong>
+                                                    <span>Expiration Date:
+                                                        <field name="exp_date"/>
+                                                    </span>
+                                                </strong>
+                                            </div>
+                                        </div>
+                                        <br/>
+                                    </div>
+                                    <div class="container o_kanban_card_content" t-if="!selection_mode">
+                                        <div class="row">
+                                            <div class="col-6 o_kanban_primary_left">
+                                                <button class="btn btn-primary" type="object" name="action_create_new">
+                                                    New Ticket
+                                                </button>
+                                            </div>
+                                            <div class="mb4">
+                                                <a name="action_view_open_tickets" type="object">Open Tickets</a>
+                                            </div>
+                                        </div>
+                                        <br/>
+                                        <div class="row">
+                                            <div class="col-6 o_kanban_primary_left">
+                                                <button class="btn btn-primary" name="action_view_tickets"
+                                                        type="object">View Tickets
+                                                </button>
+                                            </div>
+                                            <div class="col-6 o_kanban_primary_right">
+                                                <div class="mb4">
+                                                    <a name="action_view_solved_tickets" type="object">Solved Tickets
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="container o_kanban_card_manage_pane dropdown-menu" role="menu">
+
+                                        <div class="o_kanban_card_manage_settings row">
+                                            <div role="menuitem" aria-haspopup="true" class="col-8">
+                                                <ul class="oe_kanban_colorpicker" data-field="color" role="menu"/>
+                                            </div>
+                                            <div role="menuitem" class="col-4 text-right">
+                                                <a type="edit">Settings</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+        <record id="subscription_dashboard_action" model="ir.actions.act_window">
+            <field name="name">Subscriptions Overview</field>
+            <field name="res_model">subscription.info</field>
+            <field name="view_mode">kanban</field>
+            <field name="context">{}</field>
+            <field name="view_id" ref="subscription_info_view_kanban"/>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    No Subscription found
+                </p>
+                <p>
+                    Subscription tickets for support packages.
+                </p>
+            </field>
+        </record>
+        <!--        <menuitem id="menu_subscription_dashboard" action="subscription_dashboard_action"-->
+        <!--                  sequence="1" parent="menu_tickets_root" name="Overview"/>-->
+    </data>
+</odoo>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Update Ticket Info -->
+<!--        <record id="ir_cron_close_tickets" model="ir.cron">-->
+<!--            <field name="name">Ticket Update: Close Tickets</field>-->
+<!--            <field name="model_id" ref="customer_tickets.model_customer_tickets"/>-->
+<!--            <field name="type">ir.actions.server</field>-->
+<!--            <field name="state">code</field>-->
+<!--            <field name="code">model.cron_close_ticket()</field>-->
+<!--            <field name="interval_number">15</field>-->
+<!--            <field name="interval_type">minutes</field>-->
+<!--            <field name="numbercall">-1</field>-->
+<!--        </record>-->
+        <!-- Update Ticket Info -->
+<!--        <record id="ir_cron_data_ticket_update" model="ir.cron">-->
+<!--            <field name="name">Ticket Update: Update Ticket Details</field>-->
+<!--            <field name="model_id" ref="customer_tickets.model_customer_tickets"/>-->
+<!--            <field name="type">ir.actions.server</field>-->
+<!--            <field name="state">code</field>-->
+<!--            <field name="code">model.cron_update_ticket()</field>-->
+<!--            <field name="interval_number">15</field>-->
+<!--            <field name="interval_type">minutes</field>-->
+<!--            <field name="numbercall">-1</field>-->
+<!--        </record>-->
+        <!-- Update Subscription Info -->
+        <record id="ir_cron_data_subscription" model="ir.cron">
+            <field name="name">Update Subscription: Update Subscription Details</field>
+            <field name="model_id" ref="customer_tickets.model_subscription_info"/>
+            <field name="type">ir.actions.server</field>
+            <field name="state">code</field>
+            <field name="code">model.cron_subscription_info()</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">hours</field>
+            <field name="numbercall">-1</field>
+        </record>
+    </data>
+</odoo>

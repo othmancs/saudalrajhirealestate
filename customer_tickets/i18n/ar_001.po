@@ -1,0 +1,1121 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* customer_tickets
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 15.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-06-25 10:02+0000\n"
+"PO-Revision-Date: 2023-06-25 13:20+0300\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+"Language: ar\n"
+"X-Generator: Poedit 2.3\n"
+
+#. module: customer_tickets
+#: model:ir.model.fields,field_description:customer_tickets.field_customer_tickets__message_needaction
+#: model:ir.model.fields,field_description:customer_tickets.field_subscription_info__message_needaction
+msgid "Action Needed"
+msgstr "الإجراءات اللازمة"
+
+#. module: customer_tickets
+#: model_terms:ir.ui.view,arch_db:customer_tickets.subscription_code_form
+msgid "Activate"
+msgstr "تفعيل"
+
+#. module: customer_tickets
+#: code:addons/customer_tickets/models/customer_ticket.py:0
+#: code:addons/customer_tickets/models/subscription.py:0
+#: model:ir.actions.act_window,name:customer_tickets.subscription_activation
+#, python-format
+msgid "Activate Subscription"
+msgstr "كود الاشتراك"
+
+#. module: customer_tickets
+#: model:ir.model.fields,field_description:customer_tickets.field_sub_ticket_type__active
+msgid "Active"
+msgstr "نشط"
+
+#. module: customer_tickets
+#: model:ir.model.fields,field_description:customer_tickets.field_customer_tickets__activity_ids
+#: model:ir.model.fields,field_description:customer_tickets.field_subscription_info__activity_ids
+msgid "Activities"
+msgstr "الأنشطة"
+
+#. module: customer_tickets
+#: model:ir.model.fields,field_description:customer_tickets.field_customer_tickets__activity_exception_decoration
+#: model:ir.model.fields,field_description:customer_tickets.field_subscription_info__activity_exception_decoration
+msgid "Activity Exception Decoration"
+msgstr "زخرفة استثناء النشاط"
+
+#. module: customer_tickets
+#: model_terms:ir.ui.view,arch_db:customer_tickets.subscription_info_form
+msgid "Activity Notification"
+msgstr "إشعار"
+
+#. module: customer_tickets
+#: model:ir.model.fields,field_description:customer_tickets.field_customer_tickets__activity_state
+#: model:ir.model.fields,field_description:customer_tickets.field_subscription_info__activity_state
+#: model:ir.model.fields,field_description:customer_tickets.field_subscription_info__activity_state_ids
+msgid "Activity State"
+msgstr "حالة النشاط"
+
+#. module: customer_tickets
+#: model:ir.model.fields,field_description:customer_tickets.field_activity_state__activity_type_id
+msgid "Activity Type"
+msgstr "رمز نوع النشاط"
+
+#. module: customer_tickets
+#: model:ir.model.fields,field_description:customer_tickets.field_customer_tickets__activity_type_icon
+#: model:ir.model.fields,field_description:customer_tickets.field_subscription_info__activity_type_icon
+msgid "Activity Type Icon"
+msgstr "أيقونة نوع النشاط"
+
+#. module: customer_tickets
+#: code:addons/customer_tickets/models/customer_ticket.py:0
+#, python-format
+msgid "Add New Subscription Code"
+msgstr "إعادة إنشاء رمز الاشتراك"
+
+#. module: customer_tickets
+#. openerp-web
+#: code:addons/customer_tickets/static/src/xml/sale_dashboard.xml:0
+#, python-format
+msgid "All Tickets"
+msgstr "كل التذاكر"
+
+#. module: customer_tickets
+#. openerp-web
+#: code:addons/customer_tickets/static/src/xml/sale_dashboard.xml:0
+#, python-format
+msgid "All Waiting Quotes"
+msgstr "منتظر افادتك"
+
+#. module: customer_tickets
+#: model:ir.model,name:customer_tickets.model_ir_attachment
+#: model:ir.model.fields,field_description:customer_tickets.field_customer_tickets__attachment
+msgid "Attachment"
+msgstr "مرفق"
+
+#. module: customer_tickets
+#: model:ir.model.fields,field_description:customer_tickets.field_customer_tickets__message_attachment_count
+#: model:ir.model.fields,field_description:customer_tickets.field_subscription_info__message_attachment_count
+msgid "Attachment Count"
+msgstr "عدد المرفقات"
+
+#. module: customer_tickets
+#: model:ir.model.fields,field_description:customer_tickets.field_subscription_code__authentication_code
+#: model:ir.model.fields,field_description:customer_tickets.field_subscription_info__authentication_code
+msgid "Authentication Code"
+msgstr "رمز الدخول"
+
+#. module: customer_tickets
+#: model:ir.model.fields,field_description:customer_tickets.field_subscription_info__auto_close
+msgid "Auto Close Ticket After"
+msgstr "إغلاق التذكرة تلقائيا بعد "
+
+#. module: customer_tickets
+#: model:ir.model.fields,field_description:customer_tickets.field_sub_ticket_type__available
+msgid "Available"
+msgstr "متوفر"
+
+#. module: customer_tickets
+#: model:ir.model.fields,field_description:customer_tickets.field_subscription_info__bg_color_hex
+msgid "BG Color Hex"
+msgstr "لون الخلفية"
+
+#. module: customer_tickets
+#: model:ir.model.fields,field_description:customer_tickets.field_activity_state__body
+msgid "Body"
+msgstr "نص الرسالة"
+
+#. module: customer_tickets
+#: code:addons/customer_tickets/models/subscription.py:0
+#, python-format
+msgid "Can not create New One, there is an Other running Subscription"
+msgstr "لا يمكن إنشاء حساب جديد ، هناك اشتراك آخر قيد التشغيل"
+
+#. module: customer_tickets
+#: model_terms:ir.ui.view,arch_db:customer_tickets.subscription_code_form
+msgid "Cancel"
+msgstr "إلغاء "
+
+#. module: customer_tickets
+#: model:ir.model.fields.selection,name:customer_tickets.selection__customer_tickets__package_status__cancel
+#: model:ir.model.fields.selection,name:customer_tickets.selection__subscription_info__package_status__cancel
+msgid "Cancelled"
+msgstr "تم الإلغاء"
+
+#. module: customer_tickets
+#: model:ir.model.fields,field_description:customer_tickets.field_subscription_info__color
+msgid "Color Index"
+msgstr "اللون الداخلى"
+
+#. module: customer_tickets
+#: model:ir.model.fields,field_description:customer_tickets.field_customer_tickets__company_id
+msgid "Company"
+msgstr "الشركة"
+
+#. module: customer_tickets
+#: model:ir.model.fields,field_description:customer_tickets.field_subscription_info__consumed
+msgid "Consumed Tickets"
+msgstr "التذاكر المستهلكة"
+
+#. module: customer_tickets
+#: model_terms:ir.ui.view,arch_db:customer_tickets.subscription_info_view_kanban
+msgid "Consumed:"
+msgstr "مستهلكة"
+
+#. module: customer_tickets
+#: code:addons/customer_tickets/models/subscription.py:0
+#, python-format
+msgid "Create Ticket"
+msgstr "إنشاء تذكرة"
+
+#. module: customer_tickets
+#: model_terms:ir.actions.act_window,help:customer_tickets.customer_tickets_action
+msgid "Create new document"
+msgstr "إنشاء مستند جديد"
+
+#. module: customer_tickets
+#: model:ir.model.fields,field_description:customer_tickets.field_customer_tickets__created_days
+msgid "Created Days"
+msgstr "انشأ من قبل"
+
+#. module: customer_tickets
+#: model:ir.model.fields,field_description:customer_tickets.field_activity_state__create_uid
+#: model:ir.model.fields,field_description:customer_tickets.field_customer_tickets__create_uid
+#: model:ir.model.fields,field_description:customer_tickets.field_feedback__create_uid
+#: model:ir.model.fields,field_description:customer_tickets.field_sub_ticket_type__create_uid
+#: model:ir.model.fields,field_description:customer_tickets.field_subscription_code__create_uid
+#: model:ir.model.fields,field_description:customer_tickets.field_subscription_info__create_uid
+#: model:ir.model.fields,field_description:customer_tickets.field_ticket_stage__create_uid
+msgid "Created by"
+msgstr "أنشئ بواسطة"
+
+#. module: customer_tickets
+#: model:ir.model.fields,field_description:customer_tickets.field_activity_state__create_date
+#: model:ir.model.fields,field_description:customer_tickets.field_customer_tickets__create_date
+#: model:ir.model.fields,field_description:customer_tickets.field_feedback__create_date
+#: model:ir.model.fields,field_description:customer_tickets.field_sub_ticket_type__create_date
+#: model:ir.model.fields,field_description:customer_tickets.field_subscription_code__create_date
+#: model:ir.model.fields,field_description:customer_tickets.field_subscription_info__create_date
+#: model:ir.model.fields,field_description:customer_tickets.field_ticket_stage__create_date
+msgid "Created on"
+msgstr "أنشأ فى"
+
+#. module: customer_tickets
+#: model:ir.model,name:customer_tickets.model_subscription_info
+msgid "Customer Subscription Info"
+msgstr "معلومات الدعم"
+
+#. module: customer_tickets
+#: model:ir.model.fields,field_description:customer_tickets.field_feedback__customer_ticket_id
+#: model:ir.module.category,name:customer_tickets.ticket_categ_security
+#: model_terms:ir.ui.view,arch_db:customer_tickets.customer_tickets_form
+msgid "Customer Ticket"
+msgstr "تذكرة العميل"
+
+#. module: customer_tickets
+#: model:ir.model,name:customer_tickets.model_customer_tickets
+msgid "Customer Tickets"
+msgstr "تذاكر"
+
+#. module: customer_tickets
+#. openerp-web
+#: code:addons/customer_tickets/static/src/js/tickects_dashbord.js:0
+#, python-format
+msgid "Dashboard"
+msgstr "لوحة المعلومات"
+
+#. module: customer_tickets
+#: model:ir.model.fields,field_description:customer_tickets.field_subscription_info__db_name
+msgid "Database Name"
+msgstr "اسم"
+
+#. module: customer_tickets
+#: model:ir.model,name:customer_tickets.model_sub_ticket_type
+msgid "Description"
+msgstr "الوصف"
+
+#. module: customer_tickets
+#: model:ir.model.fields,field_description:customer_tickets.field_activity_state__display_name
+#: model:ir.model.fields,field_description:customer_tickets.field_customer_tickets__display_name
+#: model:ir.model.fields,field_description:customer_tickets.field_feedback__display_name
+#: model:ir.model.fields,field_description:customer_tickets.field_sub_ticket_type__display_name
+#: model:ir.model.fields,field_description:customer_tickets.field_subscription_code__display_name
+#: model:ir.model.fields,field_description:customer_tickets.field_subscription_info__display_name
+#: model:ir.model.fields,field_description:customer_tickets.field_ticket_stage__display_name
+msgid "Display Name"
+msgstr "الاسم المعروض"
+
+#. module: customer_tickets
+#: model:ir.model.fields.selection,name:customer_tickets.selection__activity_state__state__draft
+#: model:ir.model.fields.selection,name:customer_tickets.selection__customer_tickets__package_status__draft
+#: model:ir.model.fields.selection,name:customer_tickets.selection__customer_tickets__state__draft
+#: model:ir.model.fields.selection,name:customer_tickets.selection__subscription_info__package_status__draft
+#: model_terms:ir.ui.view,arch_db:customer_tickets.customer_tickets_search
+msgid "Draft"
+msgstr "مسودة"
+
+#. module: customer_tickets
+#: code:addons/customer_tickets/models/subscription.py:0
+#, python-format
+msgid "Enter Authentication Code in Subscription Configuration"
+msgstr "أدخل رمز المصادقة في تكوين الاشتراك"
+
+#. module: customer_tickets
+#: model:ir.model.fields,field_description:customer_tickets.field_customer_tickets__escalation
+#: model_terms:ir.ui.view,arch_db:customer_tickets.customer_tickets_form
+msgid "Escalation"
+msgstr "تصعيد التذكرة"
+
+#. module: customer_tickets
+#: model_terms:ir.ui.view,arch_db:customer_tickets.subscription_info_view_kanban
+msgid "Expiration Date:"
+msgstr "تاريخ انتهاء الصلاحية:"
+
+#. module: customer_tickets
+#: model:ir.model.fields.selection,name:customer_tickets.selection__customer_tickets__package_status__expired
+#: model:ir.model.fields.selection,name:customer_tickets.selection__subscription_info__package_status__expired
+#: model_terms:ir.ui.view,arch_db:customer_tickets.subscription_info_form
+msgid "Expired"
+msgstr "منتهي الصلاحية"
+
+#. module: customer_tickets
+#: model:ir.model.fields,field_description:customer_tickets.field_subscription_info__exp_date
+msgid "Expiry Date"
+msgstr "تاريخ الانتهاء"
+
+#. module: customer_tickets
+#: model_terms:ir.ui.view,arch_db:customer_tickets.customer_tickets_form
+msgid "Feedback"
+msgstr "منتظر افادتك"
+
+#. module: customer_tickets
+#: model:ir.model.fields.selection,name:customer_tickets.selection__activity_state__state__feedback
+#: model:ir.model.fields.selection,name:customer_tickets.selection__customer_tickets__state__feedback
+msgid "Feedback Sent"
+msgstr "تم إرسال الملاحظات"
+
+#. module: customer_tickets
+#: model:ir.model.fields,field_description:customer_tickets.field_customer_tickets__message_follower_ids
+#: model:ir.model.fields,field_description:customer_tickets.field_subscription_info__message_follower_ids
+msgid "Followers"
+msgstr "متابعون"
+
+#. module: customer_tickets
+#: model:ir.model.fields,field_description:customer_tickets.field_customer_tickets__message_partner_ids
+#: model:ir.model.fields,field_description:customer_tickets.field_subscription_info__message_partner_ids
+msgid "Followers (Partners)"
+msgstr "المتابعون (الشركاء)"
+
+#. module: customer_tickets
+#: model:ir.model.fields,field_description:customer_tickets.field_subscription_info__font_color_hex
+msgid "Font Color Hex"
+msgstr "لون الخط  "
+
+#. module: customer_tickets
+#: model:ir.model.fields,help:customer_tickets.field_customer_tickets__activity_type_icon
+#: model:ir.model.fields,help:customer_tickets.field_subscription_info__activity_type_icon
+msgid "Font awesome icon e.g. fa-tasks"
+msgstr "أيقونات Font awesome، مثال: fa-tasks "
+
+#. module: customer_tickets
+#: model_terms:ir.ui.view,arch_db:customer_tickets.subscription_info_form
+msgid "Get Data"
+msgstr "احصل على البيانات"
+
+#. module: customer_tickets
+#: model_terms:ir.ui.view,arch_db:customer_tickets.customer_tickets_search
+msgid "Group By..."
+msgstr "تجميع حسب.."
+
+#. module: customer_tickets
+#: model:ir.model.fields,field_description:customer_tickets.field_customer_tickets__has_message
+#: model:ir.model.fields,field_description:customer_tickets.field_subscription_info__has_message
+msgid "Has Message"
+msgstr "لديه رسالة"
+
+#. module: customer_tickets
+#: model:ir.model.fields.selection,name:customer_tickets.selection__customer_tickets__priority__2
+msgid "High priority"
+msgstr "ذو أهيمة عليا"
+
+#. module: customer_tickets
+#: model:ir.model.fields,field_description:customer_tickets.field_activity_state__id
+#: model:ir.model.fields,field_description:customer_tickets.field_customer_tickets__id
+#: model:ir.model.fields,field_description:customer_tickets.field_feedback__id
+#: model:ir.model.fields,field_description:customer_tickets.field_sub_ticket_type__id
+#: model:ir.model.fields,field_description:customer_tickets.field_subscription_code__id
+#: model:ir.model.fields,field_description:customer_tickets.field_subscription_info__id
+#: model:ir.model.fields,field_description:customer_tickets.field_ticket_stage__id
+msgid "ID"
+msgstr "المُعرف"
+
+#. module: customer_tickets
+#: model:ir.model.fields,field_description:customer_tickets.field_subscription_info__address
+msgid "IP/Domain"
+msgstr ""
+
+#. module: customer_tickets
+#: model:ir.model.fields,field_description:customer_tickets.field_customer_tickets__activity_exception_icon
+#: model:ir.model.fields,field_description:customer_tickets.field_subscription_info__activity_exception_icon
+msgid "Icon"
+msgstr "أيقونة"
+
+#. module: customer_tickets
+#: model:ir.model.fields,help:customer_tickets.field_customer_tickets__activity_exception_icon
+#: model:ir.model.fields,help:customer_tickets.field_subscription_info__activity_exception_icon
+msgid "Icon to indicate an exception activity."
+msgstr "الأيقونة للإشارة إلى النشاط المستثنى "
+
+#. module: customer_tickets
+#: model:ir.model.fields,help:customer_tickets.field_customer_tickets__message_needaction
+#: model:ir.model.fields,help:customer_tickets.field_customer_tickets__message_unread
+#: model:ir.model.fields,help:customer_tickets.field_subscription_info__message_needaction
+#: model:ir.model.fields,help:customer_tickets.field_subscription_info__message_unread
+msgid "If checked, new messages require your attention."
+msgstr "إذا تم تحديدها ، فإن الرسائل الجديدة تتطلب انتباهك."
+
+#. module: customer_tickets
+#: model:ir.model.fields,help:customer_tickets.field_customer_tickets__message_has_error
+#: model:ir.model.fields,help:customer_tickets.field_subscription_info__message_has_error
+msgid "If checked, some messages have a delivery error."
+msgstr "إذا تم تحديده ، فإن بعض الرسائل بها خطأ في التسليم."
+
+#. module: customer_tickets
+#: model_terms:ir.ui.view,arch_db:customer_tickets.subscription_info_view_kanban
+msgid "In #{kanban_getcolorname(record.color.raw_value)}"
+msgstr ""
+
+#. module: customer_tickets
+#: model:ir.model.fields.selection,name:customer_tickets.selection__activity_state__state__in_progress
+#: model:ir.model.fields.selection,name:customer_tickets.selection__customer_tickets__state__in_progress
+#: model_terms:ir.ui.view,arch_db:customer_tickets.customer_tickets_search
+msgid "In Progress"
+msgstr "جارى العمل"
+
+#. module: customer_tickets
+#: model:ir.model.fields,field_description:customer_tickets.field_ticket_stage__is_close
+msgid "Is Final"
+msgstr "نهائي"
+
+#. module: customer_tickets
+#: model:ir.model.fields,field_description:customer_tickets.field_customer_tickets__message_is_follower
+#: model:ir.model.fields,field_description:customer_tickets.field_subscription_info__message_is_follower
+msgid "Is Follower"
+msgstr "متابع"
+
+#. module: customer_tickets
+#: model:ir.model.fields,field_description:customer_tickets.field_activity_state____last_update
+#: model:ir.model.fields,field_description:customer_tickets.field_customer_tickets____last_update
+#: model:ir.model.fields,field_description:customer_tickets.field_feedback____last_update
+#: model:ir.model.fields,field_description:customer_tickets.field_sub_ticket_type____last_update
+#: model:ir.model.fields,field_description:customer_tickets.field_subscription_code____last_update
+#: model:ir.model.fields,field_description:customer_tickets.field_subscription_info____last_update
+#: model:ir.model.fields,field_description:customer_tickets.field_ticket_stage____last_update
+msgid "Last Modified on"
+msgstr "آخر تعديل في"
+
+#. module: customer_tickets
+#: model:ir.model.fields,field_description:customer_tickets.field_activity_state__write_uid
+#: model:ir.model.fields,field_description:customer_tickets.field_customer_tickets__write_uid
+#: model:ir.model.fields,field_description:customer_tickets.field_feedback__write_uid
+#: model:ir.model.fields,field_description:customer_tickets.field_sub_ticket_type__write_uid
+#: model:ir.model.fields,field_description:customer_tickets.field_subscription_code__write_uid
+#: model:ir.model.fields,field_description:customer_tickets.field_subscription_info__write_uid
+#: model:ir.model.fields,field_description:customer_tickets.field_ticket_stage__write_uid
+msgid "Last Updated by"
+msgstr "آخر تحديث بواسطة"
+
+#. module: customer_tickets
+#: model:ir.model.fields,field_description:customer_tickets.field_activity_state__write_date
+#: model:ir.model.fields,field_description:customer_tickets.field_customer_tickets__write_date
+#: model:ir.model.fields,field_description:customer_tickets.field_feedback__write_date
+#: model:ir.model.fields,field_description:customer_tickets.field_sub_ticket_type__write_date
+#: model:ir.model.fields,field_description:customer_tickets.field_subscription_code__write_date
+#: model:ir.model.fields,field_description:customer_tickets.field_subscription_info__write_date
+#: model:ir.model.fields,field_description:customer_tickets.field_ticket_stage__write_date
+msgid "Last Updated on"
+msgstr "آخر تحديث في"
+
+#. module: customer_tickets
+#: model:ir.model.fields.selection,name:customer_tickets.selection__customer_tickets__priority__0
+msgid "Low priority"
+msgstr "أولوية منخفضة"
+
+#. module: customer_tickets
+#: model:ir.model.fields,field_description:customer_tickets.field_customer_tickets__message_main_attachment_id
+#: model:ir.model.fields,field_description:customer_tickets.field_subscription_info__message_main_attachment_id
+msgid "Main Attachment"
+msgstr "المرفق الرئيسي"
+
+#. module: customer_tickets
+#: model:res.groups,name:customer_tickets.ticket_manger_group
+msgid "Manager"
+msgstr "المدير"
+
+#. module: customer_tickets
+#: model_terms:ir.ui.view,arch_db:customer_tickets.customer_tickets_form
+msgid "Mark as Solved"
+msgstr "تم حلها"
+
+#. module: customer_tickets
+#: model:ir.model.fields.selection,name:customer_tickets.selection__customer_tickets__priority__1
+msgid "Medium priority"
+msgstr "أولوية متوسطة"
+
+#. module: customer_tickets
+#: model:ir.model,name:customer_tickets.model_mail_message
+msgid "Message"
+msgstr "الرسالة"
+
+#. module: customer_tickets
+#: model:ir.model.fields,field_description:customer_tickets.field_customer_tickets__message_has_error
+#: model:ir.model.fields,field_description:customer_tickets.field_subscription_info__message_has_error
+msgid "Message Delivery error"
+msgstr "خطأ في تسليم الرسالة"
+
+#. module: customer_tickets
+#: model:ir.model.fields,field_description:customer_tickets.field_customer_tickets__message_ids
+#: model:ir.model.fields,field_description:customer_tickets.field_subscription_info__message_ids
+msgid "Messages"
+msgstr "الرسائل"
+
+#. module: customer_tickets
+#: model:ir.model.fields,field_description:customer_tickets.field_customer_tickets__model_id
+msgid "Model"
+msgstr "نموذج التذكرة"
+
+#. module: customer_tickets
+#: model:ir.model.fields,field_description:customer_tickets.field_customer_tickets__my_activity_date_deadline
+#: model:ir.model.fields,field_description:customer_tickets.field_subscription_info__my_activity_date_deadline
+msgid "My Activity Deadline"
+msgstr "نهاية الوقت المعين للنشاط"
+
+#. module: customer_tickets
+#. openerp-web
+#: code:addons/customer_tickets/static/src/xml/sale_dashboard.xml:0
+#, python-format
+msgid "My Tickets"
+msgstr "التذاكر الخاصة بي "
+
+#. module: customer_tickets
+#: model:ir.model.fields,field_description:customer_tickets.field_feedback__name
+#: model:ir.model.fields,field_description:customer_tickets.field_sub_ticket_type__name
+msgid "Name"
+msgstr "اسم"
+
+#. module: customer_tickets
+#: model_terms:ir.ui.view,arch_db:customer_tickets.subscription_info_view_kanban
+msgid "New Ticket"
+msgstr "جديد"
+
+#. module: customer_tickets
+#: model:ir.model.fields,field_description:customer_tickets.field_customer_tickets__activity_date_deadline
+#: model:ir.model.fields,field_description:customer_tickets.field_subscription_info__activity_date_deadline
+msgid "Next Activity Deadline"
+msgstr "الموعد النهائي للنشاط التالي"
+
+#. module: customer_tickets
+#: model:ir.model.fields,field_description:customer_tickets.field_customer_tickets__activity_summary
+#: model:ir.model.fields,field_description:customer_tickets.field_subscription_info__activity_summary
+msgid "Next Activity Summary"
+msgstr "ملخص النشاط التالي"
+
+#. module: customer_tickets
+#: model:ir.model.fields,field_description:customer_tickets.field_customer_tickets__activity_type_id
+#: model:ir.model.fields,field_description:customer_tickets.field_subscription_info__activity_type_id
+msgid "Next Activity Type"
+msgstr "نوع النشاط التالي"
+
+#. module: customer_tickets
+#: model_terms:ir.actions.act_window,help:customer_tickets.subscription_dashboard_action
+msgid "No Subscription found"
+msgstr "لم يتم العثور على اشتراك"
+
+#. module: customer_tickets
+#: model_terms:ir.ui.view,arch_db:customer_tickets.subscription_info_view_kanban
+msgid "No of Tickets:"
+msgstr "عدد التذاكر"
+
+#. module: customer_tickets
+#: model:ir.model.fields,field_description:customer_tickets.field_sub_ticket_type__numbers
+msgid "No/Year"
+msgstr "عدد / السنة"
+
+#. module: customer_tickets
+#: model:ir.model.fields,field_description:customer_tickets.field_customer_tickets__message_needaction_counter
+#: model:ir.model.fields,field_description:customer_tickets.field_subscription_info__message_needaction_counter
+msgid "Number of Actions"
+msgstr "عدد الإجراءات"
+
+#. module: customer_tickets
+#: model:ir.model.fields,field_description:customer_tickets.field_customer_tickets__message_has_error_counter
+#: model:ir.model.fields,field_description:customer_tickets.field_subscription_info__message_has_error_counter
+msgid "Number of errors"
+msgstr "عدد الأخطاء"
+
+#. module: customer_tickets
+#: model:ir.model.fields,help:customer_tickets.field_customer_tickets__message_needaction_counter
+#: model:ir.model.fields,help:customer_tickets.field_subscription_info__message_needaction_counter
+msgid "Number of messages which requires an action"
+msgstr "عدد الرسائل التي تتطلب اتخاذ إجراء"
+
+#. module: customer_tickets
+#: model:ir.model.fields,help:customer_tickets.field_customer_tickets__message_has_error_counter
+#: model:ir.model.fields,help:customer_tickets.field_subscription_info__message_has_error_counter
+msgid "Number of messages with delivery error"
+msgstr "عدد الرسائل التي بها خطأ في التسليم"
+
+#. module: customer_tickets
+#: model:ir.model.fields,help:customer_tickets.field_customer_tickets__message_unread_counter
+#: model:ir.model.fields,help:customer_tickets.field_subscription_info__message_unread_counter
+msgid "Number of unread messages"
+msgstr "عدد الرسائل غير المقروءة"
+
+#. module: customer_tickets
+#: code:addons/customer_tickets/models/subscription.py:0
+#: model_terms:ir.ui.view,arch_db:customer_tickets.subscription_info_view_kanban
+#, python-format
+msgid "Open Tickets"
+msgstr "فتح التذاكر"
+
+#. module: customer_tickets
+#: model:ir.model.fields,field_description:customer_tickets.field_customer_tickets__package_id
+#: model:ir.model.fields,field_description:customer_tickets.field_subscription_info__package_name
+msgid "Package"
+msgstr "حزمة"
+
+#. module: customer_tickets
+#: model:ir.model.fields,field_description:customer_tickets.field_subscription_info__no_tickets
+msgid "Package No of Tickets"
+msgstr "تذاكر الحزم"
+
+#. module: customer_tickets
+#: model:ir.model.fields,field_description:customer_tickets.field_customer_tickets__package_status
+#: model:ir.model.fields,field_description:customer_tickets.field_subscription_info__package_status
+msgid "Package Status"
+msgstr "حالة الحزمة"
+
+#. module: customer_tickets
+#: model:ir.model.fields,field_description:customer_tickets.field_subscription_info__password
+msgid "Password"
+msgstr "كلمة المرور"
+
+#. module: customer_tickets
+#: model:ir.model.fields,field_description:customer_tickets.field_subscription_info__plan_ids
+#: model:ir.model.fields,field_description:customer_tickets.field_subscription_info__plan_name
+#: model_terms:ir.ui.view,arch_db:customer_tickets.subscription_info_form
+msgid "Plan"
+msgstr "خطة"
+
+#. module: customer_tickets
+#: model_terms:ir.ui.view,arch_db:customer_tickets.subscription_info_view_kanban
+msgid "Plan :"
+msgstr "خطة"
+
+#. module: customer_tickets
+#: code:addons/customer_tickets/models/subscription.py:0
+#, python-format
+msgid ""
+"Please check database name,username and password or contact us for "
+"configuration set up."
+msgstr ""
+"يرجى التحقق من اسم قاعدة البيانات واسم المستخدم وكلمة المرور أو اتصل بنا "
+"لإعداد التكوين."
+
+#. module: customer_tickets
+#: code:addons/customer_tickets/models/subscription.py:0
+#, python-format
+msgid ""
+"Please check your connection parameter or contact us for configuration set "
+"up."
+msgstr "يرجى التحقق من معلمة الاتصال الخاصة بك أو الاتصال بنا لإعداد التكوين."
+
+#. module: customer_tickets
+#: code:addons/customer_tickets/models/subscription.py:0
+#, python-format
+msgid ""
+"Please check your connection parameter orcontact us for configuration set up"
+msgstr "يرجى التحقق من معلمة الاتصال الخاصة بك أو الاتصال بنا لإعداد التكوين"
+
+#. module: customer_tickets
+#. openerp-web
+#: code:addons/customer_tickets/static/src/js/tickects_dashbord.js:0
+#, python-format
+msgid "Please enter an integer value"
+msgstr "الرجاء إدخال قيمة عددية"
+
+#. module: customer_tickets
+#: model:ir.model.fields,field_description:customer_tickets.field_ir_attachment__plus_attachment_id
+msgid "Plus Attachment"
+msgstr "مرفق"
+
+#. module: customer_tickets
+#: model:ir.model.fields,field_description:customer_tickets.field_sub_ticket_type__plus_id
+msgid "Plus ID"
+msgstr "المُعرف"
+
+#. module: customer_tickets
+#: model:ir.model.fields,field_description:customer_tickets.field_ir_attachment__plus_ticket_id
+msgid "Plus Ticket"
+msgstr "رقم التذكرة"
+
+#. module: customer_tickets
+#: model:ir.model.fields,field_description:customer_tickets.field_customer_tickets__priority
+msgid "Priority"
+msgstr "أولوية"
+
+#. module: customer_tickets
+#: model:ir.model.fields.selection,name:customer_tickets.selection__customer_tickets__package_status__reject
+#: model:ir.model.fields.selection,name:customer_tickets.selection__subscription_info__package_status__reject
+msgid "Rejected"
+msgstr "مرفوض"
+
+#. module: customer_tickets
+#: model:ir.model.fields,field_description:customer_tickets.field_subscription_info__remaining_tickets
+msgid "Remaining Tickets"
+msgstr "التذاكر المتبقية"
+
+#. module: customer_tickets
+#: model_terms:ir.ui.view,arch_db:customer_tickets.subscription_info_view_kanban
+msgid "Remaining:"
+msgstr "التذاكر المتبقية"
+
+#. module: customer_tickets
+#: model:ir.model.fields,field_description:customer_tickets.field_customer_tickets__activity_user_id
+#: model:ir.model.fields,field_description:customer_tickets.field_subscription_info__activity_user_id
+msgid "Responsible User"
+msgstr "مستخدم مسؤول"
+
+#. module: customer_tickets
+#: model:ir.model.fields.selection,name:customer_tickets.selection__customer_tickets__package_status__running
+#: model:ir.model.fields.selection,name:customer_tickets.selection__subscription_info__package_status__running
+#: model_terms:ir.ui.view,arch_db:customer_tickets.subscription_info_form
+msgid "Running"
+msgstr "جاري"
+
+#. module: customer_tickets
+#: model:ir.model.fields,field_description:customer_tickets.field_subscription_info__search_customer_url
+msgid "Search URL"
+msgstr "رابط الدعم "
+
+#. module: customer_tickets
+#: model:ir.model.fields,field_description:customer_tickets.field_activity_state__send
+msgid "Send ?"
+msgstr "يرسل"
+
+#. module: customer_tickets
+#: code:addons/customer_tickets/models/customer_ticket.py:0
+#: model_terms:ir.ui.view,arch_db:customer_tickets.feedback_view_form
+#, python-format
+msgid "Send Feedback"
+msgstr "إرسال مللاحظات"
+
+#. module: customer_tickets
+#: model_terms:ir.ui.view,arch_db:customer_tickets.subscription_info_view_kanban
+msgid "Settings"
+msgstr "الإعدادات"
+
+#. module: customer_tickets
+#: model:ir.model.fields,field_description:customer_tickets.field_customer_tickets__ticket_solve_date
+msgid "Solve Date"
+msgstr "تاريخ الحل"
+
+#. module: customer_tickets
+#: model:ir.model.fields.selection,name:customer_tickets.selection__activity_state__state__solved
+#: model:ir.model.fields.selection,name:customer_tickets.selection__customer_tickets__state__solved
+#: model_terms:ir.ui.view,arch_db:customer_tickets.customer_tickets_search
+msgid "Solved"
+msgstr "تم حلها"
+
+#. module: customer_tickets
+#: code:addons/customer_tickets/models/subscription.py:0
+#: model:mail.activity.type,name:customer_tickets.mail_activity_solved_ticket
+#: model_terms:ir.ui.view,arch_db:customer_tickets.subscription_info_view_kanban
+#, python-format
+msgid "Solved Tickets"
+msgstr "تم حلها"
+
+#. module: customer_tickets
+#: model:ir.model.fields,field_description:customer_tickets.field_ticket_stage__name
+msgid "Stage"
+msgstr "مرحلة"
+
+#. module: customer_tickets
+#: model:ir.model.fields,field_description:customer_tickets.field_ticket_stage__stage_id
+msgid "Stage ID"
+msgstr "المُعرف"
+
+#. module: customer_tickets
+#: model:ir.model.fields,field_description:customer_tickets.field_customer_tickets__stage_state_date
+msgid "Stage State Date"
+msgstr "تاريخ حالة المرحلة"
+
+#. module: customer_tickets
+#: model:ir.model.fields,field_description:customer_tickets.field_subscription_info__start_date
+msgid "Start Date"
+msgstr "تاريخ البدء"
+
+#. module: customer_tickets
+#: model_terms:ir.ui.view,arch_db:customer_tickets.subscription_info_view_kanban
+msgid "Start Date:"
+msgstr "تاريخ البدء:"
+
+#. module: customer_tickets
+#: model:ir.model.fields,field_description:customer_tickets.field_activity_state__state
+#: model:ir.model.fields,field_description:customer_tickets.field_customer_tickets__state
+msgid "Status"
+msgstr "الحالة"
+
+#. module: customer_tickets
+#: model:ir.model.fields,help:customer_tickets.field_customer_tickets__activity_state
+#: model:ir.model.fields,help:customer_tickets.field_subscription_info__activity_state
+msgid ""
+"Status based on activities\n"
+"Overdue: Due date is already passed\n"
+"Today: Activity date is today\n"
+"Planned: Future activities."
+msgstr ""
+"الوضع على أساس الأنشطة\n"
+"متأخر: تاريخ الاستحقاق فات بالفعل\n"
+"اليوم: تاريخ النشاط هو اليوم\n"
+"مخطط له: الأنشطة المستقبلية."
+
+#. module: customer_tickets
+#: model:ir.model.fields,field_description:customer_tickets.field_customer_tickets__subscription_styling
+#: model:ir.model.fields,field_description:customer_tickets.field_subscription_info__subscription_styling
+msgid "Styling"
+msgstr "التصميم"
+
+#. module: customer_tickets
+#: model:ir.model.fields,field_description:customer_tickets.field_sub_ticket_type__sub_id
+msgid "Sub"
+msgstr "وحدة فرعية"
+
+#. module: customer_tickets
+#: model:ir.model.fields,field_description:customer_tickets.field_activity_state__subject
+#: model:ir.model.fields,field_description:customer_tickets.field_customer_tickets__ticket_subject
+msgid "Subject"
+msgstr "موضوع"
+
+#. module: customer_tickets
+#: model:ir.model.fields.selection,name:customer_tickets.selection__activity_state__state__submit
+#: model:ir.model.fields.selection,name:customer_tickets.selection__customer_tickets__state__submit
+msgid "Submit"
+msgstr "ارسال"
+
+#. module: customer_tickets
+#: model:ir.model.fields,field_description:customer_tickets.field_customer_tickets__submit_date
+msgid "Submit Date"
+msgstr "تاريخ الإرسال"
+
+#. module: customer_tickets
+#: model:ir.actions.act_window,name:customer_tickets.customer_tickets_action
+#: model_terms:ir.ui.view,arch_db:customer_tickets.customer_tickets_form
+msgid "Submit Ticket"
+msgstr "إرسال"
+
+#. module: customer_tickets
+#: model_terms:ir.ui.view,arch_db:customer_tickets.customer_tickets_search
+msgid "Submitted"
+msgstr "تم الارسال"
+
+#. module: customer_tickets
+#: model:ir.actions.act_window,name:customer_tickets.subscription_info_action
+#: model:ir.model.fields,field_description:customer_tickets.field_activity_state__subscription_id
+#: model:ir.ui.menu,name:customer_tickets.menu_subscription_info
+#: model_terms:ir.ui.view,arch_db:customer_tickets.subscription_code_form
+#: model_terms:ir.ui.view,arch_db:customer_tickets.subscription_info_form
+msgid "Subscription"
+msgstr "الاشتراك"
+
+#. module: customer_tickets
+#: model:ir.model,name:customer_tickets.model_subscription_code
+msgid "Subscription Activation Wizard"
+msgstr "معالج تنشيط الاشتراك"
+
+#. module: customer_tickets
+#: model:ir.model.fields,field_description:customer_tickets.field_customer_tickets__subscription_code
+#: model:ir.model.fields,field_description:customer_tickets.field_subscription_code__subscription_code
+#: model:ir.model.fields,field_description:customer_tickets.field_subscription_info__subscription_code
+msgid "Subscription Code"
+msgstr "كود الاشتراك"
+
+#. module: customer_tickets
+#: model:ir.model.fields,field_description:customer_tickets.field_customer_tickets__subscription_id
+msgid "Subscription Info"
+msgstr "معلومات الإشتراك"
+
+#. module: customer_tickets
+#: model_terms:ir.actions.act_window,help:customer_tickets.subscription_dashboard_action
+msgid "Subscription tickets for support packages."
+msgstr "تذاكر الاشتراك لحزم الدعم."
+
+#. module: customer_tickets
+#: model_terms:ir.ui.view,arch_db:customer_tickets.subscription_info_search
+#: model_terms:ir.ui.view,arch_db:customer_tickets.subscription_info_tree
+msgid "Subscriptions"
+msgstr "الاشتراكات"
+
+#. module: customer_tickets
+#: model:ir.actions.act_window,name:customer_tickets.subscription_dashboard_action
+msgid "Subscriptions Overview"
+msgstr "ملخص الإشتراكات"
+
+#. module: customer_tickets
+#: model:ir.model.fields,field_description:customer_tickets.field_subscription_info__support_url
+msgid "Support URL"
+msgstr "رابط الدعم "
+
+#. module: customer_tickets
+#: model:ir.model.fields,field_description:customer_tickets.field_subscription_info__team_name
+msgid "Team Name"
+msgstr "فريق الدعم"
+
+#. module: customer_tickets
+#: code:addons/customer_tickets/models/customer_ticket.py:0
+#: code:addons/customer_tickets/models/subscription.py:0
+#: model:ir.model.fields,field_description:customer_tickets.field_subscription_info__ticket_ids
+#: model_terms:ir.ui.view,arch_db:customer_tickets.customer_tickets_search
+#, python-format
+msgid "Ticket"
+msgstr "التذكرة"
+
+#. module: customer_tickets
+#: model:ir.ui.menu,name:customer_tickets.subscription_configuration
+msgid "Ticket Configuration"
+msgstr "إعدادات التذاكر"
+
+#. module: customer_tickets
+#: model:ir.model.fields,field_description:customer_tickets.field_customer_tickets__date
+#: model_terms:ir.ui.view,arch_db:customer_tickets.customer_tickets_search
+msgid "Ticket Date"
+msgstr "تاريخ التذكرة"
+
+#. module: customer_tickets
+#: model:ir.model.fields,field_description:customer_tickets.field_customer_tickets__tick_description
+msgid "Ticket Description"
+msgstr "الوصف"
+
+#. module: customer_tickets
+#: model_terms:ir.ui.view,arch_db:customer_tickets.customer_tickets_form
+msgid "Ticket Details"
+msgstr "تفاصيل التذكرة"
+
+#. module: customer_tickets
+#: model:ir.model.fields,field_description:customer_tickets.field_customer_tickets__ticket_id
+msgid "Ticket ID"
+msgstr "رقم التذكرة"
+
+#. module: customer_tickets
+#: model:ir.model.fields,field_description:customer_tickets.field_customer_tickets__name
+msgid "Ticket No"
+msgstr "رقم التذكرة"
+
+#. module: customer_tickets
+#: model_terms:ir.ui.view,arch_db:customer_tickets.customer_tickets_search
+msgid "Ticket Status"
+msgstr "حالة التذكرة"
+
+#. module: customer_tickets
+#: model:ir.model.fields,field_description:customer_tickets.field_customer_tickets__ticket_type_id
+msgid "Ticket Type"
+msgstr "نوع التذكرة"
+
+#. module: customer_tickets
+#: model:mail.activity.type,name:customer_tickets.mail_activity_ticket_update
+msgid "Ticket Update"
+msgstr "تحديث التذكرة"
+
+#. module: customer_tickets
+#: model:ir.model.fields,field_description:customer_tickets.field_customer_tickets__ticket_user_id
+msgid "Ticket User"
+msgstr "مستخدم التذكرة"
+
+#. module: customer_tickets
+#: code:addons/customer_tickets/models/subscription.py:0
+#: model:ir.ui.menu,name:customer_tickets.menu_customer_tickets
+#: model:ir.ui.menu,name:customer_tickets.menu_tickets_root
+#: model_terms:ir.ui.view,arch_db:customer_tickets.customer_tickets_tree
+#: model_terms:ir.ui.view,arch_db:customer_tickets.subscription_info_form
+#, python-format
+msgid "Tickets"
+msgstr "تذاكر"
+
+#. module: customer_tickets
+#. openerp-web
+#: code:addons/customer_tickets/static/src/xml/sale_dashboard.xml:0
+#: model:ir.model.fields,field_description:customer_tickets.field_subscription_info__tickets_count
+#, python-format
+msgid "Tickets Count"
+msgstr "عدد التذاكر"
+
+#. module: customer_tickets
+#. openerp-web
+#: code:addons/customer_tickets/static/src/xml/sale_dashboard.xml:0
+#, python-format
+msgid "Tickets Type"
+msgstr "نوع التذاكر"
+
+#. module: customer_tickets
+#: model:ir.model.fields.selection,name:customer_tickets.selection__customer_tickets__package_status__to_approve
+#: model:ir.model.fields.selection,name:customer_tickets.selection__subscription_info__package_status__to_approve
+msgid "To Approve"
+msgstr "إلى الموافقة"
+
+#. module: customer_tickets
+#: model:ir.model.fields,help:customer_tickets.field_customer_tickets__activity_exception_decoration
+#: model:ir.model.fields,help:customer_tickets.field_subscription_info__activity_exception_decoration
+msgid "Type of the exception activity on record."
+msgstr "نوع نشاط الاستثناء المسجل."
+
+#. module: customer_tickets
+#: model:ir.model.fields,field_description:customer_tickets.field_customer_tickets__message_unread
+#: model:ir.model.fields,field_description:customer_tickets.field_subscription_info__message_unread
+msgid "Unread Messages"
+msgstr "رسائل غير مقروءة"
+
+#. module: customer_tickets
+#: model:ir.model.fields,field_description:customer_tickets.field_customer_tickets__message_unread_counter
+#: model:ir.model.fields,field_description:customer_tickets.field_subscription_info__message_unread_counter
+msgid "Unread Messages Counter"
+msgstr "عداد الرسائل غير المقروءة"
+
+#. module: customer_tickets
+#: model:ir.actions.server,name:customer_tickets.ir_cron_data_subscription_ir_actions_server
+#: model:ir.cron,cron_name:customer_tickets.ir_cron_data_subscription
+#: model:ir.cron,name:customer_tickets.ir_cron_data_subscription
+msgid "Update Subscription: Update Subscription Details"
+msgstr "تحديث التذكرة: تحديث تفاصيل التذكرة"
+
+#. module: customer_tickets
+#: model:ir.model.fields,field_description:customer_tickets.field_subscription_info__update_ticket
+msgid "Update Ticket"
+msgstr "تحديث التذكرة"
+
+#. module: customer_tickets
+#: model:ir.model.fields.selection,name:customer_tickets.selection__customer_tickets__priority__3
+msgid "Urgent"
+msgstr "عاجل"
+
+#. module: customer_tickets
+#: model:res.groups,name:customer_tickets.ticket_user_group
+msgid "User"
+msgstr "المستخدم"
+
+#. module: customer_tickets
+#: model:ir.model.fields,field_description:customer_tickets.field_subscription_info__user_name
+msgid "User Name"
+msgstr "اسم"
+
+#. module: customer_tickets
+#: model:ir.model.fields,field_description:customer_tickets.field_activity_state__user_ids
+msgid "Users"
+msgstr "المستخدمون"
+
+#. module: customer_tickets
+#: model_terms:ir.ui.view,arch_db:customer_tickets.subscription_info_view_kanban
+msgid "View Tickets"
+msgstr "عرض التذاكر"
+
+#. module: customer_tickets
+#: model:ir.model.fields.selection,name:customer_tickets.selection__activity_state__state__waiting
+#: model:ir.model.fields.selection,name:customer_tickets.selection__customer_tickets__state__waiting
+msgid "Waiting Fot Your feedback"
+msgstr "منتظر افادتك"
+
+#. module: customer_tickets
+#: code:addons/customer_tickets/models/customer_ticket.py:0
+#, python-format
+msgid "You can not delete tickets which are not on draft state"
+msgstr "لا يمكنك حذف حجز ليس في حالة المسودة"
+
+#. module: customer_tickets
+#: code:addons/customer_tickets/models/customer_ticket.py:0
+#, python-format
+msgid ""
+"You cannot submit the ticket right now as of technical issue Please Contact "
+"company for help "
+msgstr ""
+"لا يمكنك إرسال التذكرة الآن بسبب مشكلة فنية. يرجى الاتصال بالشركة للحصول "
+"على المساعدة"
+
+#. module: customer_tickets
+#: code:addons/customer_tickets/models/customer_ticket.py:0
+#: code:addons/customer_tickets/models/subscription.py:0
+#, python-format
+msgid ""
+"You don't have active subscription please contact us \n"
+"Or press on activate button to enter your subscription code."
+msgstr ""
+"ليس لديك اشتراك نشط يرجى الاتصال بنا\n"
+"أو اضغط على زر التنشيط لإدخال رمز الاشتراك الخاص بك."
+
+#. module: customer_tickets
+#: code:addons/customer_tickets/models/customer_ticket.py:0
+#, python-format
+msgid ""
+"You don't have active subscription please contact us. \n"
+"Or press on activate button to enter your subscription code."
+msgstr ""
+"ليس لديك اشتراك نشط يرجى الاتصال بنا.\n"
+"أو اضغط على زر التنشيط لإدخال رمز الاشتراك الخاص بك."
+
+#. module: customer_tickets
+#: code:addons/customer_tickets/models/customer_ticket.py:0
+#, python-format
+msgid "You have run out of tickets for [ %s ]"
+msgstr "لقد نفدت تذاكر [ %s ]  لديك"
+
+#. module: customer_tickets
+#: code:addons/customer_tickets/models/customer_ticket.py:0
+#, python-format
+msgid ""
+"Your subscription was expired if you have a new subscription code please\n"
+" press on add new subscription code button."
+msgstr ""
+"انتهى اشتراكك إذا كان لديك رمز اشتراك جديد من فضلك\n"
+"اضغط على زر إضافة رمز اشتراك جديد."
+
+#. module: customer_tickets
+#: model:ir.model,name:customer_tickets.model_activity_state
+msgid "activity.state"
+msgstr ""
+
+#. module: customer_tickets
+#: model_terms:ir.ui.view,arch_db:customer_tickets.customer_tickets_kanban
+msgid "ago form today"
+msgstr "مضت من اليوم"
+
+#. module: customer_tickets
+#: model:ir.model.fields,field_description:customer_tickets.field_sub_ticket_type__consumed
+msgid "consumed"
+msgstr "مستهلكة"
+
+#. module: customer_tickets
+#: model:ir.model,name:customer_tickets.model_feedback
+msgid "feedback"
+msgstr "ملاحظات التذكرة"
+
+#. module: customer_tickets
+#: model_terms:ir.ui.view,arch_db:customer_tickets.feedback_view_form
+msgid "feedback_form"
+msgstr "ملاحظات التذكرة"
+
+#. module: customer_tickets
+#: model:ir.model,name:customer_tickets.model_ticket_stage
+msgid "ticket.stage"
+msgstr ""
+
+#. module: customer_tickets
+#: model_terms:ir.ui.view,arch_db:customer_tickets.ticket_type_view_form
+msgid "ticket_type_form"
+msgstr "نوع التذكرة"

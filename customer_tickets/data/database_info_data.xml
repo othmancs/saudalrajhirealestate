@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+   <data>
+       <!-- Connection Details -->
+<!--       <record id="connection_info" model="subscription.info">-->
+<!--            <field name="search_customer_url">https://plus.inv-sa.com/search/customer</field>-->
+<!--        </record>-->
+       <record id="plustech_partner" model="res.partner">
+            <field name="name">Plus Technology Co.</field>
+            <field name="company_type">company</field>
+            <field name="email">info@plustech.com</field>
+            <field name="active">False</field>
+        </record>
+    </data>
+</odoo>
