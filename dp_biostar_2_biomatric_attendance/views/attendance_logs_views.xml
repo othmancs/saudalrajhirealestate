@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="biometric_attnd_log_view_tree" model="ir.ui.view">
+        <field name="name">biometric.attnd.log.tree</field>
+        <field name="model">attendance.log</field>
+        <field name="arch" type="xml">
+            <tree string="Biometric Device" create="false">
+                <field name="employee_id"/>
+                <field name="punching_time"/>
+                <field name="status"/>
+                <field name="device"/>
+                <field name="employee_name" optional="hide"/>
+                <field name="status_string" optional="hide"/>
+                <field name="status_number" optional="hide"/>
+                <field name="number" optional="hide"/>
+                <field name="timestamp" optional="hide"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="biometric_attnd_log_filter" model="ir.ui.view">
+        <field name="name">biometric.attnd.log.filter</field>
+        <field name="model">attendance.log</field>
+        <field name="arch" type="xml">
+            <search string="Biometric Attendance Search">
+                <field name="employee_id"/>
+                <field name="device"/>
+                <filter name="today" string="Today" domain="[('punching_time', '&gt;=', datetime.datetime.now().strftime('%Y-%m-%d 00:00:00')),('punching_time', '&lt;=',datetime.datetime.now().strftime('%Y-%m-%d 23:23:59'))]"/>
+                <filter name="current_month" string="Current Month"
+                        domain="[('punching_time', '&gt;=', datetime.datetime.now().strftime('%Y-%m-01'))]"/>
+                <separator/>
+                <filter name="my_attendances" string="My Attendances" domain="[('employee_id.user_id.id', '=', uid)]"/>
+                <group expand="0" string="Group By">
+                    <filter name="employee" string="Employee" context="{'group_by':'employee_id'}"/>
+                    <separator/>
+                    <filter name="groupby_name" string="Month" context="{'group_by':'punching_time'}"/>
+                    <filter name="device" string="Biometric Device" context="{'group_by':'device'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_biometric_attnd_log_view" model="ir.actions.act_window">
+        <field name="name">Biometric Attendance Log</field>
+        <field name="res_model">attendance.log</field>
+        <field name="view_mode">tree,form</field>
+        <field name="context">{"search_default_today":1}</field>
+        <field name="search_view_id" ref="biometric_attnd_log_filter"/>
+    </record>
+
+    <record id="action_attendance_report" model="ir.actions.report">
+        <field name="name">Attendance Report</field>
+        <field name="model">hr.employee</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">dp_biostar_2_biomatric_attendance.report_employee_attendance_report</field>
+        <field name="report_file">dp_biostar_2_biomatric_attendance.report_employee_attendance_report</field>
+        <field name="print_report_name">"Attendance Report"</field>
+        <field name="binding_model_id" ref="model_hr_employee"/>
+    </record>
+
+    <template id="report_employee_attendance_report">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-if="o._get_attendance_report()">
+                    <t t-call="web.external_layout">
+                        <div class="page">
+                            <h1><t t-esc="o.name"/> Attendance Report</h1>
+                            <table class="table table-sm o_main_table">
+                                <!-- In case we want to repeat the header, remove "display: table-row-group" -->
+                                <thead style="display: table-row-group">
+                                    <tr>
+                                        <th>Employee</th>
+                                        <th>Check In Date Time</th>
+                                        <th>Check out Date Time</th>
+                                        <th>Difference</th>
+                                        <th>Worked Hours</th>
+                                        <th>Overtime Hours</th>
+                                        <th>Shortfall Hours</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-foreach="o._get_attendance_report()" t-as="attendance">
+                                        <tr>
+                                            <td><span t-field="attendance.employee_id.name"/></td>
+                                            <td><span t-field="attendance.check_in"/></td>
+                                            <td><span t-field="attendance.check_out"/></td>
+                                            <td><span t-field="attendance.in_out_diff" t-options="{'widget': 'float_time'}" /></td>
+                                            <td><span t-field="attendance.worked_hours" t-options="{'widget': 'float_time'}" /></td>
+                                            <td><span t-field="attendance.overtime_hours"/></td>
+                                            <td><span t-field="attendance.shortfall_hours"/></td>
+                                        </tr>
+                                    </t>
+                                </tbody>
+                            </table>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

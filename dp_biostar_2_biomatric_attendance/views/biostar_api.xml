@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="biostar_api_form_view" model="ir.ui.view">
+        <field name="name">biostar.device.sync.form</field>
+        <field name="model">biostar.device.sync</field>
+        <field name="arch" type="xml">
+            <form string="Biometric Device">
+                <header>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="not_connected,connected"/>
+                    <button name="authenticate" type="object"
+                            class="oe_highlight"
+							string="Authenticate"
+							help="This will upload settings from software to device"/>
+                    <button name="sync_devices" type="object" class="oe_highlight" string="Get all Devices"/>
+                    <button name="sync_device_types" type="object" class="oe_highlight" string="Get Device Types"/>
+                    <button name="sync_schedule" type="object" class="oe_highlight" string="Get Schedule"/>
+                    <button name="sync_attendance" type="object" class="oe_highlight" string="Get Time and Attendance"/>
+                </header>
+                <sheet>
+                    <!-- <div class="oe_button_box" name="button_box">
+                        <button name="test_device_connection" class="oe_stat_button"
+                                icon="fa-plug" type="object" string="Test Connection"/>
+
+                    </div> -->
+
+                    <div class="oe_title" name="title">
+                        <label for="name" class="oe_edit_only"/>
+                        <h1>
+                            <field name="name" placeholder="Device Reference"/>
+                        </h1>
+                    </div>
+
+                    <group colspan="4" cols="4">
+                        <group>
+                            <field name="ip"/>
+                            <field name="port" />
+                            <field name="serial_number"/>
+                            <field name="device_id"/>
+                            <field name="device_password" />
+                            <field name="time_zone"/>
+                            <field name="last_sync_time"/>
+                        </group>
+                    </group>
+
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="biostar_api_tree_view" model="ir.ui.view">
+        <field name="name">biostar.device.sync.tree</field>
+        <field name="model">biostar.device.sync</field>
+        <field name="arch" type="xml">
+            <tree string="Biometric Device">
+                <field name="name"/>
+                <field name="ip"/>
+                <field name="port"/>
+                <field name="time_zone"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="biostar_device_tree_view" model="ir.ui.view">
+        <field name="name">biostar.device.tree</field>
+        <field name="model">biostar.device</field>
+        <field name="arch" type="xml">
+            <tree string="Biometric Device">
+                <field name="device_id"/>
+                <field name="name"/>
+                <field name="device_type"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="biostar_device_type_tree_view" model="ir.ui.view">
+        <field name="name">biostar.device.type.tree</field>
+        <field name="model">biostar.device.type</field>
+        <field name="arch" type="xml">
+            <tree string="Biometric Device Type">
+                <field name="device_type_id"/>
+                <field name="name"/>
+                <field name="is_keypad"/>
+                <field name="is_fingerprint"/>
+                <field name="is_card"/>
+                <field name="is_face"/>
+                <field name="is_volume"/>
+                <field name="is_wifi"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_biostar_2_api_intigration_view" model="ir.actions.act_window">
+        <field name="name">Biometric Device Integration</field>
+        <field name="res_model">biostar.device.sync</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Click to config a new biometric device.
+            </p>
+        </field>
+    </record>
+
+    <record id="action_biostar_2_api_device_view" model="ir.actions.act_window">
+        <field name="name">Biometric Device</field>
+        <field name="res_model">biostar.device</field>
+        <field name="view_mode">tree</field>
+    </record>
+
+    <record id="action_biostar_2_api_device_type_view" model="ir.actions.act_window">
+        <field name="name">Biometric Device Type</field>
+        <field name="res_model">biostar.device.type</field>
+        <field name="view_mode">tree</field>
+    </record>
+
+<!--     <menuitem id="menu_biometric"-->
+<!--              name="Biometric"-->
+<!--              parent="hr_attendance.menu_hr_attendance_root"-->
+<!--              sequence="95" />-->
+
+<!--     <menuitem action="action_biostar_2_api_intigration_view"-->
+<!--              id="menu_biometric_device_config"-->
+<!--              parent="dp_biostar_2_biomatric_attendance.menu_biometric"-->
+<!--              sequence="98" />-->
+</odoo>

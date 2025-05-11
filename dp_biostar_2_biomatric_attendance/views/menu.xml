@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="action_calculate_attendance_server" model="ir.actions.server">
+        <field name="name">Calculate Attendance</field>
+        <field name="model_id" ref="model_attendance_log"/>
+        <field name="state">code</field>
+        <field name="code">model.create_attendance()</field>
+    </record>
+
+    <!-- Main Menu -->
+    <menuitem id="suprema_main_menu" name="SUPREMA" sequence="-1"
+              web_icon="dp_biostar_2_biomatric_attendance,static/description/icon.png"/>
+
+
+    <!-- Submenu: Reports -->
+    <menuitem id="suprema_log_menu" name="Attendance Logs" parent="suprema_main_menu" sequence="9"/>
+
+     <!-- Biometric Attendance Log Menu -->
+    <menuitem
+        action="action_biometric_attnd_log_view"
+        id="menu_biometric_attnd_log"
+        parent="suprema_log_menu"
+        sequence="1"
+    />
+
+    <!-- Submenu: Reports -->
+    <menuitem id="suprema_reports_menu" name="Reports" parent="suprema_main_menu" sequence="10"/>
+
+    <!-- Attendance Report Menu -->
+    <menuitem
+        action="action_view_attendance_report_wizard_form"
+        id="menu_attendance_report_wizard"
+        parent="suprema_reports_menu"
+        sequence="25"
+    />
+
+    <!-- Submenu: Configuration -->
+    <menuitem id="suprema_configuration_menu" name="Configuration" parent="suprema_main_menu" sequence="11"/>
+
+
+    <!-- Attendance Report Menu -->
+    <menuitem
+        action="action_biostar_2_api_intigration_view"
+        id="suprema_device_configuration_menu"
+        parent="suprema_configuration_menu"
+        sequence="25"
+    />
+    <menuitem
+        action="action_biostar_2_api_device_type_view"
+        id="suprema_device_type_menu"
+        parent="suprema_configuration_menu"
+        sequence="30"
+    /><menuitem
+        action="action_biostar_2_api_device_view"
+        id="suprema_device_menu"
+        parent="suprema_configuration_menu"
+        sequence="35"
+    />
+
+    <menuitem
+            id="menu_calculate_attendance"
+            name="Calculate Attendance"
+            parent="suprema_configuration_menu"
+            action="action_calculate_attendance_server"
+            sequence="40"
+    />
+
+
+
+</odoo>

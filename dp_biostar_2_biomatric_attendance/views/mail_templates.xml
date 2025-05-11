@@ -1,0 +1,52 @@
+<odoo>
+    <data noupdate="0">
+        <!-- Late Check-In Notification Email Template -->
+        <record id="email_template_late_check_in" model="mail.template">
+            <field name="name">Late Check-In Notification</field>
+            <field name="model_id" ref="hr.model_hr_attendance"/>
+            <field name="email_from">{{ object.company_id.email or 'noreply@yourcompany.com' }}</field>
+            <field name="email_to">{{ object.employee_id.work_email }}</field>
+            <field name="subject">Late Check-In Notification</field>
+            <field name="auto_delete" eval="True"/>
+            <field name="lang">{{ object.employee_id.lang }}</field>
+            <field name="body_html" type="html">
+                <div>
+                    <p>Dear <t t-out="object.employee_id.name"/></p>
+                    <br/>
+                    <p>You have checked in late at <t t-out="object.check_in"/> which is beyond your expected work start time.</p>
+                    <br/>
+                    <p>Please ensure you arrive on time moving forward.</p>
+                    <br/>
+                    <p>Best regards,</p>
+                    <p>Your HR Team</p>
+                </div>
+            </field>
+        </record>
+
+        <!-- Overtime Notification Email Template -->
+        <record id="email_template_overtime_notification" model="mail.template">
+            <field name="name">Overtime Notification</field>
+            <field name="model_id" ref="hr.model_hr_attendance"/>
+            <field name="email_from">{{ object.company_id.email or 'noreply@yourcompany.com' }}</field>
+            <field name="email_to">{{ object.employee_id.work_email }}</field>
+            <field name="subject">Overtime Notification for Employee</field>
+            <field name="auto_delete" eval="True"/>
+            <field name="lang">{{ object.employee_id.lang }}</field>
+            <field name="body_html" type="html">
+                <div>
+                    <p>Dear <t t-out="object.employee_id.name"/></p>
+                    <br/>
+                    <p>You have worked overtime of <t t-out="object.overtime_hours"/> hours on <t t-out="object.date"></t>, which is beyond your regular shift hours.</p>
+                    <br/>
+                    <p>Kindly ensure that you maintain a work-life balance. If you have any questions or concerns, feel free to reach out to your HR representative.</p>
+                    <br/>
+                    <p>Best regards,</p>
+                    <p>Your HR Team</p>
+                </div>
+            </field>
+        </record>
+
+    </data>
+</odoo>
+
+
