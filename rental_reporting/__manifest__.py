@@ -13,7 +13,7 @@ Currently, this ist still just a menu :-(
 The actual reporting is still missing.
 """,
     "depends": [
-        "sale_renting",
+        "rental_base",
         "mis_builder",
     ],
     "data": [
