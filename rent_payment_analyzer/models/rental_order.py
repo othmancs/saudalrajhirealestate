@@ -209,6 +209,26 @@ class SaleOrder(models.Model):
         except Exception as e:
             _logger.error(f"خطأ فني في تحليل PDF: {str(e)}", exc_info=True)
             return -1
+    def get_pdf_debug_info(self, pdf_attachment_id):
+        """طريقة مساعدة للحصول على معلومات التصحيح"""
+        attachment = self.env['ir.attachment'].browse(pdf_attachment_id)
+        if not attachment.exists():
+            return {"error": "الملف المرفق غير موجود"}
+        
+        try:
+            pdf_data = self._safe_read_attachment(attachment)
+            with fitz.open(stream=pdf_data, filetype="pdf") as doc:
+                text = ""
+                for page in doc:
+                    text += page.get_text("text", flags=fitz.TEXT_PRESERVE_LIGATURES | fitz.TEXT_PRESERVE_WHITESPACE)
+                
+                return {
+                    "text_sample": text[:2000],
+                    "page_count": len(doc),
+                    "analysis_result": self._analyze_pdf_content(pdf_data)
+                }
+        except Exception as e:
+            return {"error": str(e)}
     def action_analyze_pdf_attachments(self):
         """تحليل المرفقات يدوياً"""
         self._analyze_pdf_attachments()
