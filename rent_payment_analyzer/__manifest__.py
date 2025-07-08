@@ -1,16 +1,15 @@
 {
-    'name': 'Rent Payment Schedule Analyzer',
-    'version': '15.0.1.0.3',
-    'summary': 'Analyze PDF attachments in Rental Orders to extract Rent Payments Schedule',
+    'name': 'محلل جدول دفعات التأجير',
+    'version': '15.0.1.1.0',
+    'summary': 'تحليل مرفقات PDF لاستخراج جدول الدفعات',
     'description': """
-        This module analyzes PDF attachments in rental orders to extract 
-        Rent Payments Schedule and calculate number of payments.
-        Uses PyMuPDF for reliable PDF processing.
+        يقوم هذا الموديول بتحليل ملفات PDF المرفقة بطلبات التأجير
+        لاستخراج جدول الدفعات وحساب عدد الدفعات المتبقية.
     """,
     'author': 'Othmancs',
     'website': 'https://tbarholding.com',
-    'category': 'Sales/Sales',
-    'depends': ['sale_renting'],
+    'category': 'Sales/Rental',
+    'depends': ['sale', 'sale_renting'],
     'external_dependencies': {
         'python': ['fitz', 'pymupdf'],
     },
