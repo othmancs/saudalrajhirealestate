@@ -137,7 +137,7 @@ class AccountMove(models.Model):
             _logger.error(f"Unexpected error reading attachment {attachment.id}: {str(e)}")
             return None
     def _analyze_pdf_content(self, pdf_data):
-        """تحليل محتوى PDF واستخراج عدد الدفعات"""
+        """تحليل محتوى PDF واستخراج عدد الدفعات من العمود الأول في الجدول"""
         try:
             with fitz.open(stream=pdf_data, filetype="pdf") as pdf_document:
                 if not pdf_document.is_pdf:
@@ -146,31 +146,42 @@ class AccountMove(models.Model):
                 
                 text = ""
                 for page in pdf_document:
-                    text += page.get_text("text").lower()  # تحويل النص لحروف صغيرة لتسهيل البحث
+                    text += page.get_text("text").lower()
                 
                 _logger.debug(f"Extracted PDF text (first 1000 chars): {text[:1000]}...")
                 
-                # أنماط بحث أكثر مرونة للعثور على جدول الدفعات
-                rent_schedule_patterns = [
-                    r'rent\s*payments?\s*schedule.*?(due\s*date|amount|payment).*?(\d{1,2}[/-]\d{1,2}[/-]\d{2,4})',
-                    r'جدول\s*دفعات?\s*الإيجار.*?(تاريخ\s*الاستحقاق|المبلغ|الدفعة).*?(\d{1,2}[/-]\d{1,2}[/-]\d{2,4})',
-                    r'(payment\s*schedule|installments).*?(\d{1,2}[/-]\d{1,2}[/-]\d{2,4})'
-                ]
+                # البحث عن جدول الدفعات
+                schedule_pattern = r'rent\s*payments?\s*schedule(.*?)(?=\n\s*\n|\Z)'
+                match = re.search(schedule_pattern, text, re.DOTALL)
                 
-                dates = []
-                for pattern in rent_schedule_patterns:
-                    matches = re.finditer(pattern, text, re.DOTALL)
-                    for match in matches:
-                        if match.group(2):  # إذا وجد تاريخ
-                            dates.append(match.group(2))
+                if not match:
+                    _logger.warning("Rent Payments Schedule table not found")
+                    return -1
+                    
+                table_text = match.group(1)
                 
-                if not dates:
-                    _logger.warning("No payment dates found using all patterns. Full text extract: %s", text[:2000])
+                # استخراج الصفوف من الجدول
+                rows = [row.strip() for row in table_text.split('\n') if row.strip()]
+                
+                if not rows:
+                    _logger.warning("No rows found in the schedule table")
                     return -1
                 
-                unique_dates = set(dates)
-                _logger.info(f"Found payment dates: {unique_dates}")
-                return len(unique_dates)
+                # العثور على العمود الأول (يحتوي على أرقام الدفعات)
+                payment_numbers = []
+                for row in rows:
+                    # تقسيم كل صف إلى أعمدة (تفترض وجود فواصل مثل مسافات أو Tabs)
+                    columns = re.split(r'\s{2,}|\t', row)
+                    if columns and columns[0].isdigit():
+                        payment_numbers.append(int(columns[0]))
+                
+                if not payment_numbers:
+                    _logger.warning("No payment numbers found in first column")
+                    return -1
+                    
+                max_payment = max(payment_numbers)
+                _logger.info(f"Found {max_payment} payments in schedule table")
+                return max_payment
                 
         except Exception as e:
             _logger.error(f"Error analyzing PDF content: {str(e)}", exc_info=True)
