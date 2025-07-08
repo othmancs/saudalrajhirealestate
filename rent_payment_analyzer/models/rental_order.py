@@ -151,69 +151,63 @@ class SaleOrder(models.Model):
     #         _logger.error(f"خطأ في تحليل PDF: {str(e)}", exc_info=True)
     #         return -1
     def _analyze_pdf_content(self, pdf_data):
-        """تحليل محتوى PDF واستخراج عدد الدفعات من الجدول المحدد"""
+        """إصدار محسن لتحليل جدول الدفعات بدقة عالية"""
         try:
             with fitz.open(stream=pdf_data, filetype="pdf") as pdf_document:
                 if not pdf_document.is_pdf:
                     _logger.warning("ملف PDF غير صالح")
                     return -1
                 
+                # قراءة النص مع الحفاظ على الهيكل
                 text = ""
                 for page in pdf_document:
-                    text += page.get_text("text")
+                    text += page.get_text("text", flags=fitz.TEXT_PRESERVE_LIGATURES | fitz.TEXT_PRESERVE_WHITESPACE)
                 
-                _logger.debug(f"النص المستخرج من PDF:\n{text[:1000]}...")
+                _logger.debug(f"النص الكامل المستخرج:\n{text[:2000]}...")
                 
-                # البحث عن بداية الجدول
-                table_start_patterns = [
-                    r'Rent Payments Schedule.*?جدول سداد الدفعات',
-                    r'جدول سداد الدفعات.*?Rent Payments Schedule',
-                    r'Amount.*?Due Date'
+                # أنماط البحث الشاملة عن الجدول
+                table_patterns = [
+                    r'(Rent Payments Schedule|جدول سداد الدفعات).*?(\d+\.\d{2}.*?\n.*?\n.*?\n.*?\n)',
+                    r'(Amount|مبلغ).*?(\d+\.\d{2}.*?\n.*?\n.*?\n.*?\n)',
+                    r'(Due Date|تاريخ الاستحقاق).*?(\d{4}-\d{2}-\d{2}.*?\n.*?\n.*?\n.*?\n)'
                 ]
                 
-                # البحث عن نهاية الجدول
-                table_end_pattern = r'\n\s*\n'
-                
+                # البحث عن الجدول بأنماط متعددة
                 table_text = ""
-                for pattern in table_start_patterns:
-                    start_match = re.search(pattern, text, re.DOTALL)
-                    if start_match:
-                        remaining_text = text[start_match.end():]
-                        end_match = re.search(table_end_pattern, remaining_text)
-                        if end_match:
-                            table_text = remaining_text[:end_match.start()]
-                            break
+                for pattern in table_patterns:
+                    match = re.search(pattern, text, re.DOTALL | re.IGNORECASE)
+                    if match:
+                        table_text = match.group(2)
+                        _logger.debug(f"تم العثور على الجدول باستخدام النمط: {pattern}")
+                        break
                 
                 if not table_text:
-                    _logger.warning("لم يتم العثور على الجدول المطلوب")
+                    _logger.warning("تعذر العثور على جدول الدفعات في المستند")
                     return -1
                 
-                _logger.debug(f"نص الجدول الموجود:\n{table_text}")
+                _logger.debug(f"محتوى الجدول المستخرج:\n{table_text}")
                 
-                # استخراج الصفوف مع استبعاد الترويسة
-                rows = [row.strip() for row in table_text.split('\n') if row.strip()]
-                
-                # تحديد صفوف الدفعات (تحتوي على تاريخ ومبلغ)
+                # استخراج صفوف الدفعات الفعلية
                 payment_rows = []
-                for row in rows:
-                    # التحقق من وجود تاريخ ومبلغ في الصف
-                    has_date = re.search(r'\d{4}-\d{2}-\d{2}', row)  # يتطابق مع 2025-07-25
-                    has_amount = re.search(r'\d+\.\d{2}', row)  # يتطابق مع 9750.00
-                    
-                    if has_date and has_amount:
-                        payment_rows.append(row)
-                        _logger.debug(f"تم التعرف على صف الدفعة: {row}")
+                for line in table_text.split('\n'):
+                    line = line.strip()
+                    # شروط اعتبار السطر كدفعة: يحتوي على رقم كسري وتاريخ
+                    if (re.search(r'\d+\.\d{2}', line) and 
+                        (re.search(r'\d{4}-\d{2}-\d{2}', line) or 
+                        re.search(r'\d{2}/\d{2}/\d{4}', line)):
+                        payment_rows.append(line)
+                        _logger.debug(f"تم تحديد صف الدفعة: {line}")
                 
                 if not payment_rows:
                     _logger.warning("لا توجد صفوف دفعات في الجدول")
                     return -1
                 
                 payment_count = len(payment_rows)
-                _logger.info(f"تم العثور على {payment_count} دفعات في الجدول")
+                _logger.info(f"عدد الدفعات المحددة: {payment_count}")
                 return payment_count
                 
         except Exception as e:
-            _logger.error(f"خطأ في تحليل PDF: {str(e)}", exc_info=True)
+            _logger.error(f"خطأ فني في تحليل PDF: {str(e)}", exc_info=True)
             return -1
     def action_analyze_pdf_attachments(self):
         """تحليل المرفقات يدوياً"""
