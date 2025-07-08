@@ -115,8 +115,9 @@ class SaleOrder(models.Model):
                 
                 # البحث عن الجدول المحدد
                 table_patterns = [
-                    r'جدول سداد الدفعات.*?Schedule Payments Rent(.*?)(?=\n\s*\n|\Z)',
-                    r'Schedule Payments Rent.*?جدول سداد الدفعات(.*?)(?=\n\s*\n|\Z)'
+                    r'Rent Payments Schedule.*?جدول سداد الدفعات(.*?)(?=\n\s*\n|\Z)',
+                    r'جدول سداد الدفعات.*?Rent Payments Schedule(.*?)(?=\n\s*\n|\Z)',
+                    r'Rent Payments Schedule.*?Amount.*?(\d+\.\d{2}.*?)(?=\n\s*\n|\Z)'
                 ]
                 
                 table_text = ""
@@ -134,14 +135,14 @@ class SaleOrder(models.Model):
                 _logger.debug(f"نص الجدول الموجود:\n{table_text}")
                 
                 # استخراج الصفوف من الجدول
-                rows = [row.strip() for row in table_text.split('\n') if row.strip()]
+                rows = [row.strip() for row in table_text.split('\n') if row.strip() and re.search(r'\d+\.\d{2}', row)]
                 
                 if not rows:
                     _logger.warning("لا توجد صفوف في الجدول")
                     return -1
                 
-                # حساب عدد الصفوف (باستثناء رأس الجدول)
-                payment_count = len(rows) - 1  # نطرح 1 لاستبعاد رأس الجدول
+                # حساب عدد الصفوف (كل صف يمثل دفعة)
+                payment_count = len(rows)
                 
                 _logger.info(f"تم العثور على {payment_count} دفعات في الجدول")
                 return payment_count
