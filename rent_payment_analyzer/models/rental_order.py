@@ -133,19 +133,31 @@ class SaleOrder(models.Model):
                 
                 _logger.debug(f"نص الجدول الموجود:\n{table_text}")
                 
-                # استخراج الصفوف من الجدول
-                rows = [row.strip() for row in table_text.split('\n') if row.strip() and re.search(r'\d+\.\d{2}', row)]
+                # # استخراج الصفوف من الجدول
+                # rows = [row.strip() for row in table_text.split('\n') if row.strip() and re.search(r'\d+\.\d{2}', row)]
+                
+                # if not rows:
+                #     _logger.warning("لا توجد صفوف في الجدول")
+                #     return -1
+                
+                # # حساب عدد الصفوف (كل صف يمثل دفعة)
+                # payment_count = len(rows)
+                
+                # _logger.info(f"تم العثور على {payment_count} دفعات في الجدول")
+                # return payment_count
+                # استخراج الصفوف من الجدول مع تخطي أول صفين (العناوين)
+                rows = [row.strip() for row in table_text.split('\n') if row.strip() and re.search(r'\d+\.\d{2}', row)][2:]
                 
                 if not rows:
-                    _logger.warning("لا توجد صفوف في الجدول")
+                    _logger.warning("لا توجد صفوف دفعات في الجدول بعد استبعاد العناوين")
                     return -1
                 
                 # حساب عدد الصفوف (كل صف يمثل دفعة)
                 payment_count = len(rows)
                 
-                _logger.info(f"تم العثور على {payment_count} دفعات في الجدول")
-                return payment_count
-                
+                _logger.info(f"تم العثور على {payment_count} دفعات في الجدول بعد استبعاد العناوين")
+                return payment_count                
+
         except Exception as e:
             _logger.error(f"خطأ في تحليل PDF: {str(e)}", exc_info=True)
             return -1
