@@ -116,7 +116,7 @@ class SaleOrder(models.Model):
                 
                 # أنماط متعددة للبحث عن الجدول
                 table_patterns = [
-                    r'(Rent Payments Schedule|جدول سداد الدفعات)(.*?)(?=\n\s*\n)',
+                    r'(Rent Payments Schedule)(.*?)(?=\n\s*\n)',
                     r'(Amount|مقدار).*?(Due Date|تاريخ الاستحقاق)(.*?)(?=\n\s*\n)',
                     r'(\d+[/\.]\d+\.\d{2}).*?(\d{4}-\d{2}-\d{2})(.*?)(?=\n\s*\n)'
                 ]
