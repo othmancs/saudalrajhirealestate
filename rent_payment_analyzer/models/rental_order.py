@@ -99,6 +99,57 @@ class SaleOrder(models.Model):
             _logger.error(f"Error reading attachment: {str(e)}")
             return None
 
+    # def _analyze_pdf_content(self, pdf_data):
+    #     """تحليل محتوى PDF واستخراج عدد الدفعات من الجدول المحدد"""
+    #     try:
+    #         with fitz.open(stream=pdf_data, filetype="pdf") as pdf_document:
+    #             if not pdf_document.is_pdf:
+    #                 _logger.warning("ملف PDF غير صالح")
+    #                 return -1
+                
+    #             text = ""
+    #             for page in pdf_document:
+    #                 text += page.get_text("text")
+                
+    #             _logger.debug(f"النص المستخرج من PDF:\n{text[:1000]}...")
+                
+    #             # البحث عن الجدول المحدد
+    #             table_patterns = [
+    #                 r'Rent Payments Schedule.*?جدول سداد الدفعات(.*?)(?=\n\s*\n|\Z)',
+    #                 r'جدول سداد الدفعات.*?Rent Payments Schedule(.*?)(?=\n\s*\n|\Z)',
+    #                 r'Rent Payments Schedule.*?Amount.*?(\d+\.\d{2}.*?)(?=\n\s*\n|\Z)'
+    #             ]
+                
+    #             table_text = ""
+    #             for pattern in table_patterns:
+    #                 match = re.search(pattern, text, re.DOTALL)
+    #                 if match:
+    #                     table_text = match.group(1)
+    #                     _logger.debug(f"تم العثور على الجدول المطلوب")
+    #                     break
+                
+    #             if not table_text:
+    #                 _logger.warning("لم يتم العثور على الجدول المطلوب")
+    #                 return -1
+                
+    #             _logger.debug(f"نص الجدول الموجود:\n{table_text}")
+                
+    #             # استخراج الصفوف من الجدول
+    #             rows = [row.strip() for row in table_text.split('\n') if row.strip() and re.search(r'\d+\.\d{2}', row)]
+                
+    #             if not rows:
+    #                 _logger.warning("لا توجد صفوف في الجدول")
+    #                 return -1
+                
+    #             # حساب عدد الصفوف (كل صف يمثل دفعة)
+    #             payment_count = len(rows)
+                
+    #             _logger.info(f"تم العثور على {payment_count} دفعات في الجدول")
+    #             return payment_count
+                
+    #     except Exception as e:
+    #         _logger.error(f"خطأ في تحليل PDF: {str(e)}", exc_info=True)
+    #         return -1
     def _analyze_pdf_content(self, pdf_data):
         """تحليل محتوى PDF واستخراج عدد الدفعات من الجدول المحدد"""
         try:
@@ -115,9 +166,9 @@ class SaleOrder(models.Model):
                 
                 # البحث عن الجدول المحدد
                 table_patterns = [
-                    r'Rent Payments Schedule.*?جدول سداد الدفعات(.*?)(?=\n\s*\n|\Z)',
-                    r'جدول سداد الدفعات.*?Rent Payments Schedule(.*?)(?=\n\s*\n|\Z)',
-                    r'Rent Payments Schedule.*?Amount.*?(\d+\.\d{2}.*?)(?=\n\s*\n|\Z)'
+                    r'Rent Payments Schedule.*?جدول سداد الدفعات.*?\n(.*?)(?=\n\s*\n|\Z)',
+                    r'جدول سداد الدفعات.*?Rent Payments Schedule.*?\n(.*?)(?=\n\s*\n|\Z)',
+                    r'Amount.*?\n.*?\n(.*?)(?=\n\s*\n|\Z)'  # تخطي صفين الترويسة
                 ]
                 
                 table_text = ""
@@ -134,15 +185,22 @@ class SaleOrder(models.Model):
                 
                 _logger.debug(f"نص الجدول الموجود:\n{table_text}")
                 
-                # استخراج الصفوف من الجدول
-                rows = [row.strip() for row in table_text.split('\n') if row.strip() and re.search(r'\d+\.\d{2}', row)]
+                # استخراج الصفوف من الجدول (باستبعاد الترويسة)
+                rows = [row.strip() for row in table_text.split('\n') if row.strip()]
                 
-                if not rows:
-                    _logger.warning("لا توجد صفوف في الجدول")
+                # تصفية الصفوف الفارغة والصفوف التي لا تحتوي على بيانات دفعات
+                payment_rows = [
+                    row for row in rows 
+                    if re.search(r'\d+\.\d{2}', row)  # تحتوي على مبلغ
+                    and re.search(r'\d{4}-\d{2}-\d{2}', row)  # تحتوي على تاريخ
+                ]
+                
+                if not payment_rows:
+                    _logger.warning("لا توجد صفوف دفعات في الجدول")
                     return -1
                 
-                # حساب عدد الصفوف (كل صف يمثل دفعة)
-                payment_count = len(rows)
+                # حساب عدد صفوف الدفعات فقط
+                payment_count = len(payment_rows)
                 
                 _logger.info(f"تم العثور على {payment_count} دفعات في الجدول")
                 return payment_count
@@ -150,7 +208,6 @@ class SaleOrder(models.Model):
         except Exception as e:
             _logger.error(f"خطأ في تحليل PDF: {str(e)}", exc_info=True)
             return -1
-
     def action_analyze_pdf_attachments(self):
         """تحليل المرفقات يدوياً"""
         self._analyze_pdf_attachments()
