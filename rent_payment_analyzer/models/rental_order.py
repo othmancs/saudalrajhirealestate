@@ -164,20 +164,25 @@ class SaleOrder(models.Model):
                 
                 _logger.debug(f"النص المستخرج من PDF:\n{text[:1000]}...")
                 
-                # البحث عن الجدول المحدد
-                table_patterns = [
-                    r'Rent Payments Schedule.*?جدول سداد الدفعات.*?\n(.*?)(?=\n\s*\n|\Z)',
-                    r'جدول سداد الدفعات.*?Rent Payments Schedule.*?\n(.*?)(?=\n\s*\n|\Z)',
-                    r'Amount.*?\n.*?\n(.*?)(?=\n\s*\n|\Z)'  # تخطي صفين الترويسة
+                # البحث عن بداية الجدول
+                table_start_patterns = [
+                    r'Rent Payments Schedule.*?جدول سداد الدفعات',
+                    r'جدول سداد الدفعات.*?Rent Payments Schedule',
+                    r'Amount.*?Due Date'
                 ]
                 
+                # البحث عن نهاية الجدول
+                table_end_pattern = r'\n\s*\n'
+                
                 table_text = ""
-                for pattern in table_patterns:
-                    match = re.search(pattern, text, re.DOTALL)
-                    if match:
-                        table_text = match.group(1)
-                        _logger.debug(f"تم العثور على الجدول المطلوب")
-                        break
+                for pattern in table_start_patterns:
+                    start_match = re.search(pattern, text, re.DOTALL)
+                    if start_match:
+                        remaining_text = text[start_match.end():]
+                        end_match = re.search(table_end_pattern, remaining_text)
+                        if end_match:
+                            table_text = remaining_text[:end_match.start()]
+                            break
                 
                 if not table_text:
                     _logger.warning("لم يتم العثور على الجدول المطلوب")
@@ -185,23 +190,25 @@ class SaleOrder(models.Model):
                 
                 _logger.debug(f"نص الجدول الموجود:\n{table_text}")
                 
-                # استخراج الصفوف من الجدول (باستبعاد الترويسة)
+                # استخراج الصفوف مع استبعاد الترويسة
                 rows = [row.strip() for row in table_text.split('\n') if row.strip()]
                 
-                # تصفية الصفوف الفارغة والصفوف التي لا تحتوي على بيانات دفعات
-                payment_rows = [
-                    row for row in rows 
-                    if re.search(r'\d+\.\d{2}', row)  # تحتوي على مبلغ
-                    and re.search(r'\d{4}-\d{2}-\d{2}', row)  # تحتوي على تاريخ
-                ]
+                # تحديد صفوف الدفعات (تحتوي على تاريخ ومبلغ)
+                payment_rows = []
+                for row in rows:
+                    # التحقق من وجود تاريخ ومبلغ في الصف
+                    has_date = re.search(r'\d{4}-\d{2}-\d{2}', row)  # يتطابق مع 2025-07-25
+                    has_amount = re.search(r'\d+\.\d{2}', row)  # يتطابق مع 9750.00
+                    
+                    if has_date and has_amount:
+                        payment_rows.append(row)
+                        _logger.debug(f"تم التعرف على صف الدفعة: {row}")
                 
                 if not payment_rows:
                     _logger.warning("لا توجد صفوف دفعات في الجدول")
                     return -1
                 
-                # حساب عدد صفوف الدفعات فقط
                 payment_count = len(payment_rows)
-                
                 _logger.info(f"تم العثور على {payment_count} دفعات في الجدول")
                 return payment_count
                 
