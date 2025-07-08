@@ -100,7 +100,7 @@ class SaleOrder(models.Model):
             return None
 
     def _analyze_pdf_content(self, pdf_data):
-        """إصدار محسن لتحليل جدول الدفعات بدقة عالية"""
+        """إصدار محسن لتحليل جدول الدفعات مع دعم متقدم للجداول"""
         try:
             with fitz.open(stream=pdf_data, filetype="pdf") as pdf_document:
                 if not pdf_document.is_pdf:
@@ -108,31 +108,42 @@ class SaleOrder(models.Model):
                     return -1
                 
                 # قراءة النص مع الحفاظ على الهيكل
-                text = ""
+                full_text = ""
                 for page in pdf_document:
-                    text += page.get_text("text", flags=fitz.TEXT_PRESERVE_LIGATURES | fitz.TEXT_PRESERVE_WHITESPACE)
+                    full_text += page.get_text("text", flags=fitz.TEXT_PRESERVE_LIGATURES | fitz.TEXT_PRESERVE_WHITESPACE)
                 
-                _logger.debug(f"النص الكامل المستخرج:\n{text[:2000]}...")
+                _logger.debug(f"النص الكامل المستخرج:\n{full_text[:2000]}...")
                 
-                # البحث عن جدول الدفعات باستخدام نمط أكثر مرونة
-                table_pattern = r'(Rent Payments Schedule|جدول سداد الدفعات).*?(\d+[\/\.]\d+\.\d{2}.*?)(?=\n\s*\n|\Z)'
-                match = re.search(table_pattern, text, re.DOTALL | re.IGNORECASE)
+                # أنماط متعددة للبحث عن الجدول
+                table_patterns = [
+                    r'(Rent Payments Schedule|جدول سداد الدفعات)(.*?)(?=\n\s*\n)',
+                    r'(Amount|مقدار).*?(Due Date|تاريخ الاستحقاق)(.*?)(?=\n\s*\n)',
+                    r'(\d+[/\.]\d+\.\d{2}).*?(\d{4}-\d{2}-\d{2})(.*?)(?=\n\s*\n)'
+                ]
                 
-                if not match:
+                table_text = ""
+                for pattern in table_patterns:
+                    match = re.search(pattern, full_text, re.DOTALL | re.IGNORECASE)
+                    if match:
+                        table_text = match.group(0)
+                        _logger.debug(f"تم العثور على الجدول باستخدام النمط: {pattern}")
+                        break
+                
+                if not table_text:
                     _logger.warning("تعذر العثور على جدول الدفعات في المستند")
                     return -1
                 
-                table_text = match.group(2)
                 _logger.debug(f"محتوى الجدول المستخرج:\n{table_text}")
                 
-                # استخراج صفوف الدفعات الفعلية
+                # تحسين استخراج الصفوف
                 payment_rows = []
                 for line in table_text.split('\n'):
                     line = line.strip()
-                    # شروط اعتبار السطر كدفعة: يحتوي على نمط مبلغ (مثل 50.00 أو 12/50.00) وتاريخ
-                    if (re.search(r'\d+[\/\.]\d+\.\d{2}|\d+\.\d{2}', line) and 
-                        (re.search(r'\d{4}-\d{2}-\d{2}', line) or 
-                         re.search(r'\d{2}-\d{2}-\d{2}', line))):
+                    # شروط أكثر مرونة للتعرف على الدفعات
+                    has_amount = re.search(r'(\d+[/\.]\d+\.\d{2}|\d+\.\d{2})', line)
+                    has_date = re.search(r'(\d{4}-\d{2}-\d{2}|\d{2}-\d{2}-\d{2})', line)
+                    
+                    if has_amount and has_date:
                         payment_rows.append(line)
                         _logger.debug(f"تم تحديد صف الدفعة: {line}")
                 
@@ -147,6 +158,7 @@ class SaleOrder(models.Model):
         except Exception as e:
             _logger.error(f"خطأ فني في تحليل PDF: {str(e)}", exc_info=True)
             return -1
+
     def get_pdf_debug_info(self, pdf_attachment_id):
         """طريقة مساعدة للحصول على معلومات التصحيح"""
         attachment = self.env['ir.attachment'].browse(pdf_attachment_id)
@@ -163,8 +175,27 @@ class SaleOrder(models.Model):
                 return {
                     "text_sample": text[:2000],
                     "page_count": len(doc),
-                    "analysis_result": self._analyze_pdf_content(pdf_data)
+                    "analysis_result": self._analyze_pdf_content(pdf_data),
+                    "table_pattern_matches": [
+                        (pattern, bool(re.search(pattern, text, re.DOTALL | re.IGNORECASE)))
+                        for pattern in [
+                            r'(Rent Payments Schedule|جدول سداد الدفعات)',
+                            r'(Amount|مقدار).*?(Due Date|تاريخ الاستحقاق)',
+                            r'(\d+[/\.]\d+\.\d{2}).*?(\d{4}-\d{2}-\d{2})'
+                        ]
+                    ]
                 }
+        except Exception as e:
+            return {"error": str(e)}
+
+    def debug_pdf_content(self):
+        """وظيفة إضافية لتصحيح مشاكل PDF"""
+        if not self.rental_attachment_ids:
+            return {"error": "لا يوجد مرفقات PDF"}
+        
+        try:
+            pdf_attachment = self.rental_attachment_ids[0]
+            return self.get_pdf_debug_info(pdf_attachment.id)
         except Exception as e:
             return {"error": str(e)}
 
