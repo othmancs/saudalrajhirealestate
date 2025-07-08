@@ -1,26 +1,27 @@
 <odoo>
+    <!-- تعديل عرض نموذج الفاتورة -->
     <record id="view_move_form_inherit" model="ir.ui.view">
         <field name="name">account.move.form.inherit</field>
         <field name="model">account.move</field>
         <field name="inherit_id" ref="account.view_move_form"/>
         <field name="arch" type="xml">
-            <!-- Add renting_attachment_ids field -->
+            <!-- إضافة حقل المرفقات -->
             <xpath expr="//field[@name='invoice_line_ids']" position="before">
-                <field name="renting_attachment_ids"/>
+                <field name="renting_attachment_ids" string="Rent PDF Attachments"/>
             </xpath>
-
-            <!-- Add analysis fields -->
+            
+            <!-- إضافة حقول التحليل -->
             <xpath expr="//field[@name='operating_unit_id']" position="after">
                 <field name="pending_invoices_count" widget="integer"/>
                 <field name="pdf_analysis_status" invisible="1"/>
             </xpath>
-
-            <!-- Add analysis button -->
+            
+            <!-- إضافة زر التحليل -->
             <xpath expr="//sheet" position="before">
                 <div class="oe_button_box" name="button_box">
-                    <button name="action_analyze_pdf_attachments"
-                            type="object"
-                            string="Analyze PDF"
+                    <button name="action_analyze_pdf_attachments" 
+                            type="object" 
+                            string="Analyze PDF" 
                             class="oe_stat_button"
                             icon="fa-file-pdf-o"
                             attrs="{'invisible': [('renting_attachment_ids', '=', False)]}"/>
@@ -29,16 +30,18 @@
         </field>
     </record>
 
-    <!-- Add button to tree view -->
+    <!-- تعديل عرض شجرة الفواتير -->
     <record id="view_account_move_tree_inherit" model="ir.ui.view">
         <field name="name">account.move.tree.inherit</field>
         <field name="model">account.move</field>
         <field name="inherit_id" ref="account.view_move_tree"/>
         <field name="arch" type="xml">
             <xpath expr="//tree" position="inside">
-                <button name="action_analyze_pdf_attachments"
-                        type="object"
-                        string="Analyze PDF"
+                <!-- تأكد من إضافة الحقل قبل استخدامه في attrs -->
+                <field name="renting_attachment_ids" invisible="1"/>
+                <button name="action_analyze_pdf_attachments" 
+                        type="object" 
+                        string="Analyze PDF" 
                         class="btn-secondary"
                         icon="fa-file-pdf-o"
                         attrs="{'invisible': [('renting_attachment_ids', '=', False)]}"/>
