@@ -114,38 +114,25 @@ class SaleOrder(models.Model):
                 
                 _logger.debug(f"النص الكامل المستخرج:\n{text[:2000]}...")
                 
-                # أنماط البحث الشاملة عن الجدول
-                table_patterns = [
-                    r'(Rent Payments Schedule|جدول سداد الدفعات).*?(\d+\.\d{2}.*?\n.*?\n.*?\n.*?\n)',
-                    r'(Amount|مبلغ).*?(\d+\.\d{2}.*?\n.*?\n.*?\n.*?\n)',
-                    r'(Due Date|تاريخ الاستحقاق).*?(\d{4}-\d{2}-\d{2}.*?\n.*?\n.*?\n.*?\n)'
-                ]
+                # البحث عن جدول الدفعات باستخدام نمط أكثر مرونة
+                table_pattern = r'(Rent Payments Schedule|جدول سداد الدفعات).*?(\d+[\/\.]\d+\.\d{2}.*?)(?=\n\s*\n|\Z)'
+                match = re.search(table_pattern, text, re.DOTALL | re.IGNORECASE)
                 
-                # البحث عن الجدول بأنماط متعددة
-                table_text = ""
-                for pattern in table_patterns:
-                    match = re.search(pattern, text, re.DOTALL | re.IGNORECASE)
-                    if match:
-                        table_text = match.group(2)
-                        _logger.debug(f"تم العثور على الجدول باستخدام النمط: {pattern}")
-                        break
-                
-                if not table_text:
+                if not match:
                     _logger.warning("تعذر العثور على جدول الدفعات في المستند")
                     return -1
                 
+                table_text = match.group(2)
                 _logger.debug(f"محتوى الجدول المستخرج:\n{table_text}")
                 
                 # استخراج صفوف الدفعات الفعلية
                 payment_rows = []
                 for line in table_text.split('\n'):
                     line = line.strip()
-                    # شروط اعتبار السطر كدفعة: يحتوي على رقم كسري وتاريخ
-                    has_amount = re.search(r'\d+\.\d{2}', line)
-                    has_date_format1 = re.search(r'\d{4}-\d{2}-\d{2}', line)
-                    has_date_format2 = re.search(r'\d{2}/\d{2}/\d{4}', line)
-                    
-                    if has_amount and (has_date_format1 or has_date_format2):
+                    # شروط اعتبار السطر كدفعة: يحتوي على نمط مبلغ (مثل 50.00 أو 12/50.00) وتاريخ
+                    if (re.search(r'\d+[\/\.]\d+\.\d{2}|\d+\.\d{2}', line) and 
+                        (re.search(r'\d{4}-\d{2}-\d{2}', line) or 
+                         re.search(r'\d{2}-\d{2}-\d{2}', line))):
                         payment_rows.append(line)
                         _logger.debug(f"تم تحديد صف الدفعة: {line}")
                 
@@ -160,7 +147,6 @@ class SaleOrder(models.Model):
         except Exception as e:
             _logger.error(f"خطأ فني في تحليل PDF: {str(e)}", exc_info=True)
             return -1
-
     def get_pdf_debug_info(self, pdf_attachment_id):
         """طريقة مساعدة للحصول على معلومات التصحيح"""
         attachment = self.env['ir.attachment'].browse(pdf_attachment_id)
