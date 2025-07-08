@@ -100,45 +100,54 @@ class SaleOrder(models.Model):
             return None
 
     def _analyze_pdf_content(self, pdf_data):
-        """تحليل محتوى PDF واستخراج عدد الدفعات"""
+        """تحليل محتوى PDF واستخراج عدد الدفعات من الجدول المحدد"""
         try:
             with fitz.open(stream=pdf_data, filetype="pdf") as pdf_document:
                 if not pdf_document.is_pdf:
-                    _logger.warning("Invalid PDF file")
+                    _logger.warning("ملف PDF غير صالح")
                     return -1
                 
                 text = ""
                 for page in pdf_document:
-                    text += page.get_text("text").lower()
+                    text += page.get_text("text")
                 
-                # أنماط البحث عن جدول الدفعات
-                patterns = [
-                    r'rent\s*payments?\s*schedule(.*?)(?=\n\s*\n|\Z)',
-                    r'جدول\s*دفعات?\s*الإيجار(.*?)(?=\n\s*\n|\Z)'
+                _logger.debug(f"النص المستخرج من PDF:\n{text[:1000]}...")
+                
+                # البحث عن الجدول المحدد
+                table_patterns = [
+                    r'جدول سداد الدفعات.*?Schedule Payments Rent(.*?)(?=\n\s*\n|\Z)',
+                    r'Schedule Payments Rent.*?جدول سداد الدفعات(.*?)(?=\n\s*\n|\Z)'
                 ]
                 
-                for pattern in patterns:
+                table_text = ""
+                for pattern in table_patterns:
                     match = re.search(pattern, text, re.DOTALL)
                     if match:
                         table_text = match.group(1)
-                        rows = [row.strip() for row in table_text.split('\n') if row.strip()]
-                        
-                        if rows:
-                            # استخراج الأرقام من العمود الأول
-                            numbers = []
-                            for row in rows:
-                                cols = re.split(r'\s{2,}|\t', row)
-                                if cols and cols[0].isdigit():
-                                    numbers.append(int(cols[0]))
-                            
-                            if numbers:
-                                return max(numbers)
+                        _logger.debug(f"تم العثور على الجدول المطلوب")
+                        break
                 
-                _logger.warning("No payment schedule found in PDF")
-                return -1
+                if not table_text:
+                    _logger.warning("لم يتم العثور على الجدول المطلوب")
+                    return -1
+                
+                _logger.debug(f"نص الجدول الموجود:\n{table_text}")
+                
+                # استخراج الصفوف من الجدول
+                rows = [row.strip() for row in table_text.split('\n') if row.strip()]
+                
+                if not rows:
+                    _logger.warning("لا توجد صفوف في الجدول")
+                    return -1
+                
+                # حساب عدد الصفوف (باستثناء رأس الجدول)
+                payment_count = len(rows) - 1  # نطرح 1 لاستبعاد رأس الجدول
+                
+                _logger.info(f"تم العثور على {payment_count} دفعات في الجدول")
+                return payment_count
                 
         except Exception as e:
-            _logger.error(f"PDF analysis error: {str(e)}", exc_info=True)
+            _logger.error(f"خطأ في تحليل PDF: {str(e)}", exc_info=True)
             return -1
 
     def action_analyze_pdf_attachments(self):
@@ -154,3 +163,39 @@ class SaleOrder(models.Model):
                 'type': 'success' if self.pdf_analysis_status == 'analyzed' else 'danger',
             }
         }
+
+    @api.constrains('pending_payments_count')
+    def _check_payment_count(self):
+        """التحقق من صحة عدد الدفعات"""
+        for order in self:
+            if order.pending_payments_count < 0:
+                raise ValidationError(_("عدد الدفعات لا يمكن أن يكون سالباً"))
+
+    def action_show_pdf_text(self):
+        """عرض محتوى PDF للتحقق"""
+        self.ensure_one()
+        if not self.rental_attachment_ids:
+            raise UserError(_("لا يوجد مرفقات PDF"))
+        
+        try:
+            pdf_attachment = self.rental_attachment_ids[0]
+            pdf_data = self._safe_read_attachment(pdf_attachment)
+            
+            with fitz.open(stream=pdf_data, filetype="pdf") as pdf_document:
+                text = ""
+                for page in pdf_document:
+                    text += page.get_text("text")
+                
+                return {
+                    'type': 'ir.actions.act_window',
+                    'name': _('محتوى PDF'),
+                    'res_model': 'ir.actions.act_window',
+                    'view_mode': 'form',
+                    'target': 'new',
+                    'context': {
+                        'default_text': text[:5000]  # عرض أول 5000 حرف
+                    }
+                }
+                
+        except Exception as e:
+            raise UserError(_("تعذر قراءة محتوى PDF: %s") % str(e))
