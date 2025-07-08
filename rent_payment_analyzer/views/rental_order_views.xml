@@ -1,9 +1,9 @@
 <odoo>
-    <!-- العرض الأساسي لطلبات التأجير -->
+    <!-- تعديل العرض الأساسي لطلبات التأجير -->
     <record id="rental_order_form_inherit" model="ir.ui.view">
         <field name="name">sale.rental.order.form.inherit</field>
         <field name="model">sale.order</field>
-        <field name="inherit_id" ref="sale_renting.rental_order_form"/>
+        <field name="inherit_id" ref="sale_renting.rental_order_primary_form_view"/>
         <field name="arch" type="xml">
             <!-- إضافة حقل المرفقات -->
             <xpath expr="//field[@name='order_line']" position="before">
@@ -11,21 +11,22 @@
             </xpath>
             
             <!-- إضافة حقول التحليل -->
+            <xpath expr="//field[@name='client_order_ref']" position="after">
+                <field name="pending_payments_count" widget="integer" string="عدد الدفعات المستحقة"/>
+                <field name="pdf_analysis_message" string="رسالة التحليل" readonly="1"/>
+                <field name="pdf_analysis_status" invisible="1"/>
+            </xpath>
+            
+            <!-- إضافة زر التحليل -->
             <xpath expr="//sheet" position="before">
                 <div class="oe_button_box" name="button_box">
                     <button name="action_analyze_pdf_attachments" 
                             type="object" 
-                            string="Analyze PDF" 
+                            string="تحليل PDF" 
                             class="oe_stat_button"
                             icon="fa-file-pdf-o"
                             attrs="{'invisible': [('rental_attachment_ids', '=', False)]}"/>
                 </div>
-            </xpath>
-            
-            <xpath expr="//field[@name='client_order_ref']" position="after">
-                <field name="pending_payments_count" widget="integer"/>
-                <field name="pdf_analysis_message" readonly="1"/>
-                <field name="pdf_analysis_status" invisible="1"/>
             </xpath>
         </field>
     </record>
@@ -38,10 +39,10 @@
         <field name="arch" type="xml">
             <xpath expr="//tree" position="inside">
                 <field name="rental_attachment_ids" invisible="1"/>
-                <field name="pending_payments_count" widget="integer"/>
+                <field name="pending_payments_count" widget="integer" string="الدفعات المستحقة"/>
                 <button name="action_analyze_pdf_attachments" 
                         type="object" 
-                        string="Analyze PDF" 
+                        string="تحليل PDF" 
                         class="btn-secondary"
                         icon="fa-file-pdf-o"
                         attrs="{'invisible': [('rental_attachment_ids', '=', False)]}"/>
