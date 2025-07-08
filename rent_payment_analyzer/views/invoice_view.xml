@@ -1,0 +1,48 @@
+<odoo>
+    <record id="view_move_form_inherit" model="ir.ui.view">
+        <field name="name">account.move.form.inherit</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="arch" type="xml">
+            <!-- Add renting_attachment_ids field -->
+            <xpath expr="//field[@name='invoice_line_ids']" position="before">
+                <field name="renting_attachment_ids"/>
+            </xpath>
+
+            <!-- Add analysis fields -->
+            <xpath expr="//field[@name='operating_unit_id']" position="after">
+                <field name="pending_invoices_count" widget="integer"/>
+                <field name="pdf_analysis_status" invisible="1"/>
+            </xpath>
+
+            <!-- Add analysis button -->
+            <xpath expr="//sheet" position="before">
+                <div class="oe_button_box" name="button_box">
+                    <button name="action_analyze_pdf_attachments"
+                            type="object"
+                            string="Analyze PDF"
+                            class="oe_stat_button"
+                            icon="fa-file-pdf-o"
+                            attrs="{'invisible': [('renting_attachment_ids', '=', False)]}"/>
+                </div>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Add button to tree view -->
+    <record id="view_account_move_tree_inherit" model="ir.ui.view">
+        <field name="name">account.move.tree.inherit</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//tree" position="inside">
+                <button name="action_analyze_pdf_attachments"
+                        type="object"
+                        string="Analyze PDF"
+                        class="btn-secondary"
+                        icon="fa-file-pdf-o"
+                        attrs="{'invisible': [('renting_attachment_ids', '=', False)]}"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>
