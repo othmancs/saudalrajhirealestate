@@ -32,6 +32,11 @@ class RentSaleOrder(models.Model):
     amount_remain = fields.Float(string='اجمالي المتبقي', compute='_get_remain')
     # invoice_number = fields.Integer(string='Number Of Invoices')
     invoice_number = fields.Integer(string='Number Of Invoices', default=0)
+    @api.constrains('invoice_number')
+    def _check_invoice_number_is_int(self):
+        for rec in self:
+            if rec.invoice_number and not isinstance(rec.invoice_number, int):
+                raise ValidationError(_("Number Of Invoices must be an integer."))
     order_line = fields.One2many('sale.order.line', 'order_id', string='Order Lines',
                                  states={'cancel': [('readonly', True)], 'done': [('readonly', True)]}, copy=True,
                                  auto_join=True)
