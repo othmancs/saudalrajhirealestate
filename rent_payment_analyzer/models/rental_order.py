@@ -68,58 +68,6 @@ class SaleOrder(models.Model):
             pdf_data = self._safe_read_attachment(pdf_attachment)
             
             if not pdf_data:
-                self.pdf_analysis_message = 'تعذر قراءة ملف PDF'
-                self.pdf_analysis_status = 'error'
-                return
-                
-            payment_count = self._analyze_pdf_content(pdf_data)
-            
-            if payment_count > 0:
-                self.pending_payments_count = payment_count
-                self.invoice_number = str(payment_count)  # تعيين عدد الدفعات في حقل invoice_number
-                self.pdf_analysis_status = 'analyzed'
-                self.pdf_analysis_message = f'تم العثور على {payment_count} دفعات في الجدول'
-            elif payment_count == 0:
-                self.pdf_analysis_status = 'analyzed'
-                self.pdf_analysis_message = 'لم يتم العثور على دفعات في الجدول'
-            else:
-                self.pdf_analysis_status = 'error'
-                self.pdf_analysis_message = 'خطأ في تحليل ملف PDF'
-                
-        except Exception as e:
-            self.pdf_analysis_status = 'error'
-            self.pdf_analysis_message = f'خطأ في التحليل: {str(e)}'
-            _logger.error(f"Failed to analyze PDF for order {self.id}: {str(e)}", exc_info=True)
-
-    def _safe_read_attachment(self, attachment):
-        """قراءة آمنة لمحتوى المرفق"""
-        try:
-            if attachment.store_fname:
-                file_path = attachment._full_path(attachment.store_fname)
-                if os.path.exists(file_path):
-                    with open(file_path, 'rb') as f:
-                        return f.read()
-                _logger.error(f"File not found: {file_path}")
-            return attachment.raw
-        except Exception as e:
-            _logger.error(f"Error reading attachment: {str(e)}")
-            return None
-
-    def _analyze_pdf_attachments(self):
-        """تحليل المرفقات PDF وحساب عدد الدفعات"""
-        self.ensure_one()
-        self.pending_payments_count = 0
-        self.pdf_analysis_status = 'not_analyzed'
-        self.pdf_analysis_message = 'لا يوجد مرفقات PDF'
-        
-        if not self.rental_attachment_ids:
-            return
-            
-        try:
-            pdf_attachment = self.rental_attachment_ids[0]
-            pdf_data = self._safe_read_attachment(pdf_attachment)
-            
-            if not pdf_data:
                 self.pdf_analysis_message = 'تعذر قراءة ملف PDF - قد يكون الملف تالفاً'
                 self.pdf_analysis_status = 'error'
                 return
@@ -143,6 +91,76 @@ class SaleOrder(models.Model):
             self.pdf_analysis_message = f'خطأ في التحليل: {str(e)} - يرجى مراجعة السجلات للتفاصيل'
             _logger.error(f"Failed to analyze PDF for order {self.id}: {str(e)}", exc_info=True)
 
+    def _safe_read_attachment(self, attachment):
+        """قراءة آمنة لمحتوى المرفق"""
+        try:
+            if attachment.store_fname:
+                file_path = attachment._full_path(attachment.store_fname)
+                if os.path.exists(file_path):
+                    with open(file_path, 'rb') as f:
+                        return f.read()
+                _logger.error(f"File not found: {file_path}")
+            return attachment.raw
+        except Exception as e:
+            _logger.error(f"Error reading attachment: {str(e)}")
+            return None
+
+    def _analyze_pdf_content(self, pdf_data):
+        """تحليل محتوى PDF واستخراج عدد الدفعات من الجدول المحدد"""
+        try:
+            with fitz.open(stream=pdf_data, filetype="pdf") as pdf_document:
+                if not pdf_document.is_pdf:
+                    _logger.warning("ملف PDF غير صالح")
+                    return -1
+                
+                text = ""
+                for page in pdf_document:
+                    text += page.get_text("text")
+                
+                _logger.debug(f"النص المستخرج من PDF:\n{text[:1000]}...")
+                
+                # تحسين أنماط البحث عن الجدول
+                table_patterns = [
+                    r'(?:Rent Payments Schedule|جدول سداد الدفعات).*?(?:Amount|مقدار).*?(?:Due Date|تاريخ الاستحقاق)(.*?)(?=\n\s*\n|\Z)',
+                    r'(?:Payment|دفعة)\s*(?:No|رقم).*?(?:Date|تاريخ).*?(?:Amount|مقدار)(.*?)(?=\n\s*\n|\Z)',
+                    r'(?:Installment|قسط)\s*(?:No|رقم).*?(?:Date|تاريخ).*?(?:Amount|مقدار)(.*?)(?=\n\s*\n|\Z)'
+                ]
+                
+                table_text = ""
+                for pattern in table_patterns:
+                    match = re.search(pattern, text, re.DOTALL | re.IGNORECASE)
+                    if match:
+                        table_text = match.group(1).strip()
+                        _logger.debug(f"تم العثور على الجدول المطلوب:\n{table_text}")
+                        break
+                
+                if not table_text:
+                    _logger.warning("لم يتم العثور على الجدول المطلوب")
+                    return -1
+                
+                # تحسين استخراج الصفوف
+                rows = []
+                for line in table_text.split('\n'):
+                    line = line.strip()
+                    # البحث عن صفوف تحتوي على تاريخ و/أو مبلغ
+                    if re.search(r'(\d{1,2}[/-]\d{1,2}[/-]\d{2,4})|(\d+\.\d{2})', line):
+                        rows.append(line)
+                
+                _logger.debug(f"الصفوف المستخرجة:\n{rows}")
+                
+                if not rows:
+                    _logger.warning("لا توجد صفوف دفعات في الجدول")
+                    return -1
+                
+                # حساب عدد الصفوف (كل صف يمثل دفعة)
+                payment_count = len(rows)
+                
+                _logger.info(f"تم العثور على {payment_count} دفعات في الجدول")
+                return payment_count                
+    
+        except Exception as e:
+            _logger.error(f"خطأ في تحليل PDF: {str(e)}", exc_info=True)
+            return -1
     def get_pdf_debug_info(self, pdf_attachment_id):
         """طريقة مساعدة للحصول على معلومات التصحيح"""
         attachment = self.env['ir.attachment'].browse(pdf_attachment_id)
