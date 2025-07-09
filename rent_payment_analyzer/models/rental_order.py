@@ -98,6 +98,7 @@ class SaleOrder(models.Model):
         except Exception as e:
             _logger.error(f"Error reading attachment: {str(e)}")
             return None
+
     def _analyze_pdf_content(self, pdf_data):
         """تحليل محتوى PDF واستخراج عدد الدفعات من الجدول المحدد"""
         try:
@@ -105,20 +106,20 @@ class SaleOrder(models.Model):
                 if not pdf_document.is_pdf:
                     _logger.warning("ملف PDF غير صالح")
                     return -1
-
+    
                 text = ""
                 for page in pdf_document:
                     text += page.get_text("text")
-
+    
                 _logger.debug(f"النص المستخرج من PDF:\n{text[:1000]}...")
-
-                # البحث عن الجدول المحدد
+    
+                # البحث عن الجدول المحدد باستخدام أنماط متعددة
                 table_patterns = [
-                    r'Rent Payments Schedule.*?جدول سداد الدفعات(.*?)(?=\n\s*\n|\Z)',
-                    r'جدول سداد الدفعات.*?Rent Payments Schedule(.*?)(?=\n\s*\n|\Z)',
-                    r'Rent Payments Schedule.*?Amount.*?(\d+\.\d{2}.*?)(?=\n\s*\n|\Z)'
+                    r'Rent Payments Schedule.*?إجمالي.*?\n(.*?)(?=\n\s*\n|\Z)',
+                    r'Rent Payments Schedule.*?Total value.*?\n(.*?)(?=\n\s*\n|\Z)',
+                    r'جدول سداد الدفعات.*?إجمالي.*?\n(.*?)(?=\n\s*\n|\Z)'
                 ]
-
+    
                 table_text = ""
                 for pattern in table_patterns:
                     match = re.search(pattern, text, re.DOTALL)
@@ -126,41 +127,54 @@ class SaleOrder(models.Model):
                         table_text = match.group(1)
                         _logger.debug(f"تم العثور على الجدول المطلوب")
                         break
-
+    
                 if not table_text:
                     _logger.warning("لم يتم العثور على الجدول المطلوب")
                     return -1
-
+    
                 _logger.debug(f"نص الجدول الموجود:\n{table_text}")
-
-                # # استخراج الصفوف من الجدول
-                # rows = [row.strip() for row in table_text.split('\n') if row.strip() and re.search(r'\d+\.\d{2}', row)]
+    
+                # تحليل الصفوف في الجدول
+                # نبحث عن الصفوف التي تحتوي على قيم مالية (مثل 25000.00) وتواريخ
+                payment_rows = []
+                for line in table_text.split('\n'):
+                    line = line.strip()
+                    if (re.search(r'\d{5,}\.\d{2}', line) or  # البحث عن قيم مالية كبيرة
+                       (re.search(r'\d{4}-\d{2}-\d{2}.*\d{4}-\d{2}-\d{2}', line)):  # البحث عن تواريخ
+                        payment_rows.append(line)
+    
+                # إذا كان لدينا صفوف واضحة، نستخدمها
+                if payment_rows:
+                    payment_count = len(payment_rows)
+                    _logger.info(f"تم العثور على {payment_count} دفعات في الجدول")
+                    return payment_count
+    
+                # إذا لم نجد صفوفاً واضحة، نستخدم طريقة بديلة
+                # نحسب عدد الأسطر التي تحتوي على قيم مالية بعد العناوين
+                all_rows = [row.strip() for row in table_text.split('\n') if row.strip()]
+                payment_count = 0
                 
-                # if not rows:
-                #     _logger.warning("لا توجد صفوف في الجدول")
-                #     return -1
-                
-                # # حساب عدد الصفوف (كل صف يمثل دفعة)
-                # payment_count = len(rows)
-                
-                # _logger.info(f"تم العثور على {payment_count} دفعات في الجدول")
-                # return payment_count
-                # استخراج الصفوف من الجدول مع تخطي أول صفين (العناوين)
-                rows = [row.strip() for row in table_text.split('\n') if row.strip() and re.search(r'\d+\.\d{2}', row)][2:]
-
-                if not rows:
-                    _logger.warning("لا توجد صفوف دفعات في الجدول بعد استبعاد العناوين")
+                for row in all_rows:
+                    if re.search(r'\d+\.\d{2}', row):  # أي سطر يحتوي على قيمة مالية
+                        payment_count += 1
+    
+                # في الجدول المقدم، نرى أن هناك صفين للعناوين وصفين للبيانات
+                # لذا نطرح 2 إذا كان العدد أكبر من 2
+                if payment_count > 2:
+                    payment_count -= 2
+                    _logger.info(f"تم العثور على {payment_count} دفعات في الجدول بعد استبعاد العناوين")
+                    return payment_count
+                elif payment_count > 0:
+                    _logger.info(f"تم العثور على {payment_count} دفعات في الجدول (بدون عناوين)")
+                    return payment_count
+                else:
+                    _logger.warning("لا توجد صفوف دفعات في الجدول")
                     return -1
-
-                # حساب عدد الصفوف (كل صف يمثل دفعة)
-                payment_count = len(rows)
-
-                _logger.info(f"تم العثور على {payment_count} دفعات في الجدول بعد استبعاد العناوين")
-                return payment_count                
-
+    
         except Exception as e:
             _logger.error(f"خطأ في تحليل PDF: {str(e)}", exc_info=True)
             return -1
+
     def get_pdf_debug_info(self, pdf_attachment_id):
         """طريقة مساعدة للحصول على معلومات التصحيح"""
         attachment = self.env['ir.attachment'].browse(pdf_attachment_id)
