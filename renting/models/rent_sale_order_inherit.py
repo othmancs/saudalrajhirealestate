@@ -31,7 +31,7 @@ class RentSaleOrder(models.Model):
     contractor_pen = fields.Char(string='رسوم متأخرات')
     amount_remain = fields.Float(string='اجمالي المتبقي', compute='_get_remain')
     # invoice_number = fields.Integer(string='Number Of Invoices')
-    invoice_number = fields.string(string='Number Of Invoices', default=0)
+    invoice_number = fields.Integer(string='Number Of Invoices', default=0)
     @api.constrains('invoice_number')
     def _check_invoice_number_is_int(self):
         for rec in self:
