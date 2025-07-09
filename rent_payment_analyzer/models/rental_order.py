@@ -42,6 +42,11 @@ class SaleOrder(models.Model):
         string='رسالة التحليل',
         compute='_compute_pending_payments_count'
     )
+    
+    invoice_number = fields.Char(
+        string='عدد الدفعات (فاتورة)',
+        help='يتم تعبئته تلقائياً بعد تحليل PDF بعدد الدفعات المستخرجة'
+    )
 
     @api.depends('order_line', 'rental_attachment_ids')
     def _compute_pending_payments_count(self):
@@ -71,6 +76,7 @@ class SaleOrder(models.Model):
             
             if payment_count > 0:
                 self.pending_payments_count = payment_count
+                self.invoice_number = str(payment_count)  # تعيين عدد الدفعات في حقل invoice_number
                 self.pdf_analysis_status = 'analyzed'
                 self.pdf_analysis_message = f'تم العثور على {payment_count} دفعات في الجدول'
             elif payment_count == 0:
@@ -98,6 +104,7 @@ class SaleOrder(models.Model):
         except Exception as e:
             _logger.error(f"Error reading attachment: {str(e)}")
             return None
+
     def _analyze_pdf_content(self, pdf_data):
         """تحليل محتوى PDF واستخراج عدد الدفعات من الجدول المحدد"""
         try:
@@ -133,18 +140,6 @@ class SaleOrder(models.Model):
                 
                 _logger.debug(f"نص الجدول الموجود:\n{table_text}")
                 
-                # # استخراج الصفوف من الجدول
-                # rows = [row.strip() for row in table_text.split('\n') if row.strip() and re.search(r'\d+\.\d{2}', row)]
-                
-                # if not rows:
-                #     _logger.warning("لا توجد صفوف في الجدول")
-                #     return -1
-                
-                # # حساب عدد الصفوف (كل صف يمثل دفعة)
-                # payment_count = len(rows)
-                
-                # _logger.info(f"تم العثور على {payment_count} دفعات في الجدول")
-                # return payment_count
                 # استخراج الصفوف من الجدول مع تخطي أول صفين (العناوين)
                 rows = [row.strip() for row in table_text.split('\n') if row.strip() and re.search(r'\d+\.\d{2}', row)][2:]
                 
@@ -161,6 +156,7 @@ class SaleOrder(models.Model):
         except Exception as e:
             _logger.error(f"خطأ في تحليل PDF: {str(e)}", exc_info=True)
             return -1
+
     def get_pdf_debug_info(self, pdf_attachment_id):
         """طريقة مساعدة للحصول على معلومات التصحيح"""
         attachment = self.env['ir.attachment'].browse(pdf_attachment_id)
