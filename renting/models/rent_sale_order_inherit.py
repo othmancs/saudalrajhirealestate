@@ -8,13 +8,13 @@ from odoo.exceptions import UserError
 from odoo.tools import float_compare, format_datetime, format_time
 
 
-
 class RentSaleOrder(models.Model):
     _inherit = 'sale.order'
 
     contract_number = fields.Char(string='رقم عقد منصة ايجار')
     fromdate = fields.Date(string='From Date', default=datetime.today(), copy=False, required=True)
     todate = fields.Date(string='To Date', default=datetime.today(), copy=False, required=True)
+    
     # Fields in Contract Info Tab
     order_contract = fields.Binary(string='العقد')
     invoice_terms = fields.Selection(
@@ -84,15 +84,26 @@ class RentSaleOrder(models.Model):
     iselec_remain = fields.Boolean('نعم')
     isnotelec_remain = fields.Boolean('لا')
 
+    full_invoiced = fields.Boolean(string="Fully Invoiced", compute="_compute_full_invoiced", store=True)
+    no_of_invoiced = fields.Integer(string="الفواتير المفوترة", compute="compute_no_invoiced")
+    no_of_not_invoiced = fields.Integer(string="الفواتير الغير مفوترة", compute="compute_no_invoiced")
+    no_of_invoiced_amount = fields.Float(string="المبالغ المفوترة", compute="compute_no_invoiced")
+    no_of_not_invoiced_amount = fields.Float(string="المبالغ الغير مفوترة", compute="compute_no_invoiced")
+    no_of_posted_invoiced = fields.Integer(string="الفواتير المرحلة", compute="compute_no_invoiced")
+    no_of_posted_invoiced_amount = fields.Float(string="مبالغ الفواتير المرحلة", compute="compute_no_invoiced")
+    no_of_paid_invoiced = fields.Integer(string="الفواتر المدفوعة", compute="compute_no_invoiced")
+    no_of_paid_invoiced_amount = fields.Float(string="مبالغ الفواتير المدفوعة", compute="compute_no_invoiced")
+
     def open_return(self):
         status = "return"
         precision = self.env['decimal.precision'].precision_get('Product Unit of Measure')
         lines_to_return = self.order_line.filtered(
             lambda r: r.state in ['sale', 'done', 'occupied'] and r.is_rental and float_compare(r.qty_delivered, r.qty_returned, precision_digits=precision) > 0)
         return self._open_rental_wizard(status, lines_to_return.ids)
+
     def _get_remain(self):
         for record in self:
-            amount = 0
+            amount = 0.0
             invoices_paid = self.env['account.move'].sudo().search(
                 [('invoice_origin', '=', record.name), ('payment_state', 'in', ['paid', 'in_payment'])])
             for line in invoices_paid:
@@ -107,8 +118,6 @@ class RentSaleOrder(models.Model):
         for order in self:
             amount_untaxed = amount_tax = 0.0
             for line in order.order_line:
-                # fees_price = 0.0 fees_price = line.price_subtotal + line.insurance_value + line.contract_admin_fees
-                # + line.contract_service_fees + line.contract_admin_sub_fees + line.contract_service_sub_fees
                 amount_untaxed += line.price_subtotal
                 amount_tax += line.price_tax
             order.update({
@@ -133,15 +142,13 @@ class RentSaleOrder(models.Model):
             diff = 0
             diff = total_contract_period.days / rec.invoice_number
             diff = round(diff, 0)
-            # if abs(total_contract_period.days) % abs(rec.invoice_number) >0:
-            #     raise UserError(_('يجب كتابة عدد فواتير مناسب لمدة العقد'))
-            #
 
             for i in range(1, rec.invoice_number + 1):
-
                 total_other_amount = sum((
-                                                 i.insurance_value + i.contract_admin_fees + i.contract_service_fees + i.contract_admin_sub_fees + i.contract_service_sub_fees)
-                                         for i in rec.order_line)
+                    i.insurance_value + i.contract_admin_fees + i.contract_service_fees + 
+                    i.contract_admin_sub_fees + i.contract_service_sub_fees
+                ) for i in rec.order_line)
+                
                 taxed_total_other_amount = sum(
                     (i.contract_admin_sub_fees + i.contract_service_sub_fees) for i in rec.order_line)
 
@@ -162,6 +169,7 @@ class RentSaleOrder(models.Model):
                     amount = total_property_amount_without_tax - sum(rec.order_contract_invoice.mapped('amount'))
                 else:
                     amount = property_amount_per_inv + total_tax
+                
                 if amount > 0:
                     sale_invoices = self.env['rent.sale.invoices'].create({
                         'name': "فاتورة رقم " + str(i),
@@ -185,66 +193,50 @@ class RentSaleOrder(models.Model):
         if diff.months != 0:
             month = diff.months
         if diff.days > 0:
-            month +=1
+            month += 1
         self.invoice_number = month + m
-
-        # date1 = datetime.strptime(str(self.fromdateself.todate)[:10], '%Y-%m-%d')
-        # date2 = datetime.strptime(str(self.todate)[:10], '%Y-%m-%d')
-        # difference = relativedelta(date2, date1)
-        # months = difference.months + 12 * difference.years
-        # if difference.days > 0:
-        #     months += 1
-        # print("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXx ", months)
-        self.invoice_number = month
 
     def action_confirm(self):
         if self.invoice_number == 0:
-            # self.get_invoice_number()
             raise UserError(_('من فضلك اكتب عدد الفواتير'))
         result = super(RentSaleOrder, self).action_confirm()
         if self.is_rental_order:
             self.create_order_invoices()
         return result
 
-    full_invoiced = fields.Boolean(string="Fully Invoiced", compute="_compute_full_invoiced", store=True)
-    no_of_invoiced = fields.Integer(string=" الفواتير المفوترة", compute="compute_no_invoiced")
-    no_of_not_invoiced = fields.Integer(string=" الفواتير الغير مفوترة", compute="compute_no_invoiced")
-    no_of_invoiced_amount = fields.Float(string="المبالغ المفوترة", compute="compute_no_invoiced")
-    no_of_not_invoiced_amount = fields.Float(string="المبالغ الغير مفوترة", compute="compute_no_invoiced")
-    no_of_posted_invoiced = fields.Float(string="الفواتير المرحلة", compute="compute_no_invoiced")
-    no_of_posted_invoiced_amount = fields.Float(string="مبالغ الفواتير المرحلة", compute="compute_no_invoiced")
-
-    no_of_paid_invoiced = fields.Float(string="الفواتر المدفوعة ", compute="compute_no_invoiced")
-    no_of_paid_invoiced_amount = fields.Float(string="مبالغ  الفواتير المدفوعة", compute="compute_no_invoiced")
-
-    
-    
-    
-    # ('payment_state', '!=', 'paid')
-    
     @api.depends('order_contract_invoice.status', 'order_contract_invoice.amount')
     def compute_no_invoiced(self):
         for order in self:
+            # Initialize all fields with proper numeric values
             order.no_of_invoiced = 0
             order.no_of_not_invoiced = 0
-            order.no_of_invoiced_amount = 0
-            order.no_of_not_invoiced_amount = 0
+            order.no_of_invoiced_amount = 0.0
+            order.no_of_not_invoiced_amount = 0.0
             order.no_of_posted_invoiced = 0
+            order.no_of_posted_invoiced_amount = 0.0
             order.no_of_paid_invoiced = 0
-            order.no_of_paid_invoiced_amount = 0
+            order.no_of_paid_invoiced_amount = 0.0
 
+            # Ensure all values are properly converted to numbers
             order.no_of_invoiced = len(order.order_contract_invoice.filtered(lambda s: s.status == 'invoiced'))
-            order.no_of_invoiced_amount = sum(order.order_contract_invoice.filtered(lambda s: s.status == 'invoiced').mapped('amount'))
+            order.no_of_invoiced_amount = float(sum(
+                float(inv.amount) for inv in order.order_contract_invoice.filtered(lambda s: s.status == 'invoiced')
+            ))
 
             order.no_of_not_invoiced = len(order.order_contract_invoice.filtered(lambda s: s.status == 'uninvoiced'))
-            order.no_of_not_invoiced_amount = sum(order.order_contract_invoice.filtered(lambda s: s.status == 'uninvoiced').mapped('amount'))
+            order.no_of_not_invoiced_amount = float(sum(
+                float(inv.amount) for inv in order.order_contract_invoice.filtered(lambda s: s.status == 'uninvoiced')
+            ))
 
             order.no_of_posted_invoiced = len(order.invoice_ids.filtered(lambda s: s.state == 'posted'))
-            order.no_of_posted_invoiced_amount = sum(order.invoice_ids.filtered(lambda s: s.state == 'posted').mapped('amount_total'))
+            order.no_of_posted_invoiced_amount = float(sum(
+                float(inv.amount_total) for inv in order.invoice_ids.filtered(lambda s: s.state == 'posted')
+            ))
 
-    
             order.no_of_paid_invoiced = len(order.invoice_ids.filtered(lambda s: s.payment_state == 'paid'))
-            order.no_of_paid_invoiced_amount = sum(order.invoice_ids.filtered(lambda s: s.payment_state == 'paid').mapped('amount_total'))
+            order.no_of_paid_invoiced_amount = float(sum(
+                float(inv.amount_total) for inv in order.invoice_ids.filtered(lambda s: s.payment_state == 'paid')
+            ))
 
     @api.depends('order_contract_invoice.status')
     def _compute_full_invoiced(self):
@@ -261,100 +253,6 @@ class RentSaleOrder(models.Model):
             raise UserError(_('من فضلك اكتب عدد الفواتير'))
         return result
 
-    # @api.model_create_multi
-    # def create(self, vals_list):
-    #     order_lines_list = []
-    #     res = super(RentSaleOrder, self).create(vals_list)
-    #
-    #     # if res.invoice_terms == 'monthly':
-    #     #
-    #     # elif res.invoice_terms == 'half-year':
-    #     # elif res.invoice_terms == 'qua-year':
-    #     # elif res.invoice_terms == 'year':
-    #     product_admin = self.env['product.template'].sudo().search([('name', '=', 'رسوم ادارية')])
-    #     product_admin.list_price = res.contract_admin_fees
-    #     product_admin.standard_price = res.contract_admin_fees
-    #     product_product_admin = self.env['product.product'].sudo().search([('product_tmpl_id', '=', product_admin.id)])
-    #     if res.contract_admin_fees > 0:
-    #         order_lines_list.append((0, 0, {
-    #             'name': 'رسوم ادارية',
-    #             'product_id': product_product_admin.id,
-    #             'price_unit': res.contract_admin_fees,
-    #             'is_rental': True,
-    #             'pickup_date': res.order_line[0].pickup_date,
-    #             'return_date': res.order_line[0].return_date,
-    #             'price_subtotal': res.contract_admin_fees
-    #         }))
-    #     product_service = self.env['product.template'].sudo().search([('name', '=', 'رسوم خدمات')])
-    #     product_service.list_price = res.contract_service_fees
-    #     product_service.standard_price = res.contract_service_fees
-    #     product_product_service = self.env['product.product'].sudo().search(
-    #         [('product_tmpl_id', '=', product_service.id)])
-    #     if res.contract_service_fees > 0:
-    #         order_lines_list.append((0, 0, {
-    #             'name': 'رسوم خدمات',
-    #             'product_id': product_product_service.id,
-    #             'price_unit': res.contract_service_fees,
-    #             'is_rental': True,
-    #             'pickup_date': res.order_line[0].pickup_date,
-    #             'return_date': res.order_line[0].return_date,
-    #             'price_subtotal': res.contract_service_fees
-    #         }))
-    #     product_sub_admin = self.env['product.template'].sudo().search([('name', '=', 'رسوم ادارية خاضعة')])
-    #     product_sub_admin.list_price = res.contract_admin_sub_fees
-    #     product_sub_admin.standard_price = res.contract_admin_sub_fees
-    #     product_product_sub_admin = self.env['product.product'].sudo().search(
-    #         [('product_tmpl_id', '=', product_sub_admin.id)])
-    #     if res.contract_admin_sub_fees > 0:
-    #         order_lines_list.append((0, 0, {
-    #             'name': 'رسوم ادارية خاضعة',
-    #             'product_id': product_product_sub_admin.id,
-    #             'price_unit': res.contract_admin_sub_fees,
-    #             'is_rental': True,
-    #             'pickup_date': res.order_line[0].pickup_date,
-    #             'return_date': res.order_line[0].return_date,
-    #             'price_subtotal': res.contract_admin_sub_fees
-    #         }))
-    #     product_sub_service = self.env['product.template'].sudo().search([('name', '=', 'رسوم خدمات خاضعة')])
-    #     product_sub_service.list_price = res.contract_service_sub_fees
-    #     product_sub_service.standard_price = res.contract_service_sub_fees
-    #     product_product_sub_service = self.env['product.product'].sudo().search(
-    #         [('product_tmpl_id', '=', product_sub_service.id)])
-    #     if res.contract_service_sub_fees > 0:
-    #         order_lines_list.append((0, 0, {
-    #             'name': 'رسوم خدمات خاضعة',
-    #             'product_id': product_product_sub_service.id,
-    #             'price_unit': res.contract_service_sub_fees,
-    #             'is_rental': True,
-    #             'pickup_date': res.order_line[0].pickup_date,
-    #             'return_date': res.order_line[0].return_date,
-    #             'price_subtotal': res.contract_service_sub_fees
-    #         }))
-    #     product_service = self.env['product.template'].sudo().search([('name', '=', 'تـأمين')])
-    #     product_service.list_price = res.insurance_value
-    #     product_service.standard_price = res.insurance_value
-    #     product_product_service = self.env['product.product'].sudo().search(
-    #         [('product_tmpl_id', '=', product_service.id)])
-    #
-    #     if res.insurance_value > 0:
-    #         order_lines_list.append((0, 0, {
-    #             'name': 'تـأمين',
-    #             'product_id': product_product_service.id,
-    #             'price_unit': res.insurance_value,
-    #             'is_rental': True,
-    #             'pickup_date': res.order_line[0].pickup_date,
-    #             'return_date': res.order_line[0].return_date,
-    #             'price_subtotal': res.insurance_value
-    #         }))
-    #     print(order_lines_list)
-    #     res.update({
-    #
-    #         'order_line': order_lines_list
-    #
-    #     })
-    #
-    #     return res
-
 
 class RentSaleOrderLine(models.Model):
     _inherit = 'sale.order.line'
@@ -370,40 +268,29 @@ class RentSaleOrderLine(models.Model):
     fromdate = fields.Date(related="order_id.fromdate", store=1)
     todate = fields.Date(related="order_id.todate", store=1)
 
-    def search_property_address_area(self, operator, value):
-        return [('property_address_area', 'ilike', value)]
-
     property_address_area = fields.Many2one(comodel_name='operating.unit', string='الفرع',
-                                            compute="get_property_number_fields", store=1)
+                                          compute="get_property_number_fields", store=1)
     property_address_build2 = fields.Many2one(comodel_name='rent.property.build', string='المجمع',
-                                              related="property_number.property_address_build", store=1)
-    # property_address_build = fields.Many2one(comodel_name='rent.property.build', string='المجمع',compute="get_property_number_fields2", store=1)
-    # property_number = fields.Many2one(comodel_name='rent.property', string='العقار')
+                                            related="property_number.property_address_build", store=1)
     partner_id = fields.Many2one(related='order_id.partner_id')
+    unit_state = fields.Char(related='product_id.unit_state', store=1)
+    amount_paid = fields.Float(compute="get_amount_paid")
+    amount_due = fields.Float(compute="get_amount_paid")
 
     @api.depends('property_number')
     def get_property_number_fields(self):
         for rec in self:
             rec.property_address_area = rec.property_number.property_address_area.id if rec.property_number else False
 
-    # @api.depends('property_number')
-    # def get_property_number_fields2(self):
-    #     for rec in self:
-    #         rec.property_address_build = rec.property_number.property_address_build.id if rec.property_number else False
-
-    unit_state = fields.Char(related='product_id.unit_state', store=1)
-    amount_paid = fields.Float(compute="get_amount_paid")
-    amount_due = fields.Float(compute="get_amount_paid")
-
-    # apartment_insurance = fields.Float(related='order_id.apartment_insurance')
     @api.depends('order_id', 'product_id')
     def get_amount_paid(self):
         for rec in self:
             rec.amount_paid = sum(
-                ll.amount_total for ll in rec.order_id.invoice_ids.filtered(lambda line: line.payment_state == 'paid'))
-            rec.amount_due = sum(rec.order_id.order_line[0].price_unit / ll.sale_order_id.invoice_number for ll in
-                                 rec.order_id.order_contract_invoice.filtered(lambda line: line.status == 'uninvoiced')
-                                 ) if rec.order_id.order_line else 0.0
+                float(ll.amount_total) for ll in rec.order_id.invoice_ids.filtered(lambda line: line.payment_state == 'paid'))
+            rec.amount_due = sum(
+                float(rec.order_id.order_line[0].price_unit / ll.sale_order_id.invoice_number) for ll in
+                rec.order_id.order_contract_invoice.filtered(lambda line: line.status == 'uninvoiced')
+            ) if rec.order_id.order_line else 0.0
 
     @api.onchange('operating_unit_id')
     def _onchange_operating_unit_id(self):
@@ -420,12 +307,11 @@ class RentSaleOrderLine(models.Model):
             price_tax = line.price_unit + line.contract_admin_sub_fees + line.contract_service_sub_fees * (
                     1 - (line.discount or 0.0) / 100.0)
             taxes = line.tax_id.compute_all(price_tax, line.order_id.currency_id, line.product_uom_qty,
-                                            product=line.product_id, partner=line.order_id.partner_shipping_id)
+                                          product=line.product_id, partner=line.order_id.partner_shipping_id)
             line.update({
                 'price_tax': taxes['total_included'] - taxes['total_excluded'],
                 'price_total': taxes['total_included'],
                 'price_subtotal': price,
-                # 'price_subtotal': taxes['total_excluded'],
             })
             if self.env.context.get('import_file', False) and not self.env.user.user_has_groups(
                     'account.group_account_manager'):
@@ -438,5 +324,4 @@ class RentSaleOrderLine(models.Model):
     def _compute_is_late(self):
         now = fields.Date.today()
         for line in self:
-            # By default, an order line is considered late only if it has one hour of delay
             line.is_late = line.return_date and line.return_date < now
