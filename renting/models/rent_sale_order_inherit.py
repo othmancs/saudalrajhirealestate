@@ -4,7 +4,7 @@ from datetime import timedelta, date, datetime
 from dateutil.relativedelta import relativedelta
 
 from odoo import models, fields, api, _
-from odoo.exceptions import UserError
+from odoo.exceptions import UserError, ValidationError
 from odoo.tools import float_compare, format_datetime, format_time
 
 
@@ -30,16 +30,21 @@ class RentSaleOrder(models.Model):
     contract_extra_maintenance_cost = fields.Float(string='تكلفة الصيانة الاضافية')
     contractor_pen = fields.Char(string='رسوم متأخرات')
     amount_remain = fields.Float(string='اجمالي المتبقي', compute='_get_remain')
-    # invoice_number = fields.Integer(string='Number Of Invoices')
     invoice_number = fields.Integer(string='Number Of Invoices', default=0)
+    
     @api.constrains('invoice_number')
     def _check_invoice_number_is_int(self):
         for rec in self:
             if rec.invoice_number and not isinstance(rec.invoice_number, int):
-                raise ValidationError(_("Number Of Invoices must be an integer."))
+                try:
+                    # حاول تحويل القيمة إلى عدد صحيح
+                    rec.invoice_number = int(rec.invoice_number)
+                except (ValueError, TypeError):
+                    raise ValidationError(_("Number Of Invoices must be an integer."))
+    
     order_line = fields.One2many('sale.order.line', 'order_id', string='Order Lines',
-                                 states={'cancel': [('readonly', True)], 'done': [('readonly', True)]}, copy=True,
-                                 auto_join=True)
+                               states={'cancel': [('readonly', True)], 'done': [('readonly', True)]}, copy=True,
+                               auto_join=True)
 
     order_property_state = fields.One2many('rent.sale.state', 'sale_order_id', string='الحالة')
 
@@ -134,8 +139,15 @@ class RentSaleOrder(models.Model):
 
     def create_order_invoices(self):
         for rec in self:
-            if rec.invoice_number <= 0:
+            # تحقق من أن invoice_number هو عدد صحيح
+            try:
+                invoice_num = int(rec.invoice_number)
+            except (ValueError, TypeError):
+                raise UserError(_('عدد الفواتير يجب أن يكون رقماً صحيحاً'))
+            
+            if invoice_num <= 0:
                 raise UserError(_('من فضلك اكتب عدد الفواتير'))
+            
             rec.order_contract_invoice = False
             fromdate = rec.fromdate
             d1 = fields.Datetime.from_string(rec.fromdate)
@@ -146,10 +158,10 @@ class RentSaleOrder(models.Model):
                 raise UserError(_('يجب اختيار مدة العقد بصورة صحيحة'))
 
             diff = 0
-            diff = total_contract_period.days / rec.invoice_number
+            diff = total_contract_period.days / invoice_num
             diff = round(diff, 0)
 
-            for i in range(1, rec.invoice_number + 1):
+            for i in range(1, invoice_num + 1):
                 total_other_amount = sum((
                     i.insurance_value + i.contract_admin_fees + i.contract_service_fees + 
                     i.contract_admin_sub_fees + i.contract_service_sub_fees
@@ -160,7 +172,7 @@ class RentSaleOrder(models.Model):
 
                 total_property_amount_without_tax = sum((i.product_uom_qty * i.price_unit) for i in rec.order_line)
 
-                property_amount_per_inv = total_property_amount_without_tax / rec.invoice_number
+                property_amount_per_inv = total_property_amount_without_tax / invoice_num
 
                 total_tax_first_inv = sum(
                     (property_amount_per_inv + taxed_total_other_amount) * (tax.amount / 100) for tax in
@@ -171,7 +183,7 @@ class RentSaleOrder(models.Model):
 
                 if i == 1:
                     amount = property_amount_per_inv + total_other_amount + total_tax_first_inv
-                if i == rec.invoice_number:
+                if i == invoice_num:
                     amount = total_property_amount_without_tax - sum(rec.order_contract_invoice.mapped('amount'))
                 else:
                     amount = property_amount_per_inv + total_tax
@@ -181,7 +193,7 @@ class RentSaleOrder(models.Model):
                         'name': "فاتورة رقم " + str(i),
                         'sequence': i,
                         'fromdate': fromdate,
-                        'todate': rec.todate if rec.invoice_number == i else todate,
+                        'todate': rec.todate if invoice_num == i else todate,
                         'amount': amount,
                         'sale_order_id': rec.id,
                     })
@@ -192,6 +204,9 @@ class RentSaleOrder(models.Model):
         self.get_invoice_number()
 
     def get_invoice_number(self):
+        if not self.fromdate or not self.todate:
+            return 0
+            
         diff = relativedelta(self.todate, self.fromdate)
         m = month = 0
         if diff.years != 0:
@@ -254,6 +269,13 @@ class RentSaleOrder(models.Model):
 
     @api.model
     def create(self, vals):
+        # تحقق من أن invoice_number هو عدد صحيح عند الإنشاء
+        if 'invoice_number' in vals:
+            try:
+                vals['invoice_number'] = int(vals['invoice_number'])
+            except (ValueError, TypeError):
+                raise UserError(_('عدد الفواتير يجب أن يكون رقماً صحيحاً'))
+        
         result = super(RentSaleOrder, self).create(vals)
         if result.invoice_number <= 0 and result.is_rental_order:
             raise UserError(_('من فضلك اكتب عدد الفواتير'))
