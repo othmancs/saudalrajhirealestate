@@ -190,14 +190,10 @@ class RentSaleOrder(models.Model):
         self.invoice_number = month
 
     def action_confirm(self):
-        if self.invoice_number == 0:
-            # self.get_invoice_number()
-            raise UserError(_('من فضلك اكتب عدد الفواتير'))
         result = super(RentSaleOrder, self).action_confirm()
         if self.is_rental_order:
             self.create_order_invoices()
         return result
-
     full_invoiced = fields.Boolean(string="Fully Invoiced", compute="_compute_full_invoiced", store=True)
     no_of_invoiced = fields.Integer(string="عدد الفواتير المفوترة", compute="compute_no_invoiced", store=True)
     no_of_not_invoiced = fields.Integer(string="عدد الفواتير الغير مفوترة", compute="compute_no_invoiced", store=True)
