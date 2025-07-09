@@ -30,7 +30,8 @@ class RentSaleOrder(models.Model):
     contract_extra_maintenance_cost = fields.Float(string='تكلفة الصيانة الاضافية')
     contractor_pen = fields.Char(string='رسوم متأخرات')
     amount_remain = fields.Float(string='اجمالي المتبقي', compute='_get_remain')
-    invoice_number = fields.Integer(string='Number Of Invoices')
+    # invoice_number = fields.Integer(string='Number Of Invoices')
+    invoice_number = fields.Integer(string='Number Of Invoices', default=0)
     order_line = fields.One2many('sale.order.line', 'order_id', string='Order Lines',
                                  states={'cancel': [('readonly', True)], 'done': [('readonly', True)]}, copy=True,
                                  auto_join=True)
