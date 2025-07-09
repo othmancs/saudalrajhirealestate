@@ -135,12 +135,14 @@ class SaleOrder(models.Model):
                 _logger.debug(f"نص الجدول الموجود:\n{table_text}")
     
                 # تحليل الصفوف في الجدول
-                # نبحث عن الصفوف التي تحتوي على قيم مالية (مثل 25000.00) وتواريخ
                 payment_rows = []
                 for line in table_text.split('\n'):
                     line = line.strip()
-                    if (re.search(r'\d{5,}\.\d{2}', line) or  # البحث عن قيم مالية كبيرة
-                       (re.search(r'\d{4}-\d{2}-\d{2}.*\d{4}-\d{2}-\d{2}', line)):  # البحث عن تواريخ
+                    # البحث عن قيم مالية كبيرة
+                    if re.search(r'\d{5,}\.\d{2}', line):
+                        payment_rows.append(line)
+                    # أو البحث عن تواريخ متعددة في نفس السطر
+                    elif re.search(r'\d{4}-\d{2}-\d{2}.*\d{4}-\d{2}-\d{2}', line):
                         payment_rows.append(line)
     
                 # إذا كان لدينا صفوف واضحة، نستخدمها
@@ -150,7 +152,6 @@ class SaleOrder(models.Model):
                     return payment_count
     
                 # إذا لم نجد صفوفاً واضحة، نستخدم طريقة بديلة
-                # نحسب عدد الأسطر التي تحتوي على قيم مالية بعد العناوين
                 all_rows = [row.strip() for row in table_text.split('\n') if row.strip()]
                 payment_count = 0
                 
@@ -158,8 +159,7 @@ class SaleOrder(models.Model):
                     if re.search(r'\d+\.\d{2}', row):  # أي سطر يحتوي على قيمة مالية
                         payment_count += 1
     
-                # في الجدول المقدم، نرى أن هناك صفين للعناوين وصفين للبيانات
-                # لذا نطرح 2 إذا كان العدد أكبر من 2
+                # طرح عدد صفوف العناوين إذا كان العدد أكبر من 2
                 if payment_count > 2:
                     payment_count -= 2
                     _logger.info(f"تم العثور على {payment_count} دفعات في الجدول بعد استبعاد العناوين")
