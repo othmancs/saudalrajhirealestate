@@ -42,11 +42,6 @@ class SaleOrder(models.Model):
         string='رسالة التحليل',
         compute='_compute_pending_payments_count'
     )
-    
-    invoice_number = fields.Char(
-        string='عدد الدفعات (فاتورة)',
-        help='يتم تعبئته تلقائياً بعد تحليل PDF بعدد الدفعات المستخرجة'
-    )
 
     @api.depends('order_line', 'rental_attachment_ids')
     def _compute_pending_payments_count(self):
@@ -68,7 +63,7 @@ class SaleOrder(models.Model):
             pdf_data = self._safe_read_attachment(pdf_attachment)
             
             if not pdf_data:
-                self.pdf_analysis_message = 'تعذر قراءة ملف PDF - قد يكون الملف تالفاً'
+                self.pdf_analysis_message = 'تعذر قراءة ملف PDF'
                 self.pdf_analysis_status = 'error'
                 return
                 
@@ -76,19 +71,18 @@ class SaleOrder(models.Model):
             
             if payment_count > 0:
                 self.pending_payments_count = payment_count
-                self.invoice_number = str(payment_count)
                 self.pdf_analysis_status = 'analyzed'
-                self.pdf_analysis_message = f'تم تحليل الملف بنجاح - عدد الدفعات: {payment_count}'
+                self.pdf_analysis_message = f'تم العثور على {payment_count} دفعات في الجدول'
             elif payment_count == 0:
                 self.pdf_analysis_status = 'analyzed'
-                self.pdf_analysis_message = 'تم تحليل الملف ولكن لم يتم العثور على دفعات في الجدول'
+                self.pdf_analysis_message = 'لم يتم العثور على دفعات في الجدول'
             else:
                 self.pdf_analysis_status = 'error'
-                self.pdf_analysis_message = 'تعذر تحليل جدول الدفعات - يرجى التأكد من تنسيق الملف'
+                self.pdf_analysis_message = 'خطأ في تحليل ملف PDF'
                 
         except Exception as e:
             self.pdf_analysis_status = 'error'
-            self.pdf_analysis_message = f'خطأ في التحليل: {str(e)} - يرجى مراجعة السجلات للتفاصيل'
+            self.pdf_analysis_message = f'خطأ في التحليل: {str(e)}'
             _logger.error(f"Failed to analyze PDF for order {self.id}: {str(e)}", exc_info=True)
 
     def _safe_read_attachment(self, attachment):
@@ -104,7 +98,6 @@ class SaleOrder(models.Model):
         except Exception as e:
             _logger.error(f"Error reading attachment: {str(e)}")
             return None
-
     def _analyze_pdf_content(self, pdf_data):
         """تحليل محتوى PDF واستخراج عدد الدفعات من الجدول المحدد"""
         try:
@@ -119,45 +112,52 @@ class SaleOrder(models.Model):
                 
                 _logger.debug(f"النص المستخرج من PDF:\n{text[:1000]}...")
                 
-                # تحسين أنماط البحث عن الجدول
+                # البحث عن الجدول المحدد
                 table_patterns = [
-                    r'(?:Rent Payments Schedule|جدول سداد الدفعات).*?(?:Amount|مقدار).*?(?:Due Date|تاريخ الاستحقاق)(.*?)(?=\n\s*\n|\Z)',
-                    r'(?:Payment|دفعة)\s*(?:No|رقم).*?(?:Date|تاريخ).*?(?:Amount|مقدار)(.*?)(?=\n\s*\n|\Z)',
-                    r'(?:Installment|قسط)\s*(?:No|رقم).*?(?:Date|تاريخ).*?(?:Amount|مقدار)(.*?)(?=\n\s*\n|\Z)'
+                    r'Rent Payments Schedule.*?جدول سداد الدفعات(.*?)(?=\n\s*\n|\Z)',
+                    r'جدول سداد الدفعات.*?Rent Payments Schedule(.*?)(?=\n\s*\n|\Z)',
+                    r'Rent Payments Schedule.*?Amount.*?(\d+\.\d{2}.*?)(?=\n\s*\n|\Z)'
                 ]
                 
                 table_text = ""
                 for pattern in table_patterns:
-                    match = re.search(pattern, text, re.DOTALL | re.IGNORECASE)
+                    match = re.search(pattern, text, re.DOTALL)
                     if match:
-                        table_text = match.group(1).strip()
-                        _logger.debug(f"تم العثور على الجدول المطلوب:\n{table_text}")
+                        table_text = match.group(1)
+                        _logger.debug(f"تم العثور على الجدول المطلوب")
                         break
                 
                 if not table_text:
                     _logger.warning("لم يتم العثور على الجدول المطلوب")
                     return -1
                 
-                # تحسين استخراج الصفوف
-                rows = []
-                for line in table_text.split('\n'):
-                    line = line.strip()
-                    # البحث عن صفوف تحتوي على تاريخ و/أو مبلغ
-                    if re.search(r'(\d{1,2}[/-]\d{1,2}[/-]\d{2,4})|(\d+\.\d{2})', line):
-                        rows.append(line)
+                _logger.debug(f"نص الجدول الموجود:\n{table_text}")
                 
-                _logger.debug(f"الصفوف المستخرجة:\n{rows}")
+                # # استخراج الصفوف من الجدول
+                # rows = [row.strip() for row in table_text.split('\n') if row.strip() and re.search(r'\d+\.\d{2}', row)]
+                
+                # if not rows:
+                #     _logger.warning("لا توجد صفوف في الجدول")
+                #     return -1
+                
+                # # حساب عدد الصفوف (كل صف يمثل دفعة)
+                # payment_count = len(rows)
+                
+                # _logger.info(f"تم العثور على {payment_count} دفعات في الجدول")
+                # return payment_count
+                # استخراج الصفوف من الجدول مع تخطي أول صفين (العناوين)
+                rows = [row.strip() for row in table_text.split('\n') if row.strip() and re.search(r'\d+\.\d{2}', row)][2:]
                 
                 if not rows:
-                    _logger.warning("لا توجد صفوف دفعات في الجدول")
+                    _logger.warning("لا توجد صفوف دفعات في الجدول بعد استبعاد العناوين")
                     return -1
                 
                 # حساب عدد الصفوف (كل صف يمثل دفعة)
                 payment_count = len(rows)
                 
-                _logger.info(f"تم العثور على {payment_count} دفعات في الجدول")
+                _logger.info(f"تم العثور على {payment_count} دفعات في الجدول بعد استبعاد العناوين")
                 return payment_count                
-    
+
         except Exception as e:
             _logger.error(f"خطأ في تحليل PDF: {str(e)}", exc_info=True)
             return -1
