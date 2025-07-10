@@ -1,4 +1,4 @@
-from odoo import models, api
+from odoo import models, api, fields
 import logging
 
 _logger = logging.getLogger(__name__)
@@ -24,3 +24,4 @@ class SaleOrderLine(models.Model):
         except Exception as e:
             _logger.error("Error in _name_search: %s", str(e))
             raise
+
