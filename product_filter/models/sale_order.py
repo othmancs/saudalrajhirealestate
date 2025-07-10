@@ -5,7 +5,8 @@ _logger = logging.getLogger(__name__)
 
 class SaleOrderLine(models.Model):
     _inherit = 'sale.order.line'
-    
+    unit_state = fields.Char(related='product_id.product_tmpl_id.unit_state', store=True)
+
     @api.model
     def _name_search(self, name='', args=None, operator='ilike', limit=100, name_get_uid=None):
         try:
