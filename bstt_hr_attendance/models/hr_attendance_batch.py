@@ -7,7 +7,15 @@ from odoo.tools import format_time
 from odoo import api, fields, models, _
 from odoo.exceptions import UserError
 from odoo.osv import expression
-from odoo.addons.resource.models.resource import float_to_time, HOURS_PER_DAY
+
+# تعريف ثابت للساعات في اليوم حسب سياسات الشركة
+HOURS_PER_DAY = 8.0
+
+# دالة لتحويل الرقم العشري إلى صيغة وقت (ساعة:دقيقة)
+def float_to_time(value):
+    hours = int(value)
+    minutes = int(round((value - hours) * 60))
+    return "%02d:%02d" % (hours, minutes)
 
 
 class HrAttendanceBatch(models.Model):
@@ -78,7 +86,6 @@ class HrAttendanceBatch(models.Model):
         for rec in self:
             if rec.check_in and (rec.department_id or rec.category_ids):
                 if rec.category_ids or rec.department_id:
-                    # if not self.check_in or not self.check_out or not self.worked_hours:
                     if not rec.check_in and rec.worked_hours == 0.0:
                         raise UserError(_("You must select Check IN Date and write worked hours."))
 
@@ -97,8 +104,8 @@ class HrAttendanceBatch(models.Model):
                 employee_ids = self.env['hr.employee'].search(domain)
                 for employee in employee_ids:
                     check_in_date = rec.check_in
-                    if rec.check_in_to and rec.diff_dates().days+1 > 0:
-                        for i in range(rec.diff_dates().days+1):
+                    if rec.check_in_to and rec.diff_dates().days + 1 > 0:
+                        for i in range(rec.diff_dates().days + 1):
                             line = self.env['hr.attendance.batch.line'].new({
                                 'employee_id': employee.id,
                                 'check_in_date': check_in_date,
