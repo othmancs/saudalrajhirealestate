@@ -106,7 +106,7 @@
             <field name="name">customer.tickets.view.tree</field>
             <field name="model">customer.tickets</field>
             <field name="arch" type="xml">
-                <tree string="Tickets" js_class="sale_list_dashboard"
+                <list string="Tickets" js_class="sale_list_dashboard"
                       decoration-danger="state in ('reject')"
                       decoration-muted="state in ('submit')"
                       decoration-info="state in ('in_progress')"
@@ -122,11 +122,10 @@
                     <field name="model_id" optional="hide"/>
                     <field name="subscription_id" optional="hide"/>
                     <field name="created_days" optional="hide"/>
-                    <!--                    <field name="ticket_stage_id" string="Ticket Support Stage" optional="hide"/>-->
                     <field name="ticket_solve_date" optional="hide"/>
                     <field name="company_id" optional="show" readonly="1" groups="base.group_multi_company"/>
                     <field name="state"/>
-                </tree>
+                </list>
             </field>
         </record>
 
