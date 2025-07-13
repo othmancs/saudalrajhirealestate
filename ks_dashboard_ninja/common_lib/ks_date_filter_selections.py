@@ -1,19 +1,22 @@
-# -*- coding: utf-8 -*-
-
 from odoo.fields import datetime
 from odoo import _
 from odoo.exceptions import ValidationError
 from datetime import timedelta
 import pytz
 import os
+import ast
 import os.path
 from dateutil import rrule
 from dateutil.relativedelta import relativedelta
+from odoo.tools.safe_eval import safe_eval
 
 
 
 def ks_get_date(ks_date_filter_selection, self, type):
-    timezone = self._context.get('tz') or self.env.user.tz
+    try:
+        timezone = self._context.get('tz')
+    except Exception as e:
+        timezone = self.env.user.tz
 
     if not timezone:
         ks_tzone = os.environ.get('TZ')
@@ -32,13 +35,79 @@ def ks_get_date(ks_date_filter_selection, self, type):
 
     series = ks_date_filter_selection
     if ks_date_filter_selection in ['t_fiscal_year', 'n_fiscal_year', 'ls_fiscal_year']:
-        return eval("ks_date_series_" + series.split("_")[0])(series.split("_")[1], timezone, type,self)
+        function_name = globals()["ks_date_series_" + series.split("_")[0]]
+        return function_name(series.split("_")[1], timezone, type,self)
     else:
-        return eval("ks_date_series_" + series.split("_")[0])(series.split("_")[1], timezone, type,self)
+        function_name = globals()["ks_date_series_" + series.split("_")[0]]
+        return function_name(series.split("_")[1],timezone, type,self)
+
+def ks_date_series_td(ks_date_selection, timezone, type, self=None):
+    ks_function_name = globals()["ks_get_date_range_from_td_" + ks_date_selection]
+    return ks_function_name(timezone, type, self)
+
+def ks_get_date_range_from_td_year(timezone, type,self):
+    ks_date_data = {}
+    date = datetime.now(pytz.timezone(timezone))
+    year = date.year
+    start_date = datetime(year, 1, 1)
+    end_date = date
+    if type == 'date':
+        ks_date_data["selected_start_date"] = datetime.strptime(start_date.strftime("%Y-%m-%d"), '%Y-%m-%d')
+        ks_date_data["selected_end_date"] = datetime.strptime(end_date.strftime("%Y-%m-%d"), '%Y-%m-%d')
+    else:
+        ks_date_data["selected_start_date"] = ks_convert_into_utc(start_date, timezone)
+        ks_date_data["selected_end_date"] = ks_convert_into_utc(end_date, timezone)
+    return ks_date_data
+
+def ks_get_date_range_from_td_month(timezone, type,self):
+    ks_date_data = {}
+
+    date = datetime.now(pytz.timezone(timezone))
+    year = date.year
+    month = date.month
+    start_date = datetime(year, month, 1)
+    end_date = date
+    if type == 'date':
+        ks_date_data["selected_start_date"] = datetime.strptime(start_date.strftime("%Y-%m-%d"), '%Y-%m-%d')
+        ks_date_data["selected_end_date"] = datetime.strptime(end_date.strftime("%Y-%m-%d"), '%Y-%m-%d')
+    else:
+        ks_date_data["selected_start_date"] = ks_convert_into_utc(start_date, timezone)
+        ks_date_data["selected_end_date"] = ks_convert_into_utc(end_date, timezone)
+    return ks_date_data
+def ks_get_date_range_from_td_week(timezone, type,self):
+    ks_date_data = {}
+    lang = self.env['res.lang']._lang_get(self.env.user.lang)
+    week_start = lang.week_start
+    start_Date = rrule.weekday(int(week_start) - 1)
+    start_date = datetime.today() + relativedelta(weekday=start_Date(-1))
+    end_date = datetime.now(pytz.timezone(timezone))
+    start_date = datetime.strptime(start_date.strftime("%Y-%m-%d"), '%Y-%m-%d')
+    if type == 'date':
+        ks_date_data["selected_start_date"] = start_date
+        end_date = datetime.strptime(end_date.strftime("%Y-%m-%d"), '%Y-%m-%d')
+        ks_date_data["selected_end_date"] = end_date
+    else:
+        ks_date_data["selected_start_date"] = ks_convert_into_utc(start_date, timezone)
+        ks_date_data["selected_end_date"] = ks_convert_into_utc(end_date, timezone)
+    return ks_date_data
+def ks_get_date_range_from_td_quarter(timezone, type,self):
+    ks_date_data = {}
+    date = datetime.now(pytz.timezone(timezone))
+    year = date.year
+    quarter = int((date.month - 1) / 3) + 1
+    start_date = datetime(year, 3 * quarter - 2, 1)
+    end_date = date
+    if type == 'date':
+        ks_date_data["selected_start_date"] = datetime.strptime(start_date.strftime("%Y-%m-%d"), '%Y-%m-%d')
+        ks_date_data["selected_end_date"] = datetime.strptime(end_date.strftime("%Y-%m-%d"), '%Y-%m-%d')
+    else:
+        ks_date_data["selected_start_date"] = ks_convert_into_utc(start_date, timezone)
+        ks_date_data["selected_end_date"] = ks_convert_into_utc(end_date, timezone)
+    return ks_date_data
 
 
 # Last Specific Days Ranges : 7, 30, 90, 365
-def ks_date_series_l(ks_date_selection, timezone, type,self):
+def ks_date_series_l(ks_date_selection, timezone, type, self=None):
     ks_date_data = {}
     date_filter_options = {
         'day': 0,
@@ -65,17 +134,20 @@ def ks_date_series_l(ks_date_selection, timezone, type,self):
 
 # Current Date Ranges : Week, Month, Quarter, year
 def ks_date_series_t(ks_date_selection, timezone, type, self=None):
-    return eval("ks_get_date_range_from_" + ks_date_selection)("current", timezone, type,self)
+    ks_function_name = globals()["ks_get_date_range_from_" + ks_date_selection]
+    return ks_function_name("current", timezone, type,self)
 
 
 # Previous Date Ranges : Week, Month, Quarter, year
 def ks_date_series_ls(ks_date_selection, timezone, type,self=None):
-    return eval("ks_get_date_range_from_" + ks_date_selection)("previous", timezone, type,self)
+    ks_function_name = globals()["ks_get_date_range_from_" + ks_date_selection]
+    return ks_function_name("previous", timezone, type,self)
 
 
 # Next Date Ranges : Day, Week, Month, Quarter, year
 def ks_date_series_n(ks_date_selection, timezone, type,self=None):
-    return eval("ks_get_date_range_from_" + ks_date_selection)("next", timezone, type, self)
+    ks_function_name = globals()["ks_get_date_range_from_" + ks_date_selection]
+    return ks_function_name("next", timezone, type, self)
 
 
 def ks_get_date_range_from_day(date_state, timezone, type,self):
@@ -91,7 +163,6 @@ def ks_get_date_range_from_day(date_state, timezone, type,self):
     end_date = datetime(date.year, date.month, date.day) + timedelta(days=1, seconds=-1)
     if type == 'date':
         ks_date_data["selected_start_date"] = datetime.strptime(start_date.strftime("%Y-%m-%d"), '%Y-%m-%d')
-        ks_date_data["selected_end_date"] = end_date
         ks_date_data["selected_end_date"] = datetime.strptime(end_date.strftime("%Y-%m-%d"), '%Y-%m-%d')
     else:
         ks_date_data["selected_start_date"] = ks_convert_into_utc(start_date,timezone)
@@ -123,7 +194,6 @@ def ks_get_date_range_from_week(date_state, timezone, type,self):
         end_date = start_date + timedelta(days=6, hours=23, minutes=59, seconds=59, milliseconds=59)
         ks_date_data["selected_end_date"] = ks_convert_into_utc(end_date, timezone)
     return ks_date_data
-
 
 def ks_get_date_range_from_month(date_state, timezone, type,self):
     ks_date_data = {}

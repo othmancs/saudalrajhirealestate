@@ -242,7 +242,7 @@
             <!--            <field name="ks_chart_measure_field" eval="[ref('base.field_res_country__phone_code')]"/>-->
             <field name="ks_chart_relation_groupby" eval="ref('base.field_res_country__currency_id')"/>
             <field name="ks_domain">[["id","&lt;",40]]</field>
-            <field name="ks_chart_item_color">warm</field>
+            <field name="ks_chart_item_color">dark</field>
             <field name="ks_dashboard_item_type">ks_bar_chart</field>
             <field name="ks_company_id" eval="0"/>
 
@@ -258,7 +258,7 @@
             <field name="ks_chart_measure_field" eval="[(6, 0, [ref('base.field_res_country__phone_code')])]"/>
             <field name="ks_chart_relation_groupby" eval="ref('base.field_res_country__currency_id')"/>
             <field name="ks_domain">[["id","&lt;",10]]</field>
-            <field name="ks_chart_item_color">warm</field>
+            <field name="ks_chart_item_color">dark</field>
             <field name="ks_dashboard_item_type">ks_line_chart</field>
             <field name="ks_company_id" eval="0"/>
 
@@ -296,7 +296,7 @@
             <field name="ks_chart_measure_field" eval="[(6, 0, [ref('base.field_res_country__phone_code')])]"/>
             <field name="ks_chart_relation_groupby" eval="ref('base.field_res_country__currency_id')"/>
             <field name="ks_domain">[["id","&lt;",10]]</field>
-            <field name="ks_chart_item_color">neon</field>
+            <field name="ks_chart_item_color">material</field>
             <field name="ks_dashboard_item_type">ks_horizontalBar_chart</field>
             <field name="ks_company_id" eval="0"/>
         </record>
@@ -308,7 +308,7 @@
             <field name="ks_chart_measure_field" eval="[(6, 0, [ref('base.field_res_country__phone_code')])]"/>
             <field name="ks_chart_relation_groupby" eval="ref('base.field_res_country__currency_id')"/>
             <field name="ks_domain">[["id","&lt;",10]]</field>
-            <field name="ks_chart_item_color">cool</field>
+            <field name="ks_chart_item_color">moonrise</field>
             <field name="ks_dashboard_item_type">ks_polarArea_chart</field>
             <field name="ks_company_id" eval="0"/>
         </record>
@@ -320,7 +320,7 @@
             <field name="ks_chart_measure_field" eval="[(6, 0, [ref('base.field_res_country__phone_code')])]"/>
             <field name="ks_chart_relation_groupby" eval="ref('base.field_res_country__name')"/>
             <field name="ks_domain">[["id","&lt;",10]]</field>
-            <field name="ks_chart_item_color">neon</field>
+            <field name="ks_chart_item_color">moonrise</field>
             <field name="ks_record_data_limit">100</field>
             <field name="ks_show_data_value">1</field>
             <field name="ks_unit_selection">monetary</field>
@@ -363,7 +363,7 @@
             <field name="ks_chart_measure_field" eval="[(6, 0, [ref('base.field_res_country__phone_code')])]"/>
             <field name="ks_chart_relation_groupby" eval="ref('base.field_res_country__currency_id')"/>
             <field name="ks_domain">[["id","&lt;",10]]</field>
-            <field name="ks_chart_item_color">neon</field>
+            <field name="ks_chart_item_color">dark</field>
             <field name="ks_dashboard_item_type">ks_pie_chart</field>
             <field name="ks_company_id" eval="0"/>
         </record>
@@ -374,7 +374,7 @@
             <field name="ks_model_id" eval="ref('base.model_res_country')"/>
             <field name="ks_chart_measure_field" eval="[(6, 0, [ref('base.field_res_country__phone_code')])]"/>
             <field name="ks_chart_relation_groupby" eval="ref('base.field_res_country__code')"/>
-            <field name="ks_chart_item_color">neon</field>
+            <field name="ks_chart_item_color">default</field>
             <field name="ks_dashboard_item_type">ks_area_chart</field>
             <field name="ks_company_id" eval="0"/>
         </record>
@@ -468,7 +468,7 @@
         <field name="ks_chart_measure_field" eval="[(6, 0, [ref('base.field_res_country__phone_code')])]"/>
         <field name="ks_chart_relation_groupby" eval="ref('base.field_res_country__name')"/>
         <field name="ks_semi_circle_chart">1</field>
-        <field name="ks_chart_item_color">warm</field>
+        <field name="ks_chart_item_color">material</field>
         <field name="ks_record_data_limit">10</field>
         <field name="ks_show_data_value">1</field>
         <field name="ks_unit_selection">monetary</field>
@@ -497,7 +497,7 @@
         <field name="ks_model_id" eval="ref('base.model_res_country')"/>
         <field name="ks_chart_measure_field" eval="[(6, 0, [ref('base.field_res_country__phone_code')])]"/>
         <field name="ks_chart_relation_groupby" eval="ref('base.field_res_country__code')"/>
-        <field name="ks_chart_item_color">warm</field>
+        <field name="ks_chart_item_color">material</field>
         <field name="ks_record_data_limit">25</field>
         <field name="ks_show_data_value">1</field>
         <field name="ks_unit_selection">monetary</field>
@@ -511,7 +511,7 @@
         <field name="ks_model_id" eval="ref('base.model_res_country')"/>
         <field name="ks_chart_measure_field" eval="[(6, 0, [ref('base.field_res_country__phone_code')])]"/>
         <field name="ks_chart_relation_groupby" eval="ref('base.field_res_country__name')"/>
-        <field name="ks_chart_item_color">warm</field>
+        <field name="ks_chart_item_color">moonrise</field>
         <field name="ks_record_data_limit">10</field>
         <field name="ks_show_data_value">1</field>
         <field name="ks_unit_selection">monetary</field>
@@ -525,7 +525,7 @@
         <field name="ks_model_id" eval="ref('base.model_res_country')"/>
         <field name="ks_chart_measure_field" eval="[(6, 0, [ref('base.field_res_country__phone_code')])]"/>
         <field name="ks_chart_relation_groupby" eval="ref('base.field_res_country__name')"/>
-        <field name="ks_chart_item_color">neon</field>
+        <field name="ks_chart_item_color">default</field>
         <field name="ks_semi_circle_chart">1</field>
         <field name="ks_record_data_limit">25</field>
         <field name="ks_show_data_value">1</field>

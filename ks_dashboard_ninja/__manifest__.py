@@ -1,13 +1,6 @@
-# -*- coding: utf-8 -*-
 {
-	'name': 'Dashboard Ninja',
-
-	'summary': """
-Ksolves Dashboard Ninja gives you a wide-angle view of your business that you might have missed. Get smart visual data with interactive and engaging dashboards for your Odoo ERP.  Odoo Dashboard, CRM Dashboard, Inventory Dashboard, Sales Dashboard, Account Dashboard, Invoice Dashboard, Revamp Dashboard, Best Dashboard, Odoo Best Dashboard, Odoo Apps Dashboard, Best Ninja Dashboard, Analytic Dashboard, Pre-Configured Dashboard, Create Dashboard, Beautiful Dashboard, Customized Robust Dashboard, Predefined Dashboard, Multiple Dashboards, Advance Dashboard, Beautiful Powerful Dashboards, Chart Graphs Table View, All In One Dynamic Dashboard, Accounting Stock Dashboard, Pie Chart Dashboard, Modern Dashboard, Dashboard Studio, Dashboard Builder, Dashboard Designer, Odoo Studio.  Revamp your Odoo Dashboard like never before! It is one of the best dashboard odoo apps in the market.
-""",
-
+	'name': 'Ninja Dashboard',
 	'description': """
-Dashboard Ninja v14.0,
         Odoo Dashboard,
         Dashboard,
         Dashboards,
@@ -37,10 +30,6 @@ Dashboard Ninja v14.0,
         Charts Dashboard,
         Invoice Dashboard,
         Project management,
-        ksolves,
-        ksolves apps,
-        Ksolves India Ltd.
-        Ksolves India  Limited,
         odoo dashboard apps
         odoo dashboard app
         odoo dashboard module
@@ -63,35 +52,104 @@ Dashboard Ninja v14.0,
         odoo dashboard module
 """,
 
-	'author': 'Ksolves India Ltd.',
-
 	'license': 'OPL-1',
 
 	'currency': 'EUR',
 
-	'price': '363',
+	'price': '358.99',
 
-	'website': 'http://dn15demo.kappso.in/web/demo_login',
+	'category': 'Services',
+	'version': '18.0.0.0',
 
-	'maintainer': 'Ksolves India Ltd.',
+	'images': ['static/description/Flag day.gif'],
 
-	'live_test_url': 'http://dn15demo.kappso.in/web/demo_login',
+	'depends': ['base', 'web', 'base_setup', 'bus','base_geolocalize','spreadsheet_dashboard', 'project'],
 
-	'category': 'Tools',
+	'data': [
+		'security/ir.model.access.csv',
+		'security/ks_security_groups.xml',
+		'data/ks_default_data.xml',
+		'data/ks_mail_cron.xml',
+		'data/sequence.xml',
+		'views/ks_dashboard_ninja_view.xml',
+		'views/ks_dashboard_ninja_item_view.xml',
+		'views/ks_dashboard_group_by.xml',
+		'views/ks_dashboard_csv_group_by.xml',
+		'views/ks_dashboard_action.xml',
+		'views/ks_import_dashboard_view.xml',
+		'wizard/ks_create_dashboard_wiz_view.xml',
+		'wizard/ks_duplicate_dashboard_wiz_view.xml',
+	],
 
-        'version': '18.0.1.0.0',
-
-	'support': 'sales@ksolves.com',
-
-	'images': ['static/description/dashboard_ninja.gif'],
-
-	'depends': ['base', 'web', 'base_setup', 'bus'],
-
-	'data': ['security/ir.model.access.csv', 'security/ks_security_groups.xml', 'data/ks_default_data.xml', 'views/ks_dashboard_ninja_view.xml', 'views/ks_dashboard_ninja_item_view.xml', 'views/ks_dashboard_action.xml', 'views/ks_import_dashboard_view.xml'],
-
-	'demo': ['demo/ks_dashboard_ninja_demo.xml'],
-
-	'assets': {'web.assets_backend': ['ks_dashboard_ninja/static/src/css/ks_dashboard_ninja.scss', 'ks_dashboard_ninja/static/src/css/ks_dashboard_ninja_item.css', 'ks_dashboard_ninja/static/src/css/ks_icon_container_modal.css', 'ks_dashboard_ninja/static/src/css/ks_dashboard_item_theme.css', 'ks_dashboard_ninja/static/src/css/ks_dn_filter.css', 'ks_dashboard_ninja/static/src/css/ks_toggle_icon.css', 'ks_dashboard_ninja/static/src/css/ks_dashboard_options.css', 'ks_dashboard_ninja/static/src/js/ks_global_functions.js', 'ks_dashboard_ninja/static/src/js/ks_dashboard_ninja.js', 'ks_dashboard_ninja/static/src/js/ks_to_do_dashboard.js', 'ks_dashboard_ninja/static/src/js/ks_filter_props.js', 'ks_dashboard_ninja/static/src/js/ks_color_picker.js', 'ks_dashboard_ninja/static/src/js/ks_dashboard_ninja_item_preview.js', 'ks_dashboard_ninja/static/src/js/ks_image_basic_widget.js', 'ks_dashboard_ninja/static/src/js/ks_dashboard_item_theme.js', 'ks_dashboard_ninja/static/src/js/ks_widget_toggle.js', 'ks_dashboard_ninja/static/src/js/ks_import_dashboard.js', 'ks_dashboard_ninja/static/src/js/ks_domain_fix.js', 'ks_dashboard_ninja/static/src/js/ks_quick_edit_view.js', 'ks_dashboard_ninja/static/src/js/ks_dashboard_ninja_kpi_preview.js', 'ks_dashboard_ninja/static/src/js/ks_date_picker.js', 'ks_dashboard_ninja/static/lib/css/gridstack.min.css', 'ks_dashboard_ninja/static/lib/js/gridstack-h5.js', 'ks_dashboard_ninja/static/lib/js/Chart.bundle.min.js', 'ks_dashboard_ninja/static/src/css/ks_dashboard_ninja_pro.css', 'ks_dashboard_ninja/static/src/css/ks_to_do_item.css', 'ks_dashboard_ninja/static/src/js/ks_dashboard_ninja_graph_preview.js', 'ks_dashboard_ninja/static/src/js/ks_dashboard_ninja_list_view_preview.js', 'ks_dashboard_ninja/static/src/js/ks_to_do_preview.js'], 'web.assets_qweb': ['ks_dashboard_ninja/static/src/xml/**/*']},
+	'assets': {
+		'ks_dashboard_ninja.ks_dashboard_lib': [
+			'/ks_dashboard_ninja/static/lib/css/gridstack.min.css',
+			'/ks_dashboard_ninja/static/lib/js/gridstack-h5.js',
+			'/ks_dashboard_ninja/static/lib/js/pdfmake.min.js',
+			'/ks_dashboard_ninja/static/lib/js/vfs_fonts.js',
+			'ks_dashboard_ninja/static/lib/js/Animated.js',
+			'ks_dashboard_ninja/static/lib/js/worldLow.js',
+			'ks_dashboard_ninja/static/lib/js/map.js',
+			'ks_dashboard_ninja/static/lib/js/index.js',
+			'ks_dashboard_ninja/static/lib/js/pdfmake.js',
+			'ks_dashboard_ninja/static/lib/js/percent.js',
+			'ks_dashboard_ninja/static/lib/js/pdf.min.js',
+			'ks_dashboard_ninja/static/lib/js/print.min.js',
+			'ks_dashboard_ninja/static/lib/js/Dataviz.js',
+			'ks_dashboard_ninja/static/lib/js/Material.js',
+			'ks_dashboard_ninja/static/lib/js/Moonrise.js',
+			'ks_dashboard_ninja/static/lib/js/xy.js',
+			'ks_dashboard_ninja/static/lib/js/radar.js',
+		],
+		'web.assets_backend': [
+							'web/static/lib/jquery/jquery.js',
+					'ks_dashboard_ninja/static/src/css/ks_dashboard_ninja.scss',
+					'ks_dashboard_ninja/static/src/css/ks_dashboard_ninja_item.css',
+					'ks_dashboard_ninja/static/src/css/ks_icon_container_modal.css',
+					'ks_dashboard_ninja/static/src/css/ks_dashboard_item_theme.css',
+					'ks_dashboard_ninja/static/src/css/ks_input_bar.css',
+					'ks_dashboard_ninja/static/src/css/ks_dn_filter.css',
+					'ks_dashboard_ninja/static/src/css/ks_toggle_icon.css',
+					'ks_dashboard_ninja/static/src/css/ks_flower_view.css',
+					'ks_dashboard_ninja/static/src/css/ks_map_view.css',
+					'ks_dashboard_ninja/static/src/css/ks_funnel_view.css',
+					'ks_dashboard_ninja/static/src/css/ks_dashboard_options.css',
+					'ks_dashboard_ninja/static/lib/css/Chart.min.css',
+					'ks_dashboard_ninja/static/src/js/ks_dashboard_ninja_new.js',
+					'ks_dashboard_ninja/static/src/js/ks_global_functions.js',
+					'ks_dashboard_ninja/static/lib/js/index.js',
+					'ks_dashboard_ninja/static/lib/js/pdfmake.js',
+					'ks_dashboard_ninja/static/lib/js/percent.js',
+					'ks_dashboard_ninja/static/lib/js/pdf.min.js',
+					'ks_dashboard_ninja/static/lib/js/print.min.js',
+					'ks_dashboard_ninja/static/lib/js/Dataviz.js',
+					'ks_dashboard_ninja/static/lib/js/Material.js',
+					'ks_dashboard_ninja/static/lib/js/Moonrise.js',
+					'ks_dashboard_ninja/static/lib/js/exporting.js',
+					'ks_dashboard_ninja/static/lib/js/pdfmake.js',
+					'ks_dashboard_ninja/static/lib/js/percent.js',
+					'ks_dashboard_ninja/static/src/js/ks_dashboard_ninja_new.js',
+					'ks_dashboard_ninja/static/src/js/ks_dashboard_graphs.js',
+					'ks_dashboard_ninja/static/src/js/ks_dashboard_kpi.js',
+					'ks_dashboard_ninja/static/src/js/ks_dashboard_tile.js',
+					'ks_dashboard_ninja/static/src/js/editdialog.js',
+					'ks_dashboard_ninja/static/src/js/ks_dashboard_to_do.js',
+					'ks_dashboard_ninja/static/src/js/ks_dashboard_list.js',
+					'ks_dashboard_ninja/static/src/js/ks_global_functions.js',
+                    'ks_dashboard_ninja/static/src/js/ks_form_view_dialog.js',
+					'ks_dashboard_ninja/static/lib/js/xy.js',
+					'ks_dashboard_ninja/static/lib/js/radar.js',
+					'ks_dashboard_ninja/static/src/css/style.css',
+					'ks_dashboard_ninja/static/src/js/ks_filter_props_new.js',
+					'ks_dashboard_ninja/static/src/js/domainfix.js',
+					'ks_dashboard_ninja/static/src/css/ks_dashboard_ninja_pro.css',
+					'ks_dashboard_ninja/static/src/css/ks_to_do_item.css',
+					'ks_dashboard_ninja/static/src/xml/**/*',
+					'ks_dashboard_ninja/static/src/css/ks_radial_chart.css',
+					'ks_dashboard_ninja/static/src/components/**/*',
+					'ks_dashboard_ninja/static/src/widgets/**/*',
+					],
+			   },
 
 	'uninstall_hook': 'uninstall_hook',
 }

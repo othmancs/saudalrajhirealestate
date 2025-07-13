@@ -3,7 +3,7 @@
 from odoo import api, fields, models
 
 
-class KSCreateDashboardWizard(models.TransientModel):
+class KSduplicateDashboardWizard(models.TransientModel):
     _name = 'ks.dashboard.duplicate.wizard'
     _description = 'Dashboard Duplicate Wizard'
 
@@ -24,16 +24,19 @@ class KSCreateDashboardWizard(models.TransientModel):
         dup_dash = self.env['ks_dashboard_ninja.board'].browse(dashboard_id).copy({'ks_dashboard_top_menu_id': self.ks_top_menu_id.id})
         context = {'ks_reload_menu': True, 'ks_menu_id': dup_dash.ks_dashboard_menu_id.id}
         dash_id = self.env['ks_dashboard_ninja.board'].browse(dashboard_id)
-        if not dup_dash.ks_dashboard_items_ids:
+        length_to_skip = len(dup_dash.ks_dashboard_items_ids.ids)
+
+        count = 0
+
+        if dup_dash.ks_dashboard_items_ids or length_to_skip == 0:
             for item in dash_id.ks_dashboard_items_ids:
+                if count < length_to_skip:
+                    count += 1
+                    continue
                 item.sudo().copy({'ks_dashboard_ninja_board_id': dup_dash.id})
         return {
             'type': 'ir.actions.client',
-            'name': "Dashboard Ninja",
-            'res_model': 'ks_deshboard_ninja.board',
-            'params': {'ks_dashboard_id': dup_dash.id},
-            'tag': 'ks_dashboard_ninja',
-            'context': self.with_context(context)._context
+            'tag': 'reload',
         }
 
 
@@ -42,24 +45,10 @@ class KSDeleteDashboardWizard(models.TransientModel):
     _description = 'Dashboard Delete Wizard'
 
 
-    def DeleteDashBoard(self):
-        '''this function returns acion id of ks.dashboard.duplicate.wizard'''
-        action = self.env['ir.actions.act_window']._for_xml_id(
-            'ks_dashboard_ninja.ks_delete_dashboard_wizard')
-        action['context'] = {'dashboard_id': self.id}
-        return action
-
-    def ks_delete_record(self):
+    def ks_delete_record(self, **kwargs):
         '''this function creats record of ks_dashboard_ninja.board and return dashboard action_id'''
-        dashboard_id = self._context.get('dashboard_id')
+        dashboard_id = kwargs.get('dashboard_id')
         self.env['ks_dashboard_ninja.board'].browse(dashboard_id).unlink()
-        context = {'ks_reload_menu': True, 'ks_menu_id': self.env['ir.ui.menu'].search([('name', '=', 'My Dashboard')])[0].id}
-        return {
-            'type': 'ir.actions.client',
-            'name': "Dashboard Ninja",
-            'res_model': 'ks_deshboard_ninja.board',
-            'params': {'ks_dashboard_id': 1},
-            'tag': 'ks_dashboard_ninja',
-            'context': self.with_context(context)._context
-        }
-
+        action = self.env['ir.actions.client']._for_xml_id(
+            'ks_dashboard_ninja.board_dashboard_action_window')
+        return action

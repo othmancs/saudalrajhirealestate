@@ -14,3 +14,6 @@ class KsDashboardNinjaBoardItemAction(models.Model):
     board_type = fields.Selection([('default', 'Default'), ('child', 'Child')])
     company_id = fields.Many2one('res.company', required=True, default=lambda self: self.env.company)
 
+
+    def write(self,vals):
+        return super(KsDashboardNinjaBoardItemAction, self).write(vals)
