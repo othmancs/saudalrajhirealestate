@@ -17,18 +17,18 @@
         <field name="arch" type="xml">
             <form>
                 <header>
-                    <button name="print_result" string="Print PDF" type="object" attrs="{'invisible':[('raw_output','in',['',[],False])]}" style="color: blue !important"/>
+                    <button name="print_result" string="Print PDF" type="object" invisible="raw_output in ['', [], False]" style="color: blue !important"/>
                 </header>
 
                 <sheet>
                     <group string="Examples">
                         <group colspan="4">
                             <field name="tips" widget="selection" nolabel="1"/>
-                            <button name="copy_query" type="object" style="color:green" string="Copy" attrs="{'invisible':[('tips','=',False)]}"/>
+                            <button name="copy_query" type="object" style="color:green" string="Copy" invisible="not tips"/>
                         </group>
 
                         <group colspan="4">
-                            <field name="tips_description" attrs="{'invisible':[('tips','=',False)]}"/>
+                            <field name="tips_description" invisible="not tips"/>
                         </group>
                     </group>
 
@@ -51,7 +51,7 @@
 
                     <group>
                         <field name="show_raw_output"/>
-                        <field name="raw_output" attrs="{'invisible':[('show_raw_output','=',False)]}"/>
+                        <field name="raw_output" invisible="not show_raw_output"/>
                     </group>
 
                     <div class="oe_chatter">
