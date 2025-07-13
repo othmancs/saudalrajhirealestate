@@ -104,7 +104,7 @@ Best Odoo Dashboard Apps
 
 	'category': 'Tools',
 
-	'version': '15.0.1.0.2',
+        'version': '18.0.1.0.0',
 
 	'support': 'sales@ksolves.com',
 
