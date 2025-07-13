@@ -3,7 +3,16 @@
 from lxml import etree
 from odoo import fields, models, _
 from odoo.tools.safe_eval import safe_eval
-from odoo.tools.view_validation import transfer_field_to_modifiers
+
+
+def transfer_field_to_modifiers(field, modifiers):
+    """Manual fallback for Odoo versions where this function is not exposed."""
+    modifiers.update({
+        'readonly': field.readonly,
+        'required': field.required,
+    })
+    if getattr(field, 'invisible', False):
+        modifiers['invisible'] = True
 
 
 class IrUiView(models.Model):
