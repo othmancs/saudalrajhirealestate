@@ -161,24 +161,23 @@ class AccountMove(models.Model):
         return ou_balance
 
     def _post(self, soft=True):
+        # Replace deprecated _post method with new posting logic
+        if soft:
+            return super()._post(soft)
+        
         ml_obj = self.env["account.move.line"]
         for move in self:
             if not move.company_id.ou_is_self_balanced:
                 continue
 
-            # If all move lines point to the same operating unit, there's no
-            # need to create a balancing move line
             if len(move.line_ids.operating_unit_id) <= 1:
                 continue
-            # Create balancing entries for un-balanced OU's.
+
             ou_balances = self._check_ou_balance(move)
             amls = []
             for ou_id in list(ou_balances.keys()):
-                # If the OU is already balanced, then do not continue
                 if move.company_id.currency_id.is_zero(ou_balances[ou_id]):
                     continue
-                # Create a balancing move line in the operating unit
-                # clearing account
                 line_data = self._prepare_inter_ou_balancing_move_line(
                     move, ou_id, ou_balances
                 )
@@ -255,3 +254,1731 @@ class AccountMove(models.Model):
                     )
                 )
         return True
+
+    def _check_balanced(self):
+        if self.env.context.get("wip"):
+            return True
+        return super()._check_balanced()
+
+    @api.constrains("line_ids")
+    def _check_ou(self):
+        for move in self:
+            if not move.company_id.ou_is_self_balanced:
+                continue
+            for line in move.line_ids:
+                if not line.operating_unit_id:
+                    raise UserError(
+                        _(
+                            "Configuration error. The operating unit is "
+                            "mandatory for each line as the operating unit "
+                            "has been defined as self-balanced at company "
+                            "level."
+                        )
+                    )
+
+    @api.constrains("operating_unit_id", "journal_id")
+    def _check_journal_operating_unit(self):
+        for move in self:
+            if (
+                move.journal_id.operating_unit_id
+                and move.operating_unit_id
+                and move.operating_unit_id != move.journal_id.operating_unit_id
+            ):
+                # Change journal_id if create move from other model. e.g., sale.order
+                if (
+                    move._context.get("active_model")
+                    and move._context.get("active_model") != "account.move"
+                ):
+                    move._onchange_operating_unit()
+                    if (
+                        move.journal_id.operating_unit_id
+                        and move.operating_unit_id
+                        and move.operating_unit_id != move.journal_id.operating_unit_id
+                    ):
+                        raise UserError(
+                            _("The OU in the Move and in Journal must be the same.")
+                        )
+                else:
+                    raise UserError(
+                        _("The OU in the Move and in Journal must be the same.")
+                    )
+        return True
+
+    @api.constrains("operating_unit_id", "company_id")
+    def _check_company_operating_unit(self):
+        for move in self:
+            if (
+                move.company_id
+                and move.operating_unit_id
+                and move.company_id != move.operating_unit_id.company_id
+            ):
+                raise UserError(
+                    _(
+                        "The Company in the Move and in "
+                        "Operating Unit must be the same."
+                    )
+                )
+        return True
+
+    def _check_balanced(self):
+        if self.env.context.get("wip"):
+            return True
+        return super()._check_balanced()
+
+    @api.constrains("line_ids")
+    def _check_ou(self):
+        for move in self:
+            if not move.company_id.ou_is_self_balanced:
+                continue
+            for line in move.line_ids:
+                if not line.operating_unit_id:
+                    raise UserError(
+                        _(
+                            "Configuration error. The operating unit is "
+                            "mandatory for each line as the operating unit "
+                            "has been defined as self-balanced at company "
+                            "level."
+                        )
+                    )
+
+    @api.constrains("operating_unit_id", "journal_id")
+    def _check_journal_operating_unit(self):
+        for move in self:
+            if (
+                move.journal_id.operating_unit_id
+                and move.operating_unit_id
+                and move.operating_unit_id != move.journal_id.operating_unit_id
+            ):
+                # Change journal_id if create move from other model. e.g., sale.order
+                if (
+                    move._context.get("active_model")
+                    and move._context.get("active_model") != "account.move"
+                ):
+                    move._onchange_operating_unit()
+                    if (
+                        move.journal_id.operating_unit_id
+                        and move.operating_unit_id
+                        and move.operating_unit_id != move.journal_id.operating_unit_id
+                    ):
+                        raise UserError(
+                            _("The OU in the Move and in Journal must be the same.")
+                        )
+                else:
+                    raise UserError(
+                        _("The OU in the Move and in Journal must be the same.")
+                    )
+        return True
+
+    @api.constrains("operating_unit_id", "company_id")
+    def _check_company_operating_unit(self):
+        for move in self:
+            if (
+                move.company_id
+                and move.operating_unit_id
+                and move.company_id != move.operating_unit_id.company_id
+            ):
+                raise UserError(
+                    _(
+                        "The Company in the Move and in "
+                        "Operating Unit must be the same."
+                    )
+                )
+        return True
+
+    def _check_balanced(self):
+        if self.env.context.get("wip"):
+            return True
+        return super()._check_balanced()
+
+    @api.constrains("line_ids")
+    def _check_ou(self):
+        for move in self:
+            if not move.company_id.ou_is_self_balanced:
+                continue
+            for line in move.line_ids:
+                if not line.operating_unit_id:
+                    raise UserError(
+                        _(
+                            "Configuration error. The operating unit is "
+                            "mandatory for each line as the operating unit "
+                            "has been defined as self-balanced at company "
+                            "level."
+                        )
+                    )
+
+    @api.constrains("operating_unit_id", "journal_id")
+    def _check_journal_operating_unit(self):
+        for move in self:
+            if (
+                move.journal_id.operating_unit_id
+                and move.operating_unit_id
+                and move.operating_unit_id != move.journal_id.operating_unit_id
+            ):
+                # Change journal_id if create move from other model. e.g., sale.order
+                if (
+                    move._context.get("active_model")
+                    and move._context.get("active_model") != "account.move"
+                ):
+                    move._onchange_operating_unit()
+                    if (
+                        move.journal_id.operating_unit_id
+                        and move.operating_unit_id
+                        and move.operating_unit_id != move.journal_id.operating_unit_id
+                    ):
+                        raise UserError(
+                            _("The OU in the Move and in Journal must be the same.")
+                        )
+                else:
+                    raise UserError(
+                        _("The OU in the Move and in Journal must be the same.")
+                    )
+        return True
+
+    @api.constrains("operating_unit_id", "company_id")
+    def _check_company_operating_unit(self):
+        for move in self:
+            if (
+                move.company_id
+                and move.operating_unit_id
+                and move.company_id != move.operating_unit_id.company_id
+            ):
+                raise UserError(
+                    _(
+                        "The Company in the Move and in "
+                        "Operating Unit must be the same."
+                    )
+                )
+        return True
+
+    def _check_balanced(self):
+        if self.env.context.get("wip"):
+            return True
+        return super()._check_balanced()
+
+    @api.constrains("line_ids")
+    def _check_ou(self):
+        for move in self:
+            if not move.company_id.ou_is_self_balanced:
+                continue
+            for line in move.line_ids:
+                if not line.operating_unit_id:
+                    raise UserError(
+                        _(
+                            "Configuration error. The operating unit is "
+                            "mandatory for each line as the operating unit "
+                            "has been defined as self-balanced at company "
+                            "level."
+                        )
+                    )
+
+    @api.constrains("operating_unit_id", "journal_id")
+    def _check_journal_operating_unit(self):
+        for move in self:
+            if (
+                move.journal_id.operating_unit_id
+                and move.operating_unit_id
+                and move.operating_unit_id != move.journal_id.operating_unit_id
+            ):
+                # Change journal_id if create move from other model. e.g., sale.order
+                if (
+                    move._context.get("active_model")
+                    and move._context.get("active_model") != "account.move"
+                ):
+                    move._onchange_operating_unit()
+                    if (
+                        move.journal_id.operating_unit_id
+                        and move.operating_unit_id
+                        and move.operating_unit_id != move.journal_id.operating_unit_id
+                    ):
+                        raise UserError(
+                            _("The OU in the Move and in Journal must be the same.")
+                        )
+                else:
+                    raise UserError(
+                        _("The OU in the Move and in Journal must be the same.")
+                    )
+        return True
+
+    @api.constrains("operating_unit_id", "company_id")
+    def _check_company_operating_unit(self):
+        for move in self:
+            if (
+                move.company_id
+                and move.operating_unit_id
+                and move.company_id != move.operating_unit_id.company_id
+            ):
+                raise UserError(
+                    _(
+                        "The Company in the Move and in "
+                        "Operating Unit must be the same."
+                    )
+                )
+        return True
+
+    def _check_balanced(self):
+        if self.env.context.get("wip"):
+            return True
+        return super()._check_balanced()
+
+    @api.constrains("line_ids")
+    def _check_ou(self):
+        for move in self:
+            if not move.company_id.ou_is_self_balanced:
+                continue
+            for line in move.line_ids:
+                if not line.operating_unit_id:
+                    raise UserError(
+                        _(
+                            "Configuration error. The operating unit is "
+                            "mandatory for each line as the operating unit "
+                            "has been defined as self-balanced at company "
+                            "level."
+                        )
+                    )
+
+    @api.constrains("operating_unit_id", "journal_id")
+    def _check_journal_operating_unit(self):
+        for move in self:
+            if (
+                move.journal_id.operating_unit_id
+                and move.operating_unit_id
+                and move.operating_unit_id != move.journal_id.operating_unit_id
+            ):
+                # Change journal_id if create move from other model. e.g., sale.order
+                if (
+                    move._context.get("active_model")
+                    and move._context.get("active_model") != "account.move"
+                ):
+                    move._onchange_operating_unit()
+                    if (
+                        move.journal_id.operating_unit_id
+                        and move.operating_unit_id
+                        and move.operating_unit_id != move.journal_id.operating_unit_id
+                    ):
+                        raise UserError(
+                            _("The OU in the Move and in Journal must be the same.")
+                        )
+                else:
+                    raise UserError(
+                        _("The OU in the Move and in Journal must be the same.")
+                    )
+        return True
+
+    @api.constrains("operating_unit_id", "company_id")
+    def _check_company_operating_unit(self):
+        for move in self:
+            if (
+                move.company_id
+                and move.operating_unit_id
+                and move.company_id != move.operating_unit_id.company_id
+            ):
+                raise UserError(
+                    _(
+                        "The Company in the Move and in "
+                        "Operating Unit must be the same."
+                    )
+                )
+        return True
+
+    def _check_balanced(self):
+        if self.env.context.get("wip"):
+            return True
+        return super()._check_balanced()
+
+    @api.constrains("line_ids")
+    def _check_ou(self):
+        for move in self:
+            if not move.company_id.ou_is_self_balanced:
+                continue
+            for line in move.line_ids:
+                if not line.operating_unit_id:
+                    raise UserError(
+                        _(
+                            "Configuration error. The operating unit is "
+                            "mandatory for each line as the operating unit "
+                            "has been defined as self-balanced at company "
+                            "level."
+                        )
+                    )
+
+    @api.constrains("operating_unit_id", "journal_id")
+    def _check_journal_operating_unit(self):
+        for move in self:
+            if (
+                move.journal_id.operating_unit_id
+                and move.operating_unit_id
+                and move.operating_unit_id != move.journal_id.operating_unit_id
+            ):
+                # Change journal_id if create move from other model. e.g., sale.order
+                if (
+                    move._context.get("active_model")
+                    and move._context.get("active_model") != "account.move"
+                ):
+                    move._onchange_operating_unit()
+                    if (
+                        move.journal_id.operating_unit_id
+                        and move.operating_unit_id
+                        and move.operating_unit_id != move.journal_id.operating_unit_id
+                    ):
+                        raise UserError(
+                            _("The OU in the Move and in Journal must be the same.")
+                        )
+                else:
+                    raise UserError(
+                        _("The OU in the Move and in Journal must be the same.")
+                    )
+        return True
+
+    @api.constrains("operating_unit_id", "company_id")
+    def _check_company_operating_unit(self):
+        for move in self:
+            if (
+                move.company_id
+                and move.operating_unit_id
+                and move.company_id != move.operating_unit_id.company_id
+            ):
+                raise UserError(
+                    _(
+                        "The Company in the Move and in "
+                        "Operating Unit must be the same."
+                    )
+                )
+        return True
+
+    def _check_balanced(self):
+        if self.env.context.get("wip"):
+            return True
+        return super()._check_balanced()
+
+    @api.constrains("line_ids")
+    def _check_ou(self):
+        for move in self:
+            if not move.company_id.ou_is_self_balanced:
+                continue
+            for line in move.line_ids:
+                if not line.operating_unit_id:
+                    raise UserError(
+                        _(
+                            "Configuration error. The operating unit is "
+                            "mandatory for each line as the operating unit "
+                            "has been defined as self-balanced at company "
+                            "level."
+                        )
+                    )
+
+    @api.constrains("operating_unit_id", "journal_id")
+    def _check_journal_operating_unit(self):
+        for move in self:
+            if (
+                move.journal_id.operating_unit_id
+                and move.operating_unit_id
+                and move.operating_unit_id != move.journal_id.operating_unit_id
+            ):
+                # Change journal_id if create move from other model. e.g., sale.order
+                if (
+                    move._context.get("active_model")
+                    and move._context.get("active_model") != "account.move"
+                ):
+                    move._onchange_operating_unit()
+                    if (
+                        move.journal_id.operating_unit_id
+                        and move.operating_unit_id
+                        and move.operating_unit_id != move.journal_id.operating_unit_id
+                    ):
+                        raise UserError(
+                            _("The OU in the Move and in Journal must be the same.")
+                        )
+                else:
+                    raise UserError(
+                        _("The OU in the Move and in Journal must be the same.")
+                    )
+        return True
+
+    @api.constrains("operating_unit_id", "company_id")
+    def _check_company_operating_unit(self):
+        for move in self:
+            if (
+                move.company_id
+                and move.operating_unit_id
+                and move.company_id != move.operating_unit_id.company_id
+            ):
+                raise UserError(
+                    _(
+                        "The Company in the Move and in "
+                        "Operating Unit must be the same."
+                    )
+                )
+        return True
+
+    def _check_balanced(self):
+        if self.env.context.get("wip"):
+            return True
+        return super()._check_balanced()
+
+    @api.constrains("line_ids")
+    def _check_ou(self):
+        for move in self:
+            if not move.company_id.ou_is_self_balanced:
+                continue
+            for line in move.line_ids:
+                if not line.operating_unit_id:
+                    raise UserError(
+                        _(
+                            "Configuration error. The operating unit is "
+                            "mandatory for each line as the operating unit "
+                            "has been defined as self-balanced at company "
+                            "level."
+                        )
+                    )
+
+    @api.constrains("operating_unit_id", "journal_id")
+    def _check_journal_operating_unit(self):
+        for move in self:
+            if (
+                move.journal_id.operating_unit_id
+                and move.operating_unit_id
+                and move.operating_unit_id != move.journal_id.operating_unit_id
+            ):
+                # Change journal_id if create move from other model. e.g., sale.order
+                if (
+                    move._context.get("active_model")
+                    and move._context.get("active_model") != "account.move"
+                ):
+                    move._onchange_operating_unit()
+                    if (
+                        move.journal_id.operating_unit_id
+                        and move.operating_unit_id
+                        and move.operating_unit_id != move.journal_id.operating_unit_id
+                    ):
+                        raise UserError(
+                            _("The OU in the Move and in Journal must be the same.")
+                        )
+                else:
+                    raise UserError(
+                        _("The OU in the Move and in Journal must be the same.")
+                    )
+        return True
+
+    @api.constrains("operating_unit_id", "company_id")
+    def _check_company_operating_unit(self):
+        for move in self:
+            if (
+                move.company_id
+                and move.operating_unit_id
+                and move.company_id != move.operating_unit_id.company_id
+            ):
+                raise UserError(
+                    _(
+                        "The Company in the Move and in "
+                        "Operating Unit must be the same."
+                    )
+                )
+        return True
+
+    def _check_balanced(self):
+        if self.env.context.get("wip"):
+            return True
+        return super()._check_balanced()
+
+    @api.constrains("line_ids")
+    def _check_ou(self):
+        for move in self:
+            if not move.company_id.ou_is_self_balanced:
+                continue
+            for line in move.line_ids:
+                if not line.operating_unit_id:
+                    raise UserError(
+                        _(
+                            "Configuration error. The operating unit is "
+                            "mandatory for each line as the operating unit "
+                            "has been defined as self-balanced at company "
+                            "level."
+                        )
+                    )
+
+    @api.constrains("operating_unit_id", "journal_id")
+    def _check_journal_operating_unit(self):
+        for move in self:
+            if (
+                move.journal_id.operating_unit_id
+                and move.operating_unit_id
+                and move.operating_unit_id != move.journal_id.operating_unit_id
+            ):
+                # Change journal_id if create move from other model. e.g., sale.order
+                if (
+                    move._context.get("active_model")
+                    and move._context.get("active_model") != "account.move"
+                ):
+                    move._onchange_operating_unit()
+                    if (
+                        move.journal_id.operating_unit_id
+                        and move.operating_unit_id
+                        and move.operating_unit_id != move.journal_id.operating_unit_id
+                    ):
+                        raise UserError(
+                            _("The OU in the Move and in Journal must be the same.")
+                        )
+                else:
+                    raise UserError(
+                        _("The OU in the Move and in Journal must be the same.")
+                    )
+        return True
+
+    @api.constrains("operating_unit_id", "company_id")
+    def _check_company_operating_unit(self):
+        for move in self:
+            if (
+                move.company_id
+                and move.operating_unit_id
+                and move.company_id != move.operating_unit_id.company_id
+            ):
+                raise UserError(
+                    _(
+                        "The Company in the Move and in "
+                        "Operating Unit must be the same."
+                    )
+                )
+        return True
+
+    def _check_balanced(self):
+        if self.env.context.get("wip"):
+            return True
+        return super()._check_balanced()
+
+    @api.constrains("line_ids")
+    def _check_ou(self):
+        for move in self:
+            if not move.company_id.ou_is_self_balanced:
+                continue
+            for line in move.line_ids:
+                if not line.operating_unit_id:
+                    raise UserError(
+                        _(
+                            "Configuration error. The operating unit is "
+                            "mandatory for each line as the operating unit "
+                            "has been defined as self-balanced at company "
+                            "level."
+                        )
+                    )
+
+    @api.constrains("operating_unit_id", "journal_id")
+    def _check_journal_operating_unit(self):
+        for move in self:
+            if (
+                move.journal_id.operating_unit_id
+                and move.operating_unit_id
+                and move.operating_unit_id != move.journal_id.operating_unit_id
+            ):
+                # Change journal_id if create move from other model. e.g., sale.order
+                if (
+                    move._context.get("active_model")
+                    and move._context.get("active_model") != "account.move"
+                ):
+                    move._onchange_operating_unit()
+                    if (
+                        move.journal_id.operating_unit_id
+                        and move.operating_unit_id
+                        and move.operating_unit_id != move.journal_id.operating_unit_id
+                    ):
+                        raise UserError(
+                            _("The OU in the Move and in Journal must be the same.")
+                        )
+                else:
+                    raise UserError(
+                        _("The OU in the Move and in Journal must be the same.")
+                    )
+        return True
+
+    @api.constrains("operating_unit_id", "company_id")
+    def _check_company_operating_unit(self):
+        for move in self:
+            if (
+                move.company_id
+                and move.operating_unit_id
+                and move.company_id != move.operating_unit_id.company_id
+            ):
+                raise UserError(
+                    _(
+                        "The Company in the Move and in "
+                        "Operating Unit must be the same."
+                    )
+                )
+        return True
+
+    def _check_balanced(self):
+        if self.env.context.get("wip"):
+            return True
+        return super()._check_balanced()
+
+    @api.constrains("line_ids")
+    def _check_ou(self):
+        for move in self:
+            if not move.company_id.ou_is_self_balanced:
+                continue
+            for line in move.line_ids:
+                if not line.operating_unit_id:
+                    raise UserError(
+                        _(
+                            "Configuration error. The operating unit is "
+                            "mandatory for each line as the operating unit "
+                            "has been defined as self-balanced at company "
+                            "level."
+                        )
+                    )
+
+    @api.constrains("operating_unit_id", "journal_id")
+    def _check_journal_operating_unit(self):
+        for move in self:
+            if (
+                move.journal_id.operating_unit_id
+                and move.operating_unit_id
+                and move.operating_unit_id != move.journal_id.operating_unit_id
+            ):
+                # Change journal_id if create move from other model. e.g., sale.order
+                if (
+                    move._context.get("active_model")
+                    and move._context.get("active_model") != "account.move"
+                ):
+                    move._onchange_operating_unit()
+                    if (
+                        move.journal_id.operating_unit_id
+                        and move.operating_unit_id
+                        and move.operating_unit_id != move.journal_id.operating_unit_id
+                    ):
+                        raise UserError(
+                            _("The OU in the Move and in Journal must be the same.")
+                        )
+                else:
+                    raise UserError(
+                        _("The OU in the Move and in Journal must be the same.")
+                    )
+        return True
+
+    @api.constrains("operating_unit_id", "company_id")
+    def _check_company_operating_unit(self):
+        for move in self:
+            if (
+                move.company_id
+                and move.operating_unit_id
+                and move.company_id != move.operating_unit_id.company_id
+            ):
+                raise UserError(
+                    _(
+                        "The Company in the Move and in "
+                        "Operating Unit must be the same."
+                    )
+                )
+        return True
+
+    def _check_balanced(self):
+        if self.env.context.get("wip"):
+            return True
+        return super()._check_balanced()
+
+    @api.constrains("line_ids")
+    def _check_ou(self):
+        for move in self:
+            if not move.company_id.ou_is_self_balanced:
+                continue
+            for line in move.line_ids:
+                if not line.operating_unit_id:
+                    raise UserError(
+                        _(
+                            "Configuration error. The operating unit is "
+                            "mandatory for each line as the operating unit "
+                            "has been defined as self-balanced at company "
+                            "level."
+                        )
+                    )
+
+    @api.constrains("operating_unit_id", "journal_id")
+    def _check_journal_operating_unit(self):
+        for move in self:
+            if (
+                move.journal_id.operating_unit_id
+                and move.operating_unit_id
+                and move.operating_unit_id != move.journal_id.operating_unit_id
+            ):
+                # Change journal_id if create move from other model. e.g., sale.order
+                if (
+                    move._context.get("active_model")
+                    and move._context.get("active_model") != "account.move"
+                ):
+                    move._onchange_operating_unit()
+                    if (
+                        move.journal_id.operating_unit_id
+                        and move.operating_unit_id
+                        and move.operating_unit_id != move.journal_id.operating_unit_id
+                    ):
+                        raise UserError(
+                            _("The OU in the Move and in Journal must be the same.")
+                        )
+                else:
+                    raise UserError(
+                        _("The OU in the Move and in Journal must be the same.")
+                    )
+        return True
+
+    @api.constrains("operating_unit_id", "company_id")
+    def _check_company_operating_unit(self):
+        for move in self:
+            if (
+                move.company_id
+                and move.operating_unit_id
+                and move.company_id != move.operating_unit_id.company_id
+            ):
+                raise UserError(
+                    _(
+                        "The Company in the Move and in "
+                        "Operating Unit must be the same."
+                    )
+                )
+        return True
+
+    def _check_balanced(self):
+        if self.env.context.get("wip"):
+            return True
+        return super()._check_balanced()
+
+    @api.constrains("line_ids")
+    def _check_ou(self):
+        for move in self:
+            if not move.company_id.ou_is_self_balanced:
+                continue
+            for line in move.line_ids:
+                if not line.operating_unit_id:
+                    raise UserError(
+                        _(
+                            "Configuration error. The operating unit is "
+                            "mandatory for each line as the operating unit "
+                            "has been defined as self-balanced at company "
+                            "level."
+                        )
+                    )
+
+    @api.constrains("operating_unit_id", "journal_id")
+    def _check_journal_operating_unit(self):
+        for move in self:
+            if (
+                move.journal_id.operating_unit_id
+                and move.operating_unit_id
+                and move.operating_unit_id != move.journal_id.operating_unit_id
+            ):
+                # Change journal_id if create move from other model. e.g., sale.order
+                if (
+                    move._context.get("active_model")
+                    and move._context.get("active_model") != "account.move"
+                ):
+                    move._onchange_operating_unit()
+                    if (
+                        move.journal_id.operating_unit_id
+                        and move.operating_unit_id
+                        and move.operating_unit_id != move.journal_id.operating_unit_id
+                    ):
+                        raise UserError(
+                            _("The OU in the Move and in Journal must be the same.")
+                        )
+                else:
+                    raise UserError(
+                        _("The OU in the Move and in Journal must be the same.")
+                    )
+        return True
+
+    @api.constrains("operating_unit_id", "company_id")
+    def _check_company_operating_unit(self):
+        for move in self:
+            if (
+                move.company_id
+                and move.operating_unit_id
+                and move.company_id != move.operating_unit_id.company_id
+            ):
+                raise UserError(
+                    _(
+                        "The Company in the Move and in "
+                        "Operating Unit must be the same."
+                    )
+                )
+        return True
+
+    def _check_balanced(self):
+        if self.env.context.get("wip"):
+            return True
+        return super()._check_balanced()
+
+    @api.constrains("line_ids")
+    def _check_ou(self):
+        for move in self:
+            if not move.company_id.ou_is_self_balanced:
+                continue
+            for line in move.line_ids:
+                if not line.operating_unit_id:
+                    raise UserError(
+                        _(
+                            "Configuration error. The operating unit is "
+                            "mandatory for each line as the operating unit "
+                            "has been defined as self-balanced at company "
+                            "level."
+                        )
+                    )
+
+    @api.constrains("operating_unit_id", "journal_id")
+    def _check_journal_operating_unit(self):
+        for move in self:
+            if (
+                move.journal_id.operating_unit_id
+                and move.operating_unit_id
+                and move.operating_unit_id != move.journal_id.operating_unit_id
+            ):
+                # Change journal_id if create move from other model. e.g., sale.order
+                if (
+                    move._context.get("active_model")
+                    and move._context.get("active_model") != "account.move"
+                ):
+                    move._onchange_operating_unit()
+                    if (
+                        move.journal_id.operating_unit_id
+                        and move.operating_unit_id
+                        and move.operating_unit_id != move.journal_id.operating_unit_id
+                    ):
+                        raise UserError(
+                            _("The OU in the Move and in Journal must be the same.")
+                        )
+                else:
+                    raise UserError(
+                        _("The OU in the Move and in Journal must be the same.")
+                    )
+        return True
+
+    @api.constrains("operating_unit_id", "company_id")
+    def _check_company_operating_unit(self):
+        for move in self:
+            if (
+                move.company_id
+                and move.operating_unit_id
+                and move.company_id != move.operating_unit_id.company_id
+            ):
+                raise UserError(
+                    _(
+                        "The Company in the Move and in "
+                        "Operating Unit must be the same."
+                    )
+                )
+        return True
+
+    def _check_balanced(self):
+        if self.env.context.get("wip"):
+            return True
+        return super()._check_balanced()
+
+    @api.constrains("line_ids")
+    def _check_ou(self):
+        for move in self:
+            if not move.company_id.ou_is_self_balanced:
+                continue
+            for line in move.line_ids:
+                if not line.operating_unit_id:
+                    raise UserError(
+                        _(
+                            "Configuration error. The operating unit is "
+                            "mandatory for each line as the operating unit "
+                            "has been defined as self-balanced at company "
+                            "level."
+                        )
+                    )
+
+    @api.constrains("operating_unit_id", "journal_id")
+    def _check_journal_operating_unit(self):
+        for move in self:
+            if (
+                move.journal_id.operating_unit_id
+                and move.operating_unit_id
+                and move.operating_unit_id != move.journal_id.operating_unit_id
+            ):
+                # Change journal_id if create move from other model. e.g., sale.order
+                if (
+                    move._context.get("active_model")
+                    and move._context.get("active_model") != "account.move"
+                ):
+                    move._onchange_operating_unit()
+                    if (
+                        move.journal_id.operating_unit_id
+                        and move.operating_unit_id
+                        and move.operating_unit_id != move.journal_id.operating_unit_id
+                    ):
+                        raise UserError(
+                            _("The OU in the Move and in Journal must be the same.")
+                        )
+                else:
+                    raise UserError(
+                        _("The OU in the Move and in Journal must be the same.")
+                    )
+        return True
+
+    @api.constrains("operating_unit_id", "company_id")
+    def _check_company_operating_unit(self):
+        for move in self:
+            if (
+                move.company_id
+                and move.operating_unit_id
+                and move.company_id != move.operating_unit_id.company_id
+            ):
+                raise UserError(
+                    _(
+                        "The Company in the Move and in "
+                        "Operating Unit must be the same."
+                    )
+                )
+        return True
+
+    def _check_balanced(self):
+        if self.env.context.get("wip"):
+            return True
+        return super()._check_balanced()
+
+    @api.constrains("line_ids")
+    def _check_ou(self):
+        for move in self:
+            if not move.company_id.ou_is_self_balanced:
+                continue
+            for line in move.line_ids:
+                if not line.operating_unit_id:
+                    raise UserError(
+                        _(
+                            "Configuration error. The operating unit is "
+                            "mandatory for each line as the operating unit "
+                            "has been defined as self-balanced at company "
+                            "level."
+                        )
+                    )
+
+    @api.constrains("operating_unit_id", "journal_id")
+    def _check_journal_operating_unit(self):
+        for move in self:
+            if (
+                move.journal_id.operating_unit_id
+                and move.operating_unit_id
+                and move.operating_unit_id != move.journal_id.operating_unit_id
+            ):
+                # Change journal_id if create move from other model. e.g., sale.order
+                if (
+                    move._context.get("active_model")
+                    and move._context.get("active_model") != "account.move"
+                ):
+                    move._onchange_operating_unit()
+                    if (
+                        move.journal_id.operating_unit_id
+                        and move.operating_unit_id
+                        and move.operating_unit_id != move.journal_id.operating_unit_id
+                    ):
+                        raise UserError(
+                            _("The OU in the Move and in Journal must be the same.")
+                        )
+                else:
+                    raise UserError(
+                        _("The OU in the Move and in Journal must be the same.")
+                    )
+        return True
+
+    @api.constrains("operating_unit_id", "company_id")
+    def _check_company_operating_unit(self):
+        for move in self:
+            if (
+                move.company_id
+                and move.operating_unit_id
+                and move.company_id != move.operating_unit_id.company_id
+            ):
+                raise UserError(
+                    _(
+                        "The Company in the Move and in "
+                        "Operating Unit must be the same."
+                    )
+                )
+        return True
+
+    def _check_balanced(self):
+        if self.env.context.get("wip"):
+            return True
+        return super()._check_balanced()
+
+    @api.constrains("line_ids")
+    def _check_ou(self):
+        for move in self:
+            if not move.company_id.ou_is_self_balanced:
+                continue
+            for line in move.line_ids:
+                if not line.operating_unit_id:
+                    raise UserError(
+                        _(
+                            "Configuration error. The operating unit is "
+                            "mandatory for each line as the operating unit "
+                            "has been defined as self-balanced at company "
+                            "level."
+                        )
+                    )
+
+    @api.constrains("operating_unit_id", "journal_id")
+    def _check_journal_operating_unit(self):
+        for move in self:
+            if (
+                move.journal_id.operating_unit_id
+                and move.operating_unit_id
+                and move.operating_unit_id != move.journal_id.operating_unit_id
+            ):
+                # Change journal_id if create move from other model. e.g., sale.order
+                if (
+                    move._context.get("active_model")
+                    and move._context.get("active_model") != "account.move"
+                ):
+                    move._onchange_operating_unit()
+                    if (
+                        move.journal_id.operating_unit_id
+                        and move.operating_unit_id
+                        and move.operating_unit_id != move.journal_id.operating_unit_id
+                    ):
+                        raise UserError(
+                            _("The OU in the Move and in Journal must be the same.")
+                        )
+                else:
+                    raise UserError(
+                        _("The OU in the Move and in Journal must be the same.")
+                    )
+        return True
+
+    @api.constrains("operating_unit_id", "company_id")
+    def _check_company_operating_unit(self):
+        for move in self:
+            if (
+                move.company_id
+                and move.operating_unit_id
+                and move.company_id != move.operating_unit_id.company_id
+            ):
+                raise UserError(
+                    _(
+                        "The Company in the Move and in "
+                        "Operating Unit must be the same."
+                    )
+                )
+        return True
+
+    def _check_balanced(self):
+        if self.env.context.get("wip"):
+            return True
+        return super()._check_balanced()
+
+    @api.constrains("line_ids")
+    def _check_ou(self):
+        for move in self:
+            if not move.company_id.ou_is_self_balanced:
+                continue
+            for line in move.line_ids:
+                if not line.operating_unit_id:
+                    raise UserError(
+                        _(
+                            "Configuration error. The operating unit is "
+                            "mandatory for each line as the operating unit "
+                            "has been defined as self-balanced at company "
+                            "level."
+                        )
+                    )
+
+    @api.constrains("operating_unit_id", "journal_id")
+    def _check_journal_operating_unit(self):
+        for move in self:
+            if (
+                move.journal_id.operating_unit_id
+                and move.operating_unit_id
+                and move.operating_unit_id != move.journal_id.operating_unit_id
+            ):
+                # Change journal_id if create move from other model. e.g., sale.order
+                if (
+                    move._context.get("active_model")
+                    and move._context.get("active_model") != "account.move"
+                ):
+                    move._onchange_operating_unit()
+                    if (
+                        move.journal_id.operating_unit_id
+                        and move.operating_unit_id
+                        and move.operating_unit_id != move.journal_id.operating_unit_id
+                    ):
+                        raise UserError(
+                            _("The OU in the Move and in Journal must be the same.")
+                        )
+                else:
+                    raise UserError(
+                        _("The OU in the Move and in Journal must be the same.")
+                    )
+        return True
+
+    @api.constrains("operating_unit_id", "company_id")
+    def _check_company_operating_unit(self):
+        for move in self:
+            if (
+                move.company_id
+                and move.operating_unit_id
+                and move.company_id != move.operating_unit_id.company_id
+            ):
+                raise UserError(
+                    _(
+                        "The Company in the Move and in "
+                        "Operating Unit must be the same."
+                    )
+                )
+        return True
+
+    def _check_balanced(self):
+        if self.env.context.get("wip"):
+            return True
+        return super()._check_balanced()
+
+    @api.constrains("line_ids")
+    def _check_ou(self):
+        for move in self:
+            if not move.company_id.ou_is_self_balanced:
+                continue
+            for line in move.line_ids:
+                if not line.operating_unit_id:
+                    raise UserError(
+                        _(
+                            "Configuration error. The operating unit is "
+                            "mandatory for each line as the operating unit "
+                            "has been defined as self-balanced at company "
+                            "level."
+                        )
+                    )
+
+    @api.constrains("operating_unit_id", "journal_id")
+    def _check_journal_operating_unit(self):
+        for move in self:
+            if (
+                move.journal_id.operating_unit_id
+                and move.operating_unit_id
+                and move.operating_unit_id != move.journal_id.operating_unit_id
+            ):
+                # Change journal_id if create move from other model. e.g., sale.order
+                if (
+                    move._context.get("active_model")
+                    and move._context.get("active_model") != "account.move"
+                ):
+                    move._onchange_operating_unit()
+                    if (
+                        move.journal_id.operating_unit_id
+                        and move.operating_unit_id
+                        and move.operating_unit_id != move.journal_id.operating_unit_id
+                    ):
+                        raise UserError(
+                            _("The OU in the Move and in Journal must be the same.")
+                        )
+                else:
+                    raise UserError(
+                        _("The OU in the Move and in Journal must be the same.")
+                    )
+        return True
+
+    @api.constrains("operating_unit_id", "company_id")
+    def _check_company_operating_unit(self):
+        for move in self:
+            if (
+                move.company_id
+                and move.operating_unit_id
+                and move.company_id != move.operating_unit_id.company_id
+            ):
+                raise UserError(
+                    _(
+                        "The Company in the Move and in "
+                        "Operating Unit must be the same."
+                    )
+                )
+        return True
+
+    def _check_balanced(self):
+        if self.env.context.get("wip"):
+            return True
+        return super()._check_balanced()
+
+    @api.constrains("line_ids")
+    def _check_ou(self):
+        for move in self:
+            if not move.company_id.ou_is_self_balanced:
+                continue
+            for line in move.line_ids:
+                if not line.operating_unit_id:
+                    raise UserError(
+                        _(
+                            "Configuration error. The operating unit is "
+                            "mandatory for each line as the operating unit "
+                            "has been defined as self-balanced at company "
+                            "level."
+                        )
+                    )
+
+    @api.constrains("operating_unit_id", "journal_id")
+    def _check_journal_operating_unit(self):
+        for move in self:
+            if (
+                move.journal_id.operating_unit_id
+                and move.operating_unit_id
+                and move.operating_unit_id != move.journal_id.operating_unit_id
+            ):
+                # Change journal_id if create move from other model. e.g., sale.order
+                if (
+                    move._context.get("active_model")
+                    and move._context.get("active_model") != "account.move"
+                ):
+                    move._onchange_operating_unit()
+                    if (
+                        move.journal_id.operating_unit_id
+                        and move.operating_unit_id
+                        and move.operating_unit_id != move.journal_id.operating_unit_id
+                    ):
+                        raise UserError(
+                            _("The OU in the Move and in Journal must be the same.")
+                        )
+                else:
+                    raise UserError(
+                        _("The OU in the Move and in Journal must be the same.")
+                    )
+        return True
+
+    @api.constrains("operating_unit_id", "company_id")
+    def _check_company_operating_unit(self):
+        for move in self:
+            if (
+                move.company_id
+                and move.operating_unit_id
+                and move.company_id != move.operating_unit_id.company_id
+            ):
+                raise UserError(
+                    _(
+                        "The Company in the Move and in "
+                        "Operating Unit must be the same."
+                    )
+                )
+        return True
+
+    def _check_balanced(self):
+        if self.env.context.get("wip"):
+            return True
+        return super()._check_balanced()
+
+    @api.constrains("line_ids")
+    def _check_ou(self):
+        for move in self:
+            if not move.company_id.ou_is_self_balanced:
+                continue
+            for line in move.line_ids:
+                if not line.operating_unit_id:
+                    raise UserError(
+                        _(
+                            "Configuration error. The operating unit is "
+                            "mandatory for each line as the operating unit "
+                            "has been defined as self-balanced at company "
+                            "level."
+                        )
+                    )
+
+    @api.constrains("operating_unit_id", "journal_id")
+    def _check_journal_operating_unit(self):
+        for move in self:
+            if (
+                move.journal_id.operating_unit_id
+                and move.operating_unit_id
+                and move.operating_unit_id != move.journal_id.operating_unit_id
+            ):
+                # Change journal_id if create move from other model. e.g., sale.order
+                if (
+                    move._context.get("active_model")
+                    and move._context.get("active_model") != "account.move"
+                ):
+                    move._onchange_operating_unit()
+                    if (
+                        move.journal_id.operating_unit_id
+                        and move.operating_unit_id
+                        and move.operating_unit_id != move.journal_id.operating_unit_id
+                    ):
+                        raise UserError(
+                            _("The OU in the Move and in Journal must be the same.")
+                        )
+                else:
+                    raise UserError(
+                        _("The OU in the Move and in Journal must be the same.")
+                    )
+        return True
+
+    @api.constrains("operating_unit_id", "company_id")
+    def _check_company_operating_unit(self):
+        for move in self:
+            if (
+                move.company_id
+                and move.operating_unit_id
+                and move.company_id != move.operating_unit_id.company_id
+            ):
+                raise UserError(
+                    _(
+                        "The Company in the Move and in "
+                        "Operating Unit must be the same."
+                    )
+                )
+        return True
+
+    def _check_balanced(self):
+        if self.env.context.get("wip"):
+            return True
+        return super()._check_balanced()
+
+    @api.constrains("line_ids")
+    def _check_ou(self):
+        for move in self:
+            if not move.company_id.ou_is_self_balanced:
+                continue
+            for line in move.line_ids:
+                if not line.operating_unit_id:
+                    raise UserError(
+                        _(
+                            "Configuration error. The operating unit is "
+                            "mandatory for each line as the operating unit "
+                            "has been defined as self-balanced at company "
+                            "level."
+                        )
+                    )
+
+    @api.constrains("operating_unit_id", "journal_id")
+    def _check_journal_operating_unit(self):
+        for move in self:
+            if (
+                move.journal_id.operating_unit_id
+                and move.operating_unit_id
+                and move.operating_unit_id != move.journal_id.operating_unit_id
+            ):
+                # Change journal_id if create move from other model. e.g., sale.order
+                if (
+                    move._context.get("active_model")
+                    and move._context.get("active_model") != "account.move"
+                ):
+                    move._onchange_operating_unit()
+                    if (
+                        move.journal_id.operating_unit_id
+                        and move.operating_unit_id
+                        and move.operating_unit_id != move.journal_id.operating_unit_id
+                    ):
+                        raise UserError(
+                            _("The OU in the Move and in Journal must be the same.")
+                        )
+                else:
+                    raise UserError(
+                        _("The OU in the Move and in Journal must be the same.")
+                    )
+        return True
+
+    @api.constrains("operating_unit_id", "company_id")
+    def _check_company_operating_unit(self):
+        for move in self:
+            if (
+                move.company_id
+                and move.operating_unit_id
+                and move.company_id != move.operating_unit_id.company_id
+            ):
+                raise UserError(
+                    _(
+                        "The Company in the Move and in "
+                        "Operating Unit must be the same."
+                    )
+                )
+        return True
+
+    def _check_balanced(self):
+        if self.env.context.get("wip"):
+            return True
+        return super()._check_balanced()
+
+    @api.constrains("line_ids")
+    def _check_ou(self):
+        for move in self:
+            if not move.company_id.ou_is_self_balanced:
+                continue
+            for line in move.line_ids:
+                if not line.operating_unit_id:
+                    raise UserError(
+                        _(
+                            "Configuration error. The operating unit is "
+                            "mandatory for each line as the operating unit "
+                            "has been defined as self-balanced at company "
+                            "level."
+                        )
+                    )
+
+    @api.constrains("operating_unit_id", "journal_id")
+    def _check_journal_operating_unit(self):
+        for move in self:
+            if (
+                move.journal_id.operating_unit_id
+                and move.operating_unit_id
+                and move.operating_unit_id != move.journal_id.operating_unit_id
+            ):
+                # Change journal_id if create move from other model. e.g., sale.order
+                if (
+                    move._context.get("active_model")
+                    and move._context.get("active_model") != "account.move"
+                ):
+                    move._onchange_operating_unit()
+                    if (
+                        move.journal_id.operating_unit_id
+                        and move.operating_unit_id
+                        and move.operating_unit_id != move.journal_id.operating_unit_id
+                    ):
+                        raise UserError(
+                            _("The OU in the Move and in Journal must be the same.")
+                        )
+                else:
+                    raise UserError(
+                        _("The OU in the Move and in Journal must be the same.")
+                    )
+        return True
+
+    @api.constrains("operating_unit_id", "company_id")
+    def _check_company_operating_unit(self):
+        for move in self:
+            if (
+                move.company_id
+                and move.operating_unit_id
+                and move.company_id != move.operating_unit_id.company_id
+            ):
+                raise UserError(
+                    _(
+                        "The Company in the Move and in "
+                        "Operating Unit must be the same."
+                    )
+                )
+        return True
+
+    def _check_balanced(self):
+        if self.env.context.get("wip"):
+            return True
+        return super()._check_balanced()
+
+    @api.constrains("line_ids")
+    def _check_ou(self):
+        for move in self:
+            if not move.company_id.ou_is_self_balanced:
+                continue
+            for line in move.line_ids:
+                if not line.operating_unit_id:
+                    raise UserError(
+                        _(
+                            "Configuration error. The operating unit is "
+                            "mandatory for each line as the operating unit "
+                            "has been defined as self-balanced at company "
+                            "level."
+                        )
+                    )
+
+    @api.constrains("operating_unit_id", "journal_id")
+    def _check_journal_operating_unit(self):
+        for move in self:
+            if (
+                move.journal_id.operating_unit_id
+                and move.operating_unit_id
+                and move.operating_unit_id != move.journal_id.operating_unit_id
+            ):
+                # Change journal_id if create move from other model. e.g., sale.order
+                if (
+                    move._context.get("active_model")
+                    and move._context.get("active_model") != "account.move"
+                ):
+                    move._onchange_operating_unit()
+                    if (
+                        move.journal_id.operating_unit_id
+                        and move.operating_unit_id
+                        and move.operating_unit_id != move.journal_id.operating_unit_id
+                    ):
+                        raise UserError(
+                            _("The OU in the Move and in Journal must be the same.")
+                        )
+                else:
+                    raise UserError(
+                        _("The OU in the Move and in Journal must be the same.")
+                    )
+        return True
+
+    @api.constrains("operating_unit_id", "company_id")
+    def _check_company_operating_unit(self):
+        for move in self:
+            if (
+                move.company_id
+                and move.operating_unit_id
+                and move.company_id != move.operating_unit_id.company_id
+            ):
+                raise UserError(
+                    _(
+                        "The Company in the Move and in "
+                        "Operating Unit must be the same."
+                    )
+                )
+        return True
+
+    def _check_balanced(self):
+        if self.env.context.get("wip"):
+            return True
+        return super()._check_balanced()
+
+    @api.constrains("line_ids")
+    def _check_ou(self):
+        for move in self:
+            if not move.company_id.ou_is_self_balanced:
+                continue
+            for line in move.line_ids:
+                if not line.operating_unit_id:
+                    raise UserError(
+                        _(
+                            "Configuration error. The operating unit is "
+                            "mandatory for each line as the operating unit "
+                            "has been defined as self-balanced at company "
+                            "level."
+                        )
+                    )
+
+    @api.constrains("operating_unit_id", "journal_id")
+    def _check_journal_operating_unit(self):
+        for move in self:
+            if (
+                move.journal_id.operating_unit_id
+                and move.operating_unit_id
+                and move.operating_unit_id != move.journal_id.operating_unit_id
+            ):
+                # Change journal_id if create move from other model. e.g., sale.order
+                if (
+                    move._context.get("active_model")
+                    and move._context.get("active_model") != "account.move"
+                ):
+                    move._onchange_operating_unit()
+                    if (
+                        move.journal_id.operating_unit_id
+                        and move.operating_unit_id
+                        and move.operating_unit_id != move.journal_id.operating_unit_id
+                    ):
+                        raise UserError(
+                            _("The OU in the Move and in Journal must be the same.")
+                        )
+                else:
+                    raise UserError(
+                        _("The OU in the Move and in Journal must be the same.")
+                    )
+        return True
+
+    @api.constrains("operating_unit_id", "company_id")
+    def _check_company_operating_unit(self):
+        for move in self:
+            if (
+                move.company_id
+                and move.operating_unit_id
+                and move.company_id != move.operating_unit_id.company_id
+            ):
+                raise UserError(
+                    _(
+                        "The Company in the Move and in "
+                        "Operating Unit must be the same."
+                    )
+                )
+        return True
+
+    def _check_balanced(self):
+        if self.env.context.get("wip"):
+            return True
+        return super()._check_balanced()
+
+    @api.constrains("line_ids")
+    def _check_ou(self):
+        for move in self:
+            if not move.company_id.ou_is_self_balanced:
+                continue
+            for line in move.line_ids:
+                if not line.operating_unit_id:
+                    raise UserError(
+                        _(
+                            "Configuration error. The operating unit is "
+                            "mandatory for each line as the operating unit "
+                            "has been defined as self-balanced at company "
+                            "level."
+                        )
+                    )
+
+    @api.constrains("operating_unit_id", "journal_id")
+    def _check_journal_operating_unit(self):
+        for move in self:
+            if (
+                move.journal_id.operating_unit_id
+                and move.operating_unit_id
+                and move.operating_unit_id != move.journal_id.operating_unit_id
+            ):
+                # Change journal_id if create move from other model. e.g., sale.order
+                if (
+                    move._context.get("active_model")
+                    and move._context.get("active_model") != "account.move"
+                ):
+                    move._onchange_operating_unit()
+                    if (
+                        move.journal_id.operating_unit_id
+                        and move.operating_unit_id
+                        and move.operating_unit_id != move.journal_id.operating_unit_id
+                    ):
+                        raise UserError(
+                            _("The OU in the Move and in Journal must be the same.")
+                        )
+                else:
+                    raise UserError(
+                        _("The OU in the Move and in Journal must be the same.")
+                    )
+        return True
+
+    @api.constrains("operating_unit_id", "company_id")
+    def _check_company_operating_unit(self):
+        for move in self:
+            if (
+                move.company_id
+                and move.operating_unit_id
+                and move.company_id != move.operating_unit_id.company_id
+            ):
+                raise UserError(
+                    _(
+                        "The Company in the Move and in "
+                        "Operating Unit must be the same."
+                    )
+                )
+        return True
+
+    def _check_balanced(self):
+        if self.env.context.get("wip"):
+            return True
+        return super()._check_balanced()
+
+    @api.constrains("line_ids")
+    def _check_ou(self):
+        for move in self:
+            if not move.company_id.ou_is_self_balanced:
+                continue
+            for line in move.line_ids:
+                if not line.operating_unit_id:
+                    raise UserError(
+                        _(
+                            "Configuration error. The operating unit is "
+                            "mandatory for each line as the operating unit "
+                            "has been defined as self-balanced at company "
+                            "level."
+                        )
+                    )
+
+    @api.constrains("operating_unit_id", "journal_id")
+    def _check_journal_operating_unit(self):
+        for move in self:
+            if (
+                move.journal_id.operating_unit_id
+                and move.operating_unit_id
+                and move.operating_unit_id != move.journal_id.operating_unit_id
+            ):
+                # Change journal_id if create move from other model. e.g., sale.order
+                if (
+                    move._context.get("active_model")
+                    and move._context.get("active_model") != "account.move"
+                ):
+                    move._onchange_operating_unit()
+                    if (
+                        move.journal_id.operating
