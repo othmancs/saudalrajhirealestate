@@ -10,7 +10,7 @@
     "license": "AGPL-3",
     "application": False,
     "installable": True,
-    "depends": ['base', 'web', 'l10n_gcc_invoice', 'l10n_sa', 'l10n_sa_invoice','hr'],
+    "depends": ['base', 'web', 'l10n_gcc_invoice', 'l10n_sa', 'hr'],
     "data": [
         'security/account_security.xml',
         # 'views/assets.xml',
