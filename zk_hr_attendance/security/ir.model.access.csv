@@ -1,2 +1,0 @@
-id,name,model_id/id,group_id/id,perm_read,perm_write,perm_create,perm_unlink
-access_zk_hr_attendance_log_group_hr_attendance_user,zk.attendance.log,model_zk_hr_attendance_log,hr_attendance.group_hr_attendance_user,1,1,1,1
