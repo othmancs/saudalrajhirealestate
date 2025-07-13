@@ -9,8 +9,8 @@
 ##############################################################################
 from odoo import http, _
 from odoo.http import request, serialize_exception
-from odoo.tools import html_escape, pycompat
-from odoo.addons.web.controllers.main import ExcelExport
+from odoo.tools import html_escape
+from odoo.addons.web.controllers.export import SpreadsheetExport
 from odoo.exceptions import UserError
 
 import json
@@ -18,9 +18,9 @@ import re
 import io
 import datetime
 try:
-    import xlwt
+    import xlsxwriter
 except ImportError:
-    xlwt = None
+    xlsxwriter = None
 
 
 class CoAReportController(http.Controller):
@@ -38,7 +38,6 @@ class CoAReportController(http.Controller):
                         ('Content-Disposition', 'attachment; filename=coa_report.pdf;')
                     ]
                 )
-                # response.set_cookie('fileToken', token)
                 return response
         except Exception as e:
             se = serialize_exception(e)
@@ -51,7 +50,6 @@ class CoAReportController(http.Controller):
 
     @http.route('/account_parent/export/xls', type='http', auth='user')
     def coa_xls_report(self, data, **kw):
-        print(kw,"kwkwkw")
         coa_data = json.loads(data)
         report_id = coa_data.get('wiz_id', [])
         report_obj = request.env['account.open.chart'].browse(report_id)
@@ -63,7 +61,6 @@ class CoAReportController(http.Controller):
         user_context.update(report_obj.generate_report_context(user_context))
         show_initial_balance = user_context.get('show_initial_balance')
         row_data = report_obj.get_xls_title(user_context)
-
 
         if show_initial_balance:
             row_data.append(
@@ -92,71 +89,58 @@ class CoAReportController(http.Controller):
         return request.make_response(
             self.coa_format_data(columns_headers, rows),
             headers=[
-                ('Content-Type', 'application/vnd.ms-excel'),
-                ('Content-Disposition', 'attachment; filename=coa_report.xls;')
+                ('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'),
+                ('Content-Disposition', 'attachment; filename=coa_report.xlsx;')
             ],
-            # cookies={'fileToken': token}
         )
 
     def coa_format_data(self, fields, rows):
-        if len(rows) > 65535:
-            raise UserError(_('There are too many rows (%s rows, limit: 65535) to export as Excel 97-2003 (.xls) format. Consider splitting the export.') % len(rows))
+        if not xlsxwriter:
+            raise UserError(_("The Python library 'xlsxwriter' is required to export XLSX files."))
 
-        workbook = xlwt.Workbook(style_compression=2)
-        worksheet = workbook.add_sheet('Sheet 1')
-        style = xlwt.easyxf('align: wrap yes')
-        font = xlwt.Font()
-        font.bold = True
-        font.height = 300
-        style.font = font
+        output = io.BytesIO()
+        workbook = xlsxwriter.Workbook(output, {'in_memory': True})
+        worksheet = workbook.add_worksheet('Sheet 1')
+        
+        # Header Style
+        header_style = workbook.add_format({
+            'bold': True,
+            'align': 'center',
+            'valign': 'vcenter',
+            'border': 1,
+            'bg_color': '#FFFF00'
+        })
+        
+        # Data Style
+        data_style = workbook.add_format({
+            'text_wrap': True,
+            'border': 1
+        })
+        
+        bold_style = workbook.add_format({
+            'bold': True,
+            'border': 1
+        })
 
-        for i, fieldname in enumerate(fields):
-            worksheet.write(0, i, fieldname, style)
-            worksheet.col(i).width = 8000  # around 220 pixels
+        # Write Headers
+        for col, field in enumerate(fields):
+            worksheet.write(0, col, field, header_style)
+            worksheet.set_column(col, col, 20)  # Adjust column width
 
-        base_style = xlwt.easyxf('align: wrap yes')
-        date_style = xlwt.easyxf('align: wrap yes', num_format_str='YYYY-MM-DD')
-        datetime_style = xlwt.easyxf('align: wrap yes', num_format_str='YYYY-MM-DD HH:mm:SS')
-
-        for row_index, row in enumerate(rows):
+        # Write Data Rows
+        for row_idx, row in enumerate(rows):
             unfoldable = row[-1]
             row.pop(-1)
-
-            for cell_index, cell_value in enumerate(row):
-                cell_style = base_style
-
-                if isinstance(cell_value, bytes) and not isinstance(cell_value, pycompat.string_types):
-                    # because xls uses raw export, we can get a bytes object
-                    # here. xlwt does not support bytes values in Python 3 ->
-                    # assume this is base64 and decode to a string, if this
-                    # fails note that you can't export
-                    try:
-                        cell_value = pycompat.to_text(cell_value)
-                    except UnicodeDecodeError:
-                        raise UserError(_("Binary fields can not be exported to Excel unless their content is base64-encoded. That does not seem to be the case for %s.") % fields[cell_index])
+            
+            for col_idx, cell_value in enumerate(row):
+                style = bold_style if unfoldable or row_idx + 1 in [2, 5] else data_style
+                
                 if isinstance(cell_value, str):
-                    cell_value = re.sub("\r", " ", pycompat.to_text(cell_value))
-                    # Excel supports a maximum of 32767 characters in each cell:
-                    cell_value = cell_value[:32767]
-                elif isinstance(cell_value, datetime.datetime):
-                    cell_style = datetime_style
-                elif isinstance(cell_value, datetime.date):
-                    cell_style = date_style
-                font = xlwt.Font()
-                font.bold = False
-                cell_style.font = font
-                if row_index + 1 in [2, 5]:
-                    font = xlwt.Font()
-                    font.bold = True
-                    cell_style.font = font
-                if unfoldable:
-                    font.bold = True
+                    cell_value = re.sub("\r", " ", cell_value)
+                    cell_value = cell_value[:32767]  # Excel cell limit
+                
+                worksheet.write(row_idx + 1, col_idx, cell_value, style)
 
-                worksheet.write(row_index + 1, cell_index, cell_value, cell_style)
-
-        fp = io.BytesIO()
-        workbook.save(fp)
-        fp.seek(0)
-        data = fp.read()
-        fp.close()
-        return data
+        workbook.close()
+        output.seek(0)
+        return output.read()
