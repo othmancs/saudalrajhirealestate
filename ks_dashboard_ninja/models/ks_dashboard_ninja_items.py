@@ -95,7 +95,7 @@ def ks_read(self, records):
 
 fields.Many2many.read = ks_read
 
-read_group = models.BaseModel._read_group_process_groupby
+read_group = models.BaseModel._read_group_postprocess_groupby
 
 
 def ks_time_addition(self, gb, query):
