@@ -221,6 +221,10 @@ class MaterialPurchaseRequisition(models.Model):
         for rec in self:
             rec.state = 'draft'
 
+    def action_cancel(self):
+        for rec in self:
+            rec.state = 'cancel'
+
     @api.model
     def _prepare_pick_vals(self, line=False, stock_id=False):
         pick_vals = {
