@@ -6,7 +6,7 @@
 
 {
     'name': 'HR Attendance Multi-company',
-    'version': '13.0.1.0.0',
+    'version': '18.0.1.0.0',
     'author': 'Bashier Elbashier',
     'category': 'Human Resources',
     'summary': 'HR Attendance Multi Company',
