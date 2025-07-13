@@ -15,7 +15,7 @@
         'security/account_security.xml',
         # 'views/assets.xml',
         'views/company.xml',
-        'reports/invoice_report.xml',
+        # 'reports/invoice_report.xml',
         'reports/base_document_layout.xml',
     ],
     'qweb': [
