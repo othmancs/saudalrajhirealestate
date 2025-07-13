@@ -6,7 +6,7 @@
 
 {
     'name': 'ZKTeco biometric attendance',
-    'version': '15.0.0.0',
+    'version': '18.0.1.0.0',
     'author': 'Bashier Elbashier',
     'category': 'Human Resources',
     'summary': 'Manage employee attendances performed by ZKTeco devices',
