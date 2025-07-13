@@ -1,6 +1,0 @@
-"id","name","model_id:id","group_id:id","perm_read","perm_write","perm_create","perm_unlink"
-access_server_configuration,server.configuration,model_server_configuration,hr_attendance.group_hr_attendance,1,1,1,1
-access_server_database_type,server.database.type,model_server_database_type,hr_attendance.group_hr_attendance,1,1,1,1
-access_attendance_data,attendance.data,model_attendance_data,hr_attendance.group_hr_attendance,1,1,1,1
-
-access_attendance_reinsert_wizard,attendance.reinsert.wizard,model_attendance_reinsert_wizard,hr_attendance.group_hr_attendance,1,1,1,1
