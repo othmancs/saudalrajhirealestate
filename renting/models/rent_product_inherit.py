@@ -7,15 +7,13 @@ class RentProduct(models.Model):
     _inherit = 'product.template'
 
     unit_number = fields.Char(string='رقم الوحدة')
-    unit_area = fields.Char(string='مساحة الوحدة')
+    unit_area = fields.Float(string='مساحة الوحدة')
     unit_floor_number = fields.Char(string='رقم الطابق')
     unit_rooms_number = fields.Char(string='عدد الغرف')
-    unit_state = fields.Char(compute='_get_state', string='الحالة', default='شاغرة')
+    unit_state = fields.Char(compute='_compute_unit_state', string='الحالة', store=True)
 
     rent_unit_area = fields.Float(string='المساحة')
 
-    # unit_contain_two_scales = fields.Boolean(string='Contain Two Scales')
-    # unit_furniture = fields.Boolean(string='Furniture?')
     furniture_bedroom = fields.Boolean(string='غرفة نوم')
     furniture_bedroom_no = fields.Integer(string=' عدد غرف النوم')
     furniture_bathroom = fields.Boolean(string='حمام')
@@ -39,20 +37,16 @@ class RentProduct(models.Model):
 
     unit_construction_date = fields.Date(string='تاريخ الانشاء')
 
-    rent_config_unit_overlook_id = fields.Many2one('rent.config.unit.overlooks', string='Unit Overlooking',
-                                                   copy=True)  # Related field to menu item "Unit Views"
-    rent_config_unit_type_id = fields.Many2one('rent.config.unit.types', string='Unit type',
-                                               copy=True)  # Related field to menu item "Unit Types"
-    rent_config_unit_purpose_id = fields.Many2one('rent.config.unit.purposes', string='Unit Purpose',
-                                                  copy=True)  # Related field to menu item "Unit Purpose"
-    rent_config_unit_finish_id = fields.Many2one('rent.config.unit.finishes', string='Unit Finish',
-                                                 copy=True)  # Related field to menu item "Unit Finishes"
+    rent_config_unit_overlook_id = fields.Many2one('rent.config.unit.overlooks', string='Unit Overlooking', copy=True)
+    rent_config_unit_type_id = fields.Many2one('rent.config.unit.types', string='Unit type', copy=True)
+    rent_config_unit_purpose_id = fields.Many2one('rent.config.unit.purposes', string='Unit Purpose', copy=True)
+    rent_config_unit_finish_id = fields.Many2one('rent.config.unit.finishes', string='Unit Finish', copy=True)
 
-    property_id = fields.Many2one('rent.property', string='عمارة', copy=True)  # Related field to Properties
+    property_id = fields.Many2one('rent.property', string='عمارة', copy=True)
     property_address_build = fields.Many2one('rent.property.build', string='المجمع',
-                                             related='property_id.property_address_build', store=True, index=True)
+                                           related='property_id.property_address_build', store=True, index=True)
     property_address_city = fields.Many2one('rent.property.city', string='المدينة',
-                                            related='property_id.property_address_city', store=True)
+                                          related='property_id.property_address_city', store=True)
     country = fields.Many2one('res.country', string='الدولة', related='property_id.country', store=True, index=True)
     operating_unit = fields.Many2many('operating.unit', string='الفرع ')
 
@@ -63,22 +57,20 @@ class RentProduct(models.Model):
     unit_electricity = fields.Char(string='رقم عداد الكهرباء')
     unit_water = fields.Char(string='رقم عداد المياه')
 
-    # unit_maintenance_count = fields.Integer(string='Total Maintenance', compute='_get_count', readonly=True)
     unit_expenses_count = fields.Integer(string='Total Expenses', compute='_unit_expenses_count', readonly=True)
     unit_sales_count = fields.Integer(string='Total Sales', compute='_unit_sales_count', readonly=True)
     unit_price = fields.Float(string='قيمة الوحدة', compute='_get_unit_price')
     unit_price_unit = fields.Char(string='مدة تأجير الوحدة')
-    state_id = fields.Char()
+    state_id = fields.Char(string="الحالة", compute='_compute_unit_state', store=True)
     analytic_account = fields.Many2one('account.analytic.account', string='الحساب التحليلي', readonly=True)
     ref_analytic_account = fields.Char(string='رقم اشارة الحساب التحليلي', readonly=True)
     property_analytic_account = fields.Many2one('account.analytic.account', string='الحساب التحليلي للعقار',
-                                                related='property_id.analytic_account')
+                                              related='property_id.analytic_account')
     property_analytic_account_parent = fields.Many2one('account.analytic.group',
-                                                       related='property_id.analytic_account.group_id')
+                                                     related='property_id.analytic_account.group_id')
 
     @api.model_create_multi
     def create(self, vals_list):
-
         res = super(RentProduct, self).create(vals_list)
         res.ref_analytic_account = str(res.property_id.ref_analytic_account) + '-' + str(res.unit_number)
         analytic_account = self.env['account.analytic.account'].sudo().create(
@@ -107,16 +99,21 @@ class RentProduct(models.Model):
     contract_admin_fees = fields.Float(compute="get_sale_data", string='رسوم إدارية')
     contract_service_fees = fields.Float(compute="get_sale_data", string='رسوم الخدمات')
     insurance_value = fields.Float(compute="get_sale_data", string='قيمة التأمين')
-    fromdate = fields.Datetime(compute="get_sale_data", string='تاريخ الإستلام')
-    todate = fields.Datetime(compute="get_sale_data", string='تاريخ التسليم')
-    last_sale_id = fields.Many2one('sale.order', compute="get_sale_data")
+    fromdate = fields.Date(compute="get_sale_data", string='تاريخ بداية العقد')
+    todate = fields.Date(compute="get_sale_data", string='تاريخ نهاية العقد')
+    last_sale_id = fields.Many2one('sale.order', string='رقم العقد', compute="get_sale_data", store=True)
     operating_unit_id = fields.Many2one('operating.unit', string='الفرع ')
     contract_total = fields.Float(compute="get_sale_data", string='قيمة العقد')
+    contract_service_sub_fees = fields.Float(string=' رسوم الخدمات الخاضعة ')
+    contract_admin_sub_fees = fields.Float(string='رسوم ادارية خاضعة')
+
     def get_sale_data(self):
         for rec in self:
-            order_line_id = rec.env['sale.order.line'].sudo().search([
-                ('product_id', '=', rec.id)
-            ],limit=1, order='id desc')
+            pp = self.env['product.product'].search([('product_tmpl_id', '=', rec.id)])
+
+            order_line_id = rec.env['sale.order.line'].sudo().search(
+                [('product_id', '=', pp.id), ('order_id.rental_status', 'in', ['return', 'pickup'])],
+                limit=1, order='id desc')
             rec.partner_id = order_line_id.order_id.partner_id.id if order_line_id else False
             rec.last_sale_id = order_line_id.order_id.id if order_line_id else False
             rec.contract_admin_fees = order_line_id.contract_admin_fees if order_line_id else False
@@ -125,18 +122,23 @@ class RentProduct(models.Model):
             rec.fromdate = order_line_id.order_id.fromdate if order_line_id else False
             rec.operating_unit_id = order_line_id.order_id.operating_unit_id.id if order_line_id else False
             rec.todate = order_line_id.order_id.todate if order_line_id else False
-            rec.amount_paid = (sum(ll.price_subtotal for ll in order_line_id.order_id.invoice_ids.invoice_line_ids.filtered(lambda line: line.move_id.payment_state == 'paid' and line.product_id == rec.product_variant_id))) if order_line_id else 0
-            rec.contract_total = order_line_id.order_id.amount_total
 
-            rec.amount_due = (sum(order_line_id.order_id.order_line[0].price_unit / ll.sale_order_id.invoice_number for ll in
-                                 order_line_id.order_id.order_contract_invoice.filtered(lambda line: line.status == 'uninvoiced')
-                                 )if order_line_id.order_id.order_line else 0.0) if order_line_id else 0.0
+            rec.amount_paid = (sum(
+                ll.price_subtotal for ll in order_line_id.order_id.invoice_ids.invoice_line_ids.filtered(
+                    lambda line: line.move_id.payment_state == 'paid' and line.product_id == rec.product_variant_id))) if order_line_id else 0
+            rec.contract_total = order_line_id.order_id.amount_total
+            rec.contract_service_sub_fees = order_line_id.contract_service_sub_fees
+            rec.contract_admin_sub_fees = order_line_id.contract_admin_sub_fees
+
+            rec.amount_due = (sum(
+                order_line_id.order_id.order_line[0].price_unit / ll.sale_order_id.invoice_number for ll in
+                order_line_id.order_id.order_contract_invoice.filtered(lambda line: line.status == 'uninvoiced')
+            ) if order_line_id.order_id.order_line else 0.0) if order_line_id else 0.0
 
     @api.model
     def read_group(self, domain, fields, groupby, offset=0, limit=None, orderby=False, lazy=True):
         res = super(RentProduct, self).read_group(domain, fields, groupby, offset=offset, limit=limit, orderby=orderby,
                                                  lazy=lazy)
-        print(fields)
         if 'amount_paid' in fields:
             for line in res:
                 if '__domain' in line:
@@ -178,37 +180,38 @@ class RentProduct(models.Model):
                         total_insurance_value += record.insurance_value
                     line['insurance_value'] = total_insurance_value
         return res
-    def _get_state(self):
+
+    @api.depends('property_id', 'analytic_account')
+    def _compute_unit_state(self):
         for rec in self:
-            rec.unit_state = 'شاغرة'
-            rec.state_id = 'شاغرة'
-            order = rec.env['sale.order.line'].sudo().search([
-                ('product_id', '=', rec.id),
-                ('property_number', '=', rec.property_id.property_name)
+            status = 'شاغرة'
+            maintenance_id = rec.env['maintenance.request'].sudo().search([
+                ('property_id.product_tmpl_id', '=', rec.id),
+                ('state', 'in', ('confirm', 'ongoing'))
             ])
-            if order:
-                if order[0].order_id.rental_status == 'pickup':
-                    rec.state_id = 'مؤجرة'
-                    rec.unit_state = 'مؤجرة'
-                elif order[0].order_id.rental_status == 'return':
-                    rec.state_id = 'مؤجرة'
-                    rec.unit_state = 'مؤجرة'
-                elif order[0].order_id.rental_status == 'returned':
-                    rec.state_id = 'شاغرة'
-                    rec.unit_state = 'شاغرة'
-                elif order[0].order_id.rental_status == 'cancel':
-                    rec.state_id = 'شاغرة'
-                    rec.unit_state = 'شاغرة'
+            
+            if maintenance_id:
+                status = 'تحت الصيانة'
             else:
-                rec.state_id = 'شاغرة'
-                rec.unit_state = 'شاغرة'
+                pp = self.env['product.product'].search([('product_tmpl_id', '=', rec.id)])
+                order = rec.env['sale.order.line'].sudo().search([
+                    ('product_id', '=', pp.id),
+                    ('property_number', '=', rec.property_id.property_name)
+                ], limit=1)
+                
+                if order:
+                    if order.order_id.rental_status == 'pickup':
+                        status = 'مؤجرة'
+                    elif order.order_id.rental_status == 'return':
+                        status = 'مؤجرة'
+                    elif order.order_id.rental_status == 'returned':
+                        status = 'شاغرة'
+                    elif order.order_id.rental_status == 'cancel':
+                        status = 'شاغرة'
 
-    # def _get_count(self):
-    #     self.unit_maintenance_count = self.env['account.move'].search_count(
-    #         [('unit_number', '=', self.id), ('property_name', '=', self.property_id.property_name),
-    #          ('move_type', '=', 'in_invoice')])
+            rec.unit_state = status
+            rec.state_id = status
 
-    # For Unit Maintenance Button in rent_product_inherit_form in "vw_rent_product_inherit.xml"
     def get_unit_maintenance(self):
         return {
             'type': 'ir.actions.act_window',
@@ -217,16 +220,16 @@ class RentProduct(models.Model):
             'view_id': self.env.ref('account.view_move_form').id,
             'res_model': 'account.move',
             'context': {'default_move_type': 'in_invoice', 'default_journal_id': 2,
-                        'default_property_name': self.property_id.id,
-                        'default_unit_number': self.id, 'default_analytic_account': self.analytic_account.id},
+                       'default_property_name': self.property_id.id,
+                       'default_unit_number': self.id, 'default_analytic_account': self.analytic_account.id},
         }
 
     def _unit_sales_count(self):
-        self.unit_sales_count = self.env['sale.order.line'].search_count([
-            ('product_id', '=', self.id),
-            ('property_number', '=', self.property_id.property_name)])
+        for rec in self:
+            rec.unit_sales_count = self.env['sale.order.line'].search_count([
+                ('product_id.product_tmpl_id', '=', rec.id),
+                ('property_number', '=', rec.property_id.property_name)])
 
-    # For Unit Maintenance Button in rent_product_inherit_form in "vw_rent_product_inherit.xml"
     def unit_sales(self):
         return {
             'type': 'ir.actions.act_window',
@@ -235,5 +238,5 @@ class RentProduct(models.Model):
             'view_id': self.env.ref('sale_renting.rental_order_primary_form_view').id,
             'res_model': 'sale.order',
             'context': {'default_is_rental_order': True, 'default_property_name': self.property_id.id,
-                        'default_unit_number': self.id, 'default_analytic_account_id': self.analytic_account.id},
+                       'default_unit_number', self.id, 'default_analytic_account_id': self.analytic_account.id},
         }
