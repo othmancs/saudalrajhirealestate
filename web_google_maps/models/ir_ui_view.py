@@ -2,8 +2,8 @@
 # License AGPL-3
 from lxml import etree
 from odoo import fields, models, _
+from odoo.tools.safe_eval import safe_eval
 from odoo.addons.base.models.ir_ui_view import (
-    quick_eval,
     transfer_field_to_modifiers,
 )
 
@@ -33,8 +33,6 @@ class IrUiView(models.Model):
                     and field._description_domain(self.env)
                 )
                 if isinstance(domain, str):
-                    # dynamic domain: in [('foo', '=', bar)], field 'foo' must
-                    # exist on the comodel and field 'bar' must be in the view
                     desc = (
                         f'domain of <field name="{name}">'
                         if node.get('domain')
@@ -95,7 +93,7 @@ class IrUiView(models.Model):
             for attribute in ('invisible', 'readonly', 'required'):
                 val = node.get(attribute)
                 if val:
-                    res = quick_eval(val, {'context': self._context})
+                    res = safe_eval(val, {'context': self._context}, mode='eval')
                     if res not in (1, 0, True, False, None):
                         msg = _(
                             'Attribute %(attribute)s evaluation expects a boolean, got %(value)s',
@@ -111,12 +109,11 @@ class IrUiView(models.Model):
             attrs = {'id': node.get('id'), 'select': node.get('select')}
             field = name_manager.model._fields.get(node.get('name'))
             if field:
-                # apply groups (no tested)
+                # apply groups (not tested)
                 if field.groups and not self.user_has_groups(
                     groups=field.groups
                 ):
                     node.getparent().remove(node)
-                    # no point processing view-level ``groups`` anymore, return
                     return
                 views = {}
                 for child in node:
