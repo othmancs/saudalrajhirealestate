@@ -29,7 +29,7 @@ class ProductTemplate(models.Model):
                 """
             )
         return super()._auto_init()
-
+ 
     @api.depends('type')
     def _compute_can_be_expensed(self):
         self.filtered(lambda p: p.type not in ['consu', 'service']).update({'can_be_expensed': False})
