@@ -15,7 +15,7 @@
     "category": "Sales Management",
     "depends": ["sale", "sales_team_operating_unit"],
     "data": [
-        "security/sale_security.xml",
+        # "security/sale_security.xml",
         "views/sale_view.xml",
         "views/sale_report_view.xml",
     ],
