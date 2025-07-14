@@ -241,5 +241,6 @@ class RentProduct(models.Model):
                 'default_is_rental_order': True,
                 'default_property_name': self.property_id.id,
                 'default_unit_number': self.id,
-                'default_analytic_account_id': self.analytic_account.id
+                'default_analytic_account_id': self.analytic_account.id,
             },
+        }
