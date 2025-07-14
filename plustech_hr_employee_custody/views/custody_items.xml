@@ -102,11 +102,11 @@
             <field name="act_window_id" ref="hr_custody_product"/>
         </record>
 
-        <record id="hr_expense_custodykanban" model="ir.actions.act_window.view">
+<!--         <record id="hr_expense_custodykanban" model="ir.actions.act_window.view">
             <field name="sequence" eval="1"/>
             <field name="view_mode">kanban</field>
             <field name="act_window_id" ref="hr_custody_product"/>
-        </record>
+        </record> -->
 
         <menuitem id="config_custody_menu_action" name="Configuration"
                   parent="plustech_hr_employee_custody.custody_menu_root"
