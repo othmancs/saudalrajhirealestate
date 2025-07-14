@@ -237,6 +237,9 @@ class RentProduct(models.Model):
             'view_mode': 'form',
             'view_id': self.env.ref('sale_renting.rental_order_primary_form_view').id,
             'res_model': 'sale.order',
-            'context': {'default_is_rental_order': True, 'default_property_name': self.property_id.id,
-                       'default_unit_number', self.id, 'default_analytic_account_id': self.analytic_account.id},
-        }
+            'context': {
+                'default_is_rental_order': True,
+                'default_property_name': self.property_id.id,
+                'default_unit_number': self.id,
+                'default_analytic_account_id': self.analytic_account.id
+            },
