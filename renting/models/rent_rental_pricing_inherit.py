@@ -18,8 +18,8 @@ PERIOD_RATIO = {
 
 
 class RentRentalPricing(models.Model):
-    _inherit = 'rental.pricing'
-
+    _name = 'rental.pricing'
+    _description = 'Rental Pricing'
     unit = fields.Selection(units, string='Unit', required='true')
 
     def _compute_price(self, duration, unit):
