@@ -3,10 +3,22 @@
 from odoo import models, fields, _
 from odoo.exceptions import RedirectWarning, UserError, ValidationError, AccessError
 
+
 INSURANCE_ADMIN_FEES_PRODUCTS = ['insurance_value', 'contract_admin_fees', 'contract_service_fees',
                                  'contract_admin_sub_fees', 'contract_service_sub_fees']
 INSURANCE_ADMIN_FEES_FIELDS = ['insurance_value', 'contract_admin_fees', 'contract_service_fees',
                                'contract_admin_sub_fees', 'contract_service_sub_fees']
+
+
+def clean_float(value):
+    """Helper to clean float fields: strip spaces and convert to float safely."""
+    if isinstance(value, str):
+        value = value.strip()
+        try:
+            return float(value)
+        except ValueError:
+            return 0.0
+    return value
 
 
 class RentSaleInvoices(models.Model):
@@ -22,10 +34,13 @@ class RentSaleInvoices(models.Model):
     fromdate = fields.Datetime(string='From Date', default=fields.Date.context_today, copy=False, required=True)
     todate = fields.Datetime(string='To Date', default=fields.Date.context_today, copy=False, required=True)
     operating_unit = fields.Many2one('operating.unit', string='Operating Unit',
-                                     related='sale_order_id.operating_unit_id')
+                                    related='sale_order_id.operating_unit_id')
 
     def _prepare_invoice_line(self, line):
         self.ensure_one()
+        # تنظيف القيم من نوع float
+        price_unit = clean_float(line.price_unit)
+        invoice_number = self.sale_order_id.invoice_number or 1
         res = {
             'display_type': line.display_type,
             'sequence': line.sequence,
@@ -34,23 +49,15 @@ class RentSaleInvoices(models.Model):
             'product_uom_id': line.product_uom.id,
             'quantity': 1,
             'discount': line.discount,
-            'price_unit': line.price_unit / self.sale_order_id.invoice_number,
+            'price_unit': price_unit / invoice_number,
             'tax_ids': [(6, 0, line.tax_id.ids)],
             'analytic_account_id': line.product_id.analytic_account.id,
             'sale_line_ids': [(4, line.id)],
             'exclude_from_invoice_tab': False,
         }
-        # 'analytic_tag_ids': [(6, 0, line.analytic_tag_ids.ids)],
         if self.sequence == 1:
             res.update({
-                # 'property_price_unit': line.price_unit / self.sale_order_id.invoice_number,
-                # 'price_unit': (line.price_unit / self.sale_order_id.invoice_number) + line.contract_admin_sub_fees + line.contract_service_sub_fees,
-                'price_unit': (line.price_unit / self.sale_order_id.invoice_number),
-                # 'insurance_value': line.insurance_value,
-                # 'contract_admin_fees': line.contract_admin_fees,
-                # 'contract_service_fees': line.contract_service_fees,
-                # 'contract_admin_sub_fees': line.contract_admin_sub_fees,
-                # 'contract_service_sub_fees': line.contract_service_sub_fees
+                'price_unit': price_unit / invoice_number,
             })
         return res
 
@@ -62,8 +69,8 @@ class RentSaleInvoices(models.Model):
         type_product_template = self.env['product.template'].search([('id', '=', int(type_config_parameter))])
         if not type_product_template:
             raise UserError(_('Please define Insurance and admin fees products in renting setting.'))
-        fees_amount = 0
         fees_amount = sum(self.sale_order_id.order_line.mapped(type))
+        fees_amount = clean_float(fees_amount)
         if fees_amount > 0:
             res = {
                 'display_type': 'line_note',
@@ -84,7 +91,7 @@ class RentSaleInvoices(models.Model):
         type_product_template = self.env['product.template'].search([('id', '=', int(type_config_parameter))])
         if not type_product_template:
             raise UserError(_('Please define Insurance and admin fees products in renting setting.'))
-        fees_amount = line.mapped(type)[0]
+        fees_amount = clean_float(line.mapped(type)[0])
         res = {
             'sequence': seq + 1000,
             'name': type_product_template.name,
@@ -97,16 +104,10 @@ class RentSaleInvoices(models.Model):
                                                                                       'contract_service_sub_fees'] else False,
             'exclude_from_invoice_tab': False,
             'rent_fees': True,
-            # 'sale_line_ids': [(4, line.id)],
         }
         return res
 
     def _prepare_invoice(self, invoice_lines):
-        """
-        Prepare the dict of values to create the new invoice for a sales order. This method may be
-        overridden to implement custom invoice generation (making sure to call super() to establish
-        a clean extension chain).
-        """
         self.ensure_one()
         journal = self.env['account.move'].with_context(default_move_type='out_invoice')._get_default_journal()
         if not journal:
@@ -131,7 +132,7 @@ class RentSaleInvoices(models.Model):
                     self.sale_order_id.fiscal_position_id or self.sale_order_id.fiscal_position_id.get_fiscal_position(
                 self.sale_order_id.partner_invoice_id.id)).id,
             'partner_bank_id': self.sale_order_id.company_id.partner_id.bank_ids[:1].id,
-            'journal_id': journal.id,  # company comes from the journal
+            'journal_id': journal.id,
             'invoice_origin': self.sale_order_id.name,
             'invoice_payment_term_id': self.sale_order_id.payment_term_id.id,
             'payment_reference': self.sale_order_id.reference,
@@ -160,11 +161,10 @@ class RentSaleInvoices(models.Model):
                 seq = 0
                 for type in INSURANCE_ADMIN_FEES_FIELDS:
                     seq += 1
-                    if line.mapped(type)[0] > 0:
+                    if clean_float(line.mapped(type)[0]) > 0:
                         invoice_lines.append([0, 0, self._prepare_invoice_line_insurance_admin_fees(type, line, seq)])
 
         vals = self._prepare_invoice(invoice_lines)
-        print(vals)
         invoice = self.env['account.move'].create(vals)
         self.invoice_date = fields.Date.today()
         self.status = 'invoiced'
@@ -191,7 +191,6 @@ class RentSalestats(models.Model):
     sale_order_id = fields.Many2one('sale.order', string='Sale Order')
     sale_order = fields.Many2one('sale.order', string='Sale Order')
     sale_order_line_id = fields.Many2one('sale.order.line', string='الوحدة', domain="[('order_id', '=', sale_order)]")
-    # product_id = fields.Many2one('product.template', string='الوحدة')
     sequence = fields.Integer(string='Sequence')
 
     door_good = fields.Boolean('جيد')
@@ -207,6 +206,10 @@ class RentSalestats(models.Model):
     water_bad = fields.Boolean('سئ')
     water_comment = fields.Char('حدد')
     elec_good = fields.Boolean('جيد')
+    is_elec_filter = fields.Selection([('yes', 'نعم'), ('no', 'لا')], string='تصفية العداد؟')
+    elec_filter = fields.Char('تصفية عداد الكهرباء')
+    is_water_filter = fields.Selection([('yes', 'نعم'), ('no', 'لا')], string='تصفية العداد؟')
+    water_filter = fields.Char('تصفية عداد المياه')
     elec_bad = fields.Boolean('سئ')
     elec_comment = fields.Char('حدد')
     rdoor_good = fields.Boolean('جيد')
@@ -224,18 +227,35 @@ class RentSalestats(models.Model):
     relec_good = fields.Boolean('جيد')
     relec_bad = fields.Boolean('سئ')
     relec_comment = fields.Char('حدد')
+    return_is_elec_filter = fields.Selection([('yes', 'نعم'), ('no', 'لا')], string='تصفية العداد؟')
+    relec_filter = fields.Char('تصفية عداد الكهرباء')
+    return_is_water_filter = fields.Selection([('yes', 'نعم'), ('no', 'لا')], string='تصفية العداد؟')
+    rwater_filter = fields.Char('تصفية عداد المياه')
     customer_accept = fields.Boolean('نعم')
     customer_refused = fields.Boolean('لا')
     notes = fields.Text('الملاحظات')
     rnotes = fields.Text('الملاحظات')
-    mangement_accept = fields.Boolean('نعم')
-    mangement_refused = fields.Boolean('لا')
-    manage_note = fields.Text('ملاحظة')
-    rmanage_note = fields.Text('ملاحظة')
-    is_cost = fields.Boolean('نعم')
-    is_no_cost = fields.Boolean('لا')
-    is_amount_rem = fields.Boolean('نعم')
-    is_no_amount_rem = fields.Boolean('لا')
+    amount = fields.Float(string='Amount')
     amount_rem = fields.Float('المبلغ المتبقي')
-    iselec_remain = fields.Boolean('نعم')
-    isnotelec_remain = fields.Boolean('لا')
+    elec_remain_amount = fields.Float('Electricity Remaining Amount')
+    iswater_remain_amount = fields.Float('Water Remaining Amount')
+    return_elec_remain_amount = fields.Float('Electricity Remaining Amount')
+    return_iswater_remain_amount = fields.Float('Water Remaining Amount')
+
+    def write(self, vals):
+        # تنظيف قيم Float عند الكتابة لمنع خطأ المسافة
+        float_fields = ['amount', 'amount_rem', 'elec_remain_amount', 'iswater_remain_amount',
+                        'return_elec_remain_amount', 'return_iswater_remain_amount']
+        for field in float_fields:
+            if field in vals:
+                vals[field] = clean_float(vals[field])
+        return super(RentSalestats, self).write(vals)
+
+    def create(self, vals):
+        # تنظيف قيم Float عند الإنشاء
+        float_fields = ['amount', 'amount_rem', 'elec_remain_amount', 'iswater_remain_amount',
+                        'return_elec_remain_amount', 'return_iswater_remain_amount']
+        for field in float_fields:
+            if field in vals:
+                vals[field] = clean_float(vals[field])
+        return super(RentSalestats, self).create(vals)
