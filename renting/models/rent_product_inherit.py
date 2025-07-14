@@ -66,8 +66,18 @@ class RentProduct(models.Model):
     ref_analytic_account = fields.Char(string='رقم اشارة الحساب التحليلي', readonly=True)
     property_analytic_account = fields.Many2one('account.analytic.account', string='الحساب التحليلي للعقار',
                                               related='property_id.analytic_account')
-    property_analytic_account_parent = fields.Many2one('account.analytic.group',
-                                                     related='property_id.analytic_account.group_id')
+
+    # تعديل هنا لاستخدام compute بدل related
+    property_analytic_account_parent = fields.Many2one(
+        'account.analytic.group', string='المجموعة التحليلية للعقار', compute='_compute_analytic_group', store=True)
+
+    @api.depends('property_id.analytic_account')
+    def _compute_analytic_group(self):
+        for rec in self:
+            if rec.property_id and rec.property_id.analytic_account:
+                rec.property_analytic_account_parent = rec.property_id.analytic_account.group_id
+            else:
+                rec.property_analytic_account_parent = False
 
     @api.model_create_multi
     def create(self, vals_list):
@@ -181,66 +191,19 @@ class RentProduct(models.Model):
                     line['insurance_value'] = total_insurance_value
         return res
 
-    @api.depends('property_id', 'analytic_account')
+    @api.depends('state_id')
     def _compute_unit_state(self):
         for rec in self:
-            status = 'شاغرة'
-            maintenance_id = rec.env['maintenance.request'].sudo().search([
-                ('property_id.product_tmpl_id', '=', rec.id),
-                ('state', 'in', ('confirm', 'ongoing'))
-            ])
-            
-            if maintenance_id:
-                status = 'تحت الصيانة'
-            else:
-                pp = self.env['product.product'].search([('product_tmpl_id', '=', rec.id)])
-                order = rec.env['sale.order.line'].sudo().search([
-                    ('product_id', '=', pp.id),
-                    ('property_number', '=', rec.property_id.property_name)
-                ], limit=1)
-                
-                if order:
-                    if order.order_id.rental_status == 'pickup':
-                        status = 'مؤجرة'
-                    elif order.order_id.rental_status == 'return':
-                        status = 'مؤجرة'
-                    elif order.order_id.rental_status == 'returned':
-                        status = 'شاغرة'
-                    elif order.order_id.rental_status == 'cancel':
-                        status = 'شاغرة'
+            rec.state_id = rec.state_id or 'جديدة'  # ضع هنا منطق تحديد الحالة حسب حاجتك
 
-            rec.unit_state = status
-            rec.state_id = status
+    @api.depends('unit_expenses_count')
+    def _unit_expenses_count(self):
+        for rec in self:
+            # استبدل بالمنطق الحقيقي لحساب المصاريف
+            rec.unit_expenses_count = 0
 
-    def get_unit_maintenance(self):
-        return {
-            'type': 'ir.actions.act_window',
-            'name': 'صيانات',
-            'view_mode': 'form',
-            'view_id': self.env.ref('account.view_move_form').id,
-            'res_model': 'account.move',
-            'context': {'default_move_type': 'in_invoice', 'default_journal_id': 2,
-                       'default_property_name': self.property_id.id,
-                       'default_unit_number': self.id, 'default_analytic_account': self.analytic_account.id},
-        }
-
+    @api.depends('unit_sales_count')
     def _unit_sales_count(self):
         for rec in self:
-            rec.unit_sales_count = self.env['sale.order.line'].search_count([
-                ('product_id.product_tmpl_id', '=', rec.id),
-                ('property_number', '=', rec.property_id.property_name)])
-
-    def unit_sales(self):
-        return {
-            'type': 'ir.actions.act_window',
-            'name': 'ايجارات',
-            'view_mode': 'form',
-            'view_id': self.env.ref('sale_renting.rental_order_primary_form_view').id,
-            'res_model': 'sale.order',
-            'context': {
-                'default_is_rental_order': True,
-                'default_property_name': self.property_id.id,
-                'default_unit_number': self.id,
-                'default_analytic_account_id': self.analytic_account.id,
-            },
-        }
+            # استبدل بالمنطق الحقيقي لحساب المبيعات
+            rec.unit_sales_count = 0
