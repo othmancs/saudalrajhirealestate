@@ -12,7 +12,7 @@ class RentProduct(models.Model):
     unit_rooms_number = fields.Char(string='عدد الغرف')
     unit_state = fields.Char(compute='_get_state', string='الحالة')
     rent_unit_area = fields.Float(string='المساحة')
-
+ 
     # Furniture info
     furniture_bedroom = fields.Boolean(string='غرفة نوم')
     furniture_bedroom_no = fields.Integer(string=' عدد غرف النوم')
