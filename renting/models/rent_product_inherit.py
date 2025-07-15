@@ -65,8 +65,8 @@ class RentProduct(models.Model):
     analytic_account = fields.Many2one('account.analytic.account', string='الحساب التحليلي', readonly=True)
     ref_analytic_account = fields.Char(string='رقم اشارة الحساب التحليلي', readonly=True)
     property_analytic_account = fields.Many2one('account.analytic.account', string='الحساب التحليلي للعقار', related='property_id.analytic_account')
-    property_analytic_account_parent = fields.Many2one('account.analytic.group',
-                                                       related='property_id.analytic_account.group_id')
+    # property_analytic_account_parent = fields.Many2one('account.analytic.group',
+    #                                                    related='property_id.analytic_account.group_id')
 
     # Compute fields - no store
     partner_id = fields.Many2one('res.partner', compute="get_sale_data", string='العميل')
@@ -184,7 +184,7 @@ class RentProduct(models.Model):
         res.ref_analytic_account = str(res.property_id.ref_analytic_account) + '-' + str(res.unit_number)
         analytic_account = self.env['account.analytic.account'].sudo().create({
             'name': res.name,
-            'group_id': res.property_analytic_account_parent.id,
+            'group_id': res.property_id.analytic_account.group_id.id if res.property_id.analytic_account.group_id else False,
             'code': res.ref_analytic_account
         })
         res.analytic_account = analytic_account
