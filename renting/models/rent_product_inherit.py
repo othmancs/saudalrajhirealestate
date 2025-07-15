@@ -84,7 +84,7 @@ class RentProduct(models.Model):
     # ✅ الحقل المخزن فقط
     last_sale_id = fields.Many2one('sale.order', string='رقم العقد', compute="_compute_last_sale", store=True)
 
-    @api.depends('id')
+    # @api.depends('id')
     def _compute_last_sale(self):
         for rec in self:
             pp = self.env['product.product'].search([('product_tmpl_id', '=', rec.id)])
