@@ -12,7 +12,7 @@
     "depends": ["account"],  # Removed analytic_operating_unit dependency
     "license": "LGPL-3",
     "data": [
-        "security/account_security.xml",
+        # "security/account_security.xml",
         "views/account_move_view.xml",
         "views/account_journal_view.xml",
         "views/company_view.xml",
