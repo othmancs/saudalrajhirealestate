@@ -17,7 +17,7 @@
     "Tecnativa,"
     "Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/account-financial-reporting",
-    "depends": ["account", "date_range", "report_xlsx"],
+    "depends": ["account", "report_xlsx"],
     "data": [
         "data/report_column_data.xml",
         "security/ir.model.access.csv",
