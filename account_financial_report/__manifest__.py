@@ -13,7 +13,7 @@
     "author": "Camptocamp,"
     "initOS GmbH,"
     "redCOR AG,"
-    "ForgeFlow,"
+    "ForgeFlow," 
     "Tecnativa,"
     "Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/account-financial-reporting",
