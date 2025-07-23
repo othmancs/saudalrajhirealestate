@@ -20,7 +20,7 @@
 #
 ########################################################################################
 {
-    'name': 'Enterprise Open HRMS Loan Management',
+    'name': 'Enterprise Open HRMS Loan Management', 
     'version': '15.0.1.0.0',
     'summary': 'Manage Loan Requests',
     'description': """
